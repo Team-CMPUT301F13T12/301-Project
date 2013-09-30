@@ -6,3 +6,4 @@
 Group Members:
 Chris Hut
 Kevin Lau
+Vincent Phung checking in
