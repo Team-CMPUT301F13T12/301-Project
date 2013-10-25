@@ -1,6 +1,6 @@
 package g12.projecttestcases;
 /* Covers test cases for use cases:
- * 1, 14, 15
+ * 1,10, 14, 15
  * 
  * http://stackoverflow.com/questions/10845937/how-to-do-junit-testing-in-android
  * Referenced Oct 23, 2013 for general format of Test class
@@ -143,5 +143,27 @@ public class FragmentActivityTestCases extends ActivityInstrumentationTestCase2<
 			//camera, meaning the user may take yet another picture
 			assertTrue(camera != null);
 		}
+
+                        
+                        // test case 10
+                        public void testPostPhotoToAnotateFragment(){
+                       	Fragment someFragment = new Fragment();
+                         //start activity
+                         myFragmentActivity = this.getActivity();
+                         annotateButton = (Button) myFragemntActivity.findViewById(ualberta.g12.adventurecreator.FragemntActivity.R.id.annotateButtonID);
+                         
+                         //click annotate button
+                         asserTrue(annotateButon.performClick());
+                         int prevAnnotationLenght = someFragment.getAnnotation().getPhotos().size();
+                         //upload a phote to annotate the fragment
+                         Picture somePicture = new Picture();
+                         AddAnnotation(someFragment, somePicture);
+                         //confirm a new phote added
+                         assertTrue(prevAnnotationLenght <someFragment.getAnnotation().getPhotos().size());
+                         
+                         
+                        	
+                        }
+
 
 }
