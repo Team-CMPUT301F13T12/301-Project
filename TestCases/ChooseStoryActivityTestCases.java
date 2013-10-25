@@ -91,7 +91,6 @@ public class ChooseStoryActivityTestCases extends ActivityInstrumentationTestCas
 		availableStoryList = (ListView) myChooseStoryActivity.findViewById(ualberta.g12.adventurecreator.ChooseStoryActivity.R.id.storyListID);
 		storyListPopupMenu = (PopupMenu) myChooseStoryActivity.findViewById(ualberta.g12.adventurecreator.ChooseStoryActivity.R.id.storyListPoupMenuID);
 
-
 		//selects first (and only) story
 		availableStoryList.setSelection(0);
 		
@@ -103,6 +102,10 @@ public class ChooseStoryActivityTestCases extends ActivityInstrumentationTestCas
 
 		//asserts user can Download the story
 		assertTrue(downloadOption.getTitle().equals("Download"));
+		
+		//check that story is written by another user
+		assertFalse(someStory.getAuthor().equals(getCurrentUserName()));
+				
 	}
 	
 		//Use Case 9 , test 2/3

@@ -8,12 +8,14 @@
 
 import android.R;
 import android.test.ActivityInstrumentationTestCase2;
+import android.widget.Button;
 import android.widget.TextView;
 
 public class EditStoryActivityTestCases extends ActivityInstrumentationTestCase2<EditStoryActivity> {
 	//declare activity and widgets
 	private EditStoryActivity myEditStoryActivity;
 	private TextView myView;
+	private Button mbutton;
 	
 	//Constructor
 	public EditStoryActivityTestCases(){
@@ -24,20 +26,20 @@ public class EditStoryActivityTestCases extends ActivityInstrumentationTestCase2
 	@Override
     protected void setUp() throws Exception {
         super.setUp();
-        mActivity = this.getActivity();
+        myEditStoryActivity = this.getActivity();
 		Button mbutton = (Button) findViewById(R.id.saveStory)
     }
 
 	/* Test Cases - all start with "test" */
 	
 	//Use Case 3, test 1/2
-	public void testPublishStory(){
+	public void testPublishStory() {
 		addStory();
 		assert click(mbutton);
 	}
 	
 	//Use Case 3, test 2/2
-	public void testPublishStory(){
+	public void testPublishStory2() {
 		assert click(mbutton);
 	}
 	
