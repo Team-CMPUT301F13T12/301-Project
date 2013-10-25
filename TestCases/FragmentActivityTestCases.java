@@ -1,6 +1,6 @@
 package g12.projecttestcases;
 /* Covers test cases for use cases:
- * 1,10, 14, 15
+ * 1,10,12, 14, 15
  * 
  * http://stackoverflow.com/questions/10845937/how-to-do-junit-testing-in-android
  * Referenced Oct 23, 2013 for general format of Test class
@@ -160,9 +160,25 @@ public class FragmentActivityTestCases extends ActivityInstrumentationTestCase2<
                          AddAnnotation(someFragment, somePicture);
                          //confirm a new phote added
                          assertTrue(prevAnnotationLenght <someFragment.getAnnotation().getPhotos().size());
-                         
-                         
-                        	
+                        }
+                        
+                        //test case 12
+                        public void testStoreFragment(){
+                        Fragment someFragment = new Fragment();
+                        //start activity
+                        myFraagmentActivity = this.getActivity();
+                        
+                        //choice a store choose from fragment choices
+                        myChooseFragmentActivity = this.getActivity();
+                        availableFragmentList =(ListView) myChooseFragmentActvity.findViewById(ualberta.g12.adventurecreator.ChooseStoryActivity.R.id.fragmetnListID);
+                        fragmentListPopupMenu = (PopupMenu) myChooseFragmentActivity.findViewById(ualberta.g12.adventurecreator.ChooseStoryActivity.R.id.fragmentListPopMenuID);
+                        // popup menu open for selection 
+                        availableFragmentList.performLongClick();
+                        //store option if available
+                        MenuItem storeOption = fragmentListPopupMenu.getMenu().getItem(1);
+                        // assert fragemnt stored
+                        asserTrue(storOption.getTitle().equals("Store");
+                        
                         }
 
 
