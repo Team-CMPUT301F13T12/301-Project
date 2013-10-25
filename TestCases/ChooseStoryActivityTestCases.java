@@ -41,7 +41,7 @@ public class ChooseStoryActivityTestCases extends ActivityInstrumentationTestCas
 
 		//starts the activity
 		myChooseStoryActivity = this.getActivity();
-		myView = (TextView) myChooseStoryActivity.findViewById(ualberta.g12.adventurecreator.ChooseStoryActivity.R.id.StoryList);
+		availableStoryList; = (ListtView) myChooseStoryActivity.findViewById(ualberta.g12.adventurecreator.ChooseStoryActivity.R.id.StoryList);
 		
 		//check that user can scroll through the list
 		assertTrue(scrollable(mView.getText()));
@@ -54,7 +54,7 @@ public class ChooseStoryActivityTestCases extends ActivityInstrumentationTestCas
 
 		//starts the activity
 		myChooseStoryActivity = this.getActivity();
-		myView = (TextView) myChooseStoryActivity.findViewById(ualberta.g12.adventurecreator.ChooseStoryActivity.R.id.StoryList);
+		availableStoryList; = (ListView) myChooseStoryActivity.findViewById(ualberta.g12.adventurecreator.ChooseStoryActivity.R.id.StoryList);
 		
 		//check if the list doesn't scroll with a single entry
 		assertFalse(scrollable(mView.getText()));
@@ -64,7 +64,7 @@ public class ChooseStoryActivityTestCases extends ActivityInstrumentationTestCas
 	public void testBrowseEmptyStoryList() {
 		//starts the activity
 		myChooseStoryActivity = this.getActivity();
-		myView = (TextView) myChooseStoryActivity.findViewById(ualberta.g12.adventurecreator.ChooseStoryActivity.R.id.StoryList);
+		availableStoryList; = (ListView) myChooseStoryActivity.findViewById(ualberta.g12.adventurecreator.ChooseStoryActivity.R.id.StoryList);
 		
 		//string set to text in the list
 		String Story = myView.getText();
