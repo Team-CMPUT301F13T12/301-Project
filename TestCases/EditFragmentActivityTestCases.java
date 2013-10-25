@@ -1,11 +1,12 @@
 /* Covers test cases for use cases:
- * 5, 7 , 8
+ * 5, 6, 7, 8
  * 
  * http://stackoverflow.com/questions/10845937/how-to-do-junit-testing-in-android
  * Referenced Oct 23, 2013 for general format of Test class
  * 
  */
 
+import android.R;
 import android.test.ActivityInstrumentationTestCase2;
 import android.widget.TextView;
 
@@ -31,7 +32,7 @@ public class EditFragmentActivityTestCases extends ActivityInstrumentationTestCa
 	
 	
 	//Use Case 7, test 1/2 and Use Case 5
-	public void testAddChoiceFragment {
+	public void testAddChoiceFragment(){
 		
 		myView = (TextView) myEditFragmentActivity.findViewById(ualberta.g12.adventurecreator.ChooseStoryActivity.R.id.textviewID);
 		title = "Test_Choice"; 
@@ -43,7 +44,7 @@ public class EditFragmentActivityTestCases extends ActivityInstrumentationTestCa
 	}
 	
 	//Use Case 7, test 2/2 and Use Case 5
-	public void testMyselfAsChoiceFragment {
+	public void testMyselfAsChoiceFragment(){
 		title = "Test_Choice"; 
 		String myFragmentId = myEditFragmentActivity.getFragId();
 		Choice myChoice = new Choice(title,myFragmentId);
@@ -53,8 +54,7 @@ public class EditFragmentActivityTestCases extends ActivityInstrumentationTestCa
 	}
 
 	//Use Case 8, test 1/3 and Use Case 5
-	public void testAddChoiceToEmptyFragment {
-		
+	public void testAddChoiceToEmptyFragment(){
 		StoryFragment EmptySF = new storyFragment;
 		myEditFragmentActivity.changeStoryFragment(EmptySF);
 		Choice myChoice = new Choice("test");
@@ -64,9 +64,7 @@ public class EditFragmentActivityTestCases extends ActivityInstrumentationTestCa
 	}
 
 	//Use Case 8 2/3 and Use Case 5
-	public void testAddChoiceToFragment {
-		
-		
+	public void testAddChoiceToFragment(){
 		title = "Test_Choice"; 
                 String myFragmentId = myEditFragmentActivity.getFragId(0);
 		Choice myChoice = new Choice(title,myFragmentId);
@@ -76,11 +74,16 @@ public class EditFragmentActivityTestCases extends ActivityInstrumentationTestCa
 	}
 
 	//Use Case 8, test 3/3 
-	public void testAddEmptyChoice {
+	public void testAddEmptyChoice(){
 		Choice emptyChoice = new Choice();
 		addChoice(new Choice());
 		AssertTrue(myEditFragmentActivity.storyFragments.Choice.contains(emptyChoice);
                 
 	}
 
+	// Use Case 6
+	public void testAddPicture(){
+	    Button addPicture = (Button) findViewById(R.id.add_picture);
+	    assert(click(addPicture));
+	}
 }
