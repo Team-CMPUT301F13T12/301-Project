@@ -1,5 +1,5 @@
 /* Covers test cases for use cases:
- * 7 , 8
+ * 5, 7 , 8
  * 
  * http://stackoverflow.com/questions/10845937/how-to-do-junit-testing-in-android
  * Referenced Oct 23, 2013 for general format of Test class
@@ -13,7 +13,6 @@ public class EditFragmentActivityTestCases extends ActivityInstrumentationTestCa
 	//declare activity and widgets
 	private EditFragmentActivity myEditFragmentActivity;
 	private EditText title;
-	private 
 	
 	//Constructor
 	public EditStoryActivityTestCases(){
@@ -30,7 +29,8 @@ public class EditFragmentActivityTestCases extends ActivityInstrumentationTestCa
 
 	/* Test Cases - all start with "test" */
 	
-	//Use Case 7, test 1/2
+	
+	//Use Case 7, test 1/2 and Use Case 5
 	public void testAddChoiceFragment {
 		
 		myView = (TextView) myEditFragmentActivity.findViewById(ualberta.g12.adventurecreator.ChooseStoryActivity.R.id.textviewID);
@@ -42,19 +42,17 @@ public class EditFragmentActivityTestCases extends ActivityInstrumentationTestCa
                 
 	}
 	
-	//Use Case 7, test 2/2
+	//Use Case 7, test 2/2 and Use Case 5
 	public void testMyselfAsChoiceFragment {
-		
-		
 		title = "Test_Choice"; 
-                String myFragmentId = myEditFragmentActivity.getFragId();
+		String myFragmentId = myEditFragmentActivity.getFragId();
 		Choice myChoice = new Choice(title,myFragmentId);
 		addChoice(choice));
 		AssertTrue(myEditFragmentActivity.storyFragments.Choices.get(myFragmentId).equals(myChoice));
                 
 	}
 
-	//Use Case 8, test 1/3
+	//Use Case 8, test 1/3 and Use Case 5
 	public void testAddChoiceToEmptyFragment {
 		
 		StoryFragment EmptySF = new storyFragment;
@@ -65,7 +63,7 @@ public class EditFragmentActivityTestCases extends ActivityInstrumentationTestCa
                 
 	}
 
-	//Use Case 8 2/3
+	//Use Case 8 2/3 and Use Case 5
 	public void testAddChoiceToFragment {
 		
 		
@@ -77,7 +75,7 @@ public class EditFragmentActivityTestCases extends ActivityInstrumentationTestCa
                 
 	}
 
-	//Use Case 8, test 3/3
+	//Use Case 8, test 3/3 
 	public void testAddEmptyChoice {
 		Choice emptyChoice = new Choice();
 		addChoice(new Choice());
