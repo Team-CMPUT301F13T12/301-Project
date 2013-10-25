@@ -30,10 +30,6 @@ public class ChooseStoryActivityTestCases extends ActivityInstrumentationTestCas
 	@Override
 	protected void setUp() throws Exception {
 		super.setUp();
-		myActivity = this.getActivity();
-		myView = (TextView) mActivity.findViewById(ualberta.g12.adventurecreator.ChooseStoryActivity.R.id.textviewID);
-		availableStoryList = (ListView) mActivity.findViewById(ualberta.g12.adventurecreator.ChooseStoryActivity.R.id.storyListID);
-		storyListPopupMenu = (PopupMenu) mActivity.findViewById(ualberta.g12.adventurecreator.ChooseStoryActivity.R.id.storyListPoupMenuID);
 	}
 
 	/* Test Cases - all start with "test" */
@@ -43,7 +39,9 @@ public class ChooseStoryActivityTestCases extends ActivityInstrumentationTestCas
 		addMultiStory();
 
 		//starts the activity
-		getActivity();
+		myChooseStoryActivity = this.getActivity();
+		myView = (TextView) myChooseStoryActivity.findViewById(ualberta.g12.adventurecreator.ChooseStoryActivity.R.id.textviewID);
+		
 
 		assertTrue(scrollable(mView.getText()));
 	}
@@ -53,7 +51,9 @@ public class ChooseStoryActivityTestCases extends ActivityInstrumentationTestCas
 		addOneStory();
 
 		//starts the activity
-		getActivity();
+		myChooseStoryActivity = this.getActivity();
+		myView = (TextView) myChooseStoryActivity.findViewById(ualberta.g12.adventurecreator.ChooseStoryActivity.R.id.textviewID);
+		
 
 		assertFalse(scrollable(mView.getText()));
 	}
@@ -61,7 +61,9 @@ public class ChooseStoryActivityTestCases extends ActivityInstrumentationTestCas
 	//Use Case 2, test 3/3
 	public void testBrowseEmptyStoryList() {
 		//starts the activity
-		getActivity();
+		myChooseStoryActivity = this.getActivity();
+		myView = (TextView) myChooseStoryActivity.findViewById(ualberta.g12.adventurecreator.ChooseStoryActivity.R.id.textviewID);
+		
 		String Story = myView.getText();
 		assertEquals(Story, null);
 	}
@@ -76,7 +78,10 @@ public class ChooseStoryActivityTestCases extends ActivityInstrumentationTestCas
 
 		//starts the activity (which will automatically find all 
 		//available stories and load them into the availableStoryList)
-		getActivity();
+		myChooseStoryActivity = this.getActivity();
+		availableStoryList = (ListView) myChooseStoryActivity.findViewById(ualberta.g12.adventurecreator.ChooseStoryActivity.R.id.storyListID);
+		storyListPopupMenu = (PopupMenu) myChooseStoryActivity.findViewById(ualberta.g12.adventurecreator.ChooseStoryActivity.R.id.storyListPoupMenuID);
+
 
 		//selects first (and only) story
 		availableStoryList.setSelection(0);
