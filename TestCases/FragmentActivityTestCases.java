@@ -40,10 +40,15 @@ public class FragmentActivityTestCases extends ActivityInstrumentationTestCase2<
 	public void testReadStoryFragments() {
 		//Start Activity
 		myFragmentActivity = this.getActivity();
-		mView = (TextView) myFragmentActivity.findViewById(ualberta.g12.adventurecreator.FragemntActivity.R.id.textviewID);
+		mView = (TextView) myFragmentActivity.findViewById(ualberta.g12.adventurecreator.FragemntActivity.R.id.FragmentInfoID);
+		
+		//set text in fragment info textview
+		mView.setText("Test Text"));
 
-
+		//saves fragment text 
 		String fragment = myView.getText();
+		
+		//checks if there is valid input in the fragment textview
 		assertNotEquals(fragment, null);
 	}
 
@@ -51,9 +56,12 @@ public class FragmentActivityTestCases extends ActivityInstrumentationTestCase2<
 	public void testReadNoFragments() {
 		//Start Activity
 		myFragmentActivity = this.getActivity();
-		mView = (TextView) myFragmentActivity.findViewById(ualberta.g12.adventurecreator.FragemntActivity.R.id.textviewID);
+		mView = (TextView) myFragmentActivity.findViewById(ualberta.g12.adventurecreator.FragemntActivity.R.id.FragmentInfoID);
 
+		//saves fragment text 
 		String fragment = myView.getText();
+		
+		//checks if no text is present in fragment info textview
 		assertEquals(fragment, null);
 	}
 
