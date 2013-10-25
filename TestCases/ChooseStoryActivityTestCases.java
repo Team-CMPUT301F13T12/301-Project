@@ -36,25 +36,27 @@ public class ChooseStoryActivityTestCases extends ActivityInstrumentationTestCas
 
 	//Use Case 2, test 1/3
 	public void testBrowseStoryList() {
+		//add in multiple stories into the list
 		addMultiStory();
 
 		//starts the activity
 		myChooseStoryActivity = this.getActivity();
-		myView = (TextView) myChooseStoryActivity.findViewById(ualberta.g12.adventurecreator.ChooseStoryActivity.R.id.textviewID);
+		myView = (TextView) myChooseStoryActivity.findViewById(ualberta.g12.adventurecreator.ChooseStoryActivity.R.id.StoryList);
 		
-
+		//check that user can scroll through the list
 		assertTrue(scrollable(mView.getText()));
 	}
 
 	//Use Case 2, test 2/3
 	public void testBrowseNoScrollList() {
+		//add a single story into the list
 		addOneStory();
 
 		//starts the activity
 		myChooseStoryActivity = this.getActivity();
-		myView = (TextView) myChooseStoryActivity.findViewById(ualberta.g12.adventurecreator.ChooseStoryActivity.R.id.textviewID);
+		myView = (TextView) myChooseStoryActivity.findViewById(ualberta.g12.adventurecreator.ChooseStoryActivity.R.id.StoryList);
 		
-
+		//check if the list doesn't scroll with a single entry
 		assertFalse(scrollable(mView.getText()));
 	}
 
@@ -62,9 +64,12 @@ public class ChooseStoryActivityTestCases extends ActivityInstrumentationTestCas
 	public void testBrowseEmptyStoryList() {
 		//starts the activity
 		myChooseStoryActivity = this.getActivity();
-		myView = (TextView) myChooseStoryActivity.findViewById(ualberta.g12.adventurecreator.ChooseStoryActivity.R.id.textviewID);
+		myView = (TextView) myChooseStoryActivity.findViewById(ualberta.g12.adventurecreator.ChooseStoryActivity.R.id.StoryList);
 		
+		//string set to text in the list
 		String Story = myView.getText();
+		
+		//checks if the screen has no input with no stories
 		assertEquals(Story, null);
 	}
 
