@@ -34,12 +34,18 @@ public class EditStoryActivityTestCases extends ActivityInstrumentationTestCase2
 	
 	//Use Case 3, test 1/2
 	public void testPublishStory() {
+		
+		//add story info 
 		addStory();
+		
+		//check whether or not the publish button successfully executes
 		assert click(mbutton);
 	}
 	
 	//Use Case 3, test 2/2
-	public void testPublishStory2() {
+	public void testPublishEmptyStory() {
+		
+		//checks if story with no info can successfull publish
 		assert click(mbutton);
 	}
 	
