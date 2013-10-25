@@ -1,6 +1,6 @@
 package g12.projecttestcases;
 /* Covers test cases for use cases:
- * 4
+ * 4, 5
  * 
  */
 
@@ -28,7 +28,7 @@ public class StoryManagerTestCases extends ActivityInstrumentationTestCase2<Stor
     }
     
     // Use case 4, test 1/4
-    public void searchForStoryByTitle(){
+    public void testSearchForStoryByTitle(){
         
         // Create a story we can search for
         sm.publishStory(new Story("Blank story", "Blank Author")); 
@@ -38,7 +38,7 @@ public class StoryManagerTestCases extends ActivityInstrumentationTestCase2<Stor
     }
     
     // Use case 4, test 2/4
-    public void searchForStoryByAuthor(){
+    public void testSearchForStoryByAuthor(){
         sm.publishStory(new Story("Anonymous story", "Anonymous"));
         stories = sm.findStoryByAuthor("Anonymous");
         
@@ -46,14 +46,14 @@ public class StoryManagerTestCases extends ActivityInstrumentationTestCase2<Stor
     }
     
     // Use case 4, test 3/4
-    public void searchForInvalidStory(){
+    public void testSearchForInvalidStory(){
         stories = sm.findStoryByAuthor(null);
         
         assert(stories.isEmpty());
     }
     
     // Use case 4, test 4/4
-    public void searchForMultipleStories(){
+    public void testSearchForMultipleStories(){
         sm.publishStory(new Story("a1", "a1"));
         sm.publishStory(new Story("b1", "b1"));
         sm.publishStory(new Story("a2", "a2"));
@@ -65,5 +65,15 @@ public class StoryManagerTestCases extends ActivityInstrumentationTestCase2<Stor
         stories = sm.findStoryByAuthor("1");
         
         assert(stories.size() > 1);
+    }
+    
+    // Use case 5, test 1/5
+    public void testEditStory(){
+        sm.publishStory(new Story("this is", "no fun"));
+        stories = sm.findStoryByTitle("this");
+        
+        assert(!stories.isEmpty());
+        
+        startEditStory(stories.get(0));
     }
 }

@@ -1,11 +1,12 @@
 /* Covers test cases for use cases:
- * 3
+ * 3, 5
  * 
  * http://stackoverflow.com/questions/10845937/how-to-do-junit-testing-in-android
  * Referenced Oct 23, 2013 for general format of Test class
  * 
  */
 
+import android.R;
 import android.test.ActivityInstrumentationTestCase2;
 import android.widget.TextView;
 
@@ -30,14 +31,20 @@ public class EditStoryActivityTestCases extends ActivityInstrumentationTestCase2
 	/* Test Cases - all start with "test" */
 	
 	//Use Case 3, test 1/2
-	public void testPublishStory {
+	public void testPublishStory(){
 		addStory();
 		assert click(mbutton);
 	}
 	
 	//Use Case 3, test 2/2
-	public void testPublishStory {
+	public void testPublishStory(){
 		assert click(mbutton);
 	}
-
+	
+	// Use case 5, test 3/3
+	public void testAddFragmentToStory(){
+	    Button editStory = (Button) findViewById(R.id.editStory);
+	    assert(click(editStory);
+	}
+	
 }

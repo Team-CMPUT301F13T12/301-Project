@@ -1,5 +1,5 @@
 /* Covers test cases for use cases:
- * 2, 16 , 9
+ * 2, 5, 16 , 9
  * 
  * http://stackoverflow.com/questions/10845937/how-to-do-junit-testing-in-android
  * Referenced Oct 23, 2013 for general format of Test class
@@ -68,6 +68,14 @@ public class ChooseStoryActivityTestCases extends ActivityInstrumentationTestCas
 		assertEquals(Story, null);
 	}
 
+	// Use case 5, test 1/3
+	public void testEditExistingStory(){
+	    myChooseStoryActivity = this.getActivity();
+	    Story s = getStoryFromClick();
+	    editStory(s);
+	    assert(s != null);
+	}
+	
 	//Use Case 16, test 1/1 
 	//Use Case 9 , test 1/3
 	public void testDowloadOtherUserStory() {
