@@ -1,5 +1,5 @@
 /* Covers test cases for use cases:
- * 2, 16
+ * 2, 16 , 9
  * 
  * http://stackoverflow.com/questions/10845937/how-to-do-junit-testing-in-android
  * Referenced Oct 23, 2013 for general format of Test class
@@ -68,7 +68,8 @@ public class ChooseStoryActivityTestCases extends ActivityInstrumentationTestCas
 		assertEquals(Story, null);
 	}
 
-	//Use Case 16, test 1/1
+	//Use Case 16, test 1/1 
+	//Use Case 9 , test 1/3
 	public void testDowloadOtherUserStory() {
 		Story otherUserStory = new Story();
 		otherUserStory.setAuthor("OtherUser");
@@ -95,5 +96,67 @@ public class ChooseStoryActivityTestCases extends ActivityInstrumentationTestCas
 		//asserts user can Download the story
 		assertTrue(downloadOption.getTitle().equals("Download"));
 	}
+	
+		//Use Case 9 , test 2/3
+	public void testDowloadStoryNoInternet() {
+		Story otherUserStory = new Story();
+		otherUserStory.setAuthor("OtherUser");
+
+		//uploads/publishes story
+		addStory(otherUserStory);
+
+		//starts the activity (which will automatically find all 
+		//available stories and load them into the availableStoryList)
+		myChooseStoryActivity = this.getActivity();
+		availableStoryList = (ListView) myChooseStoryActivity.findViewById(ualberta.g12.adventurecreator.ChooseStoryActivity.R.id.storyListID);
+		storyListPopupMenu = (PopupMenu) myChooseStoryActivity.findViewById(ualberta.g12.adventurecreator.ChooseStoryActivity.R.id.storyListPoupMenuID);
+
+		//turn off the internet
+		turnOffInternet();
+		
+		//selects first (and only) story
+		availableStoryList.setSelection(0);
+		
+		//causes popupMenu to open for selection
+		availableStoryList.performLongClick();
+
+		//gets download option if available ( not available)
+		MenuItem downloadOption = storyListPopupMenu.getMenu().getItem(2);
+		
+		AssertTrue(downloadOption.equals(NULL));
+		
+	}
+	
+	//Use Case 9 , test 3/3
+	public void testDowloadStoryTurnOffInternet() {
+		Story otherUserStory = new Story();
+		otherUserStory.setAuthor("OtherUser");
+
+		//uploads/publishes story
+		addStory(otherUserStory);
+
+		//starts the activity (which will automatically find all 
+		//available stories and load them into the availableStoryList)
+		myChooseStoryActivity = this.getActivity();
+		availableStoryList = (ListView) myChooseStoryActivity.findViewById(ualberta.g12.adventurecreator.ChooseStoryActivity.R.id.storyListID);
+		storyListPopupMenu = (PopupMenu) myChooseStoryActivity.findViewById(ualberta.g12.adventurecreator.ChooseStoryActivity.R.id.storyListPoupMenuID);
+
+
+		//selects first (and only) story
+		availableStoryList.setSelection(0);
+		
+		//causes popupMenu to open for selection
+		availableStoryList.performLongClick();
+
+		//gets download option if available
+		MenuItem downloadOption = storyListPopupMenu.getMenu().getItem(2);
+		
+		//turn off the internet
+		turnOffInternet();
+
+		//asserts user can Download the story
+		assertTrue(downloadOption.getTitle().equals("Download"));
+	}
+
 
 }
