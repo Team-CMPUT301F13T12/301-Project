@@ -1,5 +1,5 @@
 /* Covers test cases for use cases:
- * 5, 6, 7, 8
+ * 5, 6, 7, 8, 11
  * 
  * http://stackoverflow.com/questions/10845937/how-to-do-junit-testing-in-android
  * Referenced Oct 23, 2013 for general format of Test class
