@@ -28,11 +28,10 @@ public class MainActivity extends Activity {
 		// TODO Auto-generated method stub
 		switch(item.getItemId()){
 		case R.id.add_story:
-			
+		    startActivity(new Intent(this, CreateStoryActivity.class));
 			break;
 			
 		case R.id.settings:
-			startActivity(new Intent(this, NewStory.class));
 			break;
 		}
 		return super.onOptionsItemSelected(item);

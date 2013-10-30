@@ -9,7 +9,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 
-public class FragmentEditor extends Activity {
+public class EditFragmentActivity extends Activity {
 
 	Button addImage;
 

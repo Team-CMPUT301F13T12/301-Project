@@ -10,7 +10,7 @@ public class Activity_read_story extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_activity_read_story);
+        setContentView(R.layout.activity_read_story);
     }
 
     @Override

@@ -5,33 +5,19 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.Button;
 
-public class NewStory extends Activity {
-	
-	Button createButton;
+public class StoryEditActivity extends Activity{
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_new_story);
-        
-        createButton = (Button) findViewById(R.id.button1);
-        createButton.setOnClickListener(new View.OnClickListener() {
-			
-			@Override
-			public void onClick(View arg0) {
-				// TODO Auto-generated method stub
-				startActivity(new Intent(getApplication(), StoryEditor.class));
-			}
-		});
+        setContentView(R.layout.android_story_editor);
     }
-
+    
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.main, menu);
+        getMenuInflater().inflate(R.menu.story_menu, menu);
         return true;
     }
 
@@ -39,8 +25,12 @@ public class NewStory extends Activity {
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		// TODO Auto-generated method stub
+		switch(item.getItemId()){
+		case R.id.add_fragment:
+			startActivity(new Intent(this, EditFragmentActivity.class));
+			break;
+		}
 		return super.onOptionsItemSelected(item);
 	}
-    
-    
+	
 }
