@@ -2,16 +2,19 @@ import java.util.LinkedList;
 import android.graphics.drawable.Drawable;
 
 public class Fragment {
-	private String pageTitle;
+	private String title;
 	private String bodyText;
 	private LinkedList<Drawable> illustrations;
+	private LinkedList<Sound> sounds;
+	private LinkedList<Video> videos;
 	private LinkedList<Choice> choices;
 	//True if at least one page references it, can be used a flag for isolated pages
 	//will have to be controlled from the story object
 	private boolean isLinkedTo; 
+	private Annotation annotations;
 	
 	public Fragment() {
-		this.pageTitle = "Choose a Title";
+		this.title = "Choose a Title";
 		this.bodyText = "Story body here.";
 		this.choices = new LinkedList<Choice>();
 		this.choices.add(new Choice()); //Add one default choice to start
@@ -20,12 +23,12 @@ public class Fragment {
 		isLinkedTo = true; 
 	}
 	
-	public String getPageTitle() {
-		return pageTitle;
+	public String getTitle() {
+		return this.title;
 	}
 
-	public void setPageTitle(String pageTitle) {
-		this.pageTitle = pageTitle;
+	public void setTitle(String newTitle) {
+		this.title = newTitle;
 	}
 
 	public String getBodyText() {
@@ -42,6 +45,22 @@ public class Fragment {
 
 	public void setIllustrations(LinkedList<Drawable> illustrations) {
 		this.illustrations = illustrations;
+	}
+
+	public LinkedList<Sound> getSounds() {
+		return sounds;
+	}
+
+	public void setSounds(LinkedList<Sound> sounds) {
+		this.sounds = sounds;
+	}
+
+	public LinkedList<Video> getVideos() {
+		return videos;
+	}
+
+	public void setVideos(LinkedList<Video> videos) {
+		this.videos = videos;
 	}
 
 	public LinkedList<Choice> getChoices() {
@@ -62,6 +81,14 @@ public class Fragment {
 
 	public void setLinkedTo(boolean isLinkedTo) {
 		this.isLinkedTo = isLinkedTo;
+	}
+
+	public Annotation getAnnotations() {
+		return annotations;
+	}
+
+	public void setAnnotations(Annotation annotations) {
+		this.annotations = annotations;
 	}
 
 }
