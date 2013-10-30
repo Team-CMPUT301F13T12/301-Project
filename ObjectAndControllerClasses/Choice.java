@@ -1,7 +1,7 @@
 
 public class Choice {
 	private String choiceText;
-	private Fragment linkedToPage;
+	private StoryFragment linkedToPage;
 	
 	//default settings for a new choice
 	public Choice() {
@@ -17,11 +17,11 @@ public class Choice {
 		this.choiceText = choiceText;
 	}
 
-	public Fragment getLinkedToPage() {
+	public StoryFragment getLinkedToPage() {
 		return linkedToPage;
 	}
 
-	public void setLinkedToPage(Fragment linkedToPage) {
+	public void setLinkedToPage(StoryFragment linkedToPage) {
 		this.linkedToPage = linkedToPage;
 		linkedToPage.setLinkedTo(true); //page is definitely linked to now
 	}

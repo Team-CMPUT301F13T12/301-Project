@@ -5,12 +5,12 @@ import java.util.LinkedList;
 public class Story {
 	private String storyTitle;
 	private String author;
-	private LinkedList<Fragment> pages; //first index in pages is always the start page
+	private LinkedList<StoryFragment> pages; //first index in pages is always the start page
 
 	public Story() {
 		this.storyTitle = "Add a title.";
 		this.author = "Your pen name here";
-		this.pages = new LinkedList<Fragment>();
+		this.pages = new LinkedList<StoryFragment>();
 	}
 	
 	public String getStoryTitle() {
@@ -29,15 +29,15 @@ public class Story {
 		this.author = author;
 	}
 
-	public LinkedList<Fragment> getPages() {
+	public LinkedList<StoryFragment> getPages() {
 		return pages;
 	}
 
-	public void addPage(Fragment newPage) {
+	public void addPage(StoryFragment newPage) {
 		this.pages.add(newPage);
 	}
 	
-	public void removePage(Fragment oldPage) {
+	public void removePage(StoryFragment oldPage) {
 		this.pages.remove(oldPage);
 	}
 	
@@ -45,12 +45,12 @@ public class Story {
 		
 	}
 	
-	public void addLinkToPageInStory(Fragment currentPage, String choiceText, Fragment linkedToPage){
+	public void addLinkToPageInStory(StoryFragment currentPage, String choiceText, StoryFragment linkedToPage){
 		
 	}
 	
 	//For merging stories (should happen when a choice is set to a page in another story)
-	public void afterPageLinkedToAnotherStory(Story newStory, Fragment pageLinkedTo, Choice choiceToSet){
+	public void afterPageLinkedToAnotherStory(Story newStory, StoryFragment pageLinkedTo, Choice choiceToSet){
 		//adds all pages of newStory to the current story
 		for(int i=0; i<newStory.getPages().size();i++){
 			this.pages.add(newStory.getPages().get(i));
@@ -63,7 +63,7 @@ public class Story {
 	//or only before the pages are displayed and change flag is true.  
 	//would need to create a change flag
 	public void findAndMarkIsolatedPages(){
-		LinkedList<Fragment> copyOfPages = new LinkedList<Fragment>();
+		LinkedList<StoryFragment> copyOfPages = new LinkedList<StoryFragment>();
 		//copies pages list
 		for(int i=0; i<this.pages.size(); i++){
 			copyOfPages.add(pages.get(i));
@@ -71,7 +71,7 @@ public class Story {
 		//removes all pages from copyOfPages that are referenced
 		for(int i=0; i<this.pages.size(); i++){
 			for (int j=0; j<pages.get(i).getChoices().size(); j++){
-				Fragment tempPage = pages.get(i).getChoices().get(j).getLinkedToPage();
+				StoryFragment tempPage = pages.get(i).getChoices().get(j).getLinkedToPage();
 				copyOfPages.remove(tempPage);
 			}
 		}
