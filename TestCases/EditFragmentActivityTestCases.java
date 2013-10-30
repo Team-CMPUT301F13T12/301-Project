@@ -89,4 +89,11 @@ public class EditFragmentActivityTestCases extends ActivityInstrumentationTestCa
 	    Button addPicture = (Button) findViewById(R.id.add_picture);
 	    assert(click(addPicture));
 	}
+	
+	//Use Case 11
+	public void testAddIllustration(){
+		Button addIllustration = (Button) findViewById(R.id.add_illustration);
+		assert(click(addIllustraion));
+	}
+	
 }
