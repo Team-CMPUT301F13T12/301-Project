@@ -1,9 +1,9 @@
 import java.util.LinkedList;
 
 
-public class StoryFragmentController {
+public class FragmentController {
 
-	public void addChoice(StoryFragment frag, Choice cho){
+	public void addChoice(Fragment frag, Choice cho){
 		LinkedList<Choice> choices = frag.getChoices();
 		choices.add(cho);
 		frag.setChoices(choices);

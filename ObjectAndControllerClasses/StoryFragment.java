@@ -38,8 +38,8 @@ public class StoryFragment {
 		return choices;
 	}
 
-	public void addChoice(Choice newChoice) {
-		this.choices.add(newChoice);
+	public void setChoices(LinkedList<Choice> newChoices) {
+		this.choices = newChoices;
 	}
 	
 	public void removeChoice(Choice oldChoice) {

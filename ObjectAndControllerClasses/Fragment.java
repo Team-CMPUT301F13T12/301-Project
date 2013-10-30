@@ -1,10 +1,10 @@
-
-
 import java.util.LinkedList;
+import android.graphics.drawable.Drawable;
 
 public class Fragment {
 	private String pageTitle;
-	private String bodyLayout; //change to layout later
+	private String bodyText;
+	private LinkedList<Drawable> illustrations;
 	private LinkedList<Choice> choices;
 	//True if at least one page references it, can be used a flag for isolated pages
 	//will have to be controlled from the story object
@@ -12,7 +12,7 @@ public class Fragment {
 	
 	public Fragment() {
 		this.pageTitle = "Choose a Title";
-		this.bodyLayout = "Story body here.";
+		this.bodyText = "Story body here.";
 		this.choices = new LinkedList<Choice>();
 		this.choices.add(new Choice()); //Add one default choice to start
 		//true because it is only possible to create a new page from a parent page
@@ -28,20 +28,28 @@ public class Fragment {
 		this.pageTitle = pageTitle;
 	}
 
-	public String getBodyLayout() {
-		return bodyLayout;
+	public String getBodyText() {
+		return bodyText;
 	}
 
-	public void setBodyLayout(String bodyLayout) {
-		this.bodyLayout = bodyLayout;
+	public void setBodyText(String bodyText) {
+		this.bodyText = bodyText;
+	}
+
+	public LinkedList<Drawable> getIllustrations() {
+		return illustrations;
+	}
+
+	public void setIllustrations(LinkedList<Drawable> illustrations) {
+		this.illustrations = illustrations;
 	}
 
 	public LinkedList<Choice> getChoices() {
 		return choices;
 	}
 
-	public void addChoice(Choice newChoice) {
-		this.choices.add(newChoice);
+	public void setChoices(LinkedList<Choice> newChoices) {
+		this.choices = newChoices;
 	}
 	
 	public void removeChoice(Choice oldChoice) {
