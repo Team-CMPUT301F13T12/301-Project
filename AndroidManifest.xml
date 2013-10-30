@@ -34,6 +34,10 @@
             android:name="ualberta.g12.adventurecreator.FragmentEditor"
             android:label="@string/title_activity_fragment_editor" >
         </activity>
+        <activity
+            android:name="ualberta.g12.adventurecreator.Activity_read_story"
+            android:label="@string/title_activity_activity_read_story" >
+        </activity>
     </application>
 
 </manifest>
