@@ -166,7 +166,7 @@ public class FragmentActivityTestCases extends ActivityInstrumentationTestCase2<
                         public void testStoreFragment(){
                         Fragment someFragment = new Fragment();
                         //start activity
-                        myFraagmentActivity = this.getActivity();
+                        myFragmentActivity = this.getActivity();
                         
                         //choice a store choose from fragment choices
                         myChooseFragmentActivity = this.getActivity();
@@ -178,7 +178,8 @@ public class FragmentActivityTestCases extends ActivityInstrumentationTestCase2<
                         MenuItem storeOption = fragmentListPopupMenu.getMenu().getItem(1);
                         // assert fragemnt stored
                         asserTrue(storOption.getTitle().equals("Store");
-                        
+                     
+                       
                         }
 
 
