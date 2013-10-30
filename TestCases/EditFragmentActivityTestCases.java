@@ -8,6 +8,7 @@
 
 import android.R;
 import android.test.ActivityInstrumentationTestCase2;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -85,15 +86,30 @@ public class EditFragmentActivityTestCases extends ActivityInstrumentationTestCa
 	}
 
 	// Use Case 6
+	// user should be have ability to add a picture
 	public void testAddPicture(){
 	    Button addPicture = (Button) findViewById(R.id.add_picture);
-	    assert(click(addPicture));
+	    assert(addPicture.performClick());
 	}
 	
-	//Use Case 11
-	public void testAddIllustration(){
+	//Use Case 11 1/2
+	//User enables adding illustrations by adding the first one to a fragment
+	public void testEnableIllustration(){
 		Button addIllustration = (Button) findViewById(R.id.add_illustration);
-		assert(click(addIllustraion));
+		ImageView ill1 = (ImageView) findViewById(R.id.ill1ID);
+		addIllustration.performClick();
+		//should be an illustration
+		assertNotNull(ill.getDrawable());
+	}
+	
+	//Use Case 11 2/2
+	//Default is illustrations are not enabled, they become enabled by
+	//adding the first illustration to a fragment
+	public void testDisableIllustration(){
+		Button addIllustration = (Button) findViewById(R.id.add_illustration);
+		ImageView ill1 = (ImageView) findViewById(R.id.ill1ID);
+		//should be no illustration
+		assertNull(ill.getDrawable());
 	}
 	
 }
