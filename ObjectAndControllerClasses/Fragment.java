@@ -8,6 +8,7 @@ public class Fragment {
 	private LinkedList<Sound> sounds;
 	private LinkedList<Video> videos;
 	private LinkedList<Choice> choices;
+	private LinkedList<String> displayOrder; //Contains one character representations of each type to display 
 	//True if at least one page references it, can be used a flag for isolated pages
 	//will have to be controlled from the story object
 	private boolean isLinkedTo; 
@@ -73,6 +74,14 @@ public class Fragment {
 	
 	public void removeChoice(Choice oldChoice) {
 		this.choices.remove(oldChoice);
+	}
+
+	public LinkedList<String> getDisplayOrder() {
+		return displayOrder;
+	}
+
+	public void setDisplayOrder(LinkedList<String> displayOrder) {
+		this.displayOrder = displayOrder;
 	}
 
 	public boolean isLinkedTo() {
