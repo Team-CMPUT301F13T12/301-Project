@@ -1,3 +1,5 @@
+package ualberta.g12.adventurecreator;
+
 import java.util.LinkedList;
 import android.graphics.drawable.Drawable;
 

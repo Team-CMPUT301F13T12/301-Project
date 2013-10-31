@@ -1,3 +1,4 @@
+package ualberta.g12.adventurecreator;
 
 public class Choice {
 	private String choiceText;

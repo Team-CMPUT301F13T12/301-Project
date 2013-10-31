@@ -1,5 +1,8 @@
+package ualberta.g12.adventurecreator;
+
 import java.util.LinkedList;
 
+import android.graphics.drawable.Drawable;
 
 
 public class FragmentController {
@@ -45,27 +48,27 @@ public class FragmentController {
 		frag.setDisplayOrder(displayOrder);
 	}
 	
-	public void addSound(Fragment frag, Sound sound){
-		LinkedList<Sound> sounds = frag.getSounds();
-		sounds.add(sound);
-		frag.setSounds(sounds);
-		LinkedList<String> displayOrder = frag.getDisplayOrder();
-		displayOrder.add("s");
-		frag.setDisplayOrder(displayOrder);
-	}
-	
-	public void addVideo(Fragment frag, Video video){
-		LinkedList<Video> videos = frag.getVideos();
-		videos.add(video);
-		frag.setVideos(videos);
-		LinkedList<String> displayOrder = frag.getDisplayOrder();
-		displayOrder.add("v");
-		frag.setDisplayOrder(displayOrder);
-	}
-	
-	public void addAnnotation(Fragment frag, Annotation annotation){
-		Annotation annotations = frag.getAnnotations();
-		annotations.addAnnotation(annotation);
-		frag.setAnnotations(annotations);
-	}
+//	public void addSound(Fragment frag, Sound sound){
+//		LinkedList<Sound> sounds = frag.getSounds();
+//		sounds.add(sound);
+//		frag.setSounds(sounds);
+//		LinkedList<String> displayOrder = frag.getDisplayOrder();
+//		displayOrder.add("s");
+//		frag.setDisplayOrder(displayOrder);
+//	}
+//	
+//	public void addVideo(Fragment frag, Video video){
+//		LinkedList<Video> videos = frag.getVideos();
+//		videos.add(video);
+//		frag.setVideos(videos);
+//		LinkedList<String> displayOrder = frag.getDisplayOrder();
+//		displayOrder.add("v");
+//		frag.setDisplayOrder(displayOrder);
+//	}
+//	
+//	public void addAnnotation(Fragment frag, Annotation annotation){
+//		Annotation annotations = frag.getAnnotations();
+//		annotations.addAnnotation(annotation);
+//		frag.setAnnotations(annotations);
+//	}
 }
