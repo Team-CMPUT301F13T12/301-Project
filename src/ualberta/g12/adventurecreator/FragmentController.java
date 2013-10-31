@@ -1,6 +1,7 @@
 import java.util.LinkedList;
 
 
+
 public class FragmentController {
 
 	public void editTitle(Fragment frag, String newTitle){

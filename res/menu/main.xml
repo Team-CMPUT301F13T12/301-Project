@@ -1,0 +1,16 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <item
+        android:id="@+id/add_story"
+        android:icon="@android:drawable/ic_menu_add"
+        android:orderInCategory="100"
+        android:showAsAction="always"
+        android:title="add"/>
+    <item
+        android:id="@+id/settings"
+        android:orderInCategory="200"
+        android:showAsAction="collapseActionView"
+        android:title="Settings"
+        />
+
+</menu>

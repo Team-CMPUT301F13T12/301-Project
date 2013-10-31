@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="ualberta.g12.adventurecreator"
+    android:versionCode="1"
+    android:versionName="1.0" >
+
+    <uses-sdk
+        android:minSdkVersion="15"
+        android:targetSdkVersion="18" />
+
+    <application
+        android:allowBackup="true"
+        android:icon="@drawable/ic_launcher"
+        android:label="@string/app_name"
+        android:theme="@style/AppTheme" >
+        <activity
+            android:name="ualberta.g12.adventurecreator.MainActivity"
+            android:label="Adventures!" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="ualberta.g12.adventurecreator.CreateStoryActivity"
+            android:label="@string/title_activity_new_story" >
+        </activity>
+        <activity
+            android:name="ualberta.g12.adventurecreator.StoryEditActivity"
+            android:label="Story Editor" >
+        </activity>
+        <activity
+            android:name="ualberta.g12.adventurecreator.EditFragmentActivity"
+            android:label="@string/title_activity_fragment_editor" >
+        </activity>
+        <activity
+            android:name="ualberta.g12.adventurecreator.Activity_read_story"
+            android:label="@string/title_activity_activity_read_story" >
+        </activity>
+    </application>
+
+</manifest>

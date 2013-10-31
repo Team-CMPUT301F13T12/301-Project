@@ -5,14 +5,14 @@ public class Fragment {
 	private String title;
 	private String bodyText;
 	private LinkedList<Drawable> illustrations;
-	private LinkedList<Sound> sounds;
-	private LinkedList<Video> videos;
+	//private LinkedList<Sound> sounds;
+	//private LinkedList<Video> videos;
 	private LinkedList<Choice> choices;
 	private LinkedList<String> displayOrder; //Contains one character representations of each type to display 
 	//True if at least one page references it, can be used a flag for isolated pages
 	//will have to be controlled from the story object
 	private boolean isLinkedTo; 
-	private Annotation annotations;
+	//private Annotation annotations;
 	
 	public Fragment() {
 		this.title = "Choose a Title";
@@ -48,21 +48,21 @@ public class Fragment {
 		this.illustrations = illustrations;
 	}
 
-	public LinkedList<Sound> getSounds() {
-		return sounds;
-	}
-
-	public void setSounds(LinkedList<Sound> sounds) {
-		this.sounds = sounds;
-	}
-
-	public LinkedList<Video> getVideos() {
-		return videos;
-	}
-
-	public void setVideos(LinkedList<Video> videos) {
-		this.videos = videos;
-	}
+//	public LinkedList<Sound> getSounds() {
+//		return sounds;
+//	}
+//
+//	public void setSounds(LinkedList<Sound> sounds) {
+//		this.sounds = sounds;
+//	}
+//
+//	public LinkedList<Video> getVideos() {
+//		return videos;
+//	}
+//
+//	public void setVideos(LinkedList<Video> videos) {
+//		this.videos = videos;
+//	}
 
 	public LinkedList<Choice> getChoices() {
 		return choices;
@@ -92,12 +92,12 @@ public class Fragment {
 		this.isLinkedTo = isLinkedTo;
 	}
 
-	public Annotation getAnnotations() {
-		return annotations;
-	}
-
-	public void setAnnotations(Annotation annotations) {
-		this.annotations = annotations;
-	}
+//	public Annotation getAnnotations() {
+//		return annotations;
+//	}
+//
+//	public void setAnnotations(Annotation annotations) {
+//		this.annotations = annotations;
+//	}
 
 }
