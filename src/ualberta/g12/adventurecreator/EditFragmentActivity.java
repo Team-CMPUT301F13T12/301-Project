@@ -15,6 +15,8 @@ import java.io.File;
 
 public class EditFragmentActivity extends Activity {
 
+    private static final int InsertAnnotate = Menu.FIRST;
+    
 	Button addImage;
 
 	@Override
@@ -50,6 +52,10 @@ public class EditFragmentActivity extends Activity {
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.fragment_editor, menu);
+		
+		//create option for annotating on menu bar
+		super.onCreateOptionsMenu(menu);
+        menu.add(0, InsertAnnotate, 0, R.string.annotate);
 		return true;
 	}
 
