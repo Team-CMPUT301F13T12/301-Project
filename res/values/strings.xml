@@ -10,5 +10,6 @@
     <string name="title_section3">Section 3</string>
     <string name="title_activity_fragment_editor">FragmentEditor</string>
     <string name="title_activity_activity_read_story">Activity_read_story</string>
+    <string name="title_activity_activity_read_fragment">ActivityReadFragment</string>
 
 </resources>

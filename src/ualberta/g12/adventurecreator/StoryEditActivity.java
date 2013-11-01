@@ -19,7 +19,7 @@ public class StoryEditActivity extends Activity{
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.story_menu, menu);
         return true;
-    }
+    } 
 
 
 	@Override
