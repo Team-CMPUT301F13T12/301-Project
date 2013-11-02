@@ -5,9 +5,21 @@ import java.util.LinkedList;
 import android.graphics.drawable.Drawable;
 
 
-public class FragmentController {
+public class FragmentController implements FController{
 
-	public void editTitle(Fragment frag, String newTitle){
+    private Fragment f = null;
+    
+    public FragmentController(Fragment f){
+        this.f =f;
+    }
+    
+    /*
+     * None of this code should be in here, it should all be within the model
+     * and the controller should just be full of simple methods that do simple
+     * things like f.editTitle(newTitle); 
+     */
+    
+/*	public void editTitle(Fragment frag, String newTitle){
 		frag.setTitle(newTitle);
 	}
 	
@@ -46,7 +58,25 @@ public class FragmentController {
 		LinkedList<String> displayOrder = frag.getDisplayOrder();
 		displayOrder.add("i");
 		frag.setDisplayOrder(displayOrder);
-	}
+	}*/
+
+    @Override
+    public void editTitle(String t) {
+        // TODO Auto-generated method stub
+        
+    }
+
+    @Override
+    public void addChoice(Choice c) {
+        // TODO Auto-generated method stub
+        
+    }
+
+    @Override
+    public void deleteChoice(Choice c) {
+        // TODO Auto-generated method stub
+        
+    }
 	
 //	public void addSound(Fragment frag, Sound sound){
 //		LinkedList<Sound> sounds = frag.getSounds();
