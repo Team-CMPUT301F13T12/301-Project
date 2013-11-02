@@ -9,6 +9,9 @@ import java.util.List;
  * Fragments as well as an author and a title.
  */
 public class Story extends SModel{
+    
+    private static final int NEW_STORY_ID = -1;
+    
     private String storyTitle;
     private String author;
     private List<Fragment> fragments; // first index in pages is always the
