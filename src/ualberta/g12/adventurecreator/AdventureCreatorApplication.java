@@ -6,14 +6,6 @@ public class AdventureCreatorApplication extends Application{
     // So many singletons!
     private transient static StoryController storyController = null;
     private transient static FragmentController fragmentController = null;
-    private transient static StoryManager storyManager = null;
-    
-    public static StoryManager getStoryManager(){
-        if(storyManager == null){
-            storyManager = new StoryManager();
-        }
-        return storyManager;
-    }
     
     public static StoryController getStoryController(){
         if (storyController == null){
@@ -21,11 +13,6 @@ public class AdventureCreatorApplication extends Application{
         }
         return storyController;
     }
-    
-    public static FragmentController getFragmentController(){
-        if(fragmentController == null){
-            fragmentController = new FragmentController();
-        }
-        return fragmentController;
-    }
+
+    // TODO: Implement getters for all of the singletons
 }
