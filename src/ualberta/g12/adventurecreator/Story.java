@@ -8,7 +8,7 @@ import java.util.List;
  * Models a story that would be created by an Author. Contains a list of
  * Fragments as well as an author and a title.
  */
-public class Story {
+public class Story extends SModel{
     private String storyTitle;
     private String author;
     private List<Fragment> fragments; // first index in pages is always the
