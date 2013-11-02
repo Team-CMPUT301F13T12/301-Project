@@ -11,13 +11,27 @@ import android.widget.Button;
 
 public class EditFragmentActivity extends Activity implements FView<Fragment> {
 
-    Button addImage;
+    private Button addImage;
+    private Fragment fragment;
+    private FragmentController fragmentController;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_fragment_editor);
 
+        // TODO: Load our fragment from the story model using the id given to us as an extra
+        
+        // TODO: Set the fragmentController to our Fragment
+        
+        // TODO: Load our fragment into view
+        
+        // TODO: Set up on clickers
+        setUpOnClickListeners();
+
+    }
+
+    private void setUpOnClickListeners() {
         addImage = (Button) findViewById(R.id.buttonAddIll);
         addImage.setOnClickListener(new OnClickListener() {
 
@@ -52,7 +66,7 @@ public class EditFragmentActivity extends Activity implements FView<Fragment> {
 
     @Override
     public void update(Fragment model) {
-        // TODO Auto-generated method stub
+        // TODO reload all fields based on new info from model
 
     }
 
