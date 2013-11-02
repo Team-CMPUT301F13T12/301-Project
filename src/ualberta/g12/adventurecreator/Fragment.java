@@ -85,7 +85,8 @@ public class Fragment {
 	}
 
 	public void setDisplayOrder(List<String> displayOrder) {
-		this.displayOrder = displayOrder;
+	    // Does this belong here or in the StoryController
+	    this.displayOrder = displayOrder;
 	}
 
 	public boolean isLinkedTo() {

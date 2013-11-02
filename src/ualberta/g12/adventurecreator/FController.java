@@ -1,13 +1,47 @@
 
 package ualberta.g12.adventurecreator;
 
+import android.graphics.drawable.Drawable;
+
 /** Control of data in the Fragment model */
 public interface FController {
+
+    /**
+     * Edits the title of the fragment
+     * 
+     * @param t the new title of the fragment
+     */
     public void editTitle(String t);
 
+    /**
+     * Edits the body text of the fragment
+     * 
+     * @param t the new body text of the fragment
+     */
+    public void editBodyText(String b);
+
+    /**
+     * Adds illustration to a fragment
+     * 
+     * @param i the illustration to add to the fragment
+     */
+    public void addIllustration(Drawable i);
+
+    /**
+     * Adds a choice to the list of choices that a fragment has
+     * 
+     * @param c the choice to add to the list
+     */
     public void addChoice(Choice c);
 
-    public void deleteChoice(Choice c);
+    /**
+     * Removes a choice from the list of choices a fragment has
+     * 
+     * @param c the choice to remove
+     * @return true is choice was removed else false
+     */
+    public boolean deleteChoice(Choice c);
+    
     // TODO: Implement annotations
     // public void addAnnotation(Annotation a);
 
