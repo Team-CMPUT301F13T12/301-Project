@@ -9,8 +9,8 @@ public class Fragment {
 	private String title;
 	private String bodyText;
 	private List<Drawable> illustrations;
-	//private LinkedList<Sound> sounds;
-	//private LinkedList<Video> videos;
+	//private List<Sound> sounds;
+	//private List<Video> videos;
 	private List<Choice> choices;
 	private List<String> displayOrder; //Contains one character representations of each type to display 
 	//True if at least one page references it, can be used a flag for isolated pages
@@ -48,23 +48,23 @@ public class Fragment {
 		return illustrations;
 	}
 
-	public void setIllustrations(LinkedList<Drawable> illustrations) {
+	public void setIllustrations(List<Drawable> illustrations) {
 		this.illustrations = illustrations;
 	}
 
-//	public LinkedList<Sound> getSounds() {
+//	public List<Sound> getSounds() {
 //		return sounds;
 //	}
 //
-//	public void setSounds(LinkedList<Sound> sounds) {
+//	public void setSounds(List<Sound> sounds) {
 //		this.sounds = sounds;
 //	}
 //
-//	public LinkedList<Video> getVideos() {
+//	public List<Video> getVideos() {
 //		return videos;
 //	}
 //
-//	public void setVideos(LinkedList<Video> videos) {
+//	public void setVideos(List<Video> videos) {
 //		this.videos = videos;
 //	}
 
@@ -72,7 +72,7 @@ public class Fragment {
 		return choices;
 	}
 
-	public void setChoices(LinkedList<Choice> newChoices) {
+	public void setChoices(List<Choice> newChoices) {
 		this.choices = newChoices;
 	}
 	
@@ -84,7 +84,7 @@ public class Fragment {
 		return displayOrder;
 	}
 
-	public void setDisplayOrder(LinkedList<String> displayOrder) {
+	public void setDisplayOrder(List<String> displayOrder) {
 		this.displayOrder = displayOrder;
 	}
 
