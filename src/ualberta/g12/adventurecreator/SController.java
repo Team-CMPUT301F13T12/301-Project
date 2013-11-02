@@ -9,7 +9,7 @@ public interface SController {
      * 
      * @param f the fragment to add to the story
      */
-    public void addFragment(Fragment f);
+    public void addFragment(Story s, Fragment f);
 
     /**
      * Deletes a fragment from a story
@@ -17,5 +17,5 @@ public interface SController {
      * @return true if fragment is deleted successfully else false
      * @param f the id of the fragment to delete
      */
-    public boolean deleteFragment(Fragment f);
+    public boolean deleteFragment(Story s, Fragment f);
 }

@@ -3,19 +3,13 @@ package ualberta.g12.adventurecreator;
 
 public class StoryController implements SController {
 
-    private Story s = null;
-
-    public void setStory(Story s) {
-        this.s = s;
-    }
-
     @Override
-    public void addFragment(Fragment f) {
+    public void addFragment(Story s, Fragment f) {
         s.addFragment(f);
     }
 
     @Override
-    public boolean deleteFragment(Fragment f) {
+    public boolean deleteFragment(Story s, Fragment f) {
         return s.removeFragment(f);
     }
 
