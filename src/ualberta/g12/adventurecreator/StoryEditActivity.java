@@ -6,7 +6,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 
-public class StoryEditActivity extends Activity{
+public class StoryEditActivity extends Activity implements SView<Story>{
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,5 +32,11 @@ public class StoryEditActivity extends Activity{
 		}
 		return super.onOptionsItemSelected(item);
 	}
+
+    @Override
+    public void update(Story model) {
+        // TODO Update how the story is displayed in this view
+        
+    }
 	
 }

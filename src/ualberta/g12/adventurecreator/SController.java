@@ -3,8 +3,12 @@ package ualberta.g12.adventurecreator;
 
 /** Controls data from the Story Model */
 public interface SController {
-    /** Adds a fragment to the a story
-     * @param f the fragment to add to the story */
+
+    /**
+     * Adds a fragment to the a story
+     * 
+     * @param f the fragment to add to the story
+     */
     public void addFragment(Fragment f);
 
     /**

@@ -1,10 +1,11 @@
+
 package ualberta.g12.adventurecreator;
 
-public class StoryController implements SController{
+public class StoryController implements SController {
 
     private Story s = null;
 
-    public StoryController(Story s){
+    public void setStory(Story s) {
         this.s = s;
     }
 
