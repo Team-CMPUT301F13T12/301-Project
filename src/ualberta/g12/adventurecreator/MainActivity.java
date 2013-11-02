@@ -6,7 +6,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 
-public class MainActivity extends Activity {
+public class MainActivity extends Activity implements LView<StoryList>{
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,6 +36,13 @@ public class MainActivity extends Activity {
 		}
 		return super.onOptionsItemSelected(item);
 	}
+
+
+    @Override
+    public void update(StoryList model) {
+        // TODO Auto-generated method stub
+        
+    }
     
     
 }
