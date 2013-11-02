@@ -7,8 +7,12 @@ import java.util.List;
 
 // TODO: parameterize to an FView
 public class Fragment extends FModel{
+    
+    private static final int NEW_FRAGMENT_ID = -1;
+    
     private String title;
     private String bodyText;
+    private int id;
     private List<Drawable> illustrations;
     // private List<Sound> sounds;
     // private List<Video> videos;
