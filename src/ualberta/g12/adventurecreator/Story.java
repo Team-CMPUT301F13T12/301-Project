@@ -2,6 +2,7 @@
 package ualberta.g12.adventurecreator;
 
 import java.util.LinkedList;
+import java.util.List;
 
 /**
  * Models a story that would be created by an Author. Contains a list of
@@ -10,19 +11,25 @@ import java.util.LinkedList;
 public class Story {
     private String storyTitle;
     private String author;
-    private LinkedList<Fragment> pages; // first index in pages is always the
+    private List<Fragment> fragments; // first index in pages is always the
                                         // start page
 
     public Story() {
         // No hardcoded strings
         // TODO: Move these to res/values/strings.xml
+        /*
+         * TODO: Possibly move to a View
+         * I feel like these should be in the view for creating a new story as
+         * the default text/hint. It doesn't really make sense for the Model to
+         * have this
+         */
         this("Add a title.", "Your pen name here");
     }
-    
-    public Story(String title, String author){
+
+    public Story(String title, String author) {
         setStoryTitle(title);
         setAuthor(author);
-        this.pages = new LinkedList<Fragment>();
+        this.fragments = new LinkedList<Fragment>();
     }
 
     public String getStoryTitle() {
@@ -41,18 +48,22 @@ public class Story {
         this.author = author;
     }
 
-    public LinkedList<Fragment> getPages() {
-        return pages;
+    public List<Fragment> getFragments() {
+        return fragments;
     }
 
-    public void addPage(Fragment newPage) {
-        this.pages.add(newPage);
+    public void addFragment(Fragment newFragment) {
+        this.fragments.add(newFragment);
     }
 
-    public void removePage(Fragment oldPage) {
-        this.pages.remove(oldPage);
+    public boolean removeFragment(Fragment oldFragment) {
+        return this.fragments.remove(oldFragment);
     }
 
+    public void setFragments(List<Fragment> f){
+        this.fragments = f;
+    }
+    
     public void addLinkToNewPage() {
 
     }
@@ -66,8 +77,8 @@ public class Story {
     public void afterPageLinkedToAnotherStory(Story newStory, Fragment pageLinkedTo,
             Choice choiceToSet) {
         // adds all pages of newStory to the current story
-        for (int i = 0; i < newStory.getPages().size(); i++) {
-            this.pages.add(newStory.getPages().get(i));
+        for (int i = 0; i < newStory.getFragments().size(); i++) {
+            this.fragments.add(newStory.getFragments().get(i));
         }
         choiceToSet.setLinkedToPage(pageLinkedTo);
     }
@@ -79,13 +90,13 @@ public class Story {
     public void findAndMarkIsolatedPages() {
         LinkedList<Fragment> copyOfPages = new LinkedList<Fragment>();
         // copies pages list
-        for (int i = 0; i < this.pages.size(); i++) {
-            copyOfPages.add(pages.get(i));
+        for (int i = 0; i < this.fragments.size(); i++) {
+            copyOfPages.add(fragments.get(i));
         }
         // removes all pages from copyOfPages that are referenced
-        for (int i = 0; i < this.pages.size(); i++) {
-            for (int j = 0; j < pages.get(i).getChoices().size(); j++) {
-                Fragment tempPage = pages.get(i).getChoices().get(j).getLinkedToPage();
+        for (int i = 0; i < this.fragments.size(); i++) {
+            for (int j = 0; j < fragments.get(i).getChoices().size(); j++) {
+                Fragment tempPage = fragments.get(i).getChoices().get(j).getLinkedToPage();
                 copyOfPages.remove(tempPage);
             }
         }
