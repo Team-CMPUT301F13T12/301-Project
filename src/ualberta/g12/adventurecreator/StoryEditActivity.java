@@ -79,7 +79,11 @@ public class StoryEditActivity extends Activity implements SView<Story> {
         // TODO Auto-generated method stub
         switch (item.getItemId()) {
             case R.id.add_fragment:
-                startActivity(new Intent(this, EditFragmentActivity.class));
+            	// right now this calls editFragment but how do we know if it is editing or adding? extras yo
+            	
+            	Intent intent = new Intent(this, EditFragmentActivity.class);
+            	intent.putExtra("EditType", "Add");
+                startActivity(intent);
                 break;
         }
         return super.onOptionsItemSelected(item);
@@ -93,4 +97,6 @@ public class StoryEditActivity extends Activity implements SView<Story> {
         // story has changed
 
     }
+    
+    
 }

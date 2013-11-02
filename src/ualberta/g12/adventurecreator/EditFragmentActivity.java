@@ -20,7 +20,19 @@ public class EditFragmentActivity extends Activity implements FView<Fragment> {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_fragment_editor);
 
-        // TODO: Load our fragment from the story model using the id given to us as an extra
+        // obtaint the intent
+        Intent editActIntent = getIntent();
+        Bundle bundledExtras = editActIntent.getExtras();
+        String editType = bundledExtras.getString("EditType");
+        
+        if (editType.equals("Edit") == false){
+        	// TODO: Load our fragment from the story model using the id given to us as an extra ( if we are editing an existing fragment)
+        	int id  = bundledExtras.getInt("FragmentId");
+        	// load title , id/page number , fragment description, choices
+        	
+        }
+        // else then we are adding a new fragment dont need to load stuff
+
         
         // TODO: Set the fragmentController to our Fragment
         
