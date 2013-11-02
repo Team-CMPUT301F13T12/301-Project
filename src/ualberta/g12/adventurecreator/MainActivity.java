@@ -13,6 +13,9 @@ public class MainActivity extends Activity implements LView<StoryList>{
     private List<Story> stories;
     private StoryList storyList;
     
+    private static final boolean DEBUG_LOG = true;
+    private static final String TAG = "MainActivity";
+    
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
