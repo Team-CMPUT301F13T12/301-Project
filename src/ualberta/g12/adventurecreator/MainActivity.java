@@ -6,12 +6,27 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import java.util.List;
+
 public class MainActivity extends Activity implements LView<StoryList>{
 
+    private List<Story> stories;
+    private StoryList storyList;
+    
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        
+        // TODO: Get our storyList instance from the application
+        
+        // TODO: Load our local stories from the StoryList Model
+        // Something like stories = storyList.getAllStories()
+        
+        // TODO: Set up ListView Stuff
+        
+        // TODO: Set up listeners on items 
+        
     }
 
 
@@ -28,6 +43,7 @@ public class MainActivity extends Activity implements LView<StoryList>{
 		// TODO Auto-generated method stub
 		switch(item.getItemId()){
 		case R.id.add_story:
+		    // TODO: Launch the EditStoryActivity with the id of NEW_STORY
 		    startActivity(new Intent(this, CreateStoryActivity.class));
 			break;
 			
@@ -40,9 +56,9 @@ public class MainActivity extends Activity implements LView<StoryList>{
 
     @Override
     public void update(StoryList model) {
-        // TODO Auto-generated method stub
+        // TODO: Reload our stories from StoryList Model
+        
+        // TODO: Notify Our ListView that our array has changed
         
     }
-    
-    
 }
