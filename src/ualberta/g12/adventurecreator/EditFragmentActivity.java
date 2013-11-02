@@ -3,13 +3,12 @@ package ualberta.g12.adventurecreator;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.provider.MediaStore;
 import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 
-public class EditFragmentActivity extends Activity {
+public class EditFragmentActivity extends Activity implements FView<Fragment>{
 
 	Button addImage;
 
@@ -48,5 +47,11 @@ public class EditFragmentActivity extends Activity {
 		getMenuInflater().inflate(R.menu.fragment_editor, menu);
 		return true;
 	}
+
+    @Override
+    public void update(Fragment model) {
+        // TODO Auto-generated method stub
+        
+    }
 
 }

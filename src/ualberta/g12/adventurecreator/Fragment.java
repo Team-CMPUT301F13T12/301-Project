@@ -3,10 +3,10 @@ package ualberta.g12.adventurecreator;
 
 import android.graphics.drawable.Drawable;
 
-import java.util.LinkedList;
 import java.util.List;
 
-public class Fragment {
+// TODO: parameterize to an FView
+public class Fragment extends FModel{
     private String title;
     private String bodyText;
     private List<Drawable> illustrations;
