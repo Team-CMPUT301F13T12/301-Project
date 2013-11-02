@@ -40,7 +40,8 @@ public class Fragment {
 
     /** Each fragment should have one default choice */
     private void initChoices() {
-        this.choices.add(new Choice());
+        // TODO: intialize the new choice
+        addChoice(new Choice());
     }
 
     public String getTitle() {
@@ -60,9 +61,17 @@ public class Fragment {
     }
 
     public List<Drawable> getIllustrations() {
-        return illustrations;
+        return this.illustrations;
     }
 
+    public boolean removeIllustration(Drawable i){
+        return this.illustrations.remove(i);
+    }
+    
+    public boolean addIllustration(Drawable i){
+        return this.illustrations.add(i);
+    }
+    
     public void setIllustrations(List<Drawable> illustrations) {
         this.illustrations = illustrations;
     }
@@ -87,12 +96,16 @@ public class Fragment {
         return choices;
     }
 
+    public void addChoice(Choice c){
+        this.choices.add(c);
+    }
+    
     public void setChoices(List<Choice> newChoices) {
         this.choices = newChoices;
     }
 
-    public void removeChoice(Choice oldChoice) {
-        this.choices.remove(oldChoice);
+    public boolean removeChoice(Choice oldChoice) {
+        return this.choices.remove(oldChoice);
     }
 
     public List<String> getDisplayOrder() {
