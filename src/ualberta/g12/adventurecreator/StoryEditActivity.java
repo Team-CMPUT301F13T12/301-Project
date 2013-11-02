@@ -7,6 +7,12 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 
+/**
+ * View for editing a Story using a StoryController.<br>
+ * This particular Activity should only be started via an intent from the main
+ * activity that has as an extra either the ID of the story to edit or
+ * NEW_STORY_ID
+ */
 public class StoryEditActivity extends Activity implements SView<Story> {
 
     private Story story;
