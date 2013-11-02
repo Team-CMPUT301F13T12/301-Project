@@ -1,16 +1,18 @@
 package ualberta.g12.adventurecreator;
 
-import java.util.LinkedList;
 import android.graphics.drawable.Drawable;
+
+import java.util.LinkedList;
+import java.util.List;
 
 public class Fragment {
 	private String title;
 	private String bodyText;
-	private LinkedList<Drawable> illustrations;
+	private List<Drawable> illustrations;
 	//private LinkedList<Sound> sounds;
 	//private LinkedList<Video> videos;
-	private LinkedList<Choice> choices;
-	private LinkedList<String> displayOrder; //Contains one character representations of each type to display 
+	private List<Choice> choices;
+	private List<String> displayOrder; //Contains one character representations of each type to display 
 	//True if at least one page references it, can be used a flag for isolated pages
 	//will have to be controlled from the story object
 	private boolean isLinkedTo; 
@@ -42,7 +44,7 @@ public class Fragment {
 		this.bodyText = bodyText;
 	}
 
-	public LinkedList<Drawable> getIllustrations() {
+	public List<Drawable> getIllustrations() {
 		return illustrations;
 	}
 
@@ -66,7 +68,7 @@ public class Fragment {
 //		this.videos = videos;
 //	}
 
-	public LinkedList<Choice> getChoices() {
+	public List<Choice> getChoices() {
 		return choices;
 	}
 
@@ -78,7 +80,7 @@ public class Fragment {
 		this.choices.remove(oldChoice);
 	}
 
-	public LinkedList<String> getDisplayOrder() {
+	public List<String> getDisplayOrder() {
 		return displayOrder;
 	}
 
