@@ -14,6 +14,7 @@ public class Story extends SModel{
     
     private String storyTitle;
     private String author;
+    private int id = 1; // TODO: should be unique 
     private List<Fragment> fragments; // first index in pages is always the
                                         // start page
 
