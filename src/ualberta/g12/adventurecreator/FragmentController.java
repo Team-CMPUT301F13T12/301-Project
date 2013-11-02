@@ -24,22 +24,19 @@ public class FragmentController implements FController{
     
     @Override
     public void addIllustration(Drawable i){
-        List<Drawable> illustrations = f.getIllustrations();
-        illustrations.add(i);
-        f.setIllustrations(illustrations);
+        // TODO: Do something with return value
+        f.addIllustration(i);
     }
 
     @Override
     public void addChoice(Choice c) {
-        List<Choice> choices = f.getChoices();
-        choices.add(c);
-        f.setChoices(choices);
+        // TODO: Do something with the return value
+        f.addChoice(c);
     }
 
     @Override
     public boolean deleteChoice(Choice c) {
-        List<Choice> choices = f.getChoices();
-        return choices.remove(c);
+        return f.removeChoice(c);
     }
 	
 }
