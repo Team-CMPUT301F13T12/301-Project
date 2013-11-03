@@ -25,15 +25,15 @@ public class MainActivity extends Activity implements LView<StoryList> {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        // TODO: Get our storyList instance from the application
+        // Get our storyList instance from the application
         storyList = AdventureCreatorApplication.getStoryList();
-        // TODO: Load our local stories from the StoryList Model
+        // Load our local stories from the StoryList Model
         stories = storyList.getAllStories();
 
         if (DEBUG_LOG)
             Log.d(TAG, String.format("Number of stories is: %d", stories.size()));
 
-        // TODO: Set up ListView Stuff
+        // Set up ListView Stuff
         adapter = new StoryListArrayAdapter(this, R.layout.listview_story_list, stories);
         listView = (ListView) findViewById(R.id.listview);
         listView.setAdapter(adapter);
@@ -50,7 +50,6 @@ public class MainActivity extends Activity implements LView<StoryList> {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // TODO Auto-generated method stub
         switch (item.getItemId()) {
             case R.id.add_story:
                 // TODO: Launch the EditStoryActivity with the id of NEW_STORY
@@ -65,9 +64,9 @@ public class MainActivity extends Activity implements LView<StoryList> {
 
     @Override
     public void update(StoryList model) {
-        // TODO: Reload our stories from StoryList Model
-
-        // TODO: Notify Our ListView that our array has changed
-
+        // Reload our stories from StoryList Model
+        stories = storyList.getAllStories();
+        // Notify Our ListView that our array has changed
+        adapter.notifyDataSetChanged();
     }
 }
