@@ -9,7 +9,7 @@
     tools:context=".EditFragmentActivity" >
 
     <EditText
-        android:id="@+id/editText1"
+        android:id="@+id/fragmentTitle"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
@@ -19,28 +19,6 @@
 
         <requestFocus />
     </EditText>
-
-    <EditText
-        android:id="@+id/editText2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/editText1"
-        android:layout_below="@+id/editText1"
-        android:layout_marginTop="15dp"
-        android:ems="10"
-        android:hint="ID/Page Number"
-        android:inputType="number" />
-
-    <EditText
-        android:id="@+id/editText3"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/editText2"
-        android:layout_below="@+id/editText2"
-        android:layout_marginTop="15dp"
-        android:ems="10"
-        android:hint="Fragment Description"
-        android:inputType="textMultiLine" />
 
     <ImageView
         android:id="@+id/imageView1"
@@ -70,7 +48,7 @@
         android:src="@android:drawable/ic_menu_close_clear_cancel" />
 
     <EditText
-        android:id="@+id/editText4"
+        android:id="@+id/choiceId1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/editText3"
@@ -112,5 +90,25 @@
         android:layout_below="@+id/editText6"
         android:layout_centerHorizontal="true"
         android:text="Add Illustration" />
+
+    <EditText
+        android:id="@+id/idPageNum"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignRight="@+id/buttonAddIll"
+        android:layout_below="@+id/fragmentTitle"
+        android:ems="10"
+        android:hint="ID/Page Number"
+        android:inputType="number" />
+
+    <EditText
+        android:id="@+id/fragmentBody"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/fragmentTitle"
+        android:layout_below="@+id/idPageNum"
+        android:ems="10"
+        android:hint="Fragment Description"
+        android:inputType="textMultiLine" />
 
 </RelativeLayout>

@@ -45,6 +45,9 @@ public class Fragment extends FModel{
     /** Each fragment should have one default choice */
     private void initChoices() {
         // TODO: intialize the new choice
+    	
+    	// i dont think so actually because if a fragment doesnt have a choice then it would be an ending!
+    	// -Vincent 
         addChoice(new Choice());
     }
 
