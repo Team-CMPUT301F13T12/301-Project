@@ -7,11 +7,14 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 
 import java.util.List;
 
-public class MainActivity extends Activity implements LView<StoryList> {
+public class MainActivity extends Activity implements LView<StoryList>, OnItemClickListener{
 
     private List<Story> stories;
     private StoryList storyList;
@@ -68,5 +71,10 @@ public class MainActivity extends Activity implements LView<StoryList> {
         stories = storyList.getAllStories();
         // Notify Our ListView that our array has changed
         adapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void onItemClick(AdapterView<?> parent, View v, int pos, long id) {
+        // TODO: Open Edit/View story Activity with 
     }
 }
