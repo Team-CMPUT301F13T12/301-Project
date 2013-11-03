@@ -2,7 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="ualberta.g12.adventurecreator"
     android:versionCode="1"
-    android:versionName="1.0" >
+    android:versionName="0.1" >
 
     <uses-sdk
         android:minSdkVersion="15"
@@ -33,10 +33,6 @@
         <activity
             android:name="ualberta.g12.adventurecreator.EditFragmentActivity"
             android:label="@string/title_activity_fragment_editor" >
-        </activity>
-        <activity
-            android:name="ualberta.g12.adventurecreator.Activity_read_story"
-            android:label="@string/title_activity_activity_read_story" >
         </activity>
     </application>
 
