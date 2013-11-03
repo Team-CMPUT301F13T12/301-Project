@@ -48,10 +48,6 @@ public class StoryListArrayAdapter extends ArrayAdapter<Story> {
             holder = (ViewHolder) convertView.getTag();
         }
 
-        if (DEBUG_LOG) {
-            Log.d(TAG, String.format("ListViewing story with title: %s", story.getStoryTitle()));
-            Log.d(TAG, String.format("ListViewing story with author: %s", story.getAuthor()));
-        }
         holder.title.setText(story.getStoryTitle());
         holder.author.setText(story.getAuthor());
 
