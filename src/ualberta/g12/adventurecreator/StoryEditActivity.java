@@ -17,6 +17,8 @@ public class StoryEditActivity extends Activity implements SView<Story> {
 
     private Story story;
     private StoryController storyController;
+    
+    public static final String INTENT_STORY_ID = "storyid";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
