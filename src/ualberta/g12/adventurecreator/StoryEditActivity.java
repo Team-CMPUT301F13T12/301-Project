@@ -87,6 +87,10 @@ public class StoryEditActivity extends Activity implements SView<Story> {
         
         storyId = id;
     }
+    
+
+    
+
 
     /** Updates all of the Ui Elements for this Activity */
     private void updateUiElements() {
@@ -94,6 +98,8 @@ public class StoryEditActivity extends Activity implements SView<Story> {
         authorText.setText(story.getAuthor());
 
         // TODO: update listView
+        fragmentList = story.getFragments();
+        adapter.notifyDataSetChanged();
     }
 
     /**
@@ -170,7 +176,8 @@ public class StoryEditActivity extends Activity implements SView<Story> {
     @Override
     public void update(Story model) {
         // TODO: Update our local story variable
-
+    	updateUiElements();
+    	
         // TODO: Reload value from our story into fields - notify adapter our
         // story has changed
 
