@@ -76,6 +76,13 @@ public class MainActivity extends Activity implements LView<StoryList>, OnItemCl
     }
 
     @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        // Make sure check box is checked if it needs to be
+        menu.findItem(R.id.menu_check_box_author).setChecked(isAuthor);
+        return true;
+    }
+
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.menu_add_story:
