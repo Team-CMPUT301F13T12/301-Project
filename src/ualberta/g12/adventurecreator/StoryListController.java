@@ -9,7 +9,7 @@ public class StoryListController {
 	// can be a singleton and also have sc = our main storylist~
 	StoryList sc = null;
 	
-	public void storyListController(StoryList sc){
+	public  StoryListController(StoryList sc){
 		this.sc = sc;
 	}
 	
