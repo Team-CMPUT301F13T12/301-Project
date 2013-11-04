@@ -23,7 +23,7 @@
     <!-- Give these real names! Chris -->
     
     <ImageView
-        android:id="@+id/imageView1"
+        android:id="@+id/ImageView00"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
@@ -35,7 +35,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/ImageView02"
-        android:layout_below="@+id/imageView1"
+        android:layout_below="@+id/ImageView00"
         android:layout_marginTop="20dp"
         android:src="@android:drawable/ic_menu_close_clear_cancel" />
 
@@ -43,7 +43,7 @@
         android:id="@+id/ImageView02"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/imageView1"
+        android:layout_alignLeft="@+id/ImageView00"
         android:layout_below="@+id/ImageView01"
         android:layout_marginTop="20dp"
         android:src="@android:drawable/ic_menu_close_clear_cancel" />
@@ -52,7 +52,7 @@
         android:id="@+id/choiceId1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/imageView1"
+        android:layout_alignTop="@+id/ImageView00"
         android:hint="ID of choice 1"
         android:ems="10" />
 
@@ -104,7 +104,7 @@
         android:id="@+id/FragmentPartList"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/imageView1"
+        android:layout_above="@+id/ImageView00"
         android:layout_alignParentLeft="true"
         android:layout_alignParentRight="true"
         android:layout_below="@+id/idPageNum" >
