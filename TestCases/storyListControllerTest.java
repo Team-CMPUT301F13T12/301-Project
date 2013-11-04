@@ -14,7 +14,7 @@ public class storyListControllerTestCases extends ActivityInstrumentationTestCas
     private StoryList sl;
     private List<Story> stories;
 
-    public StoryManagerTestCase(){
+    public StoryListTestCase(){
         super("ualberta.g12.adventurecreator.StoryListController", StoryListController.class);
     }
 
