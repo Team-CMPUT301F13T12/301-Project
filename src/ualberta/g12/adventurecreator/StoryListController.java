@@ -1,5 +1,7 @@
 package ualberta.g12.adventurecreator;
 
+import java.util.List;
+
 
 // TODO implement interfaces
 
@@ -45,6 +47,11 @@ public class StoryListController {
 	 */
 	public Story getStory(String t){
 		return sc.getStory(t);
+	}
+	
+	public List<Story> getAllStories(){
+		return sc.getAllStories();
+		
 	}
 
 }
