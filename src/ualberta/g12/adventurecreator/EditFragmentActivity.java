@@ -24,6 +24,7 @@ public class EditFragmentActivity extends Activity implements FView<Fragment> {
     private Button makeOrSave;
     private Fragment fragment;
     private FragmentController fragmentController;
+    private int storyId;
 
 
     @Override
@@ -38,7 +39,7 @@ public class EditFragmentActivity extends Activity implements FView<Fragment> {
         
         if (editType.equals("Edit") == false){
         	// TODO: Load our fragment from the story model using the id given to us as an extra ( if we are editing an existing fragment)
-        	int id  = bundledExtras.getInt("FragmentId");
+        	storyId  = bundledExtras.getInt("Id");
         	// load title , id/page number , fragment description, choices
         	
         }
@@ -102,12 +103,18 @@ public class EditFragmentActivity extends Activity implements FView<Fragment> {
 				Fragment aNewFrag = new Fragment();
 				aNewFrag.addChoice(aNewChoice);
 				
+				StoryList sl = AdventureCreatorApplication.getStoryList();
+				
+				Story story = sl.getStoryById(storyId);
+				
+				story.addFragment(aNewFrag);
+				
 				// now we have to add it to our story object
 				// TODO WE HAVE TO HAVE STORY OBJECT THAT IS ASSOSCIATED WITH THIS FRAGMENT 
 				// StoryController.addFragment(ourStoryName , aNewFrag);
 				
 				Log.d("fragment", "a new fragment has been created");
-				
+				finish();
 				
 				
 				

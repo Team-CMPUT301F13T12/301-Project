@@ -1,6 +1,8 @@
 
 package ualberta.g12.adventurecreator;
 
+import java.util.List;
+
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -33,6 +35,10 @@ public class StoryEditActivity extends Activity implements SView<Story> {
     private EditText titleText;
     private EditText authorText;
     private ListView lView;
+    
+    private FragmentListArrayAdapter adapter;
+    private int storyId;
+    private List<Fragment> fragmentList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,6 +67,7 @@ public class StoryEditActivity extends Activity implements SView<Story> {
             Log.w(TAG, String.format("There was no story with id: %d", id));
         }
 
+        
         // TODO: Set up our storyController
         storyController = AdventureCreatorApplication.getStoryController();
 
@@ -68,10 +75,17 @@ public class StoryEditActivity extends Activity implements SView<Story> {
         titleText = (EditText) findViewById(R.id.story_editor_title_edit);
         authorText = (EditText) findViewById(R.id.story_editor_author_edit);
         // TODO: Update listview
+        fragmentList = story.getFragments();
+        adapter = new FragmentListArrayAdapter(this, R.layout.listview_fragment_list, fragmentList);
+        lView = (ListView) findViewById(R.id.story_editor_listview);
+        lView.setAdapter(adapter);
+        
         // TODO: Setup Adapter
         updateUiElements();
         // TODO: Set up all listeners
         setUpOnClickListeners();
+        
+        storyId = id;
     }
 
     /** Updates all of the Ui Elements for this Activity */
@@ -130,6 +144,8 @@ public class StoryEditActivity extends Activity implements SView<Story> {
             case R.id.add_fragment:
                 // TODO: Need to Pass the ID of the fragment to edit
                 Intent intent = new Intent(this, EditFragmentActivity.class);
+                intent.putExtra("EditType", "Add");
+                intent.putExtra("Id", storyId);
                 startActivity(intent);
                 return true;
             case R.id.save_story:
