@@ -72,7 +72,7 @@ public class Fragment extends FModel{
         return textSegments;
     }
 
-    public void setTextSegments(String textSegment) {
+    public void setTextSegments(List<String> textSegment) {
         this.textSegments = textSegments;
     }
     
