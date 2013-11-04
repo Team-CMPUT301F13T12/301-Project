@@ -14,7 +14,7 @@
 
     <EditText
         android:id="@+id/story_editor_title_edit"
-        android:layout_width="wrap_content"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/story_editor_title_text"
         android:layout_margin="5dp"
@@ -31,7 +31,7 @@
 
     <EditText
         android:id="@+id/story_editor_author_edit"
-        android:layout_width="wrap_content"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/story_editor_author_text"
         android:layout_margin="5dp"
