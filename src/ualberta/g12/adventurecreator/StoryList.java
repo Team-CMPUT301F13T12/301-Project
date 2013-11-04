@@ -35,7 +35,8 @@ public class StoryList extends LModel{
      * @param s
      */
     public void addStory(Story s){
-    	stories.add(s);
+        stories.add(s);
+        notifyViews();
     }
     
     /**
@@ -44,6 +45,7 @@ public class StoryList extends LModel{
      */
     public void deleteStory(Story s){
     	stories.remove(s);
+    	notifyViews();
     }
     
     /**
@@ -67,6 +69,8 @@ public class StoryList extends LModel{
      * @return
      */
     public Story getStory(String title){
+        // Shouldn't this method be called getSToryByTitle then?
+        // Chris
     	Story temp = null;
     	for (int i = 0; i < stories.size(); i++){
     		if (stories.get(i).getStoryTitle() == title){

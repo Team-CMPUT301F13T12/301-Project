@@ -18,7 +18,7 @@ import java.util.List;
 public class MainActivity extends Activity implements LView<StoryList>, OnItemClickListener {
 
     private List<Story> stories;
-    private StoryList storyList;
+    private static StoryList storyList;
     private static final boolean DEBUG_LOG = true;
     private static final String TAG = "MainActivity";
     private ListView listView;
@@ -40,13 +40,22 @@ public class MainActivity extends Activity implements LView<StoryList>, OnItemCl
         if (DEBUG_LOG)
             Log.d(TAG, String.format("Number of stories is: %d", stories.size()));
 
+        // Add ourself to the StoryList Model
+        storyList.addView(this);
+        
         // Set up ListView Stuff
         adapter = new StoryListArrayAdapter(this, R.layout.listview_story_list, stories);
         listView = (ListView) findViewById(R.id.listview);
         listView.setAdapter(adapter);
         listView.setOnItemClickListener(this);
-        // TODO: Set up listeners on items
 
+    }
+    
+    @Override
+    public void onDestroy(){
+        super.onDestroy();
+        // Remove ourselves from the story list
+        storyList.deleteView(this);
     }
 
     @Override
