@@ -67,6 +67,8 @@ public class StoryEditActivity extends Activity implements SView<Story> {
         // TODO: Load our story contents into fields (ListView of Fragments)
         titleText = (EditText) findViewById(R.id.story_editor_title_edit);
         authorText = (EditText) findViewById(R.id.story_editor_author_edit);
+        // TODO: Update listview
+        // TODO: Setup Adapter
         updateUiElements();
         // TODO: Set up all listeners
         setUpOnClickListeners();
@@ -76,6 +78,8 @@ public class StoryEditActivity extends Activity implements SView<Story> {
     private void updateUiElements() {
         titleText.setText(story.getStoryTitle());
         authorText.setText(story.getAuthor());
+
+        // TODO: update listView
     }
 
     /**
@@ -124,13 +128,25 @@ public class StoryEditActivity extends Activity implements SView<Story> {
         // TODO Auto-generated method stub
         switch (item.getItemId()) {
             case R.id.add_fragment:
-                // right now this calls editFragment but how do we know if it is
-                // editing or adding? extras yo
-
+                // TODO: Need to Pass the ID of the fragment to edit
                 Intent intent = new Intent(this, EditFragmentActivity.class);
-                intent.putExtra("EditType", "Add");
                 startActivity(intent);
-                break;
+                return true;
+            case R.id.save_story:
+                // Save values
+                storyController.setTitle(titleText.getText().toString(), story);
+                storyController.setAuthor(authorText.getText().toString(), story);
+
+                // Tell StoryList to update Story
+                StoryListController slc = AdventureCreatorApplication.getStoryListController();
+                if (DEBUG_LOG)
+                    Log.d(TAG, String.format("SLC is null:%b story is null: %b", (slc == null),
+                            (story == null)));
+                slc.updateStoryWithId(story.getId(), story);
+                // Leave activity
+                // TODO: Should we stay in this activity?
+                finish();
+                return true;
         }
         return super.onOptionsItemSelected(item);
     }
