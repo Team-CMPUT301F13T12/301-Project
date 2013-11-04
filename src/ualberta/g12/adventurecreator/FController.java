@@ -11,14 +11,16 @@ public interface FController {
      * 
      * @param t the new title of the fragment
      */
-    public void editTitle(Fragment f,String t);
 
-    /**
-     * Edits the body text of the fragment
-     * 
-     * @param t the new body text of the fragment
-     */
-    public void editBodyText(Fragment f, String b);
+    public void editTitle(Fragment f,String t);
+    
+//  TODO
+//    /**
+//     * Edits the body text of the fragment
+//     * 
+//     * @param t the new body text of the fragment
+//     */
+//    public void edittextSegment(Fragment f, String b);
 
     /**
      * Adds illustration to a fragment
