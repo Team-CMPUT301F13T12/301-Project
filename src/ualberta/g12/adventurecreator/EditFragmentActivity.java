@@ -100,7 +100,8 @@ public class EditFragmentActivity extends Activity implements FView<Fragment> {
 				Choice aNewChoice = new Choice();
 				aNewChoice.setChoiceText(choice1);
 				
-				Fragment aNewFrag = new Fragment(title,Description);
+				//Fragment aNewFrag = new Fragment(title,Description);
+				Fragment aNewFrag = new Fragment();
 				aNewFrag.addChoice(aNewChoice);
 				
 				// now we have to add it to our story object
