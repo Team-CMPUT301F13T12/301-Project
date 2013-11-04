@@ -1,8 +1,8 @@
-
 package ualberta.g12.adventurecreator;
 
 import android.graphics.drawable.Drawable;
 
+import java.util.LinkedList;
 import java.util.List;
 
 // TODO: parameterize to an FView
@@ -11,8 +11,8 @@ public class Fragment extends FModel{
     private static final int NEW_FRAGMENT_ID = -1;
     
     private String title;
-    private String bodyText;
     private int id;
+    private List<String> textSegments;
     private List<Drawable> illustrations;
     // private List<Sound> sounds;
     // private List<Video> videos;
@@ -27,29 +27,38 @@ public class Fragment extends FModel{
     // private Annotation annotations;
 
     public Fragment() {
-        /*
-         * Should this be done here? I feel that this should be moved to the
-         * view that displays a new fragment as the default text or hint.
-         * - Chris
-         */
-        this("Choose a Title", "Story body here.");
+        textSegments = new LinkedList<String>();
+        illustrations = new LinkedList<Drawable>();
+        choices = new LinkedList<Choice>();
+        displayOrder = new LinkedList<String>();
     }
+    
+    
+    /*
+     * It doesn't really matter to me atm how or where the set for new a 
+     * fragment with hints happens, so if it should go somewhere else
+     * that's totally cool.  Above I have put the only parts that I think
+     * NEED to happen regarding Fragment creation (to avoid null pointers
+     * exceptions) the constructor code below can be deleted if no one 
+     * else cares.
+     * -Lindsay
+     */
+//    public Fragment() {
+//        /*
+//         * Should this be done here? I feel that this should be moved to the
+//         * view that displays a new fragment as the default text or hint.
+//         * - Chris
+//         */
+//        this("Choose a Title", "Story body here.");
+//    }
+//
+//    public Fragment(String title, String body) {
+//        setTitle(title);
+//        setBodyText(body);
+//        initChoices();
+//        isLinkedTo = true;
+//    }
 
-    public Fragment(String title, String body) {
-        setTitle(title);
-        setBodyText(body);
-        initChoices();
-        isLinkedTo = true;
-    }
-
-    /** Each fragment should have one default choice */
-    private void initChoices() {
-        // TODO: intialize the new choice
-    	
-    	// i dont think so actually because if a fragment doesnt have a choice then it would be an ending!
-    	// -Vincent 
-        addChoice(new Choice());
-    }
 
     public String getTitle() {
         return this.title;
@@ -59,26 +68,18 @@ public class Fragment extends FModel{
         this.title = newTitle;
     }
 
-    public String getBodyText() {
-        return bodyText;
+    public List<String> getTextSegments() {
+        return textSegments;
     }
 
-    public void setBodyText(String bodyText) {
-        this.bodyText = bodyText;
+    public void setTextSegments(List<String> textSegment) {
+        this.textSegments = textSegment;
     }
-
+    
     public List<Drawable> getIllustrations() {
-        return this.illustrations;
+        return illustrations;
     }
 
-    public boolean removeIllustration(Drawable i){
-        return this.illustrations.remove(i);
-    }
-    
-    public boolean addIllustration(Drawable i){
-        return this.illustrations.add(i);
-    }
-    
     public void setIllustrations(List<Drawable> illustrations) {
         this.illustrations = illustrations;
     }

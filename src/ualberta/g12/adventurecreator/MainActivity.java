@@ -18,7 +18,7 @@ import java.util.List;
 public class MainActivity extends Activity implements LView<StoryList>, OnItemClickListener {
 
     private List<Story> stories;
-    private StoryList storyList;
+    private static StoryList storyList;
     private static final boolean DEBUG_LOG = true;
     private static final String TAG = "MainActivity";
     private ListView listView;
@@ -40,12 +40,22 @@ public class MainActivity extends Activity implements LView<StoryList>, OnItemCl
         if (DEBUG_LOG)
             Log.d(TAG, String.format("Number of stories is: %d", stories.size()));
 
+        // Add ourself to the StoryList Model
+        storyList.addView(this);
+        
         // Set up ListView Stuff
         adapter = new StoryListArrayAdapter(this, R.layout.listview_story_list, stories);
         listView = (ListView) findViewById(R.id.listview);
         listView.setAdapter(adapter);
-        // TODO: Set up listeners on items
+        listView.setOnItemClickListener(this);
 
+    }
+    
+    @Override
+    public void onDestroy(){
+        super.onDestroy();
+        // Remove ourselves from the story list
+        storyList.deleteView(this);
     }
 
     @Override
@@ -116,6 +126,15 @@ public class MainActivity extends Activity implements LView<StoryList>, OnItemCl
 
     @Override
     public void onItemClick(AdapterView<?> parent, View v, int pos, long id) {
-        // TODO: Open Edit/View story Activity with
+        // Open Edit/View story Activity with
+        Intent i;
+        if (isAuthor) {
+            i = new Intent(this, StoryEditActivity.class);
+            i.putExtra(StoryEditActivity.INTENT_STORY_ID, stories.get(pos).getId());
+        } else {
+            i = new Intent(this, StoryViewActivity.class);
+            i.putExtra(StoryViewActivity.INTENT_STORY_ID, stories.get(pos).getId());
+        }
+        startActivity(i);
     }
 }
