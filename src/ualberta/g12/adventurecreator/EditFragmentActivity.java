@@ -58,7 +58,7 @@ public class EditFragmentActivity extends Activity {
 	        switch(item.getItemId()) 
 	        {
 	            
-	            //****To be implemented soon...****
+	            // TODO: annotation function to be written
                 case InsertAnnotate:         //if insert annotation is selected
                     AddAnnotation(); 
                     return true;
@@ -115,6 +115,7 @@ public class EditFragmentActivity extends Activity {
 	        }
 	    }
 	    
+	    //TODO: annotation function 
 	    public void AddAnnotation() {
 	        Intent galleryIntent = new Intent(Intent.ACTION_GET_CONTENT,null);
             galleryIntent.setType("image/*");
