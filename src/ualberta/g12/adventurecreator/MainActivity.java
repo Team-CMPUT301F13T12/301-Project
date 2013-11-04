@@ -45,7 +45,7 @@ public class MainActivity extends Activity implements LView<StoryList>, OnItemCl
         
         // Set up ListView Stuff
         adapter = new StoryListArrayAdapter(this, R.layout.listview_story_list, stories);
-        listView = (ListView) findViewById(R.id.listview);
+        listView = (ListView) findViewById(R.id.main_activity_listview);
         listView.setAdapter(adapter);
         listView.setOnItemClickListener(this);
 
