@@ -8,7 +8,7 @@ import android.test.ActivityInstrumentationTestCase2;
 import android.widget.Button;
 import android.widget.TextView;
 
-public class storyListControllerTestCases extends ActivityInstrumentationTestCase2<StoryManager> {
+public class storyListControllerTestCases extends ActivityInstrumentationTestCase2<StoryFragment> {
     
     private StoryListController slc;
     private StoryList sl;
