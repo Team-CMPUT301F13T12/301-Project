@@ -44,6 +44,7 @@ public class MainActivity extends Activity implements LView<StoryList>, OnItemCl
         adapter = new StoryListArrayAdapter(this, R.layout.listview_story_list, stories);
         listView = (ListView) findViewById(R.id.listview);
         listView.setAdapter(adapter);
+        listView.setOnItemClickListener(this);
         // TODO: Set up listeners on items
 
     }
@@ -116,6 +117,15 @@ public class MainActivity extends Activity implements LView<StoryList>, OnItemCl
 
     @Override
     public void onItemClick(AdapterView<?> parent, View v, int pos, long id) {
-        // TODO: Open Edit/View story Activity with
+        // Open Edit/View story Activity with
+        Intent i;
+        if (isAuthor) {
+            i = new Intent(this, StoryEditActivity.class);
+            i.putExtra(StoryEditActivity.INTENT_STORY_ID, stories.get(pos).getId());
+        } else {
+            i = new Intent(this, StoryViewActivity.class);
+            i.putExtra(StoryViewActivity.INTENT_STORY_ID, stories.get(pos).getId());
+        }
+        startActivity(i);
     }
 }
