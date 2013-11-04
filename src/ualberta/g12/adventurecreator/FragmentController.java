@@ -9,10 +9,6 @@ import android.graphics.drawable.Drawable;
 
 public class FragmentController implements FController {
     
-    public FragmentController(){
-        super();
-    }
-
     @Override
     public void editTitle(Fragment frag, String newTitle){
         frag.setTitle(newTitle);
@@ -160,6 +156,18 @@ public class FragmentController implements FController {
         choices.remove(cho);
         frag.setChoices(choices);
         return true;
+    }
+    
+    public static void addNewFragmentPart(Fragment frag){
+        List<String> displayOrder = frag.getDisplayOrder();
+        displayOrder.add("n");
+        frag.setDisplayOrder(displayOrder);
+    }
+    
+    public static void removeNewFragmentPart(Fragment frag){
+        List<String> displayOrder = frag.getDisplayOrder();
+        displayOrder.remove("n");
+        frag.setDisplayOrder(displayOrder);
     }
 
     //  public void addAnnotation(Fragment frag, Annotation annotation){

@@ -61,7 +61,9 @@ public class EditFragmentActivity extends Activity implements FView<Fragment> {
         FragmentController.addTextSegment(fragment, "entry1");
         FragmentController.addTextSegment(fragment,"entry2");
         FragmentController.addTextSegment(fragment,"entry number 3 which is rather long because we woud like to test text wrapping");
-        
+        if (editType.equals("Edit") == true){
+            FragmentController.addNewFragmentPart(fragment);
+        }
         // TODO: Load our fragment into view
         //get widget references
         fragmentPartListView = (ListView) findViewById(R.id.FragmentPartList);
@@ -156,19 +158,25 @@ public class EditFragmentActivity extends Activity implements FView<Fragment> {
             @Override
             public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
                 
-                /*
-                 * open pop up menu with options:
-                 * Add text
-                 * Add Image
-                 * Add Choice
-                 * Delete
-                 * 
-                 * or
-                 * Insert text
-                 * Insert Image
-                 * Insert Choice
-                 * Delete
-                 */
+                if (fragment.getDisplayOrder().get(position).equals("n")){
+                    /*
+                     * open pop up menu with options:
+                     * Add text
+                     * Add Image
+                     * Add Choice
+                     * Delete
+                     */
+                } else {
+                    /*
+                     * open pop up menu with options:
+                     * Insert text
+                     * Insert Image
+                     * Insert Choice
+                     * Delete
+                     * 
+                     * depending on position
+                     */
+                }
                
             }
         });

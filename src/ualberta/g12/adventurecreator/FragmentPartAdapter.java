@@ -31,7 +31,9 @@ public class FragmentPartAdapter extends ArrayAdapter{
             LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             rowView = inflater.inflate(R.layout.listview_fragment_part_list, parent, false);
         }
+        
         if (frag.getDisplayOrder().get(position).equals("t")){
+            //Display a text segment
 
             //get the occurence number of the textSegment
             int occurence = 0;
@@ -47,7 +49,8 @@ public class FragmentPartAdapter extends ArrayAdapter{
                     text.setText(textSegment);
             }
         } else if (frag.getDisplayOrder().get(position).equals("i")){
-
+            //Display an illustration
+            
             //get the occurence number of the textSegment
             int occurence = 0;
             for (int i = 0; i < position; i++){
@@ -60,6 +63,15 @@ public class FragmentPartAdapter extends ArrayAdapter{
                 ImageView image = (ImageView) rowView.findViewById(R.id.ImageView04);
                 if (image != null)
                     image.setImageDrawable(illustration);
+            }
+        } else if (frag.getDisplayOrder().get(position).equals("n")){
+            //Display a new FragmentPart
+            
+            String textSegment = "New text/image";
+            if (textSegment != null){
+                TextView text = (TextView) rowView.findViewById(R.id.fragmentPartText);
+                if (text != null)
+                    text.setText(textSegment);
             }
         }
         return rowView;
