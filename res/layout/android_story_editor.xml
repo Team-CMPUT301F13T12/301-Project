@@ -4,12 +4,51 @@
     android:layout_height="match_parent" >
 
     <TextView
-        android:id="@+id/textView1"
+        android:id="@+id/story_editor_title_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
-        android:textSize="20sp"
-        android:text="Add a story Fragment!" />
+        android:layout_alignParentTop="true"
+        android:layout_margin="5dp"
+        android:text="@string/story_edit_title"
+        android:textStyle="bold" />
+
+    <EditText
+        android:id="@+id/story_editor_title_edit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/story_editor_title_text"
+        android:layout_margin="5dp"
+        android:hint="@string/story_edit_title_hint" />
+
+    <TextView
+        android:id="@+id/story_editor_author_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/story_editor_title_edit"
+        android:layout_margin="5dp"
+        android:hint="@string/story_edit_author"
+        android:textStyle="bold" />
+
+    <EditText
+        android:id="@+id/story_editor_author_edit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/story_editor_author_text"
+        android:layout_margin="5dp"
+        android:hint="@string/story_edit_author_hint" />
+
+    <LinearLayout
+        android:id="@+id/story_editor_listview_layout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/story_editor_author_edit"
+        android:layout_margin="5dp" >
+
+        <ListView
+            android:id="@+id/story_editor_listview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" >
+        </ListView>
+    </LinearLayout>
 
 </RelativeLayout>

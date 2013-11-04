@@ -16,4 +16,10 @@
     <string name="title_activity_story_view">StoryViewActivity</string>
     <string name="hello_world">Hello world!</string>
 
+    <!-- StoryEditActivity Strings -->
+    <string name="story_edit_title">Title</string>
+    <string name="story_edit_title_hint">New Title</string>
+    <string name="story_edit_author">Author</string>
+    <string name="story_edit_author_hint">New Author</string>
+    
 </resources>

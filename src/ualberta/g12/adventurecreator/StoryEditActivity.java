@@ -4,8 +4,11 @@ package ualberta.g12.adventurecreator;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.EditText;
+import android.widget.ListView;
 
 /**
  * View for editing a Story using a StoryController.<br>
@@ -17,22 +20,62 @@ public class StoryEditActivity extends Activity implements SView<Story> {
 
     private Story story;
     private StoryController storyController;
-    
+
+    // Story ID Constants
     public static final String INTENT_STORY_ID = "storyid";
+    public static final int INVALID_STORY_ID = -1;
+
+    // Logging info
+    private static final String TAG = "StoryEditActivity";
+    private static final boolean DEBUG_LOG = true;
+
+    // UI Elements
+    private EditText titleText;
+    private EditText authorText;
+    private ListView lView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.android_story_editor);
 
-        // TODO: Load our story from the intent
+        // Load our story from the intent
+
+        Intent i = getIntent();
+        int id = i.getIntExtra(INTENT_STORY_ID, INVALID_STORY_ID);
+
+        if (DEBUG_LOG)
+            Log.d(TAG, String.format("Started with story id: %d", id));
+
+        if (id == INVALID_STORY_ID) {
+            // There was no id passed to us in this intent
+            // Also what about on an orientation change
+            // TODO: What should we do here?
+            Log.w(TAG, "We were created withoug being passed a story to load.");
+        }
+        StoryList sl = AdventureCreatorApplication.getStoryList();
+        story = sl.getStoryById(id);
+
+        if (story == null) {
+            // TODO: What should we do here?
+            Log.w(TAG, String.format("There was no story with id: %d", id));
+        }
 
         // TODO: Set up our storyController
+        storyController = AdventureCreatorApplication.getStoryController();
 
         // TODO: Load our story contents into fields (ListView of Fragments)
-
+        titleText = (EditText) findViewById(R.id.story_editor_title_edit);
+        authorText = (EditText) findViewById(R.id.story_editor_author_edit);
+        updateUiElements();
         // TODO: Set up all listeners
         setUpOnClickListeners();
+    }
+
+    /** Updates all of the Ui Elements for this Activity */
+    private void updateUiElements() {
+        titleText.setText(story.getStoryTitle());
+        authorText.setText(story.getAuthor());
     }
 
     /**
@@ -81,10 +124,11 @@ public class StoryEditActivity extends Activity implements SView<Story> {
         // TODO Auto-generated method stub
         switch (item.getItemId()) {
             case R.id.add_fragment:
-            	// right now this calls editFragment but how do we know if it is editing or adding? extras yo
-            	
-            	Intent intent = new Intent(this, EditFragmentActivity.class);
-            	intent.putExtra("EditType", "Add");
+                // right now this calls editFragment but how do we know if it is
+                // editing or adding? extras yo
+
+                Intent intent = new Intent(this, EditFragmentActivity.class);
+                intent.putExtra("EditType", "Add");
                 startActivity(intent);
                 break;
         }
@@ -99,6 +143,5 @@ public class StoryEditActivity extends Activity implements SView<Story> {
         // story has changed
 
     }
-    
-    
+
 }
