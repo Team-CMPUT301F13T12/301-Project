@@ -24,7 +24,7 @@ public class MainActivity extends Activity implements LView<StoryList>, OnItemCl
     private ListView listView;
     private StoryListArrayAdapter adapter;
 
-    private static final String IS_AUTHOR_FLAG = "isAuthor";
+    private static final String SHARED_PREF_IS_AUTHOR_FLAG = "isAuthor";
     private static boolean isAuthor = false;
 
     @Override
@@ -37,10 +37,6 @@ public class MainActivity extends Activity implements LView<StoryList>, OnItemCl
         // Load our local stories from the StoryList Model
         stories = storyList.getAllStories();
 
-        // Restore shared preferences
-        SharedPreferences settings = getPreferences(MODE_PRIVATE);
-        isAuthor = settings.getBoolean(IS_AUTHOR_FLAG, false);
-        
         if (DEBUG_LOG)
             Log.d(TAG, String.format("Number of stories is: %d", stories.size()));
 
@@ -51,15 +47,23 @@ public class MainActivity extends Activity implements LView<StoryList>, OnItemCl
         // TODO: Set up listeners on items
 
     }
-    
+
     @Override
-    protected void onStop(){
-        super.onStop();
-        
+    public void onResume() {
+        super.onResume();
+        SharedPreferences settings = getPreferences(MODE_PRIVATE);
+        isAuthor = settings.getBoolean(SHARED_PREF_IS_AUTHOR_FLAG, false);
+
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+
         SharedPreferences settings = getPreferences(MODE_PRIVATE);
         SharedPreferences.Editor editor = settings.edit();
-        editor.putBoolean(IS_AUTHOR_FLAG, isAuthor);
-        
+        editor.putBoolean(SHARED_PREF_IS_AUTHOR_FLAG, isAuthor);
+
         // Commit the edits
         editor.commit();
     }
@@ -77,10 +81,20 @@ public class MainActivity extends Activity implements LView<StoryList>, OnItemCl
             case R.id.menu_add_story:
                 // TODO: Launch the EditStoryActivity with the id of NEW_STORY
                 startActivity(new Intent(this, CreateStoryActivity.class));
-                break;
+                return true;
 
             case R.id.menu_check_box_author:
-                break;
+                if (DEBUG_LOG)
+                    Log.d(TAG,
+                            String.format("Checkbox checked, current value: %s", item.isChecked()));
+
+                boolean alreadyChecked = item.isChecked();
+                // Set it to the opposite of what it previously was
+                item.setChecked(!alreadyChecked);
+
+                // Set the flag now
+                isAuthor = item.isChecked();
+                return true;
         }
         return super.onOptionsItemSelected(item);
     }
