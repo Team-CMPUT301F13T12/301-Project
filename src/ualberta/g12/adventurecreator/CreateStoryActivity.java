@@ -36,7 +36,7 @@ public class CreateStoryActivity extends Activity {
 				// create a new story (might want to use a controller here instead!)
 				Story myNewStory = new Story(title.getText().toString(), author.getText().toString());
 				// TODO: make sure id is unique!
-				myNewStory.setId(1);
+				myNewStory.setId(5);
 				
 				// add the story with our story list controller!
 				StoryListController slc = AdventureCreatorApplication.getStoryListController(); 
