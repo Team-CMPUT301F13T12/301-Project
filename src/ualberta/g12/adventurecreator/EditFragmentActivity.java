@@ -89,12 +89,10 @@ public class EditFragmentActivity extends Activity implements FView<Fragment> {
             	
         		EditText titleET = (EditText) findViewById(R.id.fragmentTitle);
 				EditText idPageNumET = (EditText) findViewById(R.id.idPageNum);
-				EditText DescriptionET = (EditText) findViewById(R.id.fragmentBody);
 				EditText choice1ET = (EditText) findViewById(R.id.choiceId1);
 				
 				String title = titleET.getText().toString();
 				String idPageNum = idPageNumET.getText().toString();
-				String Description = DescriptionET.getText().toString();
 				String choice1 = choice1ET.getText().toString();
 				//create a new fragment object as well as choice
 				Choice aNewChoice = new Choice();

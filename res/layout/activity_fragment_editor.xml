@@ -101,14 +101,15 @@
         android:hint="ID/Page Number"
         android:inputType="number" />
 
-    <EditText
-        android:id="@+id/fragmentBody"
-        android:layout_width="fill_parent"
+    <ListView
+        android:id="@+id/FragmentPartList"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/fragmentTitle"
-        android:layout_below="@+id/idPageNum"
-        android:ems="10"
-        android:hint="Fragment Description"
-        android:inputType="textMultiLine" />
+        android:layout_above="@+id/imageView1"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/idPageNum" >
+
+    </ListView>
 
 </RelativeLayout>
