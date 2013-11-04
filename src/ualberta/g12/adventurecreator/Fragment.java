@@ -59,7 +59,14 @@ public class Fragment extends FModel{
 //        isLinkedTo = true;
 //    }
 
-
+    public int getId(){
+    	return this.id;
+    }
+    
+    public void setId(int id ){
+    	this.id = id;
+    }
+    
     public String getTitle() {
         return this.title;
     }

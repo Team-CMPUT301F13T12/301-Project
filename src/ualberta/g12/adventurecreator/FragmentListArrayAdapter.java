@@ -41,6 +41,7 @@ public class FragmentListArrayAdapter extends ArrayAdapter<Fragment> {
 	            convertView = mInflater.inflate(R.layout.listview_fragment_list, null);
 	            holder = new ViewHolder();
 	            holder.title = (TextView) convertView.findViewById(R.id.list_fragment_title);
+	            Log.d("the title is" , holder.title.getText().toString());
 	            convertView.setTag(holder);
 	        } else {
 	            holder = (ViewHolder) convertView.getTag();

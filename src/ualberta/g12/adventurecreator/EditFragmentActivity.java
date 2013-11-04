@@ -133,6 +133,13 @@ public class EditFragmentActivity extends Activity implements FView<Fragment> {
 				
 				String title = titleET.getText().toString();
 				String idPageNum = idPageNumET.getText().toString();
+				int idPage = -9;
+				try{
+				 idPage = Integer.parseInt(idPageNum);
+				}catch(NumberFormatException e){
+					Log.d("Msg","There was a number format exception!");
+				}
+				
 				String choice1 = choice1ET.getText().toString();
 				//create a new fragment object as well as choice
 				Choice aNewChoice = new Choice();
@@ -141,7 +148,8 @@ public class EditFragmentActivity extends Activity implements FView<Fragment> {
 				//Fragment aNewFrag = new Fragment(title,Description);
 				Fragment aNewFrag = new Fragment();
 				aNewFrag.addChoice(aNewChoice);
-				
+				aNewFrag.setTitle(title);
+				aNewFrag.setId(idPage);
 				StoryList sl = AdventureCreatorApplication.getStoryList();
 				
 				Story story = sl.getStoryById(storyId);
