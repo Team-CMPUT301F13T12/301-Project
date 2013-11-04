@@ -27,26 +27,28 @@ public class CreateStoryActivity extends Activity {
 				// TODO Auto-generated method stub
 				
 				// create a new story object! id should be unique too! 
-				// create one for now but should be made using a controller 
 				
 				
 				// get the editTexts!
 				EditText title = (EditText) findViewById(R.id.editStoryTitle);
 				EditText author = (EditText) findViewById(R.id.editStoryAuthor);
 				
+				// create a new story (might want to use a controller here instead!)
 				Story myNewStory = new Story(title.getText().toString(), author.getText().toString());
+				// TODO: make sure id is unique!
+				myNewStory.setId(1);
 				
-				// TODO: make Id and also add to our list of stories!~
+				// add the story with our story list controller!
+				StoryListController slc = AdventureCreatorApplication.getStoryListController(); 
+				slc.addStory(myNewStory);
+				// TODO discuss
+				// I'm changing it so that you can only create a story here
+				// it will return to our main screen where if they click on it it will let them edit
+				finish();
 				
 				
-				// launch the startEditActivty with intent of the story id 
-            	Intent intent = new Intent(getApplication(), StoryEditActivity.class);
             	
-            	// should be  intent.putExtra("StoryId", myStory.getId() );  or something like this i think 
-            	intent.putExtra("StoryId", 5 ); // putting storyid of 1 but this should be unique and we have get it somehow later
-            	
-            	intent.putExtra("EditType", "New");
-				startActivity(intent);
+
 			}
 		});
     }

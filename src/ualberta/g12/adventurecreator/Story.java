@@ -109,6 +109,22 @@ public class Story extends SModel{
             copyOfPages.get(i).setLinkedTo(false);
         }
     }
+    
+    /**
+     * will get id of the story (should be unique)
+     * @return
+     */
+    public int getId(){
+    	return this.id;
+    }
+    
+    /**
+     * will set id of the story (should be unique)
+     * @param newId
+     */
+    public void setId(int newId){
+    	this.id = newId;
+    }
 
     public int getId() {
         return id;
