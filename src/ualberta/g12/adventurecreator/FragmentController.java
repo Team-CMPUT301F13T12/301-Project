@@ -6,8 +6,8 @@ import android.graphics.drawable.Drawable;
 public class FragmentController implements FController {
 
     @Override
-    public void editBodyText(Fragment f, String b) {
-        f.setBodyText(b);
+    public void editBodyText(Fragment f, String t) {
+        f.setTextSegments(t);
     }
 
     @Override
@@ -18,7 +18,8 @@ public class FragmentController implements FController {
     @Override
     public void addIllustration(Fragment f, Drawable i) {
         // TODO: Do something with return value
-        f.addIllustration(i);
+        //f.addIllustration(i);
+        // TODO: Implement this
     }
 
     @Override
