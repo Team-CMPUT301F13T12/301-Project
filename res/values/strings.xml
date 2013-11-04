@@ -21,5 +21,8 @@
     <string name="story_edit_title_hint">New Title</string>
     <string name="story_edit_author">Author</string>
     <string name="story_edit_author_hint">New Author</string>
+    <string name="add_text">Add Text</string>
+    <string name="add_image">Add Image</string>
+    <string name="add_choice">Add Choice</string>
     
 </resources>

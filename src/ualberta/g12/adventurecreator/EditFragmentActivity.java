@@ -5,7 +5,10 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.ContextMenu;
+import android.view.ContextMenu.ContextMenuInfo;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
@@ -61,6 +64,7 @@ public class EditFragmentActivity extends Activity implements FView<Fragment> {
         FragmentController.addTextSegment(fragment, "entry1");
         FragmentController.addTextSegment(fragment,"entry2");
         FragmentController.addTextSegment(fragment,"entry number 3 which is rather long because we woud like to test text wrapping");
+        FragmentController.addNewFragmentPart(fragment);
         if (editType.equals("Edit") == true){
             FragmentController.addNewFragmentPart(fragment);
         }
@@ -83,6 +87,7 @@ public class EditFragmentActivity extends Activity implements FView<Fragment> {
                 this, R.layout.activity_fragment_editor, fragment);
         fragmentPartListView.setAdapter(adapter);
        
+        registerForContextMenu(fragmentPartListView);
         
         // TODO: Set up on clickers
         setUpOnClickListeners();
@@ -166,6 +171,8 @@ public class EditFragmentActivity extends Activity implements FView<Fragment> {
                      * Add Choice
                      * Delete
                      */
+                    registerForContextMenu(fragmentPartListView);                    
+                    
                 } else {
                     /*
                      * open pop up menu with options:
@@ -193,6 +200,14 @@ public class EditFragmentActivity extends Activity implements FView<Fragment> {
     public void update(Fragment model) {
         // TODO reload all fields based on new info from model
 
+    }
+    
+    @Override
+    public void onCreateContextMenu(ContextMenu menu, View v,
+                                    ContextMenuInfo menuInfo) {
+        super.onCreateContextMenu(menu, v, menuInfo);
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.new_fragment_part_menu, menu);
     }
 
 }
