@@ -1,5 +1,6 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/defaultText"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:paddingBottom="@dimen/activity_vertical_margin"
@@ -8,8 +9,8 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context=".MainActivity" >
 
-    <TextView
-        android:id="@+id/fragmentPartText"
+    <EditText
+        android:id="@+id/fragmentPartEditText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
@@ -17,11 +18,23 @@
         android:layout_alignParentTop="true" />
 
     <ImageView
-        android:id="@+id/ImageView04"
+        android:id="@+id/fragmentPartIllustration"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/fragmentPartText"
-        android:layout_alignRight="@+id/fragmentPartText"
-        android:layout_below="@+id/fragmentPartText" />
+        android:layout_alignLeft="@+id/fragmentPartEditText"
+        android:layout_alignRight="@+id/fragmentPartEditText"
+        android:layout_below="@+id/fragmentPartEditText" />
+
+    <EditText
+        android:id="@+id/fragmentPartTextPart"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/fragmentPartIllustration"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/fragmentPartIllustration"
+        android:ems="10" >
+
+        <requestFocus />
+    </EditText>
 
 </RelativeLayout>

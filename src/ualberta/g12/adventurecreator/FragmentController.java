@@ -62,6 +62,34 @@ public class FragmentController implements FController {
         textSegments.remove(textSegment);
         frag.setTextSegments(textSegments);
     }
+    
+    /**
+     * Removes the text segment at the given dispNum
+     * returns true if successful
+     * @param frag
+     * @param dispNum
+     * @return
+     */
+    private static boolean deleteTextSegment(Fragment frag, int dispNum){
+        List<String> textSegments = frag.getTextSegments();
+        List<String> displayOrder = frag.getDisplayOrder();
+
+        //not a text segment at dispNum
+        if (!displayOrder.get(dispNum).equals("t"))
+            return false;
+        
+        int textSegNum=0;
+        for (int i=0; i<dispNum;i++){
+            if (displayOrder.get(i).equals("t"))
+                textSegNum++;
+        }
+
+        textSegments.remove(textSegNum);
+        frag.setTextSegments(textSegments);
+        displayOrder.remove(dispNum);
+        frag.setDisplayOrder(displayOrder);
+        return true;
+    }
 
     @Override
     public void addIllustration(Fragment frag, Drawable illustration){
@@ -74,7 +102,7 @@ public class FragmentController implements FController {
         int i=0;
         
         while (i < displayOrder.size()){
-            if (displayOrder.get(i).equals("c"))
+            if (displayOrder.get(i).equals("c") || displayOrder.get(i).equals("nc"))
                 break;
             i++;
         }
@@ -104,6 +132,34 @@ public class FragmentController implements FController {
 
         illustrations.remove(illustration);
         frag.setIllustrations(illustrations);
+    }
+    
+    /**
+     * Removes the illustration at the given dispNum
+     * returns true if successful
+     * @param frag
+     * @param dispNum
+     * @return
+     */
+    private static boolean deleteIllustration(Fragment frag, int dispNum){
+        List<String> textSegments = frag.getTextSegments();
+        List<String> displayOrder = frag.getDisplayOrder();
+
+        //not a text segment at dispNum
+        if (!displayOrder.get(dispNum).equals("i"))
+            return false;
+        
+        int illustrationNum=0;
+        for (int i=0; i<dispNum;i++){
+            if (displayOrder.get(i).equals("i"))
+                illustrationNum++;
+        }
+
+        textSegments.remove(illustrationNum);
+        frag.setTextSegments(textSegments);
+        displayOrder.remove(dispNum);
+        frag.setDisplayOrder(displayOrder);
+        return true;
     }
 
 
@@ -145,7 +201,7 @@ public class FragmentController implements FController {
         int occurence = choices.indexOf(cho);
         int i = 0;
         while(occurence >= 0){
-            if (displayOrder.get(i) == "c"){
+            if (displayOrder.get(i) == "c" || displayOrder.get(i).equals("nc")){
                 occurence--;
             }
             i++;
@@ -157,16 +213,43 @@ public class FragmentController implements FController {
         frag.setChoices(choices);
         return true;
     }
-    
-    public static void addNewFragmentPart(Fragment frag){
+    /**
+     * Removes the Choice at the given dispNum
+     * returns true if successful
+     * @param frag
+     * @param dispNum
+     * @return
+     */
+    private static boolean deleteChoice(Fragment frag, int dispNum){
+        List<String> textSegments = frag.getTextSegments();
         List<String> displayOrder = frag.getDisplayOrder();
-        displayOrder.add("n");
+
+        //not a text segment at dispNum
+        if (!displayOrder.get(dispNum).equals("c"))
+            return false;
+        
+        int choiceNum=0;
+        for (int i=0; i<dispNum;i++){
+            if (displayOrder.get(i).equals("c"))
+                choiceNum++;
+        }
+
+        textSegments.remove(choiceNum);
+        frag.setTextSegments(textSegments);
+        displayOrder.remove(dispNum);
+        frag.setDisplayOrder(displayOrder);
+        return true;
+    }
+     
+    public static void addEmptyPart(Fragment frag){
+        List<String> displayOrder = frag.getDisplayOrder();
+        displayOrder.add("e");
         frag.setDisplayOrder(displayOrder);
     }
     
-    public static void removeNewFragmentPart(Fragment frag){
+    public static void removeEmptyPart(Fragment frag){
         List<String> displayOrder = frag.getDisplayOrder();
-        displayOrder.remove("n");
+        displayOrder.remove("e");
         frag.setDisplayOrder(displayOrder);
     }
 
@@ -175,4 +258,29 @@ public class FragmentController implements FController {
     //      annotations.addAnnotation(annotation);
     //      frag.setAnnotations(annotations);
     //  }
+    
+    public static void deleteFragmentPart(Fragment frag, int partNum){
+        List<String> displayOrder = frag.getDisplayOrder();
+        
+        //check for invalid partNum
+        if (partNum >= displayOrder.size())
+            return;
+        
+        String type = displayOrder.get(partNum);
+        
+        if (type.equals("t"))
+            deleteTextSegment(frag, partNum);
+        else if (type.equals("i"))
+            deleteIllustration(frag, partNum);
+        else if (type.equals("c"))
+            deleteChoice(frag, partNum);
+        else if (type.equals("e")){
+            removeEmptyPart(frag);
+            if(frag.getDisplayOrder().size()==0)
+                addEmptyPart(frag);
+        }
+            
+            
+        
+    }
 }

@@ -9,6 +9,7 @@ import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
@@ -60,13 +61,12 @@ public class EditFragmentActivity extends Activity implements FView<Fragment> {
         /* for testing, will delete later -Lindsay */
         //FragmentController fragcont = new FragmentController();
         fragment = new Fragment();
-        System.out.println("going to addtextseg");
-        FragmentController.addTextSegment(fragment, "entry1");
-        FragmentController.addTextSegment(fragment,"entry2");
-        FragmentController.addTextSegment(fragment,"entry number 3 which is rather long because we woud like to test text wrapping");
-        FragmentController.addNewFragmentPart(fragment);
-        if (editType.equals("Edit") == true){
-            FragmentController.addNewFragmentPart(fragment);
+        FragmentController.addTextSegment(fragment, "part1");
+        FragmentController.addTextSegment(fragment,"part2");
+        FragmentController.addTextSegment(fragment,"part number 3 which is rather long because we woud like to test text wrapping");
+        FragmentController.addEmptyPart(fragment);
+        if (editType.equals("Edit") == true && fragment.getDisplayOrder().size()==0){
+            FragmentController.addEmptyPart(fragment);
         }
         // TODO: Load our fragment into view
         //get widget references
@@ -149,7 +149,7 @@ public class EditFragmentActivity extends Activity implements FView<Fragment> {
 				Fragment aNewFrag = new Fragment();
 				aNewFrag.addChoice(aNewChoice);
 				aNewFrag.setTitle(title);
-				aNewFrag.setId(idPage);
+				//aNewFrag.setId(idPage);
 				StoryList sl = AdventureCreatorApplication.getStoryList();
 				
 				Story story = sl.getStoryById(storyId);
@@ -218,4 +218,26 @@ public class EditFragmentActivity extends Activity implements FView<Fragment> {
         inflater.inflate(R.menu.new_fragment_part_menu, menu);
     }
 
+    @Override
+    public boolean onContextItemSelected(MenuItem item) {
+        AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo)item.getMenuInfo();
+        //      int menuItemIndex = item.getItemId();
+        //      String[] menuItems = getResources().getStringArray(R.sfkjad.menu);
+        //      String menuItemName = menuItems[menuItemIndex];
+        //      String listItemName = Countries[info.position];
+        //
+        //      TextView text = (TextView)findViewById(R.id.footer);
+        //      text.setText(String.format("Selected %s for item %s", menuItemName, listItemName));
+
+        int position = (int)info.id;
+        
+        CharSequence itemTitle = item.getTitle();
+        if (itemTitle.equals("Insert Text")){
+            System.out.println("INSERTEXT");
+        } else if (itemTitle.equals("Delete")){
+            FragmentController.deleteFragmentPart(fragment, position);
+        }
+
+        return true;
+    }
 }

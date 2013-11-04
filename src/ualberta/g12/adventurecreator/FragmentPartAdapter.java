@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
+import android.widget.EditText;
 import android.widget.TextView;
 
 public class FragmentPartAdapter extends ArrayAdapter{
@@ -44,7 +45,7 @@ public class FragmentPartAdapter extends ArrayAdapter{
 
             String textSegment = frag.getTextSegments().get(occurence);
             if (textSegment != null){
-                TextView text = (TextView) rowView.findViewById(R.id.fragmentPartText);
+                EditText text = (EditText) rowView.findViewById(R.id.fragmentPartEditText);
                 if (text != null)
                     text.setText(textSegment);
             }
@@ -60,20 +61,21 @@ public class FragmentPartAdapter extends ArrayAdapter{
 
             Drawable illustration = frag.getIllustrations().get(occurence);
             if (illustration != null){
-                ImageView image = (ImageView) rowView.findViewById(R.id.ImageView04);
+                ImageView image = (ImageView) rowView.findViewById(R.id.fragmentPartIllustration);
                 if (image != null)
                     image.setImageDrawable(illustration);
             }
-        } else if (frag.getDisplayOrder().get(position).equals("n")){
-            //Display a new FragmentPart
+        } else if (frag.getDisplayOrder().get(position).equals("e")){
+            //Display a DefaultPart
             
-            String textSegment = "New text/image";
+            String textSegment = "Add new text/image/chioce\n(This section will be removed when done editing)";
             if (textSegment != null){
-                TextView text = (TextView) rowView.findViewById(R.id.fragmentPartText);
+                TextView text = (TextView) rowView.findViewById(R.id.fragmentPartTextPart);
                 if (text != null)
                     text.setText(textSegment);
             }
-        }
+        } 
+        
         return rowView;
     }
 }
