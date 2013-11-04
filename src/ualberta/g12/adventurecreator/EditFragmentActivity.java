@@ -55,12 +55,12 @@ public class EditFragmentActivity extends Activity implements FView<Fragment> {
         // TODO: Set the fragmentController to our Fragment
         
         /* for testing, will delete later -Lindsay */
-        LinkedList<String> strings = new LinkedList<String>();
-        strings.add("entry1");
-        strings.add("entry2");
-        strings.add("entry number 3 which is rather long because we woud like to test text wrapping");
-        fragment.setTextSegments(strings);
-        
+        //FragmentController fragcont = new FragmentController();
+        fragment = new Fragment();
+        System.out.println("going to addtextseg");
+        FragmentController.addTextSegment(fragment, "entry1");
+        FragmentController.addTextSegment(fragment,"entry2");
+        FragmentController.addTextSegment(fragment,"entry number 3 which is rather long because we woud like to test text wrapping");
         
         // TODO: Load our fragment into view
         //get widget references
@@ -80,6 +80,7 @@ public class EditFragmentActivity extends Activity implements FView<Fragment> {
         FragmentPartAdapter adapter = new FragmentPartAdapter(
                 this, R.layout.activity_fragment_editor, fragment);
         fragmentPartListView.setAdapter(adapter);
+       
         
         // TODO: Set up on clickers
         setUpOnClickListeners();
@@ -149,6 +150,7 @@ public class EditFragmentActivity extends Activity implements FView<Fragment> {
             }	
         });
         
+        System.out.println("start listener");
         fragmentPartListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
             @Override

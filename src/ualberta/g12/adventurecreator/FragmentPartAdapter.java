@@ -61,8 +61,7 @@ public class FragmentPartAdapter extends ArrayAdapter{
                 if (image != null)
                     image.setImageDrawable(illustration);
             }
-        } 
-
+        }
         return rowView;
     }
 }

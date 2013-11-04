@@ -8,23 +8,36 @@ import android.graphics.drawable.Drawable;
 
 
 public class FragmentController implements FController {
+    
+    public FragmentController(){
+        super();
+    }
 
     @Override
     public void editTitle(Fragment frag, String newTitle){
         frag.setTitle(newTitle);
     }
 
-    public void addTextSegment(Fragment frag, String textSegment){
+    public static void addTextSegment(Fragment frag, String textSegment){
         List<String> textSegments = frag.getTextSegments();
         textSegments.add(textSegment);
         frag.setTextSegments(textSegments);
 
         //insert t into corresponding spot in display order
         List<String> displayOrder = frag.getDisplayOrder();
-        int i=0;
-        while (!displayOrder.get(i).equals("c"))
+        
+        int i=0;        
+        while (i < displayOrder.size()){
+            if (displayOrder.get(i).equals("c"))
+                break;
             i++;
-        displayOrder.add(i, "t");
+        }
+        if (displayOrder.size()==i){
+            displayOrder.add("t");
+        } else {
+            displayOrder.add(i, "t");
+        }
+        
         frag.setDisplayOrder(displayOrder);
     }
     
@@ -63,9 +76,17 @@ public class FragmentController implements FController {
         //insert t into corresponding spot in display order
         List<String> displayOrder = frag.getDisplayOrder();
         int i=0;
-        while (!displayOrder.get(i).equals("c"))
+        
+        while (i < displayOrder.size()){
+            if (displayOrder.get(i).equals("c"))
+                break;
             i++;
-        displayOrder.add(i, "i");
+        }
+        if (displayOrder.size()==i){
+            displayOrder.add("i");
+        } else {
+            displayOrder.add(i, "i");
+        }
         frag.setDisplayOrder(displayOrder);
     }
 
