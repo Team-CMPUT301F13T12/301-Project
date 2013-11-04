@@ -26,7 +26,7 @@ public class AdventureCreatorApplication extends Application {
     
     public static StoryListController getStoryListController() {
         if (storyController == null) {
-            storyListController = new StoryListController(storyList);
+            storyListController = new StoryListController(getStoryList());
         }
         return storyListController;
     }
