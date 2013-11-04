@@ -1,4 +1,3 @@
-
 package ualberta.g12.adventurecreator;
 
 import android.app.Application;

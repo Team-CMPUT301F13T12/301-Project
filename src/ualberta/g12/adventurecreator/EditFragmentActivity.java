@@ -8,9 +8,13 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ListView;
+import android.widget.TextView;
 
+import java.util.LinkedList;
 
 // Right now we are making Fragments here and also choice
 // What i was thinking was maybe just make the general fragment here
@@ -25,6 +29,8 @@ public class EditFragmentActivity extends Activity implements FView<Fragment> {
     private Fragment fragment;
     private FragmentController fragmentController;
     private int storyId;
+    private TextView fragmentTitleTextView;
+    private ListView fragmentPartListView;
 
 
     @Override
@@ -48,7 +54,32 @@ public class EditFragmentActivity extends Activity implements FView<Fragment> {
         
         // TODO: Set the fragmentController to our Fragment
         
+        /* for testing, will delete later -Lindsay */
+        LinkedList<String> strings = new LinkedList<String>();
+        strings.add("entry1");
+        strings.add("entry2");
+        strings.add("entry number 3 which is rather long because we woud like to test text wrapping");
+        fragment.setTextSegments(strings);
+        
+        
         // TODO: Load our fragment into view
+        //get widget references
+        fragmentPartListView = (ListView) findViewById(R.id.FragmentPartList);
+        fragmentTitleTextView = (TextView) findViewById(R.id.fragmentTitle);
+        
+        //Loads title
+        String title = fragment.getTitle();
+        if (fragmentTitleTextView != null){
+            if (title != null)
+                fragmentTitleTextView.setText(title);
+            else
+                fragmentTitleTextView.setText("Title Here");  //should this go here? -Lindsay
+        }
+        
+        //Loads fragment parts (text, images, videos, sounds, etc
+        FragmentPartAdapter adapter = new FragmentPartAdapter(
+                this, R.layout.activity_fragment_editor, fragment);
+        fragmentPartListView.setAdapter(adapter);
         
         // TODO: Set up on clickers
         setUpOnClickListeners();
@@ -115,13 +146,29 @@ public class EditFragmentActivity extends Activity implements FView<Fragment> {
 				
 				Log.d("fragment", "a new fragment has been created");
 				finish();
-				
-				
-				
             }	
-        	
-        	
-        	
+        });
+        
+        fragmentPartListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+            @Override
+            public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
+                
+                /*
+                 * open pop up menu with options:
+                 * Add text
+                 * Add Image
+                 * Add Choice
+                 * Delete
+                 * 
+                 * or
+                 * Insert text
+                 * Insert Image
+                 * Insert Choice
+                 * Delete
+                 */
+               
+            }
         });
     }
 
