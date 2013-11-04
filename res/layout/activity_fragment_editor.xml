@@ -20,11 +20,12 @@
         <requestFocus />
     </EditText>
 
+    <!-- Give these real names! Chris -->
+    
     <ImageView
         android:id="@+id/imageView1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignRight="@+id/editText3"
         android:layout_centerVertical="true"
         android:layout_marginRight="20dp"
         android:src="@android:drawable/ic_menu_close_clear_cancel" />
@@ -51,7 +52,6 @@
         android:id="@+id/choiceId1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/editText3"
         android:layout_alignTop="@+id/imageView1"
         android:hint="ID of choice 1"
         android:ems="10" />
@@ -60,7 +60,6 @@
         android:id="@+id/editText5"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/editText4"
         android:layout_alignTop="@+id/ImageView01"
         android:hint="ID of choice 2"
         android:ems="10" />
