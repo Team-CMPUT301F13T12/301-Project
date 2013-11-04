@@ -12,6 +12,7 @@
     <string name="title_activity_activity_read_story">Activity_read_story</string>
     <string name="title_activity_activity_read_fragment">ActivityReadFragment</string>
     <string name="annotate">Annotate With Photo</string>
+    <string name="InsertPic">Add Illustration</string>
 
 
 </resources>

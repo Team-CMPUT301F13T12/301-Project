@@ -47,14 +47,16 @@
 
     
      <!-- width and height adjusted to fit layout better (does not capture entire image) -->
-    <ImageButton
-        android:id="@+id/imageButton" 
- 		android:layout_width="200dip" 
- 		android:layout_height="200dip"
+
+    <ImageView
+        android:id="@+id/imageButton"
+        android:layout_width="340dip"
+        android:layout_height="200dip"
         android:layout_alignLeft="@+id/editText3"
+        android:layout_alignRight="@+id/annotateImage"
         android:layout_below="@+id/editText3"
         android:layout_marginTop="120dp"
-        android:src="@android:drawable/ic_menu_gallery"/>
+        android:src="@android:drawable/ic_menu_gallery" />
 
     <EditText
         android:id="@+id/editText6"
@@ -86,6 +88,14 @@
         android:ems="10"
         android:hint="ID of Choice 3" />
 
+    <ImageView
+        android:id="@+id/annotateImage"
+        android:layout_width="100dip"
+        android:layout_height="100dip"
+        android:layout_alignParentRight="true"
+        android:layout_alignTop="@+id/editText3"
+        android:layout_marginTop="21dp"
+        android:src="@android:drawable/alert_light_frame" />
 
 </RelativeLayout>
 

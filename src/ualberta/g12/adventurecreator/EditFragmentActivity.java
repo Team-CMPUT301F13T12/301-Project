@@ -3,6 +3,7 @@ package ualberta.g12.adventurecreator;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.PointF;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
@@ -10,8 +11,10 @@ import android.os.Environment;
 import android.provider.MediaStore;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.View.OnTouchListener;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -23,8 +26,12 @@ public class EditFragmentActivity extends Activity {
 
     Uri imageFileUri;
     private static final int InsertAnnotate = Menu.FIRST;
-   
-	Button addImage;
+    private static final int InsertPicture = Menu.FIRST +2;
+    
+    public int x = 0;
+    
+        //button for ButtonImage if we want to use it
+//	Button addImage;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -32,14 +39,51 @@ public class EditFragmentActivity extends Activity {
 		setContentView(R.layout.activity_fragment_editor);
 
 		
-		   ImageButton button = (ImageButton) findViewById(R.id.imageButton);
+		//Image Button to insert illustration if we want to use image buttons instead
+	/*	   ImageButton button = (ImageButton) findViewById(R.id.imageButton);
 	        OnClickListener listener = new OnClickListener() {
 	            public void onClick(View v){
 	                AddImage();
 	            }
 	        };
 	        
-	        button.setOnClickListener(listener);
+	        button.setOnClickListener(listener);*/
+	     
+	        
+	        //from: http://stackoverflow.com/questions/16557076/how-to-smoothly-move-a-image-view-with-users-finger-on-android-emulator
+	        
+	        final ImageView img = (ImageView) findViewById(R.id.annotateImage);
+	        
+	        img.setOnTouchListener(new OnTouchListener()
+	        {
+	            PointF DownPT = new PointF(); // Record Mouse Position When Pressed Down
+	            PointF StartPT = new PointF(); // Record Start Position of 'img'
+
+	            public boolean onTouch(View v, MotionEvent event)
+	            {
+	                int eid = event.getAction();
+	                switch (eid)
+	                {
+	                    case MotionEvent.ACTION_MOVE :
+	                        PointF mv = new PointF( event.getX() - DownPT.x, event.getY() - DownPT.y);
+	                        img.setX((int)(StartPT.x+mv.x));
+	                        img.setY((int)(StartPT.y+mv.y));
+	                        StartPT = new PointF( img.getX(), img.getY() );
+	                        break;
+	                    case MotionEvent.ACTION_DOWN :
+	                        DownPT.x = event.getX();
+	                        DownPT.y = event.getY();
+	                        StartPT = new PointF( img.getX(), img.getY() );
+	                        break;
+	                    case MotionEvent.ACTION_UP :
+	                        // Nothing have to do
+	                        break;
+	                    default :
+	                        break;
+	                }
+	                return true;
+	            }
+	        });
 	}
 
 	@Override
@@ -50,6 +94,7 @@ public class EditFragmentActivity extends Activity {
 		//create option for annotating on menu bar
 		super.onCreateOptionsMenu(menu);
         menu.add(0, InsertAnnotate, 0, R.string.annotate);
+        menu.add(0, InsertPicture, 0, R.string.InsertPic);
 		return true;
 	}
 
@@ -57,12 +102,13 @@ public class EditFragmentActivity extends Activity {
 	    {
 	        switch(item.getItemId()) 
 	        {
-	            
-	            // TODO: annotation function to be written
                 case InsertAnnotate:         //if insert annotation is selected
                     AddAnnotation(); 
                     return true;
-            
+                    
+                case InsertPicture:         //if insert annotation is selected
+                    AddImage(); 
+                    return true;
 	                
 	            }
 	        return super.onMenuItemSelected(featureId, item);
@@ -70,6 +116,8 @@ public class EditFragmentActivity extends Activity {
 	 private static final int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 100;
 	    
 	    public void AddImage() {
+	        
+	         x = 0;
 	        
 	           // From: http://stackoverflow.com/q/16391124/1684866
 	        //*****Gallery Intent to save image      
@@ -107,25 +155,42 @@ public class EditFragmentActivity extends Activity {
 	   
 	    //Loads camera image onto Allocated View
 	    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+	          
 	        if (requestCode == CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE) {
 	            if (resultCode == RESULT_OK) {
-	                ImageButton button = (ImageButton) findViewById(R.id.imageButton);
-	                button.setImageDrawable(Drawable.createFromPath(imageFileUri.getPath()));
+	                if (x == 0) {
+	                ImageView view = (ImageView) findViewById(R.id.imageButton);
+	                view.setImageDrawable(Drawable.createFromPath(imageFileUri.getPath()));
+	                }
+	                if (x == 1) {
+	                    ImageView view = (ImageView) findViewById(R.id.annotateImage);
+	                    view.setImageDrawable(Drawable.createFromPath(imageFileUri.getPath()));
+	                    }
 	            }
+	            
 	        }
 	    }
 	    
-	    //TODO: annotation function 
+	    //TODO: add in multiple annotations 
 	    public void AddAnnotation() {
-	        Intent galleryIntent = new Intent(Intent.ACTION_GET_CONTENT,null);
-            galleryIntent.setType("image/*");
-            galleryIntent.addCategory(Intent.CATEGORY_OPENABLE);
-           
-            startActivityForResult(galleryIntent,0);  
-            
-	    }
-     
-
-	   
+	        
+	        x = 1;
+	        
+	        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+	        
+	        String folder = Environment.getExternalStorageDirectory().getAbsolutePath() + "/tmp";
+	        File folderF = new File(folder);
+	        if (!folderF.exists()) {
+	            folderF.mkdir();
+	        }
+	        
+	        String imageFilePath = folder + "/" + String.valueOf(System.currentTimeMillis()) + "jpg";
+	        File imageFile = new File(imageFilePath);
+	        imageFileUri = Uri.fromFile(imageFile);
+	        
+	        intent.putExtra(MediaStore.EXTRA_OUTPUT, imageFileUri);
+	        startActivityForResult(intent, CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE);
+	        
+	    } 
 }
 
