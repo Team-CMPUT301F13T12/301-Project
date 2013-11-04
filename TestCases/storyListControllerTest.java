@@ -48,6 +48,36 @@ public class storyListControllerTestCases extends ActivityInstrumentationTestCas
         
     }
     
+          //tests getting a story
+      public void getStoryWithObject(){
+        
+        // add a story to our storyList
+        sl = new StoryList();
+        slc = new StoryListController(sl);
+        story s = new story("Book","Dan Dude");
+        slc.addStory(s);
+        story s2 = slc.getStory(s);
+        
+        
+        assert(s == s2);
+        
+    }
+    
+              //tests getting a story
+      public void getStoryWithTitle(){
+        
+        // add a story to our storyList
+        sl = new StoryList();
+        slc = new StoryListController(sl);
+        story s = new story("Book","Dan Dude");
+        slc.addStory(s);
+        story s2 = slc.getStory("Book");
+        
+        
+        assert(s == s2);
+        
+    }
+    
 
     
     
