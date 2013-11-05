@@ -13,65 +13,13 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
-        android:hint="Title of Fragment"
-        android:ems="10" >
-        
+        android:ems="10"
+        android:hint="Title of Fragment" >
 
         <requestFocus />
     </EditText>
 
     <!-- Give these real names! Chris -->
-    
-    <ImageView
-        android:id="@+id/ImageView00"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerVertical="true"
-        android:layout_marginRight="20dp"
-        android:src="@android:drawable/ic_menu_close_clear_cancel" />
-
-    <ImageView
-        android:id="@+id/ImageView01"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/ImageView02"
-        android:layout_below="@+id/ImageView00"
-        android:layout_marginTop="20dp"
-        android:src="@android:drawable/ic_menu_close_clear_cancel" />
-
-    <ImageView
-        android:id="@+id/ImageView02"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/ImageView00"
-        android:layout_below="@+id/ImageView01"
-        android:layout_marginTop="20dp"
-        android:src="@android:drawable/ic_menu_close_clear_cancel" />
-
-    <EditText
-        android:id="@+id/choiceId1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/ImageView00"
-        android:hint="ID of choice 1"
-        android:ems="10" />
-
-    <EditText
-        android:id="@+id/editText5"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/ImageView01"
-        android:hint="ID of choice 2"
-        android:ems="10" />
-
-    <EditText
-        android:id="@+id/editText6"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/editText5"
-        android:layout_alignTop="@+id/ImageView02"
-        android:hint="ID of choice 3"
-        android:ems="10" />
 
     <Button
         android:id="@+id/ButtonAddOrSave"
@@ -79,14 +27,14 @@
         android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/buttonAddIll"
         android:layout_alignParentBottom="true"
-        android:layout_alignRight="@+id/editText6"
+        android:layout_alignRight="@+id/buttonAddIll"
         android:text="Create" />
 
     <Button
         android:id="@+id/buttonAddIll"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/editText6"
+        android:layout_above="@+id/ButtonAddOrSave"
         android:layout_centerHorizontal="true"
         android:text="Add Illustration" />
 
@@ -104,7 +52,7 @@
         android:id="@+id/FragmentPartList"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/ImageView00"
+        android:layout_above="@+id/buttonAddIll"
         android:layout_alignParentLeft="true"
         android:layout_alignParentRight="true"
         android:layout_below="@+id/idPageNum" >

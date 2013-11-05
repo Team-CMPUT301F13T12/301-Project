@@ -35,6 +35,7 @@ public class EditFragmentActivity extends Activity implements FView<Fragment> {
     private int storyId;
     private TextView fragmentTitleTextView;
     private ListView fragmentPartListView;
+    private FragmentPartAdapter adapter;
 
 
     @Override
@@ -83,7 +84,7 @@ public class EditFragmentActivity extends Activity implements FView<Fragment> {
         }
         
         //Loads fragment parts (text, images, videos, sounds, etc
-        FragmentPartAdapter adapter = new FragmentPartAdapter(
+        adapter = new FragmentPartAdapter(
                 this, R.layout.activity_fragment_editor, fragment);
         fragmentPartListView.setAdapter(adapter);
        
@@ -95,6 +96,12 @@ public class EditFragmentActivity extends Activity implements FView<Fragment> {
     }
 
     private void setUpOnClickListeners() {
+        
+        /* 
+         * Should not need the add illustration button anymore
+         * I have copied the code to the insert Illustration
+         * menu option at the bottom of this file.
+         */
         addImage = (Button) findViewById(R.id.buttonAddIll);
         addImage.setOnClickListener(new OnClickListener() {
 
@@ -129,7 +136,7 @@ public class EditFragmentActivity extends Activity implements FView<Fragment> {
             	
         		EditText titleET = (EditText) findViewById(R.id.fragmentTitle);
 				EditText idPageNumET = (EditText) findViewById(R.id.idPageNum);
-				EditText choice1ET = (EditText) findViewById(R.id.choiceId1);
+				
 				
 				String title = titleET.getText().toString();
 				String idPageNum = idPageNumET.getText().toString();
@@ -140,10 +147,9 @@ public class EditFragmentActivity extends Activity implements FView<Fragment> {
 					Log.d("Msg","There was a number format exception!");
 				}
 				
-				String choice1 = choice1ET.getText().toString();
+				
 				//create a new fragment object as well as choice
 				Choice aNewChoice = new Choice();
-				aNewChoice.setChoiceText(choice1);
 				
 				//Fragment aNewFrag = new Fragment(title,Description);
 				Fragment aNewFrag = new Fragment();
@@ -165,36 +171,15 @@ public class EditFragmentActivity extends Activity implements FView<Fragment> {
             }	
         });
         
-        System.out.println("start listener");
-        fragmentPartListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-
-            @Override
-            public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
-                
-                if (fragment.getDisplayOrder().get(position).equals("n")){
-                    /*
-                     * open pop up menu with options:
-                     * Add text
-                     * Add Image
-                     * Add Choice
-                     * Delete
-                     */
-                    registerForContextMenu(fragmentPartListView);                    
-                    
-                } else {
-                    /*
-                     * open pop up menu with options:
-                     * Insert text
-                     * Insert Image
-                     * Insert Choice
-                     * Delete
-                     * 
-                     * depending on position
-                     */
-                }
-               
-            }
-        });
+        //Might not need... will decide soon, -Lindsay
+//        System.out.println("start listener");
+//        fragmentPartListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//
+//            @Override
+//            public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
+//               
+//            }
+//        });
     }
 
     @Override
@@ -215,29 +200,55 @@ public class EditFragmentActivity extends Activity implements FView<Fragment> {
                                     ContextMenuInfo menuInfo) {
         super.onCreateContextMenu(menu, v, menuInfo);
         MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.new_fragment_part_menu, menu);
+        inflater.inflate(R.menu.fragment_part_menu, menu);
     }
 
     @Override
     public boolean onContextItemSelected(MenuItem item) {
         AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo)item.getMenuInfo();
-        //      int menuItemIndex = item.getItemId();
-        //      String[] menuItems = getResources().getStringArray(R.sfkjad.menu);
-        //      String menuItemName = menuItems[menuItemIndex];
-        //      String listItemName = Countries[info.position];
-        //
-        //      TextView text = (TextView)findViewById(R.id.footer);
-        //      text.setText(String.format("Selected %s for item %s", menuItemName, listItemName));
-
         int position = (int)info.id;
         
         CharSequence itemTitle = item.getTitle();
         if (itemTitle.equals("Insert Text")){
-            System.out.println("INSERTEXT");
-        } else if (itemTitle.equals("Delete")){
+            // TODO
+            
+        } else if (itemTitle.equals("Insert Illustration")){
+            /*
+             * Need this code to return a drawable to add to the fragment
+             */
+            
+            // From: http://stackoverflow.com/q/16391124/1684866
+            Intent galleryIntent = new Intent(Intent.ACTION_GET_CONTENT, null);
+            galleryIntent.setType("image/*");
+            galleryIntent.addCategory(Intent.CATEGORY_OPENABLE);
+
+            Intent cameraIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
+
+            Intent chooser = new Intent(Intent.ACTION_CHOOSER);
+            chooser.putExtra(Intent.EXTRA_INTENT, galleryIntent);
+            chooser.putExtra(Intent.EXTRA_TITLE, "Select Illustration From");
+
+            Intent[] intentArray = {
+                    cameraIntent
+            };
+            chooser.putExtra(Intent.EXTRA_INITIAL_INTENTS, intentArray);
+            startActivityForResult(chooser, 0);
+            
+        }else if(itemTitle.equals("Add Choice")){
+            //add choice Logic
+//            EditText choice1ET = (EditText) findViewById(R.id.choiceId1);
+//            String choice1 = choice1ET.getText().toString();
+//            aNewChoice.setChoiceText(choice1);
+            
+        }else if (itemTitle.equals("Delete")){
             FragmentController.deleteFragmentPart(fragment, position);
         }
+        
+        //Make sure the fragment isn't completely empty
+        if(fragment.getDisplayOrder().size()==0)
+            FragmentController.addEmptyPart(fragment);
 
+        adapter.notifyDataSetChanged();
         return true;
     }
 }

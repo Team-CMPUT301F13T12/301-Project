@@ -32,8 +32,18 @@ public class FragmentPartAdapter extends ArrayAdapter{
             LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             rowView = inflater.inflate(R.layout.listview_fragment_part_list, parent, false);
         }
+        EditText editText = (EditText) rowView.findViewById(R.id.fragmentPartEditText);
+        ImageView image = (ImageView) rowView.findViewById(R.id.fragmentPartIllustration);
+        TextView defaultText = (TextView) rowView.findViewById(R.id.fragmentPartTextPart);
         
+        //make all invisible
+        editText.setVisibility(View.GONE);
+        image.setVisibility(View.GONE);
+        defaultText.setVisibility(View.GONE);
+        
+        System.out.println("POSITION "+position);
         if (frag.getDisplayOrder().get(position).equals("t")){
+            System.out.println("TEXT "+position);
             //Display a text segment
 
             //get the occurence number of the textSegment
@@ -45,11 +55,12 @@ public class FragmentPartAdapter extends ArrayAdapter{
 
             String textSegment = frag.getTextSegments().get(occurence);
             if (textSegment != null){
-                EditText text = (EditText) rowView.findViewById(R.id.fragmentPartEditText);
-                if (text != null)
-                    text.setText(textSegment);
+                editText.setVisibility(View.VISIBLE);
+                if (editText != null)
+                    editText.setText(textSegment);
             }
         } else if (frag.getDisplayOrder().get(position).equals("i")){
+            System.out.println("IMAGE "+position);
             //Display an illustration
             
             //get the occurence number of the textSegment
@@ -61,18 +72,20 @@ public class FragmentPartAdapter extends ArrayAdapter{
 
             Drawable illustration = frag.getIllustrations().get(occurence);
             if (illustration != null){
-                ImageView image = (ImageView) rowView.findViewById(R.id.fragmentPartIllustration);
+                image.setVisibility(View.VISIBLE);
                 if (image != null)
                     image.setImageDrawable(illustration);
             }
         } else if (frag.getDisplayOrder().get(position).equals("e")){
+            System.out.println("EMPTY "+position);
             //Display a DefaultPart
+            
             
             String textSegment = "Add new text/image/chioce\n(This section will be removed when done editing)";
             if (textSegment != null){
-                TextView text = (TextView) rowView.findViewById(R.id.fragmentPartTextPart);
-                if (text != null)
-                    text.setText(textSegment);
+                defaultText.setVisibility(View.VISIBLE);
+                if (defaultText != null)
+                    defaultText.setText(textSegment);
             }
         } 
         

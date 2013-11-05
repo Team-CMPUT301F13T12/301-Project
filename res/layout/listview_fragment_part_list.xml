@@ -16,20 +16,21 @@
         android:layout_alignParentRight="true"
         android:layout_alignParentTop="true" />
 
-    <ImageView
-        android:id="@+id/fragmentPartIllustration"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentRight="true"
-        android:layout_below="@+id/fragmentPartEditText" />
-
     <TextView
         android:id="@+id/fragmentPartTextPart"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_alignParentRight="true"
-        android:layout_alignParentTop="@+id/fragmentPartIllustration" />
+        android:layout_alignTop="@+id/fragmentPartEditText" />
+
+    <ImageView
+        android:id="@+id/fragmentPartIllustration"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignTop="@+id/fragmentPartText" />
+
 </RelativeLayout>
 
