@@ -37,21 +37,13 @@ public class MainActivity extends Activity implements LView<StoryList>, OnItemCl
         //storyList = AdventureCreatorApplication.getStoryList();
 
         listView = (ListView) findViewById(R.id.main_activity_listview);
-        storyList = new StoryList();
-        offlineHelper = new OfflineIOHelper(MainActivity.this);
-        offlineHelper.saveOfflineStories(storyList);
     }
     
     @Override
     protected void onStart() {
         super.onStart();
-        //obtain the intent
-//        Intent editActIntent = getIntent();
-//        storyList = (StoryList)editActIntent.getSerializableExtra("StoryList");
       
-      System.out.println("ONE");
       storyList = offlineHelper.loadOfflineStories();
-      System.out.println("FOUR");
 
 //      // Get our storyList instance from the application
 //      storyList = AdventureCreatorApplication.getStoryList();
@@ -60,29 +52,25 @@ public class MainActivity extends Activity implements LView<StoryList>, OnItemCl
 
       // Load our local stories from the StoryList Model
       stories = storyList.getAllStories();
-      System.out.println("FIVE");
       
       if (DEBUG_LOG)
           Log.d(TAG, String.format("Number of stories is: %d", stories.size()));
       System.out.println("SIX");
       // Add ourself to the StoryList Model
-      //storyList.addView(this);
+      storyList.addView(this);
       
       // Set up ListView Stuff
       adapter = new StoryListArrayAdapter(this, R.layout.listview_story_list, stories);
-      System.out.println("SEVEN");
       listView.setAdapter(adapter);
-      System.out.println("EIGHT");
       listView.setOnItemClickListener(this);
-      System.out.println("NINE");
     }
     
-//    @Override
-//    public void onDestroy(){
-//        super.onDestroy();
-//        // Remove ourselves from the story list
-//        storyList.deleteView(this);
-//    }
+    @Override
+    public void onDestroy(){
+        super.onDestroy();
+        // Remove ourselves from the story list
+        storyList.deleteView(this);
+    }
 
     @Override
     public void onResume() {
