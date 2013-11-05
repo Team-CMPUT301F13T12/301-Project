@@ -101,7 +101,7 @@ public class StoryEditActivity extends Activity implements SView<Story> {
 			public void onItemClick(AdapterView<?> parent, View view, int position, long id)
 			{
 			    Fragment selectedFrag = fragmentList.get(position);
-				openEditFragment(selectedFrag, position );
+				openEditFragment(selectedFrag, position);
 			}
 		}
 				);
