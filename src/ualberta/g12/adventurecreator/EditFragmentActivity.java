@@ -222,14 +222,16 @@ public class EditFragmentActivity extends Activity implements FView<Fragment> {
             AddImage();
 
         } else if (itemTitle.equals("Edit")){
-            if (fragment.getDisplayOrder().get(position).equals("t") || fragment.getDisplayOrder().get(position).equals("e")){
+            String type = fragment.getDisplayOrder().get(position);
+            if (type.equals("t") || type.equals("e")){
                 RelativeLayout curLayout = new RelativeLayout(this);
 
                 LayoutInflater inflater = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
                 final PopupWindow editTextWindow = new PopupWindow(inflater.inflate(R.layout.edit_text_seg_popup, null, true), 400, 400, true);
 
                 final EditText editTextSegView = (EditText) editTextWindow.getContentView().findViewById(R.id.editTextSeg);
-                editTextSegView.setText(fragment.getTextSegments().get(position));
+                if (type.equals("t"))
+                    editTextSegView.setText(fragment.getTextSegments().get(position));
 
                 Button editTextSave = (Button) editTextWindow.getContentView().findViewById(R.id.editTextSave);
                 Button editTextCancel = (Button) editTextWindow.getContentView().findViewById(R.id.editTextCancel);
@@ -255,7 +257,7 @@ public class EditFragmentActivity extends Activity implements FView<Fragment> {
                 editTextWindow.showAtLocation(curLayout, Gravity.CENTER, 0, 0); 
                 editTextWindow.update(0,0,fragmentPartListView.getWidth(),400);
 
-            } else if (fragment.getDisplayOrder().get(position).equals("i")){
+            } else if (type.equals("i")){
                 Drawable illustration = getDrawableGalleryOrCamera();
                 FragmentController.addIllustration(fragment, illustration, position);
             }
