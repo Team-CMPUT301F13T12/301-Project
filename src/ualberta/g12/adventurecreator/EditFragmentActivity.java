@@ -5,7 +5,10 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
+import android.provider.MediaStore;
 import android.util.Log;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
@@ -19,12 +22,15 @@ import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.ImageView.ScaleType;
 
+import java.io.File;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -39,7 +45,7 @@ public class EditFragmentActivity extends Activity implements FView<Fragment> {
     private Button addImage;
     private Button makeOrSave;
     private Fragment fragment;
-    private int storyId;
+    private int storyId, position;
     private TextView fragmentTitleTextView;
     private ListView fragmentPartListView;
     private FragmentPartAdapter adapter;
@@ -48,6 +54,8 @@ public class EditFragmentActivity extends Activity implements FView<Fragment> {
     public static final int ADD = 1;
     private EditText titleText;
     private EditText idPageNumText;
+    Uri imageFileUri;
+    private static final int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 100;
 
 
 
@@ -161,7 +169,7 @@ public class EditFragmentActivity extends Activity implements FView<Fragment> {
     @Override
     public boolean onContextItemSelected(MenuItem item) {
         AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo)item.getMenuInfo();
-        int position = (int)info.id;
+        position = (int)info.id;
         
         CharSequence itemTitle = item.getTitle();
         if (itemTitle.equals("Insert Text")){
@@ -170,8 +178,7 @@ public class EditFragmentActivity extends Activity implements FView<Fragment> {
 
         } else if (itemTitle.equals("Insert Illustration")){
 
-            Drawable illustration = getDrawableGalleryOrCamera();
-            FragmentController.addIllustration(fragment, illustration, position);
+            AddImage();
 
         } else if (itemTitle.equals("Edit")){
             if (fragment.getDisplayOrder().get(position).equals("t")){
@@ -275,4 +282,48 @@ public class EditFragmentActivity extends Activity implements FView<Fragment> {
         fragment.setTitle(title);
         fragment.setId(idPage);
     }   
+    
+    public void AddImage() {
+        
+        // From: http://stackoverflow.com/q/16391124/1684866
+     //*****Gallery Intent to save image      
+     //NOT FINISHED! only opens up gallery***
+      Intent galleryIntent = new Intent(Intent.ACTION_GET_CONTENT,null);
+      galleryIntent.setType("image/*");
+      galleryIntent.addCategory(Intent.CATEGORY_OPENABLE);
+     //***end Gallery intent**** 
+     
+   
+      //*****Camera intent to save image *****
+      Intent CameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+         
+         String folder = Environment.getExternalStorageDirectory().getAbsolutePath() + "/tmp";
+         File folderF = new File(folder);
+         if (!folderF.exists()) {
+             folderF.mkdir();
+     }     
+     String imageFilePath = folder + "/" + String.valueOf(System.currentTimeMillis()) + "jpg";
+     File imageFile = new File(imageFilePath);
+     imageFileUri = Uri.fromFile(imageFile);
+     CameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, imageFileUri);
+     //*********/End Camera intent******
+     
+     //Intent for chooser for image resource 
+      Intent chooser = new Intent(Intent.ACTION_CHOOSER);   
+      chooser.putExtra(Intent.EXTRA_INTENT, galleryIntent);      
+      chooser.putExtra(Intent.EXTRA_TITLE, "Select Illustration From");
+      
+      Intent[] intentArray =  {CameraIntent}; 
+      chooser.putExtra(Intent.EXTRA_INITIAL_INTENTS, intentArray);
+      startActivityForResult(chooser,CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE);  
+ }
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        
+        if (requestCode == CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE) {
+            if (resultCode == RESULT_OK) {
+                Drawable illustration = Drawable.createFromPath(imageFileUri.getPath());
+                FragmentController.addIllustration(fragment, illustration, position);
+            }
+        }
+    }
 }
