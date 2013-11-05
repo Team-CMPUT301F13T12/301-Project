@@ -5,6 +5,7 @@ import java.util.List;
 
 
 
+
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -58,6 +59,7 @@ public class StoryEditActivity extends Activity implements SView<Story> {
 
         Intent i = getIntent();
         int id = i.getIntExtra(INTENT_STORY_ID, INVALID_STORY_ID);
+        story = (Story)i.getSerializableExtra("Story");
 
         if (DEBUG_LOG)
             Log.d(TAG, String.format("Started with story id: %d", id));
@@ -68,8 +70,8 @@ public class StoryEditActivity extends Activity implements SView<Story> {
             // TODO: What should we do here?
             Log.w(TAG, "We were created withoug being passed a story to load.");
         }
-        StoryList sl = AdventureCreatorApplication.getStoryList();
-        story = sl.getStoryById(id);
+        //StoryList sl = AdventureCreatorApplication.getStoryList();
+        //story = sl.getStoryById(id);
 
         if (story == null) {
             // TODO: What should we do here?
@@ -172,7 +174,7 @@ public class StoryEditActivity extends Activity implements SView<Story> {
                 Intent intent = new Intent(this, EditFragmentActivity.class);
                 intent.putExtra("EditType", "Edit");
                 intent.putExtra("Fragment", newFrag);
-                intent.putExtra("storyId", storyId);
+                intent.putExtra("Story", story);
                 Log.d("This",String.format("The story id was: %d", storyId));
                 startActivity(intent);
                 return true;

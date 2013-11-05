@@ -42,7 +42,7 @@ public class FragmentController implements FController {
         List<String> displayOrder = frag.getDisplayOrder();
         
         //check for invalid dispNum
-        if (displayOrder.size()<=dispNum)
+        if (displayOrder.size()<dispNum)
             return false;
         
         //Insert the text segment

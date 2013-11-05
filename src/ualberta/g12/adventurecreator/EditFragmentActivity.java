@@ -60,9 +60,6 @@ public class EditFragmentActivity extends Activity implements FView<Fragment> {
     private static final int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 100;
     ImageButton imag;
     private static final String TAG = "EditFragmentActivity";
-    
-    private List<Fragment>fragmentList;
-    private int pos;
     private Story story;
 
 
@@ -72,13 +69,11 @@ public class EditFragmentActivity extends Activity implements FView<Fragment> {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_fragment_editor);
 
-        // obtain the intent
+        //obtain the intent
         Intent editActIntent = getIntent();
-        Bundle bundledExtras = editActIntent.getExtras();
-        String editType = bundledExtras.getString("EditType");
-        //fragment = (Fragment)editActIntent.getSerializableExtra("Fragment");
-        fragment = (Fragment) bundledExtras.getSerializable("Fragment");
-        //storyId  = bundledExtras.getInt("storyId");
+        String editType = (String) editActIntent.getSerializableExtra("EditType");
+        fragment = (Fragment)editActIntent.getSerializableExtra("Fragment");
+        story  = (Story)editActIntent.getSerializableExtra("Story");
         
         //get widget references
         fragmentPartListView = (ListView) findViewById(R.id.FragmentPartList);
@@ -110,9 +105,8 @@ public class EditFragmentActivity extends Activity implements FView<Fragment> {
                 titleText.setText("Title Here");  //should this go here? -Lindsay
         }
 
-        //Loads fragment parts (text, images, videos, sounds, etc
-        adapter = new FragmentPartAdapter(
-                this, R.layout.activity_fragment_editor, fragment);
+        //Loads fragment parts (text, images, videos, sounds, etc)
+        adapter = new FragmentPartAdapter(this, R.layout.activity_fragment_editor, fragment);
         fragmentPartListView.setAdapter(adapter);
 
         registerForContextMenu(fragmentPartListView);
@@ -157,7 +151,7 @@ public class EditFragmentActivity extends Activity implements FView<Fragment> {
             AddImage();
 
         } else if (itemTitle.equals("Edit")){
-            if (fragment.getDisplayOrder().get(position).equals("t")){
+            if (fragment.getDisplayOrder().get(position).equals("t") || fragment.getDisplayOrder().get(position).equals("e")){
                 RelativeLayout curLayout = new RelativeLayout(this);
                 
                 LayoutInflater inflater = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -187,16 +181,15 @@ public class EditFragmentActivity extends Activity implements FView<Fragment> {
                 });
                 
                 
-                Log.d(TAG,"width"+fragmentPartListView.getWidth());
                 editTextWindow.showAtLocation(curLayout, Gravity.CENTER, 0, 0); 
-                editTextWindow.update(0,0,300,400);
-                System.out.println("n1");
+                editTextWindow.update(0,0,fragmentPartListView.getWidth(),400);
+                
             } else if (fragment.getDisplayOrder().get(position).equals("i")){
                 Drawable illustration = getDrawableGalleryOrCamera();
                 FragmentController.addIllustration(fragment, illustration, position);
             }
             
-        } else if(itemTitle.equals("Add Choice")){
+        } else if(itemTitle.equals("Add Choice")){ 
             //add choice Logic
             //            EditText choice1ET = (EditText) findViewById(R.id.choiceId1);
             //            String choice1 = choice1ET.getText().toString();
@@ -225,7 +218,8 @@ public class EditFragmentActivity extends Activity implements FView<Fragment> {
         if(fragment.getDisplayOrder().size()==0)
             FragmentController.addEmptyPart(fragment);
 
-        adapter.notifyDataSetChanged();
+        //reset listview to display any changes
+        fragmentPartListView.invalidateViews();
         return true;
     }
     

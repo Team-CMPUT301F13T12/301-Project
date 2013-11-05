@@ -130,9 +130,11 @@ public class MainActivity extends Activity implements LView<StoryList>, OnItemCl
         Intent i;
         if (isAuthor) {
             i = new Intent(this, StoryEditActivity.class);
+            i.putExtra("Story",stories.get(pos));
             i.putExtra(StoryEditActivity.INTENT_STORY_ID, stories.get(pos).getId());
         } else {
             i = new Intent(this, StoryViewActivity.class);
+            i.putExtra("Story",stories.get(pos));
             i.putExtra(StoryViewActivity.INTENT_STORY_ID, stories.get(pos).getId());
         }
         startActivity(i);
