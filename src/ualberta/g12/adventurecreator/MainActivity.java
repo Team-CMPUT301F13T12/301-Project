@@ -35,6 +35,10 @@ public class MainActivity extends Activity implements LView<StoryList>, OnItemCl
         
         // Get our storyList instance from the application
         //storyList = AdventureCreatorApplication.getStoryList();
+        
+//        //Erases previous saves
+//        storyList = new StoryList();
+//        offlineHelper.saveOfflineStories(storyList);
 
         listView = (ListView) findViewById(R.id.main_activity_listview);
     }
@@ -75,8 +79,8 @@ public class MainActivity extends Activity implements LView<StoryList>, OnItemCl
     @Override
     public void onResume() {
         super.onResume();
-//        SharedPreferences settings = getPreferences(MODE_PRIVATE);
-//        isAuthor = settings.getBoolean(SHARED_PREF_IS_AUTHOR_FLAG, false);
+        SharedPreferences settings = getPreferences(MODE_PRIVATE);
+        isAuthor = settings.getBoolean(SHARED_PREF_IS_AUTHOR_FLAG, false);
         listView.invalidateViews();
 
     }

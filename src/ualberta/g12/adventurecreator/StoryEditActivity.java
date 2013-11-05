@@ -214,7 +214,7 @@ public class StoryEditActivity extends Activity implements SView<Story> {
 	private void openEditFragment(Fragment frag, int fragPos){
        
         Intent intent = new Intent(this, EditFragmentActivity.class);
-        intent.putExtra("EditType", "Edit");
+        intent.putExtra("Mode", "Edit");
         intent.putExtra("StoryList", storyList);
         intent.putExtra("StoryPos",storyPos);
         intent.putExtra("Story", story);

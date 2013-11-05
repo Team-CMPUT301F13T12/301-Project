@@ -20,7 +20,7 @@ public class Story extends SModel implements Serializable{
     private String author;
     private int id = 1; // TODO: should be unique 
     private List<Fragment> fragments; // list of all fragments in story (no particular order)
-    private Fragment startFragment;     // start page
+    private int startFragPos;     // start page
 
     public Story() {
         this.fragments = new LinkedList<Fragment>();
@@ -40,20 +40,14 @@ public class Story extends SModel implements Serializable{
         this.storyTitle = storyTitle;
     }
 
-    /**
-     * @return the startFragment
-     */
-    public Fragment getStartFragment() {
-        return startFragment;
+    public int getStartFragPos() {
+        return startFragPos;
     }
 
-    /**
-     * @param startFragment the startFragment to set
-     */
-    public void setStartFragment(Fragment startFragment) {
-        this.startFragment = startFragment;
+    public void setStartFragPos(int startFragPos) {
+        this.startFragPos = startFragPos;
     }
-    
+
     public String getAuthor() {
         return author;
     }
@@ -142,7 +136,7 @@ public class Story extends SModel implements Serializable{
         out.writeObject(this.author);
         out.writeObject(this.id);
         out.writeObject(this.fragments);
-        out.writeObject(this.startFragment);
+        out.writeObject(this.startFragPos);
     }
     private void readObject(java.io.ObjectInputStream in) throws IOException, ClassNotFoundException{
         this.NEW_STORY_ID = (Integer) in.readObject();
@@ -150,7 +144,7 @@ public class Story extends SModel implements Serializable{
         this.author = (String) in.readObject();
         this.id = (Integer) in.readObject();
         this.fragments = (List<Fragment>) in.readObject();
-        this.startFragment = (Fragment) in.readObject();
+        this.startFragPos = (Integer) in.readObject();
     }
 
 }

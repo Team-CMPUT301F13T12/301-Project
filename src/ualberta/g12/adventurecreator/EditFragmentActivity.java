@@ -44,14 +44,10 @@ import java.util.List;
 //
 public class EditFragmentActivity extends Activity implements FView<Fragment> {
 
-    private Button addImage;
-    private Button makeOrSave;
-    private Fragment fragment;
-    private int storyId, position;
+    private int storyId, position, type;
     private TextView fragmentTitleTextView;
     private ListView fragmentPartListView;
     private FragmentPartAdapter adapter;
-    private int type, storyPos, fragPos;
     public static final int EDIT = 0;
     public static final int ADD = 1;
     private EditText titleText;
@@ -60,10 +56,13 @@ public class EditFragmentActivity extends Activity implements FView<Fragment> {
     private static final int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 100;
     ImageButton imag;
     private static final String TAG = "EditFragmentActivity";
-    private Story story;
-    private StoryList storyList;
     private OfflineIOHelper offlineHelper;
-
+    private String mode;
+    private StoryList storyList;
+    private Story story;
+    private int storyPos, fragPos;
+    private Fragment fragment;
+    
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,7 +71,7 @@ public class EditFragmentActivity extends Activity implements FView<Fragment> {
 
         //obtain the intent
         Intent editActIntent = getIntent();
-        String editType = (String) editActIntent.getSerializableExtra("EditType");
+        mode = (String) editActIntent.getSerializableExtra("Mode");
         storyList = (StoryList)editActIntent.getSerializableExtra("StoryList");
         story  = (Story)editActIntent.getSerializableExtra("Story");
         storyPos  = (Integer)editActIntent.getSerializableExtra("StoryPos");
@@ -95,7 +94,7 @@ public class EditFragmentActivity extends Activity implements FView<Fragment> {
 
         //FragmentController.addIllustration(fragment,ill,2);
         
-        if (editType.equals("Edit") == true && fragment.getDisplayOrder().size()==0){
+        if (mode.equals("Edit") == true && fragment.getDisplayOrder().size()==0){
             FragmentController.addEmptyPart(fragment);
         }
         // TODO: Load our fragment into view
