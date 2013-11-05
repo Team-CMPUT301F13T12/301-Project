@@ -2,13 +2,16 @@ package ualberta.g12.adventurecreator;
 
 import android.graphics.drawable.Drawable;
 
+import java.io.IOException;
+import java.io.ObjectStreamException;
+import java.io.Serializable;
 import java.util.LinkedList;
 import java.util.List;
 
 // TODO: parameterize to an FView
-public class Fragment extends FModel{
+public class Fragment extends FModel implements Serializable{
 
-    private static final int NEW_FRAGMENT_ID = -1;
+    private static int NEW_FRAGMENT_ID = -1;
 
     private String title;
     private int id;
@@ -122,5 +125,29 @@ public class Fragment extends FModel{
     // public void setAnnotations(Annotation annotations) {
     // this.annotations = annotations;
     // }
-
+    
+    private void writeObject(java.io.ObjectOutputStream out) throws IOException{
+        out.writeObject(this.NEW_FRAGMENT_ID);
+        out.writeObject(this.title);
+        out.writeObject(this.id);
+        out.writeObject(this.textSegments);
+        out.writeObject(this.illustrations);
+        // out.writeObject(this.sounds);
+        // out.writeObject(this.videos);
+        out.writeObject(this.choices);
+        out.writeObject(this.displayOrder);
+        out.writeObject(this.isLinkedTo);
+    }
+    private void readObject(java.io.ObjectInputStream in) throws IOException, ClassNotFoundException{
+        this.NEW_FRAGMENT_ID = (Integer) in.readObject();
+        this.title = (String) in.readObject();
+        this.id = (Integer) in.readObject();
+        this.textSegments = (List<String>) in.readObject();
+        this.illustrations = (List<Drawable>) in.readObject();
+        // this.sounds = (LinkedList<>) in.readObject();
+        // this.videos = (LinkedList<>) in.readObject();
+        this.choices = (List<Choice>) in.readObject();
+        this.displayOrder = (List<String>) in.readObject();
+        this.isLinkedTo = (Boolean) in.readObject();
+    }
 }

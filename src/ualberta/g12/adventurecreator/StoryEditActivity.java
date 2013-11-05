@@ -167,8 +167,11 @@ public class StoryEditActivity extends Activity implements SView<Story> {
         switch (item.getItemId()) {
             case R.id.add_fragment:
                 // TODO: Need to Pass the ID of the fragment to edit
+                Fragment newFrag = new Fragment();
+                storyController.addFragment(story, newFrag);
                 Intent intent = new Intent(this, EditFragmentActivity.class);
-                intent.putExtra("EditType", "Add");
+                intent.putExtra("EditType", "Edit");
+                intent.putExtra("Fragment", newFrag);
                 intent.putExtra("storyId", storyId);
                 Log.d("This",String.format("The story id was: %d", storyId));
                 startActivity(intent);

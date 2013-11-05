@@ -32,14 +32,14 @@ public class FragmentPartAdapter extends ArrayAdapter{
             LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             rowView = inflater.inflate(R.layout.listview_fragment_part_list, parent, false);
         }
-        EditText editText = (EditText) rowView.findViewById(R.id.fragmentPartEditText);
+        //EditText editText = (EditText) rowView.findViewById(R.id.fragmentPartEditText);
         ImageView image = (ImageView) rowView.findViewById(R.id.fragmentPartIllustration);
-        TextView defaultText = (TextView) rowView.findViewById(R.id.fragmentPartTextPart);
+        TextView text = (TextView) rowView.findViewById(R.id.fragmentPartTextPart);
         
         //make all invisible
-        editText.setVisibility(View.GONE);
+        //EditText.setVisibility(View.GONE);
         image.setVisibility(View.GONE);
-        defaultText.setVisibility(View.GONE);
+        text.setVisibility(View.GONE);
         
         System.out.println("POSITION "+position);
         if (frag.getDisplayOrder().get(position).equals("t")){
@@ -55,9 +55,9 @@ public class FragmentPartAdapter extends ArrayAdapter{
 
             String textSegment = frag.getTextSegments().get(occurence);
             if (textSegment != null){
-                editText.setVisibility(View.VISIBLE);
-                if (editText != null)
-                    editText.setText(textSegment);
+                text.setVisibility(View.VISIBLE);
+                if (text != null)
+                    text.setText(textSegment);
             }
         } else if (frag.getDisplayOrder().get(position).equals("i")){
             System.out.println("IMAGE "+position);
@@ -83,9 +83,9 @@ public class FragmentPartAdapter extends ArrayAdapter{
             
             String textSegment = "Add new text/image/chioce\n(This section will be removed when done editing)";
             if (textSegment != null){
-                defaultText.setVisibility(View.VISIBLE);
-                if (defaultText != null)
-                    defaultText.setText(textSegment);
+                text.setVisibility(View.VISIBLE);
+                if (text != null)
+                    text.setText(textSegment);
             }
         } 
         

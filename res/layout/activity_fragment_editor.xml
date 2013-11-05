@@ -21,29 +21,12 @@
 
     <!-- Give these real names! Chris -->
 
-    <Button
-        android:id="@+id/ButtonAddOrSave"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/buttonAddIll"
-        android:layout_alignParentBottom="true"
-        android:layout_alignRight="@+id/buttonAddIll"
-        android:text="Create" />
-
-    <Button
-        android:id="@+id/buttonAddIll"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/ButtonAddOrSave"
-        android:layout_centerHorizontal="true"
-        android:text="Add Illustration" />
-
     <EditText
         android:id="@+id/idPageNum"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignRight="@+id/buttonAddIll"
         android:layout_below="@+id/fragmentTitle"
+        android:layout_centerHorizontal="true"
         android:ems="10"
         android:hint="ID/Page Number"
         android:inputType="number" />
@@ -52,11 +35,9 @@
         android:id="@+id/FragmentPartList"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/buttonAddIll"
         android:layout_alignParentLeft="true"
         android:layout_alignParentRight="true"
         android:layout_below="@+id/idPageNum" >
-
     </ListView>
 
 </RelativeLayout>
