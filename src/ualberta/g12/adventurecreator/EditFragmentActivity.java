@@ -68,26 +68,35 @@ public class EditFragmentActivity extends Activity implements FView<Fragment> {
         if (editType.equals("Edit") == false){
             // TODO: Load our fragment from the story model using the id given to us as an extra ( if we are editing an existing fragment)
         	type = ADD;
+        	
             storyId  = bundledExtras.getInt("storyId");
-
+            Log.d("This",String.format("The story i got  was: %d", storyId));
             
             // load title , id/page number , fragment description, choices
             
         }
+        else{
+        	type = EDIT;
+        }
         
         // else then we are adding a new fragment dont need to load stuff
 
-        type = EDIT;
+        //type = EDIT;
         
         storyId  = bundledExtras.getInt("storyId");
         if (type == EDIT){
         	StoryList sl = AdventureCreatorApplication.getStoryList();
         	Story story = sl.getStoryById(storyId);
+        	Log.d("This",String.format("There was no story with id: %d", storyId));
         	List<Fragment>fragmentList = story.getFragments();
         	int pos = bundledExtras.getInt("pos");
         	Fragment fragment = fragmentList.get(pos);
         	titleText.setText(fragment.getTitle());
-        	idPageNumText.setText(fragment.getId());
+        	//idPageNumText.setText(String.format("%d",fragment.getId()));
+        	String idString = (new Integer(fragment.getId())).toString();
+        	Log.d("This",String.format("There was no story with id: %d", fragment.getId()));
+        	idPageNumText.setText(idString);
+        	
         }
         
         // TODO: Set the fragmentController to our Fragment
@@ -105,16 +114,16 @@ public class EditFragmentActivity extends Activity implements FView<Fragment> {
         // TODO: Load our fragment into view
         //get widget references
         fragmentPartListView = (ListView) findViewById(R.id.FragmentPartList);
-        fragmentTitleTextView = (TextView) findViewById(R.id.fragmentTitle);
+        //fragmentTitleTextView = (TextView) findViewById(R.id.fragmentTitle);
 
         //Loads title
-        String title = fragment.getTitle();
-        if (fragmentTitleTextView != null){
-            if (title != null)
-                fragmentTitleTextView.setText(title);
-            else
-                fragmentTitleTextView.setText("Title Here");  //should this go here? -Lindsay
-        }
+        //String title = fragment.getTitle();
+        //if (fragmentTitleTextView != null){
+        //    if (title != null)
+        //        fragmentTitleTextView.setText(title);
+        //    else
+        //        fragmentTitleTextView.setText("Title Here");  //should this go here? -Lindsay
+        //}
 
         //Loads fragment parts (text, images, videos, sounds, etc
         adapter = new FragmentPartAdapter(
@@ -188,6 +197,7 @@ public class EditFragmentActivity extends Activity implements FView<Fragment> {
                 Fragment aNewFrag = new Fragment();
                 aNewFrag.addChoice(aNewChoice);
                 aNewFrag.setTitle(title);
+                aNewFrag.setId(idPage);
                 //aNewFrag.setId(idPage);
                 StoryList sl = AdventureCreatorApplication.getStoryList();
 

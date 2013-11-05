@@ -169,7 +169,8 @@ public class StoryEditActivity extends Activity implements SView<Story> {
                 // TODO: Need to Pass the ID of the fragment to edit
                 Intent intent = new Intent(this, EditFragmentActivity.class);
                 intent.putExtra("EditType", "Add");
-                intent.putExtra("Id", storyId);
+                intent.putExtra("storyId", storyId);
+                Log.d("This",String.format("The story id was: %d", storyId));
                 startActivity(intent);
                 return true;
             case R.id.save_story:
@@ -207,7 +208,8 @@ public class StoryEditActivity extends Activity implements SView<Story> {
 		int id = selectedFrag.getId();
         Intent intent = new Intent(this, EditFragmentActivity.class);
         intent.putExtra("EditType", "Edit");
-        intent.putExtra("StoryId",storyId);
+        Log.d("This",String.format("The story id from editing is : %d", storyId));
+        intent.putExtra("storyId",storyId);
         intent.putExtra("FragmentId", id);
         //TODO need as we dont have a way to pass find fragment by id yet
         intent.putExtra("pos", position);
