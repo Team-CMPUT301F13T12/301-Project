@@ -2,8 +2,13 @@
 package ualberta.g12.adventurecreator;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
@@ -23,6 +28,7 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.PopupWindow;
@@ -32,6 +38,10 @@ import android.widget.ImageView.ScaleType;
 import android.util.Log;
 
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -61,6 +71,9 @@ public class EditFragmentActivity extends Activity implements FView<Fragment> {
     private Story story;
     private int storyPos, fragPos;
     private Fragment fragment;
+	private ImageView viewImage,viewImage2, viewImage3;
+	
+    public int x = 0;
 
 
     @Override
@@ -130,6 +143,36 @@ public class EditFragmentActivity extends Activity implements FView<Fragment> {
                     fragmentTitleTextView.setText("Error - No title found");
             }
         }
+        
+        //click listeners for adding illustrations
+        viewImage=(ImageView)findViewById(R.id.viewImage);
+        viewImage2=(ImageView)findViewById(R.id.viewImage2);
+        viewImage3=(ImageView)findViewById(R.id.viewImage3);
+        
+        viewImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+            	x=0;
+            	AddImage();
+            }
+        });
+        
+        viewImage2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+            	x=1;
+            	AddImage();
+            }
+        });
+        
+        viewImage3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+            	x=2;
+            	AddImage();
+            }
+        });
+        
     }
 
     @Override
@@ -257,10 +300,10 @@ public class EditFragmentActivity extends Activity implements FView<Fragment> {
                 editTextWindow.showAtLocation(curLayout, Gravity.CENTER, 0, 0); 
                 editTextWindow.update(0,0,fragmentPartListView.getWidth(),400);
 
-            } else if (type.equals("i")){
+            } /*else if (type.equals("i")){
                 Drawable illustration = getDrawableGalleryOrCamera();
                 FragmentController.addIllustration(fragment, illustration, position);
-            }
+            }*/
 
         } else if(itemTitle.equals("Add Choice")){ 
             //add choice Logic
@@ -293,81 +336,6 @@ public class EditFragmentActivity extends Activity implements FView<Fragment> {
         fragmentPartListView.invalidateViews();
         return true;
     }
-
-    /*
-     * Needs to be finished!!!  (Please) -Lindsay
-     */
-    private Drawable getDrawableGalleryOrCamera(){
-        // From: http://stackoverflow.com/q/16391124/1684866
-        Intent galleryIntent = new Intent(Intent.ACTION_GET_CONTENT, null);
-        galleryIntent.setType("image/*");
-        galleryIntent.addCategory(Intent.CATEGORY_OPENABLE);
-
-        Intent cameraIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
-
-        Intent chooser = new Intent(Intent.ACTION_CHOOSER);
-        chooser.putExtra(Intent.EXTRA_INTENT, galleryIntent);
-        chooser.putExtra(Intent.EXTRA_TITLE, "Select Illustration From");
-
-        Intent[] intentArray = {
-                cameraIntent
-        };
-        chooser.putExtra(Intent.EXTRA_INITIAL_INTENTS, intentArray);
-        startActivityForResult(chooser, 0);
-        return null;
-    }  
-
-    public void AddImage() {
-
-        // From: http://stackoverflow.com/q/16391124/1684866
-        //*****Gallery Intent to save image      
-        //NOT FINISHED! only opens up gallery***
-        Intent galleryIntent = new Intent(Intent.ACTION_GET_CONTENT,null);
-        galleryIntent.setType("image/*");
-        galleryIntent.addCategory(Intent.CATEGORY_OPENABLE);
-        //***end Gallery intent**** 
-
-
-        //*****Camera intent to save image *****
-        Intent CameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-
-        String folder = Environment.getExternalStorageDirectory().getAbsolutePath() + "/tmp";
-        File folderF = new File(folder);
-        if (!folderF.exists()) {
-            folderF.mkdir();
-        }     
-        String imageFilePath = folder + "/" + String.valueOf(System.currentTimeMillis()) + "jpg";
-        File imageFile = new File(imageFilePath);
-        imageFileUri = Uri.fromFile(imageFile);
-        CameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, imageFileUri);
-        //*********/End Camera intent******
-
-        //Intent for chooser for image resource 
-        Intent chooser = new Intent(Intent.ACTION_CHOOSER);   
-        chooser.putExtra(Intent.EXTRA_INTENT, galleryIntent);      
-        chooser.putExtra(Intent.EXTRA_TITLE, "Select Illustration From");
-
-        Intent[] intentArray =  {CameraIntent}; 
-        chooser.putExtra(Intent.EXTRA_INITIAL_INTENTS, intentArray);
-        startActivityForResult(chooser,CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE);  
-    }
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-
-        if (requestCode == CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE) {
-            if (resultCode == RESULT_OK) {
-                System.out.println("RES OK");
-                Drawable illustration = Drawable.createFromPath(imageFileUri.getPath());
-                System.out.println("DRAWABLECREATE");
-                FragmentController.addIllustration(fragment, illustration, position);
-                System.out.println("ADDILL");
-
-                ImageButton imag = (ImageButton) findViewById(R.id.imagbut);
-                //button.setScaleType(ScaleType.CENTER_INSIDE);
-                imag.setImageDrawable(Drawable.createFromPath(imageFileUri.getPath()));
-                System.out.println("SET imagBUT");
-            }
-        }
-    }
     
     private void setTitleAndPageId() {
 
@@ -393,4 +361,111 @@ public class EditFragmentActivity extends Activity implements FView<Fragment> {
         offlineHelper = new OfflineIOHelper(EditFragmentActivity.this);
         offlineHelper.saveOfflineStories(storyList);
     }
+    
+    public void AddImage() {
+        final CharSequence[] options = { "Take Photo", "Choose from Gallery","Cancel" };
+        
+        AlertDialog.Builder builder = new AlertDialog.Builder(EditFragmentActivity.this);
+        builder.setTitle("Add Photo!");
+        builder.setItems(options, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int item) {
+                if (options[item].equals("Take Photo"))
+                {
+                    Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                    File f = new File(android.os.Environment.getExternalStorageDirectory(), "temp.jpg");
+                    intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(f));
+                    startActivityForResult(intent, 1);
+                }
+                else if (options[item].equals("Choose from Gallery"))
+                {
+                    Intent intent = new   Intent(Intent.ACTION_PICK,android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                    startActivityForResult(intent, 2);
+ 
+                }
+                else if (options[item].equals("Cancel")) {
+                    dialog.dismiss();
+                }
+            }
+        });
+        builder.show();
+    }
+    
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == RESULT_OK) {
+            if (requestCode == 1) {
+                File f = new File(Environment.getExternalStorageDirectory().toString());
+                for (File temp : f.listFiles()) {
+                    if (temp.getName().equals("temp.jpg")) {
+                        f = temp;
+                        break;
+                    }
+                }
+                try {
+                    Bitmap bitmap;
+                    BitmapFactory.Options bitmapOptions = new BitmapFactory.Options();
+ 
+                    bitmap = BitmapFactory.decodeFile(f.getAbsolutePath(),
+                            bitmapOptions); 
+                   if(x==0){
+                    viewImage.setImageBitmap(bitmap);
+                   } 
+                   if(x==1){
+                    viewImage2.setImageBitmap(bitmap);
+                   }
+                   if(x==2){
+                       viewImage3.setImageBitmap(bitmap);
+                   }
+                   
+                    String path = android.os.Environment
+                            .getExternalStorageDirectory()
+                            + File.separator
+                            + "Phoenix" + File.separator + "default";
+                    f.delete();
+                    OutputStream outFile = null;
+                    File file = new File(path, String.valueOf(System.currentTimeMillis()) + ".jpg");
+                    try {
+                        outFile = new FileOutputStream(file);
+                        bitmap.compress(Bitmap.CompressFormat.JPEG, 85, outFile);
+                        outFile.flush();
+                        outFile.close();
+                    } catch (FileNotFoundException e) {
+                        e.printStackTrace();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            } else if (requestCode == 2) {
+ 
+                Uri selectedImage = data.getData();
+                String[] filePath = { MediaStore.Images.Media.DATA };
+                Cursor c = getContentResolver().query(selectedImage,filePath, null, null, null);
+                c.moveToFirst();
+                int columnIndex = c.getColumnIndex(filePath[0]);
+                String picturePath = c.getString(columnIndex);
+                c.close();
+                Bitmap thumbnail = (BitmapFactory.decodeFile(picturePath));
+                Log.w("path of image from gallery......******************.........", picturePath+"");
+                
+                if(x==0){
+                    viewImage.setImageBitmap(thumbnail);
+                } 
+                if(x==1){
+                    viewImage2.setImageBitmap(thumbnail);	
+                }
+                if(x==2){
+                    viewImage3.setImageBitmap(thumbnail);
+                }
+                
+                
+            }
+        }
+    }
+    
 }
