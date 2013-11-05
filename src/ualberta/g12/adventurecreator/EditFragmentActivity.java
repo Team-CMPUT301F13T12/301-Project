@@ -57,6 +57,10 @@ public class EditFragmentActivity extends Activity implements FView<Fragment> {
     Uri imageFileUri;
     private static final int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 100;
     ImageButton imag;
+    
+    private List<Fragment>fragmentList;
+    private int pos;
+    private Story story;
 
 
 
@@ -220,6 +224,20 @@ public class EditFragmentActivity extends Activity implements FView<Fragment> {
             //            EditText choice1ET = (EditText) findViewById(R.id.choiceId1);
             //            String choice1 = choice1ET.getText().toString();
             //            aNewChoice.setChoiceText(choice1);
+        	
+        	//TODO AS of right now it only works for edit mode will have to add extra logic for ADD mode as fragment is not created yet
+        	/*
+        	// will have to change way of calling 
+        	// TODO change to newer way of calling 
+        	if (type == EDIT){
+        		Fragment selectedFrag = fragmentList.get(pos);
+        		Intent intent = new Intent(this,EditChoiceActivity.class);
+        		intent.putExtra("OurFragmentId", fragmentId);
+        		intent.putExtra("OurStoryId", storyId);
+        		startActivity(intent);
+        		Log.d("HI","HELLO");
+        	}
+        	*/
 
         }else if (itemTitle.equals("Delete")){
             FragmentController.deleteFragmentPart(fragment, position);
