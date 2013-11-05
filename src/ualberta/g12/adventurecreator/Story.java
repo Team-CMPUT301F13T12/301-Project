@@ -23,7 +23,11 @@ public class Story extends SModel implements Serializable{
     private int startFragPos;     // start page
 
     public Story() {
+        this.startFragPos = 0;
         this.fragments = new LinkedList<Fragment>();
+        Fragment frag = new Fragment();
+        frag.setTitle("Story Start Fragmet");
+        this.addFragment(frag);
     }
 
     public Story(String title, String author) {

@@ -161,11 +161,18 @@ public class MainActivity extends Activity implements LView<StoryList>, OnItemCl
             i.putExtra("StoryPos", pos);
             i.putExtra(StoryEditActivity.INTENT_STORY_ID, stories.get(pos).getId());
         } else {
-            i = new Intent(this, StoryViewActivity.class);
+            Story story = stories.get(pos);
+            int fragPos = story.getStartFragPos();
+            Fragment frag = story.getFragments().get(fragPos);
+
+            i = new Intent(this, EditFragmentActivity.class);
+            i.putExtra("Mode", "View");
             i.putExtra("StoryList", storyList);
-            i.putExtra("Story",stories.get(pos));
-            i.putExtra("StoryPos", pos);
-            i.putExtra(StoryViewActivity.INTENT_STORY_ID, stories.get(pos).getId());
+            i.putExtra("StoryPos",pos);
+            i.putExtra("Story", story);
+            i.putExtra("FragmentPos", fragPos);
+            i.putExtra("Fragment", frag);
+            startActivity(i);
         }
         startActivity(i);
     }
