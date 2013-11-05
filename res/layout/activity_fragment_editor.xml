@@ -12,7 +12,7 @@
         android:id="@+id/fragmentTitle"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
+        android:layout_below="@+id/fragmentTitleText"
         android:ems="10"
         android:hint="Title of Fragment" >
 
@@ -48,5 +48,14 @@
         android:layout_below="@+id/fragmentPartList"
         android:layout_weight="1"
         android:src="@android:drawable/ic_menu_gallery" />
+
+    <TextView
+        android:id="@+id/fragmentTitleText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:ems="10" />
 
 </RelativeLayout>

@@ -50,8 +50,7 @@ public class EditFragmentActivity extends Activity implements FView<Fragment> {
     private FragmentPartAdapter adapter;
     public static final int EDIT = 0;
     public static final int ADD = 1;
-    private EditText titleText;
-    private EditText idPageNumText;
+    private EditText editTitleText, idPageNumText;
     Uri imageFileUri;
     private static final int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 100;
     ImageButton imag;
@@ -62,7 +61,7 @@ public class EditFragmentActivity extends Activity implements FView<Fragment> {
     private Story story;
     private int storyPos, fragPos;
     private Fragment fragment;
-    
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,56 +75,73 @@ public class EditFragmentActivity extends Activity implements FView<Fragment> {
         story  = (Story)editActIntent.getSerializableExtra("Story");
         storyPos  = (Integer)editActIntent.getSerializableExtra("StoryPos");
         fragment = (Fragment)editActIntent.getSerializableExtra("Fragment");
-        fragPos = (Integer)editActIntent.getSerializableExtra("FragmentPos");
-        
-        
+        fragPos = (Integer)editActIntent.getSerializableExtra("FragmentPos"); //not reliable when in view mode
+
         //get widget references
         fragmentPartListView = (ListView) findViewById(R.id.FragmentPartList);
-        titleText = (EditText) findViewById(R.id.fragmentTitle);
+        fragmentTitleTextView = (TextView) findViewById(R.id.fragmentTitleText);
+        editTitleText = (EditText) findViewById(R.id.fragmentTitle);
         idPageNumText = (EditText) findViewById(R.id.idPageNum);
-            
-        // TODO: Set the fragmentController to our Fragment
-
-        /* for testing, will delete later -Lindsay */
-        //Drawable ill = Drawable.createFromPath("/mnt/sdcard/tmp/2013-11-04 22.04.41.jpg");
-        FragmentController.addTextSegment(fragment, "part1");
-        FragmentController.addTextSegment(fragment,"part2beforeill");
-        FragmentController.addTextSegment(fragment,"part number 3 which is rather long because we woud like to test text wrapping");
-
-        //FragmentController.addIllustration(fragment,ill,2);
         
+        /* for testing, will delete later -Lindsay */
+//        Drawable ill = Drawable.createFromPath("/mnt/sdcard/tmp/2013-11-04 22.04.41.jpg");
+//        FragmentController.addTextSegment(fragment, "part1");
+//        FragmentController.addTextSegment(fragment,"part2beforeill");
+//        FragmentController.addTextSegment(fragment,"part number 3 which is rather long because we would like to test text wrapping");
+//        FragmentController.addIllustration(fragment,ill,2);
+
+        //Make sure we have at least one part if in edit mode
         if (mode.equals("Edit") == true && fragment.getDisplayOrder().size()==0){
             FragmentController.addEmptyPart(fragment);
         }
-        // TODO: Load our fragment into view
         
-
-        //Loads title
-        String title = fragment.getTitle();
-        if (titleText != null){
-            if (title != null)
-                titleText.setText(title);
-            else
-                titleText.setText("Title Here");  //should this go here? -Lindsay
-        }
-
+        //First load fragment parts as that is the same for both modes
         //Loads fragment parts (text, images, videos, sounds, etc)
         adapter = new FragmentPartAdapter(this, R.layout.activity_fragment_editor, fragment);
         fragmentPartListView.setAdapter(adapter);
-
-        registerForContextMenu(fragmentPartListView);
+     
+        if (mode.equals("Edit")){
+            //don't want textview
+            fragmentTitleTextView.setVisibility(View.GONE);
+            
+            //want the context menu for list parts
+            registerForContextMenu(fragmentPartListView);
+            
+            //Loads title
+            String title = fragment.getTitle();
+            if (editTitleText != null){
+                if (title != null)
+                    editTitleText.setText(title);
+                else
+                    editTitleText.setText("");
+            }
+            
+        } else if (mode.equals("View")){
+            //don't want edit text views
+            editTitleText.setVisibility(View.GONE);
+            idPageNumText.setVisibility(View.GONE);
+            
+            //Loads title
+            String title = fragment.getTitle();
+            if (fragmentTitleTextView != null){
+                if (title != null)
+                    fragmentTitleTextView.setText(title);
+                else
+                    fragmentTitleTextView.setText("Error - No title found");
+            }
+        }
     }
 
     @Override
     public void onBackPressed() {
-        saveTitlePageId();
-        saveFragment();
-//        Intent i = new Intent(this, StoryEditActivity.class);
-//        i.putExtra("Story",story);
-//        i.putExtra(StoryEditActivity.INTENT_STORY_ID, story.getId());
+        if (mode.equals("Edit"))
+            saveFragment();
+        //        Intent i = new Intent(this, StoryEditActivity.class);
+        //        i.putExtra("Story",story);
+        //        i.putExtra(StoryEditActivity.INTENT_STORY_ID, story.getId());
         super.onBackPressed();
     }
-    
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -139,6 +155,40 @@ public class EditFragmentActivity extends Activity implements FView<Fragment> {
 
     }
 
+    private void setListClickListener(){
+        fragmentPartListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+    
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                if (fragment.getDisplayOrder().get(position).equals("c")){
+                    if (mode.equals("Edit")){
+                        // TODO open edit choice activity
+                        
+                        
+                    } else if (mode.equals("View")){
+                        //go to next fragment
+                        
+                        //get the occurence number of the textSegment
+                        int occurence = 0;
+                        for (int i = 0; i < position; i++){
+                            if (fragment.getDisplayOrder().get(position).equals("t"))
+                                occurence++;  
+                        }
+                        Fragment goToFrag = fragment.getChoices().get(occurence).getLinkedToFragment();
+                        
+                        Intent intent = new Intent(EditFragmentActivity.this, EditFragmentActivity.class);
+                        intent.putExtra("Mode", "View");
+                        intent.putExtra("StoryList", storyList);
+                        intent.putExtra("StoryPos",storyPos);
+                        intent.putExtra("Story", story);
+                        intent.putExtra("FragmentPos", fragPos);
+                        intent.putExtra("Fragment", goToFrag);
+                        startActivity(intent);
+                    }
+                }
+            }});
+    }
+    
     @Override
     public void onCreateContextMenu(ContextMenu menu, View v,
             ContextMenuInfo menuInfo) {
@@ -151,7 +201,7 @@ public class EditFragmentActivity extends Activity implements FView<Fragment> {
     public boolean onContextItemSelected(MenuItem item) {
         AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo)item.getMenuInfo();
         position = (int)info.id;
-        
+
         CharSequence itemTitle = item.getTitle();
         if (itemTitle.equals("Insert Text")){
             FragmentController.addTextSegment(fragment, "New text", position);
@@ -162,16 +212,16 @@ public class EditFragmentActivity extends Activity implements FView<Fragment> {
         } else if (itemTitle.equals("Edit")){
             if (fragment.getDisplayOrder().get(position).equals("t") || fragment.getDisplayOrder().get(position).equals("e")){
                 RelativeLayout curLayout = new RelativeLayout(this);
-                
+
                 LayoutInflater inflater = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
                 final PopupWindow editTextWindow = new PopupWindow(inflater.inflate(R.layout.edit_text_seg_popup, null, true), 400, 400, true);
-        
+
                 final EditText editTextSegView = (EditText) editTextWindow.getContentView().findViewById(R.id.editTextSeg);
                 editTextSegView.setText(fragment.getTextSegments().get(position));
-                
+
                 Button editTextSave = (Button) editTextWindow.getContentView().findViewById(R.id.editTextSave);
                 Button editTextCancel = (Button) editTextWindow.getContentView().findViewById(R.id.editTextCancel);
-                
+
                 editTextSave.setOnClickListener(new EditTextSegOnClickListener(position) {
                     @Override
                     public void onClick(View v) {
@@ -181,31 +231,31 @@ public class EditFragmentActivity extends Activity implements FView<Fragment> {
                         editTextWindow.dismiss();
                     }
                 });
-                
+
                 editTextCancel.setOnClickListener(new OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         editTextWindow.dismiss();
                     }
                 });
-                
-                
+
+
                 editTextWindow.showAtLocation(curLayout, Gravity.CENTER, 0, 0); 
                 editTextWindow.update(0,0,fragmentPartListView.getWidth(),400);
-                
+
             } else if (fragment.getDisplayOrder().get(position).equals("i")){
                 Drawable illustration = getDrawableGalleryOrCamera();
                 FragmentController.addIllustration(fragment, illustration, position);
             }
-            
+
         } else if(itemTitle.equals("Add Choice")){ 
             //add choice Logic
             //            EditText choice1ET = (EditText) findViewById(R.id.choiceId1);
             //            String choice1 = choice1ET.getText().toString();
             //            aNewChoice.setChoiceText(choice1);
-        	
-        	//TODO AS of right now it only works for edit mode will have to add extra logic for ADD mode as fragment is not created yet
-        	/*
+
+            //TODO AS of right now it only works for edit mode will have to add extra logic for ADD mode as fragment is not created yet
+            /*
         	// will have to change way of calling 
         	// TODO change to newer way of calling 
         	if (type == EDIT){
@@ -216,13 +266,11 @@ public class EditFragmentActivity extends Activity implements FView<Fragment> {
         		startActivity(intent);
         		Log.d("HI","HELLO");
         	}
-        	*/
+             */
 
         }else if (itemTitle.equals("Delete")){
             FragmentController.deleteFragmentPart(fragment, position);
         }
-
-        System.out.println("n2");
         //Make sure the fragment isn't completely empty
         if(fragment.getDisplayOrder().size()==0)
             FragmentController.addEmptyPart(fragment);
@@ -231,12 +279,12 @@ public class EditFragmentActivity extends Activity implements FView<Fragment> {
         fragmentPartListView.invalidateViews();
         return true;
     }
-    
+
     /*
      * Needs to be finished!!!  (Please) -Lindsay
      */
     private Drawable getDrawableGalleryOrCamera(){
-     // From: http://stackoverflow.com/q/16391124/1684866
+        // From: http://stackoverflow.com/q/16391124/1684866
         Intent galleryIntent = new Intent(Intent.ACTION_GET_CONTENT, null);
         galleryIntent.setType("image/*");
         galleryIntent.addCategory(Intent.CATEGORY_OPENABLE);
@@ -253,19 +301,64 @@ public class EditFragmentActivity extends Activity implements FView<Fragment> {
         chooser.putExtra(Intent.EXTRA_INITIAL_INTENTS, intentArray);
         startActivityForResult(chooser, 0);
         return null;
+    }  
+
+    public void AddImage() {
+
+        // From: http://stackoverflow.com/q/16391124/1684866
+        //*****Gallery Intent to save image      
+        //NOT FINISHED! only opens up gallery***
+        Intent galleryIntent = new Intent(Intent.ACTION_GET_CONTENT,null);
+        galleryIntent.setType("image/*");
+        galleryIntent.addCategory(Intent.CATEGORY_OPENABLE);
+        //***end Gallery intent**** 
+
+
+        //*****Camera intent to save image *****
+        Intent CameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+
+        String folder = Environment.getExternalStorageDirectory().getAbsolutePath() + "/tmp";
+        File folderF = new File(folder);
+        if (!folderF.exists()) {
+            folderF.mkdir();
+        }     
+        String imageFilePath = folder + "/" + String.valueOf(System.currentTimeMillis()) + "jpg";
+        File imageFile = new File(imageFilePath);
+        imageFileUri = Uri.fromFile(imageFile);
+        CameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, imageFileUri);
+        //*********/End Camera intent******
+
+        //Intent for chooser for image resource 
+        Intent chooser = new Intent(Intent.ACTION_CHOOSER);   
+        chooser.putExtra(Intent.EXTRA_INTENT, galleryIntent);      
+        chooser.putExtra(Intent.EXTRA_TITLE, "Select Illustration From");
+
+        Intent[] intentArray =  {CameraIntent}; 
+        chooser.putExtra(Intent.EXTRA_INITIAL_INTENTS, intentArray);
+        startActivityForResult(chooser,CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE);  
+    }
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+
+        if (requestCode == CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE) {
+            if (resultCode == RESULT_OK) {
+                System.out.println("RES OK");
+                Drawable illustration = Drawable.createFromPath(imageFileUri.getPath());
+                System.out.println("DRAWABLECREATE");
+                FragmentController.addIllustration(fragment, illustration, position);
+                System.out.println("ADDILL");
+
+                ImageButton imag = (ImageButton) findViewById(R.id.imagbut);
+                //button.setScaleType(ScaleType.CENTER_INSIDE);
+                imag.setImageDrawable(Drawable.createFromPath(imageFileUri.getPath()));
+                System.out.println("SET imagBUT");
+            }
+        }
     }
     
-    /*
-     * Must call before leaving activity!!!
-     */
-    private void saveTitlePageId() {
-        //AS OF RIGHT NOW ONLY LOADS ONE CHOICE TITLE AND TITLE PAGE NUMBER AND ALSO FRAGMENT DESCRIPTION
+    private void setTitleAndPageId() {
 
-        EditText titleET = (EditText) findViewById(R.id.fragmentTitle);
-        EditText idPageNumET = (EditText) findViewById(R.id.idPageNum);
-        
-        String title = titleET.getText().toString();
-        String idPageNum = idPageNumET.getText().toString();
+        String title = editTitleText.getText().toString();
+        String idPageNum = idPageNumText.getText().toString();
         int idPage = -9;
         try{
             idPage = Integer.parseInt(idPageNum);
@@ -275,61 +368,13 @@ public class EditFragmentActivity extends Activity implements FView<Fragment> {
 
         fragment.setTitle(title);
         fragment.setId(idPage);
-    }   
-    
-    public void AddImage() {
-        
-        // From: http://stackoverflow.com/q/16391124/1684866
-     //*****Gallery Intent to save image      
-     //NOT FINISHED! only opens up gallery***
-      Intent galleryIntent = new Intent(Intent.ACTION_GET_CONTENT,null);
-      galleryIntent.setType("image/*");
-      galleryIntent.addCategory(Intent.CATEGORY_OPENABLE);
-     //***end Gallery intent**** 
-     
-   
-      //*****Camera intent to save image *****
-      Intent CameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-         
-         String folder = Environment.getExternalStorageDirectory().getAbsolutePath() + "/tmp";
-         File folderF = new File(folder);
-         if (!folderF.exists()) {
-             folderF.mkdir();
-     }     
-     String imageFilePath = folder + "/" + String.valueOf(System.currentTimeMillis()) + "jpg";
-     File imageFile = new File(imageFilePath);
-     imageFileUri = Uri.fromFile(imageFile);
-     CameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, imageFileUri);
-     //*********/End Camera intent******
-     
-     //Intent for chooser for image resource 
-      Intent chooser = new Intent(Intent.ACTION_CHOOSER);   
-      chooser.putExtra(Intent.EXTRA_INTENT, galleryIntent);      
-      chooser.putExtra(Intent.EXTRA_TITLE, "Select Illustration From");
-      
-      Intent[] intentArray =  {CameraIntent}; 
-      chooser.putExtra(Intent.EXTRA_INITIAL_INTENTS, intentArray);
-      startActivityForResult(chooser,CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE);  
- }
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        
-        if (requestCode == CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE) {
-            if (resultCode == RESULT_OK) {
-                System.out.println("RES OK");
-                Drawable illustration = Drawable.createFromPath(imageFileUri.getPath());
-                System.out.println("DRAWABLECREATE");
-                FragmentController.addIllustration(fragment, illustration, position);
-                System.out.println("ADDILL");
-                
-                ImageButton imag = (ImageButton) findViewById(R.id.imagbut);
-                //button.setScaleType(ScaleType.CENTER_INSIDE);
-                imag.setImageDrawable(Drawable.createFromPath(imageFileUri.getPath()));
-                System.out.println("SET imagBUT");
-            }
-        }
-    }
+    } 
     
     private void saveFragment(){
+        //make sure fragment does not have any empty parts
+        FragmentController.removeEmptyPart(fragment);
+
+        setTitleAndPageId();
         storyList.getAllStories().get(storyPos).getFragments().set(fragPos, fragment);
         offlineHelper = new OfflineIOHelper(EditFragmentActivity.this);
         offlineHelper.saveOfflineStories(storyList);

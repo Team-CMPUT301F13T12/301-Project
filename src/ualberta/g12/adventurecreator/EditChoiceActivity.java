@@ -140,7 +140,7 @@ public class EditChoiceActivity extends Activity {
 		Choice newChoice = new Choice();
 		// TODO needs to be checked;need controller
 		newChoice.setChoiceText(Title);
-		newChoice.setLinkedToPage(linked);
+		newChoice.setLinkedToFragment(linked);
 		fc.addChoice(frag, newChoice);
 		int i = frag.getChoices().size();
 		Log.d("DID IT GROW?", String.format("%d", i));

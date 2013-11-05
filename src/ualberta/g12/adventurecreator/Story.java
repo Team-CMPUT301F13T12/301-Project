@@ -88,7 +88,7 @@ public class Story extends SModel implements Serializable{
         for (int i = 0; i < newStory.getFragments().size(); i++) {
             this.fragments.add(newStory.getFragments().get(i));
         }
-        choiceToSet.setLinkedToPage(pageLinkedTo);
+        choiceToSet.setLinkedToFragment(pageLinkedTo);
     }
 
     // finds isolated pages and sets their isLinkedTo flag to false
@@ -104,7 +104,7 @@ public class Story extends SModel implements Serializable{
         // removes all pages from copyOfPages that are referenced
         for (int i = 0; i < this.fragments.size(); i++) {
             for (int j = 0; j < fragments.get(i).getChoices().size(); j++) {
-                Fragment tempPage = fragments.get(i).getChoices().get(j).getLinkedToPage();
+                Fragment tempPage = fragments.get(i).getChoices().get(j).getLinkedToFragment();
                 copyOfPages.remove(tempPage);
             }
         }

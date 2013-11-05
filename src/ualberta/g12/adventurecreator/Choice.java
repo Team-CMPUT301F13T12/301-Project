@@ -2,12 +2,12 @@ package ualberta.g12.adventurecreator;
 
 public class Choice {
 	private String choiceText;
-	private Fragment linkedToPage;
+	private Fragment linkedToFragment;
 	
 	//default settings for a new choice
 	public Choice() {
 		this.choiceText = "Change My Text";
-		this.linkedToPage = null;  //always check before linking from a choice that likedToPage != null
+		this.linkedToFragment = null;  //always check before linking from a choice that likedToPage != null
 	}
 
 	public String getChoiceText() {
@@ -18,12 +18,12 @@ public class Choice {
 		this.choiceText = choiceText;
 	}
 
-	public Fragment getLinkedToPage() {
-		return linkedToPage;
+	public Fragment getLinkedToFragment() {
+		return linkedToFragment;
 	}
 
-	public void setLinkedToPage(Fragment linkedToPage) {
-		this.linkedToPage = linkedToPage;
-		linkedToPage.setLinkedTo(true); //page is definitely linked to now
+	public void setLinkedToFragment(Fragment linkedToFragment) {
+		this.linkedToFragment = linkedToFragment;
+		linkedToFragment.setLinkedTo(true); //page is definitely linked to now
 	}
 }

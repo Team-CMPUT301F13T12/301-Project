@@ -46,14 +46,14 @@ public class FragmentPartAdapter extends ArrayAdapter{
             System.out.println("TEXT "+position);
             //Display a text segment
 
-            //get the occurence number of the textSegment
-            int occurence = 0;
+            //get the occurrence number of the textSegment
+            int occurrence = 0;
             for (int i = 0; i < position; i++){
                 if (frag.getDisplayOrder().get(position).equals("t"))
-                    occurence++;  
+                    occurrence++;  
             }
 
-            String textSegment = frag.getTextSegments().get(occurence);
+            String textSegment = frag.getTextSegments().get(occurrence);
             if (textSegment != null){
                 text.setVisibility(View.VISIBLE);
                 if (text != null)
@@ -63,15 +63,14 @@ public class FragmentPartAdapter extends ArrayAdapter{
             System.out.println("IMAGE "+position);
             //Display an illustration
             
-            //get the occurence number of the textSegment
-            int occurence = 0;
+            //get the occurrence number of the illustration
+            int occurrence = 0;
             for (int i = 0; i < position; i++){
                 if (frag.getDisplayOrder().get(i).equals("i"))
-                    occurence++;  
+                    occurrence++;  
             }
 
-            System.out.println("ADA ILLU");
-            Drawable illustration = frag.getIllustrations().get(occurence);
+            Drawable illustration = frag.getIllustrations().get(occurrence);
             if (illustration != null){
                 image.setVisibility(View.VISIBLE);
                 if (image != null)
