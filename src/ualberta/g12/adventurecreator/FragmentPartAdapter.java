@@ -66,7 +66,7 @@ public class FragmentPartAdapter extends ArrayAdapter{
             //get the occurence number of the textSegment
             int occurence = 0;
             for (int i = 0; i < position; i++){
-                if (frag.getDisplayOrder().get(position).equals("i"))
+                if (frag.getDisplayOrder().get(i).equals("i"))
                     occurence++;  
             }
 

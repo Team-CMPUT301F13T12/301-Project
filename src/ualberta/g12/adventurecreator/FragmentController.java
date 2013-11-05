@@ -154,7 +154,7 @@ public class FragmentController implements FController {
         //Insert the text segment
         int illNum=0;
         for (int i=0; i<dispNum;i++){
-            if (displayOrder.get(i).equals("t"))
+            if (displayOrder.get(i).equals("i"))
                 illNum++;
         }
         if (illustrations.size()==illNum){
@@ -164,7 +164,7 @@ public class FragmentController implements FController {
         }
 
         //insert t into corresponding spot in display order
-        displayOrder.add(dispNum, "t");
+        displayOrder.add(dispNum, "i");
         
         frag.setDisplayOrder(displayOrder);
         frag.setIllustrations(illustrations);
