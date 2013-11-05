@@ -39,15 +39,8 @@ public class EditFragmentActivity extends Activity {
 
     Uri imageFileUri;
 	ImageView viewImage,viewImage2, viewImage3;
-
-    //not using action bar right now
-    //private static final int InsertAnnotate = Menu.FIRST;
-    //private static final int InsertPicture = Menu.FIRST +2;
-    
+	
     public int x = 0;
-    
-    
-	Button addImage;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -55,7 +48,6 @@ public class EditFragmentActivity extends Activity {
 		setContentView(R.layout.activity_fragment_editor);
 
 	     
-	        
         viewImage=(ImageView)findViewById(R.id.viewImage);
         viewImage2=(ImageView)findViewById(R.id.viewImage2);
         viewImage3=(ImageView)findViewById(R.id.viewImage3);
@@ -92,32 +84,6 @@ public class EditFragmentActivity extends Activity {
         return true;
     }
     
-//no menu actions right now
-/*	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.fragment_editor, menu);
-		
-	}
-
-	 public boolean onMenuItemSelected(int featureId, MenuItem item) 
-	    {
-	        switch(item.getItemId()) 
-	        {
-                case InsertAnnotate:         //if insert annotation is selected
-                    AddAnnotation(); 
-                    return true;
-                    
-                case InsertPicture:         //if insert annotation is selected
-                    AddImage(); 
-                    return true;
-	                
-	            }
-	        return super.onMenuItemSelected(featureId, item);
-	        
-	    }
-	    */
-	// private static final int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 100;
 	    
 	    public void AddImage() {
 	        final CharSequence[] options = { "Take Photo", "Choose from Gallery","Cancel" };

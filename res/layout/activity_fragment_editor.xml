@@ -70,31 +70,33 @@
         android:layout_width="wrap_content"
         android:layout_height="fill_parent"
         android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
         android:layout_below="@+id/editText3"
         android:layout_marginTop="100dp" >
 
         <LinearLayout
-            android:layout_width="320dp"
+            android:layout_width="836dp"
             android:layout_height="198dp"
             android:orientation="horizontal" >
     <ImageView
         android:id="@+id/viewImage"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        
+        android:layout_width="340dip"
+        android:layout_height="200dip"
+        android:layout_weight="1"
         android:src="@android:drawable/ic_menu_gallery" />
 
     <ImageView
         android:id="@+id/viewImage2"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+         android:layout_width="340dip"
+        android:layout_height="200dip"
+        android:layout_weight="1"
         android:src="@android:drawable/ic_menu_gallery"/>
  
      <ImageView
          android:id="@+id/viewImage3"
-         android:layout_width="match_parent"
-         android:layout_height="wrap_content"
-      
+          android:layout_width="340dip"
+        android:layout_height="200dip"
+        android:layout_weight="1"
          android:src="@android:drawable/ic_menu_gallery" />
   </LinearLayout> 
 </HorizontalScrollView>
