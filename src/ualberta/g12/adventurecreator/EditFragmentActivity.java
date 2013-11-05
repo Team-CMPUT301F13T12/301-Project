@@ -18,6 +18,7 @@ import android.view.View.OnTouchListener;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.ImageView.ScaleType;
 import android.widget.TextView;
 
 import java.io.File;
@@ -25,13 +26,15 @@ import java.io.File;
 public class EditFragmentActivity extends Activity {
 
     Uri imageFileUri;
-    private static final int InsertAnnotate = Menu.FIRST;
-    private static final int InsertPicture = Menu.FIRST +2;
+    
+    //not using action bar right now
+    //private static final int InsertAnnotate = Menu.FIRST;
+    //private static final int InsertPicture = Menu.FIRST +2;
     
     public int x = 0;
     
-        //button for ButtonImage if we want to use it
-//	Button addImage;
+    
+	Button addImage;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -39,63 +42,43 @@ public class EditFragmentActivity extends Activity {
 		setContentView(R.layout.activity_fragment_editor);
 
 		
-		//Image Button to insert illustration if we want to use image buttons instead
-	/*	   ImageButton button = (ImageButton) findViewById(R.id.imageButton);
+		   ImageButton button = (ImageButton) findViewById(R.id.imageButton);
 	        OnClickListener listener = new OnClickListener() {
 	            public void onClick(View v){
+	                x = 0;
 	                AddImage();
 	            }
 	        };
 	        
-	        button.setOnClickListener(listener);*/
+	        ImageButton button2 = (ImageButton) findViewById(R.id.imageButton2);
+            OnClickListener listener2 = new OnClickListener() {
+                public void onClick(View v){
+                    x = 1;
+                    AddImage();
+                }
+            };
+            
+            ImageButton button3 = (ImageButton) findViewById(R.id.imageButton3);
+            OnClickListener listener3 = new OnClickListener() {
+                public void onClick(View v){
+                    x = 2;
+                    AddImage();
+                }
+            };
+	        
+	        button.setOnClickListener(listener);
+            button2.setOnClickListener(listener2);
+            button3.setOnClickListener(listener3);
+         
 	     
 	        
-	        //from: http://stackoverflow.com/questions/16557076/how-to-smoothly-move-a-image-view-with-users-finger-on-android-emulator
-	        
-	        final ImageView img = (ImageView) findViewById(R.id.annotateImage);
-	        
-	        img.setOnTouchListener(new OnTouchListener()
-	        {
-	            PointF DownPT = new PointF(); // Record Mouse Position When Pressed Down
-	            PointF StartPT = new PointF(); // Record Start Position of 'img'
-
-	            public boolean onTouch(View v, MotionEvent event)
-	            {
-	                int eid = event.getAction();
-	                switch (eid)
-	                {
-	                    case MotionEvent.ACTION_MOVE :
-	                        PointF mv = new PointF( event.getX() - DownPT.x, event.getY() - DownPT.y);
-	                        img.setX((int)(StartPT.x+mv.x));
-	                        img.setY((int)(StartPT.y+mv.y));
-	                        StartPT = new PointF( img.getX(), img.getY() );
-	                        break;
-	                    case MotionEvent.ACTION_DOWN :
-	                        DownPT.x = event.getX();
-	                        DownPT.y = event.getY();
-	                        StartPT = new PointF( img.getX(), img.getY() );
-	                        break;
-	                    case MotionEvent.ACTION_UP :
-	                        // Nothing have to do
-	                        break;
-	                    default :
-	                        break;
-	                }
-	                return true;
-	            }
-	        });
 	}
-
-	@Override
+//no menu actions right now
+/*	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.fragment_editor, menu);
 		
-		//create option for annotating on menu bar
-		super.onCreateOptionsMenu(menu);
-        menu.add(0, InsertAnnotate, 0, R.string.annotate);
-        menu.add(0, InsertPicture, 0, R.string.InsertPic);
-		return true;
 	}
 
 	 public boolean onMenuItemSelected(int featureId, MenuItem item) 
@@ -112,12 +95,12 @@ public class EditFragmentActivity extends Activity {
 	                
 	            }
 	        return super.onMenuItemSelected(featureId, item);
+	        
 	    }
+	    */
 	 private static final int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 100;
 	    
 	    public void AddImage() {
-	        
-	         x = 0;
 	        
 	           // From: http://stackoverflow.com/q/16391124/1684866
 	        //*****Gallery Intent to save image      
@@ -159,38 +142,23 @@ public class EditFragmentActivity extends Activity {
 	        if (requestCode == CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE) {
 	            if (resultCode == RESULT_OK) {
 	                if (x == 0) {
-	                ImageView view = (ImageView) findViewById(R.id.imageButton);
-	                view.setImageDrawable(Drawable.createFromPath(imageFileUri.getPath()));
+	                ImageButton button = (ImageButton) findViewById(R.id.imageButton);
+	                button.setScaleType(ScaleType.CENTER_INSIDE);
+	                button.setImageDrawable(Drawable.createFromPath(imageFileUri.getPath()));
 	                }
 	                if (x == 1) {
-	                    ImageView view = (ImageView) findViewById(R.id.annotateImage);
-	                    view.setImageDrawable(Drawable.createFromPath(imageFileUri.getPath()));
+	                    ImageButton button = (ImageButton) findViewById(R.id.imageButton2);
+	                    button.setScaleType(ScaleType.CENTER_INSIDE);
+	                    button.setImageDrawable(Drawable.createFromPath(imageFileUri.getPath()));
 	                    }
+	                if (x == 2) {
+                        ImageButton button = (ImageButton) findViewById(R.id.imageButton3);
+                        button.setScaleType(ScaleType.CENTER_INSIDE);
+                        button.setImageDrawable(Drawable.createFromPath(imageFileUri.getPath()));
+                        }
 	            }
 	            
 	        }
 	    }
-	    
-	    //TODO: add in multiple annotations 
-	    public void AddAnnotation() {
-	        
-	        x = 1;
-	        
-	        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-	        
-	        String folder = Environment.getExternalStorageDirectory().getAbsolutePath() + "/tmp";
-	        File folderF = new File(folder);
-	        if (!folderF.exists()) {
-	            folderF.mkdir();
-	        }
-	        
-	        String imageFilePath = folder + "/" + String.valueOf(System.currentTimeMillis()) + "jpg";
-	        File imageFile = new File(imageFilePath);
-	        imageFileUri = Uri.fromFile(imageFile);
-	        
-	        intent.putExtra(MediaStore.EXTRA_OUTPUT, imageFileUri);
-	        startActivityForResult(intent, CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE);
-	        
-	    } 
 }
 

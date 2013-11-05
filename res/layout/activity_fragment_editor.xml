@@ -6,7 +6,7 @@
         
 <RelativeLayout
     android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
+    android:layout_height="595dp"
     android:paddingBottom="@dimen/activity_vertical_margin"
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
@@ -45,19 +45,6 @@
         android:hint="Fragment Description"
         android:inputType="textMultiLine" />
 
-    
-     <!-- width and height adjusted to fit layout better (does not capture entire image) -->
-
-    <ImageView
-        android:id="@+id/imageButton"
-        android:layout_width="340dip"
-        android:layout_height="200dip"
-        android:layout_alignLeft="@+id/editText3"
-        android:layout_alignRight="@+id/annotateImage"
-        android:layout_below="@+id/editText3"
-        android:layout_marginTop="120dp"
-        android:src="@android:drawable/ic_menu_gallery" />
-
     <EditText
         android:id="@+id/editText6"
         android:layout_width="wrap_content"
@@ -69,16 +56,6 @@
         android:hint="ID of Choice 2" />
 
     <EditText
-        android:id="@+id/editText4"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/imageButton"
-        android:layout_below="@+id/imageButton"
-        android:layout_marginTop="33dp"
-        android:ems="10"
-        android:hint="ID of Choice 1" />
-
-    <EditText
         android:id="@+id/editText5"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -88,14 +65,51 @@
         android:ems="10"
         android:hint="ID of Choice 3" />
 
-    <ImageView
-        android:id="@+id/annotateImage"
-        android:layout_width="100dip"
-        android:layout_height="100dip"
-        android:layout_alignParentRight="true"
-        android:layout_alignTop="@+id/editText3"
-        android:layout_marginTop="21dp"
-        android:src="@android:drawable/alert_light_frame" />
+    <HorizontalScrollView
+        android:id="@+id/HorizontalScrollView01"
+        android:layout_width="wrap_content"
+        android:layout_height="fill_parent"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/editText3"
+        android:layout_marginTop="100dp" >
+
+        <LinearLayout
+            android:layout_width="320dp"
+            android:layout_height="198dp"
+            android:orientation="horizontal" >
+
+            <ImageButton
+                android:id="@+id/imageButton"
+                android:layout_width="340dip"
+                android:layout_height="200dip"
+                android:layout_weight="1"
+                android:src="@android:drawable/ic_menu_gallery" />
+
+            <ImageButton
+                android:id="@+id/imageButton2"
+                android:layout_width="340dip"
+                android:layout_height="200dip"
+                android:layout_weight="1"
+                android:src="@android:drawable/ic_menu_gallery" />
+
+            <ImageButton
+                android:id="@+id/imageButton3"
+                android:layout_width="340dip"
+                android:layout_height="200dip"
+                android:layout_weight="1"
+                android:src="@android:drawable/ic_menu_gallery" />
+        </LinearLayout>
+    </HorizontalScrollView>
+
+    <EditText
+        android:id="@+id/editText4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/HorizontalScrollView01"
+        android:layout_below="@+id/HorizontalScrollView01"
+        android:layout_marginTop="113dp"
+        android:ems="10"
+        android:hint="ID of Choice 1" />
 
 </RelativeLayout>
 
