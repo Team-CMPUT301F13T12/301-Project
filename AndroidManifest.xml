@@ -38,6 +38,14 @@
             android:name="ualberta.g12.adventurecreator.StoryViewActivity"
             android:label="@string/title_activity_story_view" >
         </activity>
+        <activity
+            android:name="ualberta.g12.adventurecreator.EditChoiceActivity"
+            android:label="@string/title_activity_edit_choice"
+            android:parentActivityName="ualberta.g12.adventurecreator.EditFragmentActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="ualberta.g12.adventurecreator.EditFragmentActivity" />
+        </activity>
     </application>
 
 </manifest>
