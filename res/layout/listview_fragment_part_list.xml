@@ -19,8 +19,8 @@
 
     <ImageView
         android:id="@+id/fragmentPartIllustration"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="340dip"
+        android:layout_height="200dip"
         android:layout_alignParentLeft="true"
         android:layout_alignParentRight="true"
         android:layout_alignTop="@+id/fragmentPartText" />

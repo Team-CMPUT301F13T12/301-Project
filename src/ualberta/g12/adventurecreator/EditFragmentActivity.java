@@ -28,7 +28,6 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.PopupWindow;
@@ -54,26 +53,21 @@ import java.util.List;
 //
 public class EditFragmentActivity extends Activity implements FView<Fragment> {
 
-    private int storyId, position, type;
+    private int storyId, position, type, picturePosition;
     private TextView fragmentTitleTextView;
     private ListView fragmentPartListView;
     private FragmentPartAdapter adapter;
     public static final int EDIT = 0;
     public static final int ADD = 1;
     private EditText editTitleText, idPageNumText;
-    Uri imageFileUri;
     private static final int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 100;
-    ImageButton imag;
     private static final String TAG = "EditFragmentActivity";
     private OfflineIOHelper offlineHelper;
-    private String mode;
+    private String mode, pictureMode;
     private StoryList storyList;
     private Story story;
     private int storyPos, fragPos;
     private Fragment fragment;
-	private ImageView viewImage,viewImage2, viewImage3;
-	
-    public int x = 0;
 
 
     @Override
@@ -143,36 +137,6 @@ public class EditFragmentActivity extends Activity implements FView<Fragment> {
                     fragmentTitleTextView.setText("Error - No title found");
             }
         }
-        
-        //click listeners for adding illustrations
-        viewImage=(ImageView)findViewById(R.id.viewImage);
-        viewImage2=(ImageView)findViewById(R.id.viewImage2);
-        viewImage3=(ImageView)findViewById(R.id.viewImage3);
-        
-        viewImage.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-            	x=0;
-            	AddImage();
-            }
-        });
-        
-        viewImage2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-            	x=1;
-            	AddImage();
-            }
-        });
-        
-        viewImage3.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-            	x=2;
-            	AddImage();
-            }
-        });
-        
     }
 
     @Override
@@ -262,6 +226,8 @@ public class EditFragmentActivity extends Activity implements FView<Fragment> {
             FragmentController.addTextSegment(fragment, "New text", position);
 
         } else if (itemTitle.equals("Insert Illustration")){
+            pictureMode = "Add";
+            picturePosition = position;
             AddImage();
 
         } else if (itemTitle.equals("Edit")){
@@ -270,11 +236,18 @@ public class EditFragmentActivity extends Activity implements FView<Fragment> {
                 RelativeLayout curLayout = new RelativeLayout(this);
 
                 LayoutInflater inflater = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-                final PopupWindow editTextWindow = new PopupWindow(inflater.inflate(R.layout.edit_text_seg_popup, null, true), 400, 400, true);
+                final PopupWindow editTextWindow = new PopupWindow(inflater.inflate(R.layout.edit_text_seg_popup, null, true), fragmentPartListView.getWidth(), 400, true);
 
                 final EditText editTextSegView = (EditText) editTextWindow.getContentView().findViewById(R.id.editTextSeg);
-                if (type.equals("t"))
-                    editTextSegView.setText(fragment.getTextSegments().get(position));
+                if (type.equals("t")){
+                    int occurrence = 0;
+                    for (int i = 0; i < position; i++){
+                        if (fragment.getDisplayOrder().get(i).equals("t"))
+                            occurrence++;  
+                    }
+                    editTextSegView.setText(fragment.getTextSegments().get(occurrence));
+                }
+                    
 
                 Button editTextSave = (Button) editTextWindow.getContentView().findViewById(R.id.editTextSave);
                 Button editTextCancel = (Button) editTextWindow.getContentView().findViewById(R.id.editTextCancel);
@@ -285,6 +258,7 @@ public class EditFragmentActivity extends Activity implements FView<Fragment> {
                         String newText = editTextSegView.getText().toString();
                         FragmentController.deleteFragmentPart(fragment,this.position);
                         FragmentController.addTextSegment(fragment, newText, this.position);
+                        fragmentPartListView.invalidateViews();
                         editTextWindow.dismiss();
                     }
                 });
@@ -300,10 +274,11 @@ public class EditFragmentActivity extends Activity implements FView<Fragment> {
                 editTextWindow.showAtLocation(curLayout, Gravity.CENTER, 0, 0); 
                 editTextWindow.update(0,0,fragmentPartListView.getWidth(),400);
 
-            } /*else if (type.equals("i")){
-                Drawable illustration = getDrawableGalleryOrCamera();
-                FragmentController.addIllustration(fragment, illustration, position);
-            }*/
+            } else if (type.equals("i")){
+                pictureMode = "Edit";
+                picturePosition = position;
+                AddImage();
+            }
 
         } else if(itemTitle.equals("Add Choice")){ 
             //add choice Logic
@@ -333,35 +308,11 @@ public class EditFragmentActivity extends Activity implements FView<Fragment> {
             FragmentController.addEmptyPart(fragment);
 
         //reset listview to display any changes
+        //adapter.notifyDataSetChanged();
         fragmentPartListView.invalidateViews();
         return true;
     }
-    
-    private void setTitleAndPageId() {
 
-        String title = editTitleText.getText().toString();
-        String idPageNum = idPageNumText.getText().toString();
-        int idPage = -9;
-        try{
-            idPage = Integer.parseInt(idPageNum);
-        }catch(NumberFormatException e){
-            Log.d("Msg","There was a number format exception!");
-        }
-
-        fragment.setTitle(title);
-        fragment.setId(idPage);
-    } 
-    
-    private void saveFragment(){
-        //make sure fragment does not have any empty parts
-        FragmentController.removeEmptyPart(fragment);
-
-        setTitleAndPageId();
-        storyList.getAllStories().get(storyPos).getFragments().set(fragPos, fragment);
-        offlineHelper = new OfflineIOHelper(EditFragmentActivity.this);
-        offlineHelper.saveOfflineStories(storyList);
-    }
-    
     public void AddImage() {
         final CharSequence[] options = { "Take Photo", "Choose from Gallery","Cancel" };
         
@@ -395,6 +346,7 @@ public class EditFragmentActivity extends Activity implements FView<Fragment> {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK) {
+            Bitmap bitmap=null;
             if (requestCode == 1) {
                 File f = new File(Environment.getExternalStorageDirectory().toString());
                 for (File temp : f.listFiles()) {
@@ -404,21 +356,10 @@ public class EditFragmentActivity extends Activity implements FView<Fragment> {
                     }
                 }
                 try {
-                    Bitmap bitmap;
                     BitmapFactory.Options bitmapOptions = new BitmapFactory.Options();
  
                     bitmap = BitmapFactory.decodeFile(f.getAbsolutePath(),
                             bitmapOptions); 
-                   if(x==0){
-                    viewImage.setImageBitmap(bitmap);
-                   } 
-                   if(x==1){
-                    viewImage2.setImageBitmap(bitmap);
-                   }
-                   if(x==2){
-                       viewImage3.setImageBitmap(bitmap);
-                   }
-                   
                     String path = android.os.Environment
                             .getExternalStorageDirectory()
                             + File.separator
@@ -450,22 +391,45 @@ public class EditFragmentActivity extends Activity implements FView<Fragment> {
                 int columnIndex = c.getColumnIndex(filePath[0]);
                 String picturePath = c.getString(columnIndex);
                 c.close();
-                Bitmap thumbnail = (BitmapFactory.decodeFile(picturePath));
-                Log.w("path of image from gallery......******************.........", picturePath+"");
-                
-                if(x==0){
-                    viewImage.setImageBitmap(thumbnail);
-                } 
-                if(x==1){
-                    viewImage2.setImageBitmap(thumbnail);	
-                }
-                if(x==2){
-                    viewImage3.setImageBitmap(thumbnail);
-                }
-                
-                
+                bitmap = (BitmapFactory.decodeFile(picturePath));
+                Log.w("path of image from gallery......******************.........", picturePath+"");                
             }
+            if(bitmap != null){
+                if (pictureMode.equals("Add"))
+                    FragmentController.addIllustration(fragment, bitmap, position);
+                else if (pictureMode.equals("Edit")){
+                    FragmentController.deleteFragmentPart(fragment, position);
+                    FragmentController.addIllustration(fragment, bitmap, position);
+                }
+                    
+                fragmentPartListView.invalidateViews();
+            } else
+                Log.d(TAG,"bitmap returned is null");
         }
     }
     
+    private void setTitleAndPageId() {
+
+        String title = editTitleText.getText().toString();
+        String idPageNum = idPageNumText.getText().toString();
+        int idPage = -9;
+        try{
+            idPage = Integer.parseInt(idPageNum);
+        }catch(NumberFormatException e){
+            Log.d("Msg","There was a number format exception!");
+        }
+
+        fragment.setTitle(title);
+        fragment.setId(idPage);
+    } 
+    
+    private void saveFragment(){
+        //make sure fragment does not have any empty parts
+        FragmentController.removeEmptyPart(fragment);
+
+        setTitleAndPageId();
+        storyList.getAllStories().get(storyPos).getFragments().set(fragPos, fragment);
+        offlineHelper = new OfflineIOHelper(EditFragmentActivity.this);
+        offlineHelper.saveOfflineStories(storyList);
+    }
 }

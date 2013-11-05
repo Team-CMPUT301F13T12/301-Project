@@ -4,6 +4,7 @@ package ualberta.g12.adventurecreator;
 import java.util.LinkedList;
 import java.util.List;
 
+import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 
 
@@ -121,8 +122,8 @@ public class FragmentController implements FController {
     }
 
     @Override
-    public void addIllustration(Fragment frag, Drawable illustration){
-        List<Drawable> illustrations = frag.getIllustrations();
+    public void addIllustration(Fragment frag, Bitmap illustration){
+        List<Bitmap> illustrations = frag.getIllustrations();
         illustrations.add(illustration);
         frag.setIllustrations(illustrations);
 
@@ -143,12 +144,12 @@ public class FragmentController implements FController {
         frag.setDisplayOrder(displayOrder);
     }
     
-    public static boolean addIllustration(Fragment frag, Drawable illustration, int dispNum){
-        List<Drawable> illustrations = frag.getIllustrations();
+    public static boolean addIllustration(Fragment frag, Bitmap illustration, int dispNum){
+        List<Bitmap> illustrations = frag.getIllustrations();
         List<String> displayOrder = frag.getDisplayOrder();
         
         //check for invalid dispNum
-        if (displayOrder.size()<=dispNum)
+        if (displayOrder.size()<dispNum)
             return false;
         
         //Insert the text segment
@@ -172,8 +173,8 @@ public class FragmentController implements FController {
         return true;
     }
 
-    public void deleteIllustration(Fragment frag, Drawable illustration){
-        List<Drawable> illustrations = frag.getIllustrations();
+    public void deleteIllustration(Fragment frag, Bitmap illustration){
+        List<Bitmap> illustrations = frag.getIllustrations();
         List<String> displayOrder = frag.getDisplayOrder();
 
         //find the entry of display order that should be removed
@@ -200,10 +201,10 @@ public class FragmentController implements FController {
      * @return
      */
     private static boolean deleteIllustration(Fragment frag, int dispNum){
-        List<String> textSegments = frag.getTextSegments();
+        List<Bitmap> illustrations = frag.getIllustrations();
         List<String> displayOrder = frag.getDisplayOrder();
 
-        //not a text segment at dispNum
+        //not an illustration at dispNum
         if (!displayOrder.get(dispNum).equals("i"))
             return false;
         
@@ -213,8 +214,8 @@ public class FragmentController implements FController {
                 illustrationNum++;
         }
 
-        textSegments.remove(illustrationNum);
-        frag.setTextSegments(textSegments);
+        illustrations.remove(illustrationNum);
+        frag.setIllustrations(illustrations);
         displayOrder.remove(dispNum);
         frag.setDisplayOrder(displayOrder);
         return true;
@@ -319,7 +320,6 @@ public class FragmentController implements FController {
     
     public static void deleteFragmentPart(Fragment frag, int partNum){
         List<String> displayOrder = frag.getDisplayOrder();
-        
         //check for invalid partNum
         if (partNum >= displayOrder.size())
             return;

@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import android.content.Context;
-import android.graphics.drawable.Drawable;
+import android.graphics.Bitmap;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -36,7 +36,7 @@ public class FragmentPartAdapter extends ArrayAdapter{
         ImageView image = (ImageView) rowView.findViewById(R.id.fragmentPartIllustration);
         TextView text = (TextView) rowView.findViewById(R.id.fragmentPartTextPart);
         Button choiceButton = (Button) rowView.findViewById(R.id.fragmentPartChoice);
-        
+                
         //make all invisible
         image.setVisibility(View.GONE);
         text.setVisibility(View.GONE);
@@ -50,7 +50,7 @@ public class FragmentPartAdapter extends ArrayAdapter{
             //get the occurrence number of the textSegment
             int occurrence = 0;
             for (int i = 0; i < position; i++){
-                if (frag.getDisplayOrder().get(position).equals("t"))
+                if (frag.getDisplayOrder().get(i).equals("t"))
                     occurrence++;  
             }
 
@@ -71,12 +71,12 @@ public class FragmentPartAdapter extends ArrayAdapter{
                     occurrence++;  
             }
 
-            Drawable illustration = frag.getIllustrations().get(occurrence);
+            Bitmap illustration = frag.getIllustrations().get(occurrence);
             if (illustration != null){
                 image.setVisibility(View.VISIBLE);
                 if (image != null)
                     System.out.println("SET IMAGE");
-                    image.setImageDrawable(illustration);
+                    image.setImageBitmap(illustration);
             }
         } else if (frag.getDisplayOrder().get(position).equals("c")){
             System.out.println("CHOICE "+position);

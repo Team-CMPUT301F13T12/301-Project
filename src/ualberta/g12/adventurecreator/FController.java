@@ -1,7 +1,7 @@
 
 package ualberta.g12.adventurecreator;
 
-import android.graphics.drawable.Drawable;
+import android.graphics.Bitmap;
 
 /** Control of data in the Fragment model */
 public interface FController {
@@ -27,7 +27,7 @@ public interface FController {
      * 
      * @param i the illustration to add to the fragment
      */
-    public void addIllustration(Fragment f, Drawable i);
+    public void addIllustration(Fragment f, Bitmap i);
 
     /**
      * Adds a choice to the list of choices that a fragment has
