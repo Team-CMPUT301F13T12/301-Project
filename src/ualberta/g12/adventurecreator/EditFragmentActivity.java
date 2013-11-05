@@ -116,12 +116,12 @@ public class EditFragmentActivity extends Activity implements FView<Fragment> {
         // TODO: Set the fragmentController to our Fragment
 
         /* for testing, will delete later -Lindsay */
-        Drawable ill = Drawable.createFromPath("/mnt/sdcard/tmp/2013-11-04 22.04.41.jpg");
+        //Drawable ill = Drawable.createFromPath("/mnt/sdcard/tmp/2013-11-04 22.04.41.jpg");
         FragmentController.addTextSegment(fragment, "part1");
         FragmentController.addTextSegment(fragment,"part2beforeill");
         FragmentController.addTextSegment(fragment,"part number 3 which is rather long because we woud like to test text wrapping");
 
-        FragmentController.addIllustration(fragment,ill,2);
+        //FragmentController.addIllustration(fragment,ill,2);
         
         if (editType.equals("Edit") == true && fragment.getDisplayOrder().size()==0){
             FragmentController.addEmptyPart(fragment);
