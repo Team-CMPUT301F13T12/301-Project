@@ -70,10 +70,12 @@ public class FragmentPartAdapter extends ArrayAdapter{
                     occurence++;  
             }
 
+            System.out.println("ADA ILLU");
             Drawable illustration = frag.getIllustrations().get(occurence);
             if (illustration != null){
                 image.setVisibility(View.VISIBLE);
                 if (image != null)
+                    System.out.println("SET IMAGE");
                     image.setImageDrawable(illustration);
             }
         } else if (frag.getDisplayOrder().get(position).equals("e")){

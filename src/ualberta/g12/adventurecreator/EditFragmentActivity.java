@@ -56,6 +56,7 @@ public class EditFragmentActivity extends Activity implements FView<Fragment> {
     private EditText idPageNumText;
     Uri imageFileUri;
     private static final int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 100;
+    ImageButton imag;
 
 
 
@@ -70,43 +71,43 @@ public class EditFragmentActivity extends Activity implements FView<Fragment> {
         String editType = bundledExtras.getString("EditType");
         //fragment = (Fragment)editActIntent.getSerializableExtra("Fragment");
         fragment = (Fragment) bundledExtras.getSerializable("Fragment");
+        //storyId  = bundledExtras.getInt("storyId");
         
+        //get widget references
+        fragmentPartListView = (ListView) findViewById(R.id.FragmentPartList);
         titleText = (EditText) findViewById(R.id.fragmentTitle);
         idPageNumText = (EditText) findViewById(R.id.idPageNum);
         
-        if (editType.equals("Edit") == false){
-            // TODO: Load our fragment from the story model using the id given to us as an extra ( if we are editing an existing fragment)
-        	type = ADD;
-        	
-            storyId  = bundledExtras.getInt("storyId");
-            Log.d("This",String.format("The story i got  was: %d", storyId));
-            
-            // load title , id/page number , fragment description, choices
-            
-        }
-        else{
-        	type = EDIT;
-        }
-        
-        // else then we are adding a new fragment dont need to load stuff
-
-        //type = EDIT;
-        
-        storyId  = bundledExtras.getInt("storyId");
-        if (type == EDIT){
-        	StoryList sl = AdventureCreatorApplication.getStoryList();
-        	Story story = sl.getStoryById(storyId);
-        	Log.d("This",String.format("There was no story with id: %d", storyId));
-        	List<Fragment>fragmentList = story.getFragments();
-        	int pos = bundledExtras.getInt("pos");
-        	fragment = fragmentList.get(pos);
-        	titleText.setText(fragment.getTitle());
-        	//idPageNumText.setText(String.format("%d",fragment.getId()));
-        	String idString = (new Integer(fragment.getId())).toString();
-        	Log.d("This",String.format("There was no story with id: %d", fragment.getId()));
-        	idPageNumText.setText(idString);
-        	
-        }
+//        if (editType.equals("Edit") == false){
+//            // TODO: Load our fragment from the story model using the id given to us as an extra ( if we are editing an existing fragment)
+//        	type = ADD;
+//        	Log.d("This",String.format("The story i got  was: %d", storyId));
+//            
+//            // load title , id/page number , fragment description, choices
+//            
+//        }
+//        else{
+//        	type = EDIT;
+//        }
+//        
+//        // else then we are adding a new fragment dont need to load stuff
+//
+//        
+//        
+//        if (type == EDIT){
+//        	StoryList sl = AdventureCreatorApplication.getStoryList();
+//        	Story story = sl.getStoryById(storyId);
+//        	Log.d("This",String.format("There was no story with id: %d", storyId));
+//        	List<Fragment>fragmentList = story.getFragments();
+//        	int pos = bundledExtras.getInt("pos");
+//        	fragment = fragmentList.get(pos);
+//        	titleText.setText(fragment.getTitle());
+//        	//idPageNumText.setText(String.format("%d",fragment.getId()));
+//        	String idString = (new Integer(fragment.getId())).toString();
+//        	Log.d("This",String.format("There was no story with id: %d", fragment.getId()));
+//        	idPageNumText.setText(idString);
+//        	
+//        }
         
         // TODO: Set the fragmentController to our Fragment
 
@@ -119,17 +120,15 @@ public class EditFragmentActivity extends Activity implements FView<Fragment> {
             FragmentController.addEmptyPart(fragment);
         }
         // TODO: Load our fragment into view
-        //get widget references
-        fragmentPartListView = (ListView) findViewById(R.id.FragmentPartList);
-        fragmentTitleTextView = (TextView) findViewById(R.id.fragmentTitle);
+        
 
         //Loads title
         String title = fragment.getTitle();
-        if (fragmentTitleTextView != null){
+        if (titleText != null){
             if (title != null)
-                fragmentTitleTextView.setText(title);
+                titleText.setText(title);
             else
-                fragmentTitleTextView.setText("Title Here");  //should this go here? -Lindsay
+                titleText.setText("Title Here");  //should this go here? -Lindsay
         }
 
         //Loads fragment parts (text, images, videos, sounds, etc
@@ -173,11 +172,9 @@ public class EditFragmentActivity extends Activity implements FView<Fragment> {
         
         CharSequence itemTitle = item.getTitle();
         if (itemTitle.equals("Insert Text")){
-            // TODO
             FragmentController.addTextSegment(fragment, "New text", position);
 
         } else if (itemTitle.equals("Insert Illustration")){
-
             AddImage();
 
         } else if (itemTitle.equals("Edit")){
@@ -321,8 +318,16 @@ public class EditFragmentActivity extends Activity implements FView<Fragment> {
         
         if (requestCode == CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE) {
             if (resultCode == RESULT_OK) {
+                System.out.println("RES OK");
                 Drawable illustration = Drawable.createFromPath(imageFileUri.getPath());
+                System.out.println("DRAWABLECREATE");
                 FragmentController.addIllustration(fragment, illustration, position);
+                System.out.println("ADDILL");
+                
+                ImageButton imag = (ImageButton) findViewById(R.id.imagbut);
+                //button.setScaleType(ScaleType.CENTER_INSIDE);
+                imag.setImageDrawable(Drawable.createFromPath(imageFileUri.getPath()));
+                System.out.println("SET imagBUT");
             }
         }
     }

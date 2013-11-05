@@ -19,8 +19,6 @@
         <requestFocus />
     </EditText>
 
-    <!-- Give these real names! Chris -->
-
     <EditText
         android:id="@+id/idPageNum"
         android:layout_width="wrap_content"
@@ -35,9 +33,20 @@
         android:id="@+id/FragmentPartList"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_above="@+id/imagbut"
         android:layout_alignParentLeft="true"
         android:layout_alignParentRight="true"
         android:layout_below="@+id/idPageNum" >
+
     </ListView>
+    
+    <ImageButton
+        android:id="@+id/imagbut"
+        android:layout_width="340dip"
+        android:layout_height="200dip"
+        android:layout_alignParentBottom="true"
+        android:layout_below="@+id/fragmentPartList"
+        android:layout_weight="1"
+        android:src="@android:drawable/ic_menu_gallery" />
 
 </RelativeLayout>
