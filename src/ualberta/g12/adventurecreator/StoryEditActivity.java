@@ -3,14 +3,19 @@ package ualberta.g12.adventurecreator;
 
 import java.util.List;
 
+
+
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.AdapterView.OnItemClickListener;
 
 /**
  * View for editing a Story using a StoryController.<br>
@@ -27,6 +32,10 @@ public class StoryEditActivity extends Activity implements SView<Story> {
     public static final String INTENT_STORY_ID = "storyid";
     public static final int INVALID_STORY_ID = -1;
 
+    //edit or add contants
+    public static final int EDIT = 0;
+    public static final int ADD = 1;
+    
     // Logging info
     private static final String TAG = "StoryEditActivity";
     private static final boolean DEBUG_LOG = true;
@@ -79,7 +88,16 @@ public class StoryEditActivity extends Activity implements SView<Story> {
         adapter = new FragmentListArrayAdapter(this, R.layout.listview_fragment_list, fragmentList);
         lView = (ListView) findViewById(R.id.story_editor_listview);
         lView.setAdapter(adapter);
-        
+        lView.setOnItemClickListener(new OnItemClickListener()
+		{
+			public void onItemClick(AdapterView<?> parent, View view, int position, long id)
+			{
+
+				openEditFragment(0, position );
+
+			}
+		}
+				);
         // TODO: Setup Adapter
         updateUiElements();
         // TODO: Set up all listeners
@@ -182,5 +200,16 @@ public class StoryEditActivity extends Activity implements SView<Story> {
         // story has changed
 
     }
+    
+
+	private void openEditFragment(int type  , int position ){
+		Fragment selectedFrag = fragmentList.get(position);
+		int id = selectedFrag.getId();
+        Intent intent = new Intent(this, EditFragmentActivity.class);
+        intent.putExtra("EditType", "Edit");
+        
+        intent.putExtra("Id", id);
+        startActivity(intent);
+	}
 
 }
