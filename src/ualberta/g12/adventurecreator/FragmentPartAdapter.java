@@ -32,12 +32,12 @@ public class FragmentPartAdapter extends ArrayAdapter{
             LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             rowView = inflater.inflate(R.layout.listview_fragment_part_list, parent, false);
         }
-        //EditText editText = (EditText) rowView.findViewById(R.id.fragmentPartEditText);
+        EditText editText = (EditText) rowView.findViewById(R.id.fragmentPartEditText);
         ImageView image = (ImageView) rowView.findViewById(R.id.fragmentPartIllustration);
         TextView text = (TextView) rowView.findViewById(R.id.fragmentPartTextPart);
         
         //make all invisible
-        //EditText.setVisibility(View.GONE);
+        editText.setVisibility(View.GONE);
         image.setVisibility(View.GONE);
         text.setVisibility(View.GONE);
         
