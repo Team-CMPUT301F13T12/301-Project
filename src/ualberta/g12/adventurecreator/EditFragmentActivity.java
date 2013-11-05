@@ -133,20 +133,32 @@ public class EditFragmentActivity extends Activity implements FView<Fragment> {
     }
 
     @Override
-    public void onBackPressed() {
-        if (mode.equals("Edit"))
-            saveFragment();
-        //        Intent i = new Intent(this, StoryEditActivity.class);
-        //        i.putExtra("Story",story);
-        //        i.putExtra(StoryEditActivity.INTENT_STORY_ID, story.getId());
-        super.onBackPressed();
-    }
-
-    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.fragment_editor, menu);
+        
+        //we only want the menu when in edit mode
+        if (mode.equals("Edit"))
+            getMenuInflater().inflate(R.menu.fragment_editor, menu);
         return true;
+    }
+    
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // TODO Auto-generated method stub
+        switch (item.getItemId()) {
+            case R.id.add_option:
+                return true;
+                
+            case R.id.save_fragment:
+                // Save values
+                if (mode.equals("Edit"))
+                    saveFragment();
+                
+                // Leave activity
+                finish();
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     @Override
