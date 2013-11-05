@@ -29,10 +29,12 @@ import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.ImageView.ScaleType;
+import android.util.Log;
 
 import java.io.File;
 import java.util.LinkedList;
 import java.util.List;
+
 
 // Right now we are making Fragments here and also choice
 // What i was thinking was maybe just make the general fragment here
@@ -57,6 +59,7 @@ public class EditFragmentActivity extends Activity implements FView<Fragment> {
     Uri imageFileUri;
     private static final int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 100;
     ImageButton imag;
+    private static final String TAG = "EditFragmentActivity";
     
     private List<Fragment>fragmentList;
     private int pos;
@@ -81,38 +84,7 @@ public class EditFragmentActivity extends Activity implements FView<Fragment> {
         fragmentPartListView = (ListView) findViewById(R.id.FragmentPartList);
         titleText = (EditText) findViewById(R.id.fragmentTitle);
         idPageNumText = (EditText) findViewById(R.id.idPageNum);
-        
-//        if (editType.equals("Edit") == false){
-//            // TODO: Load our fragment from the story model using the id given to us as an extra ( if we are editing an existing fragment)
-//        	type = ADD;
-//        	Log.d("This",String.format("The story i got  was: %d", storyId));
-//            
-//            // load title , id/page number , fragment description, choices
-//            
-//        }
-//        else{
-//        	type = EDIT;
-//        }
-//        
-//        // else then we are adding a new fragment dont need to load stuff
-//
-//        
-//        
-//        if (type == EDIT){
-//        	StoryList sl = AdventureCreatorApplication.getStoryList();
-//        	Story story = sl.getStoryById(storyId);
-//        	Log.d("This",String.format("There was no story with id: %d", storyId));
-//        	List<Fragment>fragmentList = story.getFragments();
-//        	int pos = bundledExtras.getInt("pos");
-//        	fragment = fragmentList.get(pos);
-//        	titleText.setText(fragment.getTitle());
-//        	//idPageNumText.setText(String.format("%d",fragment.getId()));
-//        	String idString = (new Integer(fragment.getId())).toString();
-//        	Log.d("This",String.format("There was no story with id: %d", fragment.getId()));
-//        	idPageNumText.setText(idString);
-//        	
-//        }
-        
+            
         // TODO: Set the fragmentController to our Fragment
 
         /* for testing, will delete later -Lindsay */
@@ -214,8 +186,10 @@ public class EditFragmentActivity extends Activity implements FView<Fragment> {
                     }
                 });
                 
+                
+                Log.d(TAG,"width"+fragmentPartListView.getWidth());
                 editTextWindow.showAtLocation(curLayout, Gravity.CENTER, 0, 0); 
-                editTextWindow.update(0,0,400,400);
+                editTextWindow.update(0,0,300,400);
                 System.out.println("n1");
             } else if (fragment.getDisplayOrder().get(position).equals("i")){
                 Drawable illustration = getDrawableGalleryOrCamera();
@@ -286,8 +260,7 @@ public class EditFragmentActivity extends Activity implements FView<Fragment> {
 
         EditText titleET = (EditText) findViewById(R.id.fragmentTitle);
         EditText idPageNumET = (EditText) findViewById(R.id.idPageNum);
-
-
+        
         String title = titleET.getText().toString();
         String idPageNum = idPageNumET.getText().toString();
         int idPage = -9;

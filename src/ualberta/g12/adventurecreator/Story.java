@@ -1,6 +1,10 @@
 
 package ualberta.g12.adventurecreator;
 
+import android.graphics.drawable.Drawable;
+
+import java.io.IOException;
+import java.io.Serializable;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -8,32 +12,24 @@ import java.util.List;
  * Models a story that would be created by an Author. Contains a list of
  * Fragments as well as an author and a title.
  */
-public class Story extends SModel{
+public class Story extends SModel implements Serializable{
     
-    private static final int NEW_STORY_ID = -1;
+    private static int NEW_STORY_ID = -1;
     
     private String storyTitle;
     private String author;
     private int id = 1; // TODO: should be unique 
-    private List<Fragment> fragments; // first index in pages is always the
-                                        // start page
+    private List<Fragment> fragments; // list of all fragments in story (no particular order)
+    private Fragment startFragment;     // start page
 
     public Story() {
-        // No hardcoded strings
-        // TODO: Move these to res/values/strings.xml
-        /*
-         * TODO: Possibly move to a View
-         * I feel like these should be in the view for creating a new story as
-         * the default text/hint. It doesn't really make sense for the Model to
-         * have this
-         */
-        this("Add a title.", "Your pen name here");
+        this.fragments = new LinkedList<Fragment>();
     }
 
     public Story(String title, String author) {
+        this();
         setStoryTitle(title);
-        setAuthor(author);
-        this.fragments = new LinkedList<Fragment>();
+        setAuthor(author);   
     }
 
     public String getStoryTitle() {
@@ -44,6 +40,20 @@ public class Story extends SModel{
         this.storyTitle = storyTitle;
     }
 
+    /**
+     * @return the startFragment
+     */
+    public Fragment getStartFragment() {
+        return startFragment;
+    }
+
+    /**
+     * @param startFragment the startFragment to set
+     */
+    public void setStartFragment(Fragment startFragment) {
+        this.startFragment = startFragment;
+    }
+    
     public String getAuthor() {
         return author;
     }
@@ -124,6 +134,23 @@ public class Story extends SModel{
      */
     public void setId(int newId){
     	this.id = newId;
+    }
+    
+    private void writeObject(java.io.ObjectOutputStream out) throws IOException{
+        out.writeObject(this.NEW_STORY_ID);
+        out.writeObject(this.storyTitle);
+        out.writeObject(this.author);
+        out.writeObject(this.id);
+        out.writeObject(this.fragments);
+        out.writeObject(this.startFragment);
+    }
+    private void readObject(java.io.ObjectInputStream in) throws IOException, ClassNotFoundException{
+        this.NEW_STORY_ID = (Integer) in.readObject();
+        this.storyTitle = (String) in.readObject();
+        this.author = (String) in.readObject();
+        this.id = (Integer) in.readObject();
+        this.fragments = (List<Fragment>) in.readObject();
+        this.startFragment = (Fragment) in.readObject();
     }
 
 }
