@@ -46,7 +46,6 @@ public class EditFragmentActivity extends Activity implements FView<Fragment> {
     private FragmentPartAdapter adapter;
     private PopupWindow editTextWindow;
     private LinearLayout editTextLayout;
-    private EditText editTextSegView;
 
 
     @Override
@@ -251,19 +250,39 @@ public class EditFragmentActivity extends Activity implements FView<Fragment> {
             FragmentController.addIllustration(fragment, illustration, position);
 
         } else if (itemTitle.equals("Edit")){
-            RelativeLayout curLayout = new RelativeLayout(this);
-            
-            LayoutInflater inflater = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            System.out.println("1");
-            PopupWindow editTextWindow = new PopupWindow(inflater.inflate(R.layout.edit_text_seg_popup, null, true), 50, 50, true);
-            System.out.println("2");
-            EditText editTextSegView = (EditText) findViewById(R.id.editTextSeg);
-            System.out.println("3");
-            //editTextSegView.setText(fragment.getTextSegments().get(position));
-            System.out.println("4");
-            editTextWindow.showAtLocation(curLayout, Gravity.CENTER, 0, 0); 
-            System.out.println("5");
-            editTextWindow.update();
+            if (fragment.getDisplayOrder().get(position).equals("t")){
+                RelativeLayout curLayout = new RelativeLayout(this);
+                
+                LayoutInflater inflater = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                final PopupWindow editTextWindow = new PopupWindow(inflater.inflate(R.layout.edit_text_seg_popup, null, true), 400, 400, true);
+        
+                final EditText editTextSegView = (EditText) editTextWindow.getContentView().findViewById(R.id.editTextSeg);
+                editTextSegView.setText(fragment.getTextSegments().get(position));
+                
+                Button editTextSave = (Button) editTextWindow.getContentView().findViewById(R.id.editTextSave);
+                Button editTextCancel = (Button) editTextWindow.getContentView().findViewById(R.id.editTextCancel);
+                
+                editTextSave.setOnClickListener(new EditTextSegOnClickListener(position) {
+                    @Override
+                    public void onClick(View v) {
+                        String newText = editTextSegView.getText().toString();
+                        FragmentController.deleteFragmentPart(fragment,this.position);
+                        FragmentController.addTextSegment(fragment, newText, this.position);
+                        editTextWindow.dismiss();
+                    }
+                });
+                
+                editTextCancel.setOnClickListener(new OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        editTextWindow.dismiss();
+                    }
+                });
+                
+                editTextWindow.showAtLocation(curLayout, Gravity.CENTER, 0, 0); 
+                editTextWindow.update(0,0,400,400);
+                System.out.println("n1");
+            }
             
         } else if(itemTitle.equals("Add Choice")){
             //add choice Logic
@@ -275,6 +294,7 @@ public class EditFragmentActivity extends Activity implements FView<Fragment> {
             FragmentController.deleteFragmentPart(fragment, position);
         }
 
+        System.out.println("n2");
         //Make sure the fragment isn't completely empty
         if(fragment.getDisplayOrder().size()==0)
             FragmentController.addEmptyPart(fragment);

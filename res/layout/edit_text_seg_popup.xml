@@ -8,7 +8,15 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context=".MainActivity" >
 
-    <EditText
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:background="@color/lightblue" >
+        
+        <EditText
         android:id="@+id/editTextSeg"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -33,6 +41,8 @@
         android:layout_below="@+id/editTextSeg"
         android:layout_toLeftOf="@+id/editTextCancel"
         android:text="@string/save" />
+        
+    </RelativeLayout>
 
 </RelativeLayout>
 
