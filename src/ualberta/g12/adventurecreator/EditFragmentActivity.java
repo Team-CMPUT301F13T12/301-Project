@@ -47,6 +47,11 @@ public class EditFragmentActivity extends Activity implements FView<Fragment> {
     private PopupWindow editTextWindow;
     private LinearLayout editTextLayout;
     private EditText editTextSegView;
+    private int type;
+    public static final int EDIT = 0;
+    public static final int ADD = 1;
+    private EditText titleText;
+    private EditText idPageNumText;
 
 
     @Override
@@ -58,16 +63,33 @@ public class EditFragmentActivity extends Activity implements FView<Fragment> {
         Intent editActIntent = getIntent();
         Bundle bundledExtras = editActIntent.getExtras();
         String editType = bundledExtras.getString("EditType");
-
+        titleText = (EditText) findViewById(R.id.fragmentTitle);
+        idPageNumText = (EditText) findViewById(R.id.idPageNum);
         if (editType.equals("Edit") == false){
             // TODO: Load our fragment from the story model using the id given to us as an extra ( if we are editing an existing fragment)
-            storyId  = bundledExtras.getInt("Id");
-            // load title , id/page number , fragment description, choices
+        	type = ADD;
+            storyId  = bundledExtras.getInt("storyId");
 
+            
+            // load title , id/page number , fragment description, choices
+            
         }
+        
         // else then we are adding a new fragment dont need to load stuff
 
-
+        type = EDIT;
+        
+        storyId  = bundledExtras.getInt("storyId");
+        if (type == EDIT){
+        	StoryList sl = AdventureCreatorApplication.getStoryList();
+        	Story story = sl.getStoryById(storyId);
+        	List<Fragment>fragmentList = story.getFragments();
+        	int pos = bundledExtras.getInt("pos");
+        	Fragment fragment = fragmentList.get(pos);
+        	titleText.setText(fragment.getTitle());
+        	idPageNumText.setText(fragment.getId());
+        }
+        
         // TODO: Set the fragmentController to our Fragment
 
         /* for testing, will delete later -Lindsay */

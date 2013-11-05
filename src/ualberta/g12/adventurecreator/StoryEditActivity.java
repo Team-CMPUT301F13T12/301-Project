@@ -207,8 +207,10 @@ public class StoryEditActivity extends Activity implements SView<Story> {
 		int id = selectedFrag.getId();
         Intent intent = new Intent(this, EditFragmentActivity.class);
         intent.putExtra("EditType", "Edit");
-        
-        intent.putExtra("Id", id);
+        intent.putExtra("StoryId",storyId);
+        intent.putExtra("FragmentId", id);
+        //TODO need as we dont have a way to pass find fragment by id yet
+        intent.putExtra("pos", position);
         startActivity(intent);
 	}
 
