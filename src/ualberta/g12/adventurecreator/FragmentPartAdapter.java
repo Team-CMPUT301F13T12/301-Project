@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -32,14 +33,14 @@ public class FragmentPartAdapter extends ArrayAdapter{
             LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             rowView = inflater.inflate(R.layout.listview_fragment_part_list, parent, false);
         }
-        EditText editText = (EditText) rowView.findViewById(R.id.fragmentPartEditText);
         ImageView image = (ImageView) rowView.findViewById(R.id.fragmentPartIllustration);
         TextView text = (TextView) rowView.findViewById(R.id.fragmentPartTextPart);
+        Button choiceButton = (Button) rowView.findViewById(R.id.fragmentPartChoice);
         
         //make all invisible
-        editText.setVisibility(View.GONE);
         image.setVisibility(View.GONE);
         text.setVisibility(View.GONE);
+        choiceButton.setVisibility(View.GONE);
         
         System.out.println("POSITION "+position);
         if (frag.getDisplayOrder().get(position).equals("t")){
@@ -76,6 +77,24 @@ public class FragmentPartAdapter extends ArrayAdapter{
                 if (image != null)
                     System.out.println("SET IMAGE");
                     image.setImageDrawable(illustration);
+            }
+        } else if (frag.getDisplayOrder().get(position).equals("c")){
+            System.out.println("CHOICE "+position);
+            //Display a choice
+            
+            //get the occurrence number of the illustration
+            int occurrence = 0;
+            for (int i = 0; i < position; i++){
+                if (frag.getDisplayOrder().get(i).equals("c"))
+                    occurrence++;  
+            }
+
+            Choice choice = frag.getChoices().get(occurrence);
+            if (choice != null){
+                choiceButton.setVisibility(View.VISIBLE);
+                if (choiceButton != null)
+                    System.out.println("SET CHOICE");
+                    choiceButton.setText(choice.getChoiceText());
             }
         } else if (frag.getDisplayOrder().get(position).equals("e")){
             System.out.println("EMPTY "+position);

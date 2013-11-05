@@ -1,10 +1,7 @@
 package ualberta.g12.adventurecreator;
 
-import android.graphics.drawable.Drawable;
-
 import java.io.IOException;
 import java.io.Serializable;
-import java.util.List;
 
 public class Choice implements Serializable{
 	private String choiceText;
