@@ -19,7 +19,7 @@ public class CreateStoryActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_story);
         
-        createButton = (Button) findViewById(R.id.button1);
+        createButton = (Button) findViewById(R.id.editTextSave);
         createButton.setOnClickListener(new View.OnClickListener() {
 			
 			@Override

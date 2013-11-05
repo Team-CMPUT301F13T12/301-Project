@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:title="@string/insert_text" android:id="@+id/insertText"></item>
-    <item android:id="@+id/insertIllustration" android:title="@string/insert_illustration"></item>
-    <item android:id="@+id/addChoice" android:title="@string/add_choice"></item>
-    <item android:id="@+id/edit" android:title="@string/edit"></item>
-    <item android:id="@+id/delete" android:title="@string/delete"></item>
-</menu>

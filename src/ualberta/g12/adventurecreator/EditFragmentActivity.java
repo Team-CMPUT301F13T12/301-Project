@@ -2,11 +2,15 @@
 package ualberta.g12.adventurecreator;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -15,10 +19,14 @@ import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.PopupWindow;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import java.util.LinkedList;
+import java.util.List;
 
 // Right now we are making Fragments here and also choice
 // What i was thinking was maybe just make the general fragment here
@@ -29,13 +37,16 @@ import java.util.LinkedList;
 public class EditFragmentActivity extends Activity implements FView<Fragment> {
 
     private Button addImage;
-    private Button makeOrSave;
+    private Button makeOrSave, editTextSave;
     private Fragment fragment;
     private FragmentController fragmentController;
     private int storyId;
     private TextView fragmentTitleTextView;
     private ListView fragmentPartListView;
     private FragmentPartAdapter adapter;
+    private PopupWindow editTextWindow;
+    private LinearLayout editTextLayout;
+    private EditText editTextSegView;
 
 
     @Override
@@ -47,18 +58,18 @@ public class EditFragmentActivity extends Activity implements FView<Fragment> {
         Intent editActIntent = getIntent();
         Bundle bundledExtras = editActIntent.getExtras();
         String editType = bundledExtras.getString("EditType");
-        
+
         if (editType.equals("Edit") == false){
-        	// TODO: Load our fragment from the story model using the id given to us as an extra ( if we are editing an existing fragment)
-        	storyId  = bundledExtras.getInt("Id");
-        	// load title , id/page number , fragment description, choices
-        	
+            // TODO: Load our fragment from the story model using the id given to us as an extra ( if we are editing an existing fragment)
+            storyId  = bundledExtras.getInt("Id");
+            // load title , id/page number , fragment description, choices
+
         }
         // else then we are adding a new fragment dont need to load stuff
 
-        
+
         // TODO: Set the fragmentController to our Fragment
-        
+
         /* for testing, will delete later -Lindsay */
         //FragmentController fragcont = new FragmentController();
         fragment = new Fragment();
@@ -73,7 +84,7 @@ public class EditFragmentActivity extends Activity implements FView<Fragment> {
         //get widget references
         fragmentPartListView = (ListView) findViewById(R.id.FragmentPartList);
         fragmentTitleTextView = (TextView) findViewById(R.id.fragmentTitle);
-        
+
         //Loads title
         String title = fragment.getTitle();
         if (fragmentTitleTextView != null){
@@ -82,21 +93,21 @@ public class EditFragmentActivity extends Activity implements FView<Fragment> {
             else
                 fragmentTitleTextView.setText("Title Here");  //should this go here? -Lindsay
         }
-        
+
         //Loads fragment parts (text, images, videos, sounds, etc
         adapter = new FragmentPartAdapter(
                 this, R.layout.activity_fragment_editor, fragment);
         fragmentPartListView.setAdapter(adapter);
-       
+
         registerForContextMenu(fragmentPartListView);
-        
+
         // TODO: Set up on clickers
         setUpOnClickListeners();
 
     }
 
     private void setUpOnClickListeners() {
-        
+
         /* 
          * Should not need the add illustration button anymore
          * I have copied the code to the insert Illustration
@@ -125,61 +136,61 @@ public class EditFragmentActivity extends Activity implements FView<Fragment> {
                 startActivityForResult(chooser, 0);
             }
         });
-        
+
         makeOrSave = (Button) findViewById(R.id.ButtonAddOrSave);
         makeOrSave.setOnClickListener(new OnClickListener() {
-        	
-        	
+
+
             @Override
             public void onClick(View v) {
                 //AS OF RIGHT NOW ONLY LOADS ONE CHOICE TITLE AND TITLE PAGE NUMBER AND ALSO FRAGMENT DESCRIPTION
-            	
-        		EditText titleET = (EditText) findViewById(R.id.fragmentTitle);
-				EditText idPageNumET = (EditText) findViewById(R.id.idPageNum);
-				
-				
-				String title = titleET.getText().toString();
-				String idPageNum = idPageNumET.getText().toString();
-				int idPage = -9;
-				try{
-				 idPage = Integer.parseInt(idPageNum);
-				}catch(NumberFormatException e){
-					Log.d("Msg","There was a number format exception!");
-				}
-				
-				
-				//create a new fragment object as well as choice
-				Choice aNewChoice = new Choice();
-				
-				//Fragment aNewFrag = new Fragment(title,Description);
-				Fragment aNewFrag = new Fragment();
-				aNewFrag.addChoice(aNewChoice);
-				aNewFrag.setTitle(title);
-				//aNewFrag.setId(idPage);
-				StoryList sl = AdventureCreatorApplication.getStoryList();
-				
-				Story story = sl.getStoryById(storyId);
-				
-				story.addFragment(aNewFrag);
-				
-				// now we have to add it to our story object
-				// TODO WE HAVE TO HAVE STORY OBJECT THAT IS ASSOSCIATED WITH THIS FRAGMENT 
-				// StoryController.addFragment(ourStoryName , aNewFrag);
-				
-				Log.d("fragment", "a new fragment has been created");
-				finish();
+
+                EditText titleET = (EditText) findViewById(R.id.fragmentTitle);
+                EditText idPageNumET = (EditText) findViewById(R.id.idPageNum);
+
+
+                String title = titleET.getText().toString();
+                String idPageNum = idPageNumET.getText().toString();
+                int idPage = -9;
+                try{
+                    idPage = Integer.parseInt(idPageNum);
+                }catch(NumberFormatException e){
+                    Log.d("Msg","There was a number format exception!");
+                }
+
+
+                //create a new fragment object as well as choice
+                Choice aNewChoice = new Choice();
+
+                //Fragment aNewFrag = new Fragment(title,Description);
+                Fragment aNewFrag = new Fragment();
+                aNewFrag.addChoice(aNewChoice);
+                aNewFrag.setTitle(title);
+                //aNewFrag.setId(idPage);
+                StoryList sl = AdventureCreatorApplication.getStoryList();
+
+                Story story = sl.getStoryById(storyId);
+
+                story.addFragment(aNewFrag);
+
+                // now we have to add it to our story object
+                // TODO WE HAVE TO HAVE STORY OBJECT THAT IS ASSOSCIATED WITH THIS FRAGMENT 
+                // StoryController.addFragment(ourStoryName , aNewFrag);
+
+                Log.d("fragment", "a new fragment has been created");
+                finish();
             }	
         });
-        
+
         //Might not need... will decide soon, -Lindsay
-//        System.out.println("start listener");
-//        fragmentPartListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//
-//            @Override
-//            public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
-//               
-//            }
-//        });
+        //        System.out.println("start listener");
+        //        fragmentPartListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        //
+        //            @Override
+        //            public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
+        //               
+        //            }
+        //        });
     }
 
     @Override
@@ -194,10 +205,10 @@ public class EditFragmentActivity extends Activity implements FView<Fragment> {
         // TODO reload all fields based on new info from model
 
     }
-    
+
     @Override
     public void onCreateContextMenu(ContextMenu menu, View v,
-                                    ContextMenuInfo menuInfo) {
+            ContextMenuInfo menuInfo) {
         super.onCreateContextMenu(menu, v, menuInfo);
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.fragment_part_menu, menu);
@@ -207,16 +218,18 @@ public class EditFragmentActivity extends Activity implements FView<Fragment> {
     public boolean onContextItemSelected(MenuItem item) {
         AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo)item.getMenuInfo();
         int position = (int)info.id;
-        
+
+
         CharSequence itemTitle = item.getTitle();
         if (itemTitle.equals("Insert Text")){
             // TODO
-            
+            FragmentController.addTextSegment(fragment, "New text", position);
+
         } else if (itemTitle.equals("Insert Illustration")){
             /*
              * Need this code to return a drawable to add to the fragment
              */
-            
+
             // From: http://stackoverflow.com/q/16391124/1684866
             Intent galleryIntent = new Intent(Intent.ACTION_GET_CONTENT, null);
             galleryIntent.setType("image/*");
@@ -233,17 +246,35 @@ public class EditFragmentActivity extends Activity implements FView<Fragment> {
             };
             chooser.putExtra(Intent.EXTRA_INITIAL_INTENTS, intentArray);
             startActivityForResult(chooser, 0);
+
+            Drawable illustration = null;
+            FragmentController.addIllustration(fragment, illustration, position);
+
+        } else if (itemTitle.equals("Edit")){
+            RelativeLayout curLayout = new RelativeLayout(this);
             
-        }else if(itemTitle.equals("Add Choice")){
+            LayoutInflater inflater = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            System.out.println("1");
+            PopupWindow editTextWindow = new PopupWindow(inflater.inflate(R.layout.edit_text_seg_popup, null, true), 50, 50, true);
+            System.out.println("2");
+            EditText editTextSegView = (EditText) findViewById(R.id.editTextSeg);
+            System.out.println("3");
+            //editTextSegView.setText(fragment.getTextSegments().get(position));
+            System.out.println("4");
+            editTextWindow.showAtLocation(curLayout, Gravity.CENTER, 0, 0); 
+            System.out.println("5");
+            editTextWindow.update();
+            
+        } else if(itemTitle.equals("Add Choice")){
             //add choice Logic
-//            EditText choice1ET = (EditText) findViewById(R.id.choiceId1);
-//            String choice1 = choice1ET.getText().toString();
-//            aNewChoice.setChoiceText(choice1);
-            
+            //            EditText choice1ET = (EditText) findViewById(R.id.choiceId1);
+            //            String choice1 = choice1ET.getText().toString();
+            //            aNewChoice.setChoiceText(choice1);
+
         }else if (itemTitle.equals("Delete")){
             FragmentController.deleteFragmentPart(fragment, position);
         }
-        
+
         //Make sure the fragment isn't completely empty
         if(fragment.getDisplayOrder().size()==0)
             FragmentController.addEmptyPart(fragment);
