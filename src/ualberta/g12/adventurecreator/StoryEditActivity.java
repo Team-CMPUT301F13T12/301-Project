@@ -6,6 +6,8 @@ import java.util.List;
 
 
 
+
+
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -26,6 +28,7 @@ import android.widget.AdapterView.OnItemClickListener;
  */
 public class StoryEditActivity extends Activity implements SView<Story> {
 
+    private StoryList storyList;
     private Story story;
     private StoryController storyController;
 
@@ -46,8 +49,10 @@ public class StoryEditActivity extends Activity implements SView<Story> {
     private EditText authorText;
     private ListView lView;
     
+
+    private OfflineIOHelper offlineHelper;
     private FragmentListArrayAdapter adapter;
-    private int storyId;
+    private int storyId, storyPos;
     private List<Fragment> fragmentList;
 
     @Override
@@ -56,10 +61,11 @@ public class StoryEditActivity extends Activity implements SView<Story> {
         setContentView(R.layout.android_story_editor);
 
         // Load our story from the intent
-
         Intent i = getIntent();
         int id = i.getIntExtra(INTENT_STORY_ID, INVALID_STORY_ID);
         story = (Story)i.getSerializableExtra("Story");
+        storyList = (StoryList)i.getSerializableExtra("StoryList"); 
+        storyPos = (Integer)i.getSerializableExtra("StoryPos"); 
 
         if (DEBUG_LOG)
             Log.d(TAG, String.format("Started with story id: %d", id));
@@ -94,9 +100,8 @@ public class StoryEditActivity extends Activity implements SView<Story> {
 		{
 			public void onItemClick(AdapterView<?> parent, View view, int position, long id)
 			{
-
-				openEditFragment(0, position );
-
+			    Fragment selectedFrag = fragmentList.get(position);
+				openEditFragment(selectedFrag, position );
 			}
 		}
 				);
@@ -108,9 +113,6 @@ public class StoryEditActivity extends Activity implements SView<Story> {
         storyId = id;
     }
     
-
-    
-
 
     /** Updates all of the Ui Elements for this Activity */
     private void updateUiElements() {
@@ -168,27 +170,28 @@ public class StoryEditActivity extends Activity implements SView<Story> {
         // TODO Auto-generated method stub
         switch (item.getItemId()) {
             case R.id.add_fragment:
-                // TODO: Need to Pass the ID of the fragment to edit
+                // Create and add new fragment
                 Fragment newFrag = new Fragment();
+                int fragPos = story.getFragments().size();
                 storyController.addFragment(story, newFrag);
-                Intent intent = new Intent(this, EditFragmentActivity.class);
-                intent.putExtra("EditType", "Edit");
-                intent.putExtra("Fragment", newFrag);
-                intent.putExtra("Story", story);
-                Log.d("This",String.format("The story id was: %d", storyId));
-                startActivity(intent);
+                
+                //save and pass fragment
+                saveChanges();
+                openEditFragment(newFrag, fragPos);
                 return true;
+                
             case R.id.save_story:
                 // Save values
-                storyController.setTitle(titleText.getText().toString(), story);
-                storyController.setAuthor(authorText.getText().toString(), story);
-
+                story.setStoryTitle(titleText.getText().toString());
+                story.setAuthor(authorText.getText().toString());
+                saveChanges();
+                
                 // Tell StoryList to update Story
-                StoryListController slc = AdventureCreatorApplication.getStoryListController();
-                if (DEBUG_LOG)
-                    Log.d(TAG, String.format("SLC is null:%b story is null: %b", (slc == null),
-                            (story == null)));
-                slc.updateStoryWithId(story.getId(), story);
+//                StoryListController slc = AdventureCreatorApplication.getStoryListController();
+//                if (DEBUG_LOG)
+//                    Log.d(TAG, String.format("SLC is null:%b story is null: %b", (slc == null),
+//                            (story == null)));
+//                slc.updateStoryWithId(story.getId(), story);
                 // Leave activity
                 // TODO: Should we stay in this activity?
                 finish();
@@ -208,17 +211,24 @@ public class StoryEditActivity extends Activity implements SView<Story> {
     }
     
 
-	private void openEditFragment(int type  , int position ){
-		Fragment selectedFrag = fragmentList.get(position);
-		int id = selectedFrag.getId();
+	private void openEditFragment(Fragment frag, int fragPos){
+       
         Intent intent = new Intent(this, EditFragmentActivity.class);
         intent.putExtra("EditType", "Edit");
-        Log.d("This",String.format("The story id from editing is : %d", storyId));
-        intent.putExtra("storyId",storyId);
-        intent.putExtra("FragmentId", id);
-        //TODO need as we dont have a way to pass find fragment by id yet
-        intent.putExtra("pos", position);
+        intent.putExtra("StoryList", storyList);
+        intent.putExtra("StoryPos",storyPos);
+        intent.putExtra("Story", story);
+        intent.putExtra("FragmentPos", fragPos);
+        intent.putExtra("Fragment", frag);
+        
+        Log.d("This",String.format("The story id was: %d", storyId));
         startActivity(intent);
 	}
 
+	 private void saveChanges(){
+        //save any changes
+	    storyList.getAllStories().set(storyPos, story);
+        offlineHelper = new OfflineIOHelper(StoryEditActivity.this);
+        offlineHelper.saveOfflineStories(storyList);
+    }
 }

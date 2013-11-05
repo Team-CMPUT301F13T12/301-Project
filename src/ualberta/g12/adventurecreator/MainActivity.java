@@ -23,6 +23,7 @@ public class MainActivity extends Activity implements LView<StoryList>, OnItemCl
     private static final String TAG = "MainActivity";
     private ListView listView;
     private StoryListArrayAdapter adapter;
+    private OfflineIOHelper offlineHelper = new OfflineIOHelper(MainActivity.this);
 
     private static final String SHARED_PREF_IS_AUTHOR_FLAG = "isAuthor";
     private static boolean isAuthor = false;
@@ -31,38 +32,64 @@ public class MainActivity extends Activity implements LView<StoryList>, OnItemCl
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        // Get our storyList instance from the application
-        storyList = AdventureCreatorApplication.getStoryList();
-        // Load our local stories from the StoryList Model
-        stories = storyList.getAllStories();
-
-        if (DEBUG_LOG)
-            Log.d(TAG, String.format("Number of stories is: %d", stories.size()));
-
-        // Add ourself to the StoryList Model
-        storyList.addView(this);
         
-        // Set up ListView Stuff
-        adapter = new StoryListArrayAdapter(this, R.layout.listview_story_list, stories);
-        listView = (ListView) findViewById(R.id.main_activity_listview);
-        listView.setAdapter(adapter);
-        listView.setOnItemClickListener(this);
+        // Get our storyList instance from the application
+        //storyList = AdventureCreatorApplication.getStoryList();
 
+        listView = (ListView) findViewById(R.id.main_activity_listview);
+        storyList = new StoryList();
+        offlineHelper = new OfflineIOHelper(MainActivity.this);
+        offlineHelper.saveOfflineStories(storyList);
     }
     
     @Override
-    public void onDestroy(){
-        super.onDestroy();
-        // Remove ourselves from the story list
-        storyList.deleteView(this);
+    protected void onStart() {
+        super.onStart();
+        //obtain the intent
+//        Intent editActIntent = getIntent();
+//        storyList = (StoryList)editActIntent.getSerializableExtra("StoryList");
+      
+      System.out.println("ONE");
+      storyList = offlineHelper.loadOfflineStories();
+      System.out.println("FOUR");
+
+//      // Get our storyList instance from the application
+//      storyList = AdventureCreatorApplication.getStoryList();
+//      // Load our local stories from the StoryList Model
+//      stories = storyList.getAllStories();
+
+      // Load our local stories from the StoryList Model
+      stories = storyList.getAllStories();
+      System.out.println("FIVE");
+      
+      if (DEBUG_LOG)
+          Log.d(TAG, String.format("Number of stories is: %d", stories.size()));
+      System.out.println("SIX");
+      // Add ourself to the StoryList Model
+      //storyList.addView(this);
+      
+      // Set up ListView Stuff
+      adapter = new StoryListArrayAdapter(this, R.layout.listview_story_list, stories);
+      System.out.println("SEVEN");
+      listView.setAdapter(adapter);
+      System.out.println("EIGHT");
+      listView.setOnItemClickListener(this);
+      System.out.println("NINE");
     }
+    
+//    @Override
+//    public void onDestroy(){
+//        super.onDestroy();
+//        // Remove ourselves from the story list
+//        storyList.deleteView(this);
+//    }
 
     @Override
     public void onResume() {
         super.onResume();
-        SharedPreferences settings = getPreferences(MODE_PRIVATE);
-        isAuthor = settings.getBoolean(SHARED_PREF_IS_AUTHOR_FLAG, false);
+//        SharedPreferences settings = getPreferences(MODE_PRIVATE);
+//        isAuthor = settings.getBoolean(SHARED_PREF_IS_AUTHOR_FLAG, false);
+        listView.invalidateViews();
 
     }
 
@@ -97,7 +124,14 @@ public class MainActivity extends Activity implements LView<StoryList>, OnItemCl
         switch (item.getItemId()) {
             case R.id.menu_add_story:
                 // TODO: Launch the EditStoryActivity with the id of NEW_STORY
-                startActivity(new Intent(this, CreateStoryActivity.class));
+                int storyPos = storyList.getAllStories().size();
+                Story story = new Story();
+                storyList.addStory(story);
+                Intent i = new Intent(this, CreateStoryActivity.class);
+                i.putExtra("Story",story);
+                i.putExtra("StoryList", storyList);
+                i.putExtra("StoryPos", storyPos);
+                startActivity(i);
                 return true;
 
             case R.id.menu_check_box_author:
@@ -130,11 +164,15 @@ public class MainActivity extends Activity implements LView<StoryList>, OnItemCl
         Intent i;
         if (isAuthor) {
             i = new Intent(this, StoryEditActivity.class);
+            i.putExtra("StoryList", storyList);
             i.putExtra("Story",stories.get(pos));
+            i.putExtra("StoryPos", pos);
             i.putExtra(StoryEditActivity.INTENT_STORY_ID, stories.get(pos).getId());
         } else {
             i = new Intent(this, StoryViewActivity.class);
+            i.putExtra("StoryList", storyList);
             i.putExtra("Story",stories.get(pos));
+            i.putExtra("StoryPos", pos);
             i.putExtra(StoryViewActivity.INTENT_STORY_ID, stories.get(pos).getId());
         }
         startActivity(i);

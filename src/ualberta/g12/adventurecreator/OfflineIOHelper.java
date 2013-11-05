@@ -9,6 +9,8 @@ import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 
 
+import java.util.List;
+
 import android.content.Context;
 
 
@@ -32,18 +34,16 @@ public class OfflineIOHelper {
 	 * 
 	 *
 	 */
-	public ArrayList<Story> loadOfflineStories() {
-		ArrayList<Story> temp = new ArrayList<Story>();
+	public StoryList loadOfflineStories() {
+		StoryList stories = new StoryList();
 		try {
 
 			FileInputStream fis = storyContext.openFileInput(this.fileName);
 			ObjectInputStream ois = new ObjectInputStream(fis);
-			Story one = (Story) ois.readObject();
-			while (temp != null) {
-				temp.add(one);
-				one = (Story) ois.readObject();
-			}
-
+            stories = (StoryList) ois.readObject();
+            if (stories == null)
+                System.out.println("NULLBABY");
+            fis.close();
 
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
@@ -55,7 +55,7 @@ public class OfflineIOHelper {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		return temp;
+		return stories;
 	}
 	
 	/**
@@ -64,13 +64,15 @@ public class OfflineIOHelper {
 	 */
 	
 	// TODO make sure to make each model object serializable
-	public void saveOfflineStories(ArrayList<Story> myStories) {
+	public void saveOfflineStories(StoryList myStories) {
+	    if (myStories == null)
+            System.out.println("SAVING NULLBABY");
+	    else 
+            System.out.println("SAVING BABY");
 		try {
 			FileOutputStream fos = storyContext.openFileOutput(this.fileName,0);
 			ObjectOutputStream oos = new ObjectOutputStream(fos);
-			for (Story aStory : myStories) {
-				oos.writeObject(aStory);
-			}
+			oos.writeObject(myStories);
 			fos.close();
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block

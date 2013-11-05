@@ -51,7 +51,7 @@ public class EditFragmentActivity extends Activity implements FView<Fragment> {
     private TextView fragmentTitleTextView;
     private ListView fragmentPartListView;
     private FragmentPartAdapter adapter;
-    private int type;
+    private int type, storyPos, fragPos;
     public static final int EDIT = 0;
     public static final int ADD = 1;
     private EditText titleText;
@@ -61,7 +61,8 @@ public class EditFragmentActivity extends Activity implements FView<Fragment> {
     ImageButton imag;
     private static final String TAG = "EditFragmentActivity";
     private Story story;
-
+    private StoryList storyList;
+    private OfflineIOHelper offlineHelper;
 
 
     @Override
@@ -72,8 +73,12 @@ public class EditFragmentActivity extends Activity implements FView<Fragment> {
         //obtain the intent
         Intent editActIntent = getIntent();
         String editType = (String) editActIntent.getSerializableExtra("EditType");
-        fragment = (Fragment)editActIntent.getSerializableExtra("Fragment");
+        storyList = (StoryList)editActIntent.getSerializableExtra("StoryList");
         story  = (Story)editActIntent.getSerializableExtra("Story");
+        storyPos  = (Integer)editActIntent.getSerializableExtra("StoryPos");
+        fragment = (Fragment)editActIntent.getSerializableExtra("Fragment");
+        fragPos = (Integer)editActIntent.getSerializableExtra("FragmentPos");
+        
         
         //get widget references
         fragmentPartListView = (ListView) findViewById(R.id.FragmentPartList);
@@ -115,6 +120,11 @@ public class EditFragmentActivity extends Activity implements FView<Fragment> {
     @Override
     public void onBackPressed() {
         saveTitlePageId();
+        saveFragment();
+//        Intent i = new Intent(this, StoryEditActivity.class);
+//        i.putExtra("Story",story);
+//        i.putExtra(StoryEditActivity.INTENT_STORY_ID, story.getId());
+        super.onBackPressed();
     }
     
     @Override
@@ -318,5 +328,11 @@ public class EditFragmentActivity extends Activity implements FView<Fragment> {
                 System.out.println("SET imagBUT");
             }
         }
+    }
+    
+    private void saveFragment(){
+        storyList.getAllStories().get(storyPos).getFragments().set(fragPos, fragment);
+        offlineHelper = new OfflineIOHelper(EditFragmentActivity.this);
+        offlineHelper.saveOfflineStories(storyList);
     }
 }
