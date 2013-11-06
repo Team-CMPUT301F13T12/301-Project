@@ -297,7 +297,7 @@ public class EditFragmentActivity extends Activity implements FView<Fragment> {
             Intent intent = new Intent(this, EditChoiceActivity.class);
             intent.putExtra("StoryPos",storyPos);
             intent.putExtra("FragmentPos", fragPos);
-            intent.putExtra("choicePos", choicePos);
+            intent.putExtra("ChoicePos", choicePos);
             startActivity(intent);
             
         }else if (itemTitle.equals("Delete")){

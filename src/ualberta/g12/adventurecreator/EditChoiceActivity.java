@@ -107,7 +107,9 @@ public class EditChoiceActivity extends Activity {
 	
 
 	private void doneSelecting(int result){
-		if (result!=possibleChoices.size()){
+		Log.d("the size of possible choices is ",String.format("%d", possibleChoices.size()));
+		Log.d("the number of results is ",String.format("%d", result));
+		if (result!=(possibleChoices.size()-1)){
 			linked = ourFragmentList.get(result);
 		}
 	}
@@ -160,14 +162,18 @@ public class EditChoiceActivity extends Activity {
 		FragmentController fc = new FragmentController();
 		EditText myTitleET = (EditText)findViewById(R.id.choiceBody);
 		String Title = myTitleET.getText().toString();
-		Choice newChoice = new Choice();
+		//Choice newChoice = new Choice();
+		 Choice choice  = fragment.getChoices().get(choicePos);
 		// TODO needs to be checked;need controller
-		newChoice.setChoiceText(Title);
-		newChoice.setLinkedToFragment(linked);
-		fc.addChoice(fragment, newChoice);
+		 choice.setChoiceText(Title);
+		 if (linked != null)
+			 choice.setLinkedToFragment(linked);
+		//fc.addChoice(fragment, newChoice);
 		//sl.getAllStories().get(storyPos).getFragments().set(fragPos, fragment);
 		int i = fragment.getChoices().size();
 		Log.d("DID IT GROW?", String.format("%d", i));
+        sl.getAllStories().get(storyPos).getFragments().set(fragPos, fragment);
+        offlineHelper.saveOfflineStories(sl);
 		finish();
 		return true;
 	}
