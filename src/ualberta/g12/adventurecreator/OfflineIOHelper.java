@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import android.content.Context;
+import android.util.Log;
 
 
 /**
@@ -23,6 +24,8 @@ public class OfflineIOHelper {
 	
 	private String fileName = "myStories.sav";
 	private Context storyContext;
+
+    private static final String TAG = "OfflineIOHelper";
 	
 	public OfflineIOHelper(Context context){
 		storyContext = context;
@@ -42,7 +45,7 @@ public class OfflineIOHelper {
 			ObjectInputStream ois = new ObjectInputStream(fis);
             stories = (StoryList) ois.readObject();
             if (stories == null)
-                System.out.println("NULLBABY");
+                Log.d(TAG, "StoryList read in is null");
             fis.close();
 
 		} catch (FileNotFoundException e) {
@@ -66,9 +69,7 @@ public class OfflineIOHelper {
 	// TODO make sure to make each model object serializable
 	public void saveOfflineStories(StoryList myStories) {
 	    if (myStories == null)
-            System.out.println("SAVING NULLBABY");
-	    else 
-            System.out.println("SAVING BABY");
+	        Log.d(TAG, "Saving a null StoryList");
 		try {
 			FileOutputStream fos = storyContext.openFileOutput(this.fileName,0);
 			ObjectOutputStream oos = new ObjectOutputStream(fos);

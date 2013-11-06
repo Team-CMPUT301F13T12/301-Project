@@ -3,14 +3,9 @@ package ualberta.g12.adventurecreator;
 
 import java.util.List;
 
-
-
-
-
-
-
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -51,7 +46,7 @@ public class StoryEditActivity extends Activity implements SView<Story> {
     private ListView lView;
     
 
-    private OfflineIOHelper offlineHelper;
+    private OfflineIOHelper offlineHelper = new OfflineIOHelper(StoryEditActivity.this);
     private FragmentListArrayAdapter adapter;
     private int storyId, storyPos;
     private List<Fragment> fragmentList;
@@ -62,35 +57,13 @@ public class StoryEditActivity extends Activity implements SView<Story> {
         setContentView(R.layout.android_story_editor);
 
         // Load our story from the intent
-        Intent i = getIntent();
-        int id = i.getIntExtra(INTENT_STORY_ID, INVALID_STORY_ID);
-        story = (Story)i.getSerializableExtra("Story");
-        storyList = (StoryList)i.getSerializableExtra("StoryList"); 
+        Intent i = getIntent(); 
         storyPos = (Integer)i.getSerializableExtra("StoryPos"); 
 
         //get widget references
         titleText = (EditText) findViewById(R.id.story_editor_title_edit);
         authorText = (EditText) findViewById(R.id.story_editor_author_edit);
         lView = (ListView) findViewById(R.id.story_editor_listview);
-        
-        if (DEBUG_LOG)
-            Log.d(TAG, String.format("Started with story id: %d", id));
-
-        if (id == INVALID_STORY_ID) {
-            // There was no id passed to us in this intent
-            // Also what about on an orientation change
-            // TODO: What should we do here?
-            Log.w(TAG, "We were created withoug being passed a story to load.");
-        }
-
-        if (story == null) {
-            // TODO: What should we do here?
-            Log.w(TAG, String.format("There was no story with id: %d", id));
-        }
-
-        
-//        // TODO: Set up our storyController
-//        storyController = AdventureCreatorApplication.getStoryController();
         
         // Set up all listeners
         setUpOnClickListeners();
@@ -100,6 +73,9 @@ public class StoryEditActivity extends Activity implements SView<Story> {
     @Override
     protected void onStart() {
         super.onStart();
+        
+        storyList = offlineHelper.loadOfflineStories();
+        
         story = storyList.getAllStories().get(storyPos);
         
         //update title and author
@@ -111,6 +87,13 @@ public class StoryEditActivity extends Activity implements SView<Story> {
         adapter = new FragmentListArrayAdapter(this, R.layout.listview_fragment_list, fragmentList);
         lView.setAdapter(adapter);      
     }
+    
+    @Override
+    public void onResume() {
+        super.onResume();
+        lView.invalidateViews();
+
+    }
 
     /**
      * Sets up this activities onClickListeners:
@@ -119,17 +102,6 @@ public class StoryEditActivity extends Activity implements SView<Story> {
      * addPageButton: Opens EditFragmentActivity to create a new Fragment
      */
     private void setUpOnClickListeners() {
-        /*
-         * TODO: SaveButton - Tell the StoryListController to update the
-         * StoryList Model as a story has been changed or created
-         */
-
-        /*
-         * TODO: AddPageButton - Use the StoryController to add another Fragment
-         * which might update this story and then Open EditFragmentActivity with
-         * and Intent that has extras of a NEW_FRAGMENT_ID. Model should tell us
-         * to update.
-         */
 
         lView.setOnItemClickListener(new OnItemClickListener()
         {
@@ -139,19 +111,6 @@ public class StoryEditActivity extends Activity implements SView<Story> {
                 openEditFragment(selectedFrag, position);
             }
         });
-    }
-
-    /*
-     * Set up the context menu for the ListViews elements. This is probably not
-     * going to be done in this method however this is used to remind us it
-     * needs to be done
-     */
-    private void setUpContextMenu() {
-        // TODO: ListItemClick: Same as AddPageButton except our extra will be
-        // the ID of the intent
-
-        // TODO: DeleteFragment: Use the StoryController to remove the fragment
-        // with this id. Model should tell us to update
     }
 
     @Override
@@ -165,11 +124,13 @@ public class StoryEditActivity extends Activity implements SView<Story> {
     public boolean onOptionsItemSelected(MenuItem item) {
         // TODO Auto-generated method stub
         switch (item.getItemId()) {
-            case R.id.add_fragment:                
+            case R.id.add_fragment:           
+                
                 // Create and add new fragment
                 Fragment newFrag = new Fragment();
                 int fragPos = story.getFragments().size();
                 storyController.addFragment(story, newFrag);
+                
                 //pass new fragment to edit fragment intent
                 openEditFragment(newFrag, fragPos);
                 return true;
@@ -218,7 +179,6 @@ public class StoryEditActivity extends Activity implements SView<Story> {
          story.setAuthor(authorText.getText().toString());
          
 	    storyList.getAllStories().set(storyPos, story);
-        offlineHelper = new OfflineIOHelper(StoryEditActivity.this);
         offlineHelper.saveOfflineStories(storyList);
     }
 }

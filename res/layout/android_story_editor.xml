@@ -7,6 +7,8 @@
         android:id="@+id/story_editor_title_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
         android:layout_alignParentTop="true"
         android:layout_margin="5dp"
         android:text="@string/story_edit_title"
@@ -16,39 +18,60 @@
         android:id="@+id/story_editor_title_edit"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
         android:layout_below="@+id/story_editor_title_text"
         android:layout_margin="5dp"
         android:hint="@string/story_edit_title_hint" />
-
-    <TextView
-        android:id="@+id/story_editor_author_text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/story_editor_title_edit"
-        android:layout_margin="5dp"
-        android:hint="@string/story_edit_author"
-        android:textStyle="bold" />
-
-    <EditText
-        android:id="@+id/story_editor_author_edit"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/story_editor_author_text"
-        android:layout_margin="5dp"
-        android:hint="@string/story_edit_author_hint" />
 
     <LinearLayout
         android:id="@+id/story_editor_listview_layout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/story_editor_author_edit"
+        android:layout_below="@+id/story_editor_fragment_text"
         android:layout_margin="5dp" >
 
         <ListView
             android:id="@+id/story_editor_listview"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" >
+            android:layout_height="match_parent" >
         </ListView>
     </LinearLayout>
+
+    <TextView
+        android:id="@+id/story_editor_fragment_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/story_editor_author_edit"
+        android:layout_margin="5dp"
+        android:text="@string/story_edit_fragment"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/story_editor_author_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/story_editor_title_edit"
+        android:layout_margin="5dp"
+        android:text="@string/story_edit_author"
+        android:textStyle="bold" />
+    
+    <EditText
+        android:id="@+id/story_editor_author_edit"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/story_editor_author_text"
+        android:layout_margin="5dp"
+        android:ems="10"
+        android:hint="@string/story_edit_author_hint" >
+
+        <requestFocus />
+    </EditText>
 
 </RelativeLayout>

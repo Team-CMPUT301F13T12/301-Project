@@ -6,7 +6,8 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context=".EditFragmentActivity" >
+    tools:context=".EditFragmentActivity" 
+    android:padding="6dip">
 
     <EditText
         android:id="@+id/fragmentTitle"
@@ -46,6 +47,8 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentTop="true"
-        android:ems="10" />
+        android:ems="10"
+        android:textSize="3mm"
+        android:textStyle="bold" />
 
 </RelativeLayout>

@@ -62,7 +62,7 @@ public class EditFragmentActivity extends Activity implements FView<Fragment> {
     private EditText editTitleText, idPageNumText;
     private static final int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 100;
     private static final String TAG = "EditFragmentActivity";
-    private OfflineIOHelper offlineHelper;
+    private OfflineIOHelper offlineHelper = new OfflineIOHelper(EditFragmentActivity.this);
     private String mode, pictureMode;
     private StoryList storyList;
     private Story story;
@@ -78,10 +78,7 @@ public class EditFragmentActivity extends Activity implements FView<Fragment> {
         //obtain the intent
         Intent editActIntent = getIntent();
         mode = (String) editActIntent.getSerializableExtra("Mode");
-        storyList = (StoryList)editActIntent.getSerializableExtra("StoryList");
-        story  = (Story)editActIntent.getSerializableExtra("Story");
         storyPos  = (Integer)editActIntent.getSerializableExtra("StoryPos");
-        fragment = (Fragment)editActIntent.getSerializableExtra("Fragment");
         fragPos = (Integer)editActIntent.getSerializableExtra("FragmentPos"); //not reliable when in view mode
 
         //get widget references
@@ -90,13 +87,19 @@ public class EditFragmentActivity extends Activity implements FView<Fragment> {
         editTitleText = (EditText) findViewById(R.id.fragmentTitle);
         idPageNumText = (EditText) findViewById(R.id.idPageNum);
         
-        /* for testing, will delete later -Lindsay */
-//        Drawable ill = Drawable.createFromPath("/mnt/sdcard/tmp/2013-11-04 22.04.41.jpg");
-//        FragmentController.addTextSegment(fragment, "part1");
-//        FragmentController.addTextSegment(fragment,"part2beforeill");
-//        FragmentController.addTextSegment(fragment,"part number 3 which is rather long because we would like to test text wrapping");
-//        FragmentController.addIllustration(fragment,ill,2);
-
+        setListClickListener();
+    }
+        
+    /** Updates all of the Ui Elements for this Activity */
+    @Override
+    protected void onStart() {
+        super.onStart();
+        
+        //load save file
+        storyList = offlineHelper.loadOfflineStories();
+        story = storyList.getAllStories().get(storyPos);
+        fragment = story.getFragments().get(fragPos);
+        
         //Make sure we have at least one part if in edit mode
         if (mode.equals("Edit") == true && fragment.getDisplayOrder().size()==0){
             FragmentController.addEmptyPart(fragment);
@@ -281,25 +284,8 @@ public class EditFragmentActivity extends Activity implements FView<Fragment> {
             }
 
         } else if(itemTitle.equals("Add Choice")){ 
-            //add choice Logic
-            //            EditText choice1ET = (EditText) findViewById(R.id.choiceId1);
-            //            String choice1 = choice1ET.getText().toString();
-            //            aNewChoice.setChoiceText(choice1);
-
-            //TODO AS of right now it only works for edit mode will have to add extra logic for ADD mode as fragment is not created yet
-            /*
-        	// will have to change way of calling 
-        	// TODO change to newer way of calling 
-        	if (type == EDIT){
-        		Fragment selectedFrag = fragmentList.get(pos);
-        		Intent intent = new Intent(this,EditChoiceActivity.class);
-        		intent.putExtra("OurFragmentId", fragmentId);
-        		intent.putExtra("OurStoryId", storyId);
-        		startActivity(intent);
-        		Log.d("HI","HELLO");
-        	}
-             */
-
+            //adds choice 
+            
         }else if (itemTitle.equals("Delete")){
             FragmentController.deleteFragmentPart(fragment, position);
         }
@@ -429,7 +415,6 @@ public class EditFragmentActivity extends Activity implements FView<Fragment> {
 
         setTitleAndPageId();
         storyList.getAllStories().get(storyPos).getFragments().set(fragPos, fragment);
-        offlineHelper = new OfflineIOHelper(EditFragmentActivity.this);
         offlineHelper.saveOfflineStories(storyList);
     }
 }

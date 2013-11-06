@@ -37,8 +37,8 @@ public class MainActivity extends Activity implements LView<StoryList>, OnItemCl
         //storyList = AdventureCreatorApplication.getStoryList();
         
         //Erases previous saves
-//        storyList = new StoryList();
-//        offlineHelper.saveOfflineStories(storyList);
+        storyList = new StoryList();
+        offlineHelper.saveOfflineStories(storyList);
 
         listView = (ListView) findViewById(R.id.main_activity_listview);
     }
@@ -46,15 +46,9 @@ public class MainActivity extends Activity implements LView<StoryList>, OnItemCl
     @Override
     protected void onStart() {
         super.onStart();
-      
-      storyList = offlineHelper.loadOfflineStories();
-
-//      // Get our storyList instance from the application
-//      storyList = AdventureCreatorApplication.getStoryList();
-//      // Load our local stories from the StoryList Model
-//      stories = storyList.getAllStories();
 
       // Load our local stories from the StoryList Model
+      storyList = offlineHelper.loadOfflineStories();
       stories = storyList.getAllStories();
       
       if (DEBUG_LOG)
@@ -118,9 +112,11 @@ public class MainActivity extends Activity implements LView<StoryList>, OnItemCl
                 int storyPos = storyList.getAllStories().size();
                 Story story = new Story();
                 storyList.addStory(story);
+                
+                //save the newly added story
+                offlineHelper.saveOfflineStories(storyList);
+                
                 Intent i = new Intent(this, CreateStoryActivity.class);
-                i.putExtra("Story",story);
-                i.putExtra("StoryList", storyList);
                 i.putExtra("StoryPos", storyPos);
                 startActivity(i);
                 return true;
@@ -155,22 +151,15 @@ public class MainActivity extends Activity implements LView<StoryList>, OnItemCl
         Intent i;
         if (isAuthor) {
             i = new Intent(this, StoryEditActivity.class);
-            i.putExtra("StoryList", storyList);
-            i.putExtra("Story",stories.get(pos));
+            i.putExtra("Mode", "Edit");
             i.putExtra("StoryPos", pos);
-            i.putExtra(StoryEditActivity.INTENT_STORY_ID, stories.get(pos).getId());
         } else {
-            Story story = stories.get(pos);
-            int fragPos = story.getStartFragPos();
-            Fragment frag = story.getFragments().get(fragPos);
+            int fragPos = stories.get(pos).getStartFragPos();
 
             i = new Intent(this, EditFragmentActivity.class);
             i.putExtra("Mode", "View");
-            i.putExtra("StoryList", storyList);
             i.putExtra("StoryPos",pos);
-            i.putExtra("Story", story);
             i.putExtra("FragmentPos", fragPos);
-            i.putExtra("Fragment", frag);
             startActivity(i);
         }
         startActivity(i);

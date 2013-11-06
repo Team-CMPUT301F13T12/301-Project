@@ -13,7 +13,7 @@ import android.widget.EditText;
 public class CreateStoryActivity extends Activity {
     private Story story;
     private StoryList storyList;
-    private OfflineIOHelper offlineHelper;
+    private OfflineIOHelper offlineHelper = new OfflineIOHelper(CreateStoryActivity.this);
     private int storyPos;
     
 	Button createButton;
@@ -24,43 +24,19 @@ public class CreateStoryActivity extends Activity {
         setContentView(R.layout.activity_create_story);
         
         createButton = (Button) findViewById(R.id.editTextSave);
-        createButton.setOnClickListener(new View.OnClickListener() {
-			
-			@Override
-			public void onClick(View arg0) {
-				// TODO Auto-generated method stub
-				
-				// create a new story object! id should be unique too! 
-				
-				
-				// get the editTexts!
-				EditText title = (EditText) findViewById(R.id.editStoryTitle);
-				EditText author = (EditText) findViewById(R.id.editStoryAuthor);
-				
-				// create a new story (might want to use a controller here instead!)
-				story.setStoryTitle(title.getText().toString());
-                story.setAuthor(author.getText().toString());
-				// TODO: make sure id is unique!
-				story.setId(5);
-				
-				//save the new story
-				saveStory();
-				// TODO discuss
-				// I'm changing it so that you can only create a story here
-				// it will return to our main screen where if they click on it it will let them edit
-				finish();
-			}
-		});
+
+        //obtain the intent
+        Intent editActIntent = getIntent();
+        storyPos = (Integer)editActIntent.getSerializableExtra("StoryPos");
+        
+        setListeners();
     }
 
     @Override
     protected void onStart() {
         super.onStart();
-        //obtain the intent
-        Intent editActIntent = getIntent();
-        storyList = (StoryList)editActIntent.getSerializableExtra("StoryList");
-        story  = (Story)editActIntent.getSerializableExtra("Story");
-        storyPos  = (Integer)editActIntent.getSerializableExtra("StoryPos");
+        storyList = offlineHelper.loadOfflineStories();
+        story = storyList.getAllStories().get(storyPos);      
     }
     
     @Override
@@ -77,11 +53,31 @@ public class CreateStoryActivity extends Activity {
 		return super.onOptionsItemSelected(item);
 	}
 	
+	private void setListeners(){
+
+        createButton.setOnClickListener(new View.OnClickListener() {
+            
+            @Override
+            public void onClick(View arg0) {
+                
+                // get the editTexts!
+                EditText title = (EditText) findViewById(R.id.editStoryTitle);
+                EditText author = (EditText) findViewById(R.id.editStoryAuthor);
+                
+                // create a new story (might want to use a controller here instead!)
+                story.setStoryTitle(title.getText().toString());
+                story.setAuthor(author.getText().toString());
+                
+                //save the new story
+                saveStory();
+                
+                finish();
+            }
+        });
+    }
+	
 	private void saveStory(){
 	    storyList.getAllStories().set(storyPos, story);
-        offlineHelper = new OfflineIOHelper(CreateStoryActivity.this);
         offlineHelper.saveOfflineStories(storyList);
 	}
-    
-    
 }

@@ -29,5 +29,6 @@
     <string name="cancel">Cancel</string>
     <string name="save">Save</string>
     <string name="title_activity_edit_choice">EditChoiceActivity</string>
+    <string name="story_edit_fragment">Fragments</string>
 
 </resources>
