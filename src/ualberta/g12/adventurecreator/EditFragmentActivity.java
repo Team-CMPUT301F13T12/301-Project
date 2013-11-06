@@ -229,6 +229,8 @@ public class EditFragmentActivity extends Activity implements FView<Fragment> {
             FragmentController.addTextSegment(fragment, "New text", position);
 
         } else if (itemTitle.equals("Insert Illustration")){
+            System.out.println("insert ill start");
+            saveFragment();
             pictureMode = "Add";
             picturePosition = position;
             AddImage();
@@ -278,6 +280,7 @@ public class EditFragmentActivity extends Activity implements FView<Fragment> {
                 editTextWindow.update(0,0,fragmentPartListView.getWidth(),400);
 
             } else if (type.equals("i")){
+                saveFragment();
                 pictureMode = "Edit";
                 picturePosition = position;
                 AddImage();
@@ -381,14 +384,15 @@ public class EditFragmentActivity extends Activity implements FView<Fragment> {
                 Log.w("path of image from gallery......******************.........", picturePath+"");                
             }
             if(bitmap != null){
-                if (pictureMode.equals("Add"))
+                if (pictureMode.equals("Add")){
+                    System.out.println("add ill start");
                     FragmentController.addIllustration(fragment, bitmap, position);
-                else if (pictureMode.equals("Edit")){
+                }else if (pictureMode.equals("Edit")){
                     FragmentController.deleteFragmentPart(fragment, position);
                     FragmentController.addIllustration(fragment, bitmap, position);
                 }
-                    
-                fragmentPartListView.invalidateViews();
+                saveFragment();
+                //fragmentPartListView.invalidateViews();
             } else
                 Log.d(TAG,"bitmap returned is null");
         }

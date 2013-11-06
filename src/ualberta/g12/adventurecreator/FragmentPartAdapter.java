@@ -71,7 +71,9 @@ public class FragmentPartAdapter extends ArrayAdapter{
                     occurrence++;  
             }
 
-            Bitmap illustration = frag.getIllustrations().get(occurrence);
+            System.out.println("probably dies here"+occurrence);
+            Bitmap illustration = FragmentController.getIllustrations(frag).get(occurrence);
+            System.out.println("betchs don't see me");
             if (illustration != null){
                 image.setVisibility(View.VISIBLE);
                 if (image != null)

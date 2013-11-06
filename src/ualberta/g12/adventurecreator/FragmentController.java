@@ -121,10 +121,22 @@ public class FragmentController implements FController {
         return true;
     }
 
+    public static List<Bitmap> getIllustrations(Fragment frag){
+        List<Bitmap> ills = new LinkedList<Bitmap>();
+        List<SerializableImage> illustrations = frag.getIllustrations();
+        
+        for (SerializableImage serIm : illustrations){
+            ills.add(serIm.getImage());
+        }
+        return ills;
+    }
+    
     @Override
     public void addIllustration(Fragment frag, Bitmap illustration){
-        List<Bitmap> illustrations = frag.getIllustrations();
-        illustrations.add(illustration);
+        List<SerializableImage> illustrations = frag.getIllustrations();
+        SerializableImage serIm = new SerializableImage();
+        serIm.setImage(illustration);
+        illustrations.add(serIm);
         frag.setIllustrations(illustrations);
 
         //insert t into corresponding spot in display order
@@ -145,23 +157,27 @@ public class FragmentController implements FController {
     }
     
     public static boolean addIllustration(Fragment frag, Bitmap illustration, int dispNum){
-        List<Bitmap> illustrations = frag.getIllustrations();
+        List<SerializableImage> illustrations = frag.getIllustrations();
         List<String> displayOrder = frag.getDisplayOrder();
+        SerializableImage serIm = new SerializableImage();
+        serIm.setImage(illustration);
         
+        System.out.println("add ill start2");
         //check for invalid dispNum
         if (displayOrder.size()<dispNum)
             return false;
-        
+        System.out.println("ill 3");
         //Insert the text segment
         int illNum=0;
         for (int i=0; i<dispNum;i++){
             if (displayOrder.get(i).equals("i"))
                 illNum++;
         }
+        System.out.println("illNum "+illNum);
         if (illustrations.size()==illNum){
-           illustrations.add(illustration);
+           illustrations.add(serIm);
         } else {
-            illustrations.add(illNum, illustration);
+            illustrations.add(illNum, serIm);
         }
 
         //insert t into corresponding spot in display order
@@ -169,12 +185,14 @@ public class FragmentController implements FController {
         
         frag.setDisplayOrder(displayOrder);
         frag.setIllustrations(illustrations);
+        System.out.println("ill disord "+displayOrder.toString());
+        System.out.println("ill size "+illustrations.size());
         
         return true;
     }
 
     public void deleteIllustration(Fragment frag, Bitmap illustration){
-        List<Bitmap> illustrations = frag.getIllustrations();
+        List<SerializableImage> illustrations = frag.getIllustrations();
         List<String> displayOrder = frag.getDisplayOrder();
 
         //find the entry of display order that should be removed
@@ -201,7 +219,7 @@ public class FragmentController implements FController {
      * @return
      */
     private static boolean deleteIllustration(Fragment frag, int dispNum){
-        List<Bitmap> illustrations = frag.getIllustrations();
+        List<SerializableImage> illustrations = frag.getIllustrations();
         List<String> displayOrder = frag.getDisplayOrder();
 
         //not an illustration at dispNum
