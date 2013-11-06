@@ -25,20 +25,43 @@ public class EditChoiceActivity extends Activity {
 	private int userPicked;
 	private List<String> possibleChoices;
 	private Fragment linked;
+	private int requestKey;
+	private int storyPos,fragPos ,choicePos;
+	private StoryList sl ;
+	private Fragment fragment;
+	private OfflineIOHelper offlineHelper = new OfflineIOHelper(EditChoiceActivity.this);
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_edit_choice);
 		// Show the Up button in the action bar.
 		setupActionBar();
+		///stufsf;jasdf
+		
+			 Intent editChoiceIntent = getIntent();
+			 storyPos  = (Integer)editChoiceIntent.getSerializableExtra("StoryPos");
+			 fragPos = (Integer)editChoiceIntent.getSerializableExtra("FragmentPos"); 
+			 choicePos = (Integer)editChoiceIntent.getSerializableExtra("ChoicePos"); 
+/*
+			 //load save file
+			        storyList = offlineHelper.loadOfflineStories();
+			        story = storyList.getAllStories().get(storyPos);
+			        fragment = story.getFragments().get(fragPos);
+			        Choice choice fragment.getChoices().get(choicePos);
+		 
+			*/
 		Intent i = getIntent();
-		Bundle extras = i.getExtras();
-		ourStoryId = extras.getInt("OurStoryId");
-		ourFragmentId = extras.getInt("OurFragmentId");
+		//Bundle extras = i.getExtras();
+		//ourStoryId = extras.getInt("OurStoryId");
+		//ourFragmentId = extras.getInt("OurFragmentId");
 		Button choiceButton  = (Button) findViewById(R.id.choiceButton);
-		StoryList sl = AdventureCreatorApplication.getStoryList();
-		ourStory = sl.getStoryById(ourStoryId);
+		//StoryList sl = AdventureCreatorApplication.getStoryList();
+		sl  = offlineHelper.loadOfflineStories();
+		ourStory = sl.getAllStories().get(storyPos);
+		//Log.d("WHAT IS OUR STORY SIZE?", ourStory.getStoryTitle());
 		ourFragmentList = ourStory.getFragments();
+		fragment = ourFragmentList.get(fragPos);
+		Log.d("HURR DURR", "HEER HERR");
 		Log.d("WHAT AM BEFORE", String.format("%d",ourFragmentList.size() ));
 		choiceButton.setOnClickListener(new OnClickListener() {
 		  @Override
@@ -57,7 +80,7 @@ public class EditChoiceActivity extends Activity {
 	//http://stackoverflow.com/questions/4473940/android-best-practice-returning-values-from-a-dialog
 	private void dialogz(){
 		  AlertDialog.Builder builder = new AlertDialog.Builder(this);
-		  builder.setTitle("Pick a Fragment to link to (Choosing {NONE} option will indicate that this fragment is an Ending");
+		  builder.setTitle("Pick a Fragment to link {NONE} means end");
 		  possibleChoices = getFragmentTitleList(ourFragmentList);
 		  CharSequence[] chars = possibleChoices.toArray(new CharSequence[possibleChoices.size()]);
 		  
@@ -125,14 +148,14 @@ public class EditChoiceActivity extends Activity {
 		return super.onOptionsItemSelected(item);
 		*/
 		
-		Fragment frag = null; 
+		//Fragment frag = null; 
 		// TODO SEARCH FOR FRAGMENT BY FRAGMENT ID?
-		for (int i = 0; i < ourFragmentList.size(); i++){
-			if (ourFragmentList.get(i).getId() == ourFragmentId)
-				frag = ourFragmentList.get(i);
-		}
-		Log.d("WHAT AM BEFORE", String.format("%d",frag.getChoices().size() ));
-		Log.d("WHAT?!", frag.getChoices().get(0).getChoiceText());
+		//for (int i = 0; i < ourFragmentList.size(); i++){
+		//	if (ourFragmentList.get(i).getId() == ourFragmentId)
+		//		frag = ourFragmentList.get(i);
+		//}
+		//Log.d("WHAT AM BEFORE", String.format("%d",frag.getChoices().size() ));
+		//Log.d("WHAT?!", frag.getChoices().get(0).getChoiceText());
 		//TODO CHANGE THIS AND REFACTOR ALL CODE IN CLASS
 		FragmentController fc = new FragmentController();
 		EditText myTitleET = (EditText)findViewById(R.id.choiceBody);
@@ -141,11 +164,12 @@ public class EditChoiceActivity extends Activity {
 		// TODO needs to be checked;need controller
 		newChoice.setChoiceText(Title);
 		newChoice.setLinkedToFragment(linked);
-		fc.addChoice(frag, newChoice);
-		int i = frag.getChoices().size();
+		fc.addChoice(fragment, newChoice);
+		//sl.getAllStories().get(storyPos).getFragments().set(fragPos, fragment);
+		int i = fragment.getChoices().size();
 		Log.d("DID IT GROW?", String.format("%d", i));
+		finish();
 		return true;
-		
 	}
 
 }
