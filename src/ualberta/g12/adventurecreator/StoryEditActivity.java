@@ -8,6 +8,7 @@ import java.util.List;
 
 
 
+
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -30,7 +31,7 @@ public class StoryEditActivity extends Activity implements SView<Story> {
 
     private StoryList storyList;
     private Story story;
-    private StoryController storyController;
+    private StoryController storyController = new StoryController();
 
     // Story ID Constants
     public static final String INTENT_STORY_ID = "storyid";
@@ -67,6 +68,11 @@ public class StoryEditActivity extends Activity implements SView<Story> {
         storyList = (StoryList)i.getSerializableExtra("StoryList"); 
         storyPos = (Integer)i.getSerializableExtra("StoryPos"); 
 
+        //get widget references
+        titleText = (EditText) findViewById(R.id.story_editor_title_edit);
+        authorText = (EditText) findViewById(R.id.story_editor_author_edit);
+        lView = (ListView) findViewById(R.id.story_editor_listview);
+        
         if (DEBUG_LOG)
             Log.d(TAG, String.format("Started with story id: %d", id));
 
@@ -76,8 +82,6 @@ public class StoryEditActivity extends Activity implements SView<Story> {
             // TODO: What should we do here?
             Log.w(TAG, "We were created withoug being passed a story to load.");
         }
-        //StoryList sl = AdventureCreatorApplication.getStoryList();
-        //story = sl.getStoryById(id);
 
         if (story == null) {
             // TODO: What should we do here?
@@ -85,43 +89,27 @@ public class StoryEditActivity extends Activity implements SView<Story> {
         }
 
         
-        // TODO: Set up our storyController
-        storyController = AdventureCreatorApplication.getStoryController();
-
-        // TODO: Load our story contents into fields (ListView of Fragments)
-        titleText = (EditText) findViewById(R.id.story_editor_title_edit);
-        authorText = (EditText) findViewById(R.id.story_editor_author_edit);
-        // TODO: Update listview
-        fragmentList = story.getFragments();
-        adapter = new FragmentListArrayAdapter(this, R.layout.listview_fragment_list, fragmentList);
-        lView = (ListView) findViewById(R.id.story_editor_listview);
-        lView.setAdapter(adapter);
-        lView.setOnItemClickListener(new OnItemClickListener()
-		{
-			public void onItemClick(AdapterView<?> parent, View view, int position, long id)
-			{
-			    Fragment selectedFrag = fragmentList.get(position);
-				openEditFragment(selectedFrag, position );
-			}
-		}
-				);
-        // TODO: Setup Adapter
-        updateUiElements();
-        // TODO: Set up all listeners
-        setUpOnClickListeners();
+//        // TODO: Set up our storyController
+//        storyController = AdventureCreatorApplication.getStoryController();
         
-        storyId = id;
+        // Set up all listeners
+        setUpOnClickListeners();
     }
     
-
     /** Updates all of the Ui Elements for this Activity */
-    private void updateUiElements() {
+    @Override
+    protected void onStart() {
+        super.onStart();
+        story = storyList.getAllStories().get(storyPos);
+        
+        //update title and author
         titleText.setText(story.getStoryTitle());
         authorText.setText(story.getAuthor());
 
-        // TODO: update listView
+        //populate the fragment list
         fragmentList = story.getFragments();
-        adapter.notifyDataSetChanged();
+        adapter = new FragmentListArrayAdapter(this, R.layout.listview_fragment_list, fragmentList);
+        lView.setAdapter(adapter);      
     }
 
     /**
@@ -143,6 +131,14 @@ public class StoryEditActivity extends Activity implements SView<Story> {
          * to update.
          */
 
+        lView.setOnItemClickListener(new OnItemClickListener()
+        {
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id)
+            {
+                Fragment selectedFrag = fragmentList.get(position);
+                openEditFragment(selectedFrag, position);
+            }
+        });
     }
 
     /*
@@ -169,31 +165,20 @@ public class StoryEditActivity extends Activity implements SView<Story> {
     public boolean onOptionsItemSelected(MenuItem item) {
         // TODO Auto-generated method stub
         switch (item.getItemId()) {
-            case R.id.add_fragment:
+            case R.id.add_fragment:                
                 // Create and add new fragment
                 Fragment newFrag = new Fragment();
                 int fragPos = story.getFragments().size();
                 storyController.addFragment(story, newFrag);
-                
-                //save and pass fragment
-                saveChanges();
+                //pass new fragment to edit fragment intent
                 openEditFragment(newFrag, fragPos);
                 return true;
                 
             case R.id.save_story:
                 // Save values
-                story.setStoryTitle(titleText.getText().toString());
-                story.setAuthor(authorText.getText().toString());
                 saveChanges();
-                
-                // Tell StoryList to update Story
-//                StoryListController slc = AdventureCreatorApplication.getStoryListController();
-//                if (DEBUG_LOG)
-//                    Log.d(TAG, String.format("SLC is null:%b story is null: %b", (slc == null),
-//                            (story == null)));
-//                slc.updateStoryWithId(story.getId(), story);
+                                
                 // Leave activity
-                // TODO: Should we stay in this activity?
                 finish();
                 return true;
         }
@@ -202,17 +187,19 @@ public class StoryEditActivity extends Activity implements SView<Story> {
 
     @Override
     public void update(Story model) {
-        // TODO: Update our local story variable
-    	updateUiElements();
-    	
-        // TODO: Reload value from our story into fields - notify adapter our
+        // Update our local story variable   	
+        // Reload value from our story into fields - notify adapter our
         // story has changed
+        onStart();
 
     }
     
 
 	private void openEditFragment(Fragment frag, int fragPos){
-       
+	    System.out.println("entered opoenedit");
+	    //save before leaving activity
+        saveChanges();
+        
         Intent intent = new Intent(this, EditFragmentActivity.class);
         intent.putExtra("Mode", "Edit");
         intent.putExtra("StoryList", storyList);
@@ -227,6 +214,9 @@ public class StoryEditActivity extends Activity implements SView<Story> {
 
 	 private void saveChanges(){
         //save any changes
+	     story.setStoryTitle(titleText.getText().toString());
+         story.setAuthor(authorText.getText().toString());
+         
 	    storyList.getAllStories().set(storyPos, story);
         offlineHelper = new OfflineIOHelper(StoryEditActivity.this);
         offlineHelper.saveOfflineStories(storyList);

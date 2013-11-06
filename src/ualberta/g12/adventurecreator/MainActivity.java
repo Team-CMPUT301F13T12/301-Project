@@ -36,7 +36,7 @@ public class MainActivity extends Activity implements LView<StoryList>, OnItemCl
         // Get our storyList instance from the application
         //storyList = AdventureCreatorApplication.getStoryList();
         
-//        //Erases previous saves
+        //Erases previous saves
 //        storyList = new StoryList();
 //        offlineHelper.saveOfflineStories(storyList);
 
@@ -59,7 +59,6 @@ public class MainActivity extends Activity implements LView<StoryList>, OnItemCl
       
       if (DEBUG_LOG)
           Log.d(TAG, String.format("Number of stories is: %d", stories.size()));
-      System.out.println("SIX");
       // Add ourself to the StoryList Model
       storyList.addView(this);
       

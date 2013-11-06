@@ -1,6 +1,8 @@
 
 package ualberta.g12.adventurecreator;
 
+import java.util.List;
+
 public class StoryController implements SController {
 
     
@@ -20,7 +22,9 @@ public class StoryController implements SController {
     
     @Override
     public void addFragment(Story s, Fragment f) {
-        s.addFragment(f);
+        List<Fragment> fragments = s.getFragments();
+        fragments.add(f);
+        s.setFragments(fragments);
     }
 
     @Override
