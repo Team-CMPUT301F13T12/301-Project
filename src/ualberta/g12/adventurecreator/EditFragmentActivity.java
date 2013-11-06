@@ -287,7 +287,18 @@ public class EditFragmentActivity extends Activity implements FView<Fragment> {
             }
 
         } else if(itemTitle.equals("Add Choice")){ 
-            //adds choice 
+            // create, add and save new choice
+            int choicePos = fragment.getChoices().size();
+            Choice choice = new Choice();
+            fragment.addChoice(choice);
+            saveFragment();
+            
+            //go to edit choice activity
+            Intent intent = new Intent(this, EditChoiceActivity.class);
+            intent.putExtra("StoryPos",storyPos);
+            intent.putExtra("FragmentPos", fragPos);
+            intent.putExtra("choicePos", choicePos);
+            startActivity(intent);
             
         }else if (itemTitle.equals("Delete")){
             FragmentController.deleteFragmentPart(fragment, position);

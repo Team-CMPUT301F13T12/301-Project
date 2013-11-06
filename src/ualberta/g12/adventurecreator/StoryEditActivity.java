@@ -108,7 +108,7 @@ public class StoryEditActivity extends Activity implements SView<Story> {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id)
             {
                 Fragment selectedFrag = fragmentList.get(position);
-                openEditFragment(selectedFrag, position);
+                openEditFragment(position);
             }
         });
     }
@@ -132,7 +132,7 @@ public class StoryEditActivity extends Activity implements SView<Story> {
                 storyController.addFragment(story, newFrag);
                 
                 //pass new fragment to edit fragment intent
-                openEditFragment(newFrag, fragPos);
+                openEditFragment(fragPos);
                 return true;
                 
             case R.id.save_story:
@@ -156,18 +156,14 @@ public class StoryEditActivity extends Activity implements SView<Story> {
     }
     
 
-	private void openEditFragment(Fragment frag, int fragPos){
-	    System.out.println("entered opoenedit");
+	private void openEditFragment(int fragPos){
 	    //save before leaving activity
         saveChanges();
         
         Intent intent = new Intent(this, EditFragmentActivity.class);
         intent.putExtra("Mode", "Edit");
-        intent.putExtra("StoryList", storyList);
         intent.putExtra("StoryPos",storyPos);
-        intent.putExtra("Story", story);
         intent.putExtra("FragmentPos", fragPos);
-        intent.putExtra("Fragment", frag);
         
         Log.d("This",String.format("The story id was: %d", storyId));
         startActivity(intent);
