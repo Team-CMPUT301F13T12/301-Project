@@ -397,27 +397,20 @@ public class EditFragmentActivity extends Activity implements FView<Fragment> {
  
                     bitmap = BitmapFactory.decodeFile(f.getAbsolutePath(),
                             bitmapOptions);
-                    String path = f.getPath();                    
+                    //String path = f.getPath();                    
                     
                     long picTime = System.currentTimeMillis();
-                    path = android.os.Environment   
-                            .getExternalStorageDirectory()
-                            + File.separator
-                            + "Phoenix" + File.separator + "default";
                     
                     String newPicName = new SimpleDateFormat("yyyy-MM-dd HH.mm.ss").format(picTime);
 
                     Log.d(TAG,"path of image from camera"+ picturePath+""); 
-                    picturePath = android.os.Environment   
-                            .getExternalStorageDirectory()
-                            + File.separator
-                            + "DCIM" + File.separator + "Camera" + File.separator +newPicName+ ".jpg";
+                    picturePath = f.getPath();
 
                     Log.d(TAG,"path of image from camera"+ picturePath+""); 
                     
                     f.delete();
                     OutputStream outFile = null;
-                    File file = new File(path, String.valueOf(picTime)+".jpg");
+                    File file = new File(picturePath, String.valueOf(picTime)+".jpg");
                     Log.d(TAG,"path of image from camera"+ picturePath+""); 
                     try {
                         outFile = new FileOutputStream(file);
