@@ -37,37 +37,54 @@ public class ChooseStoryActivityTestCases extends ActivityInstrumentationTestCas
 	//Use Case 2, test 1/3
 	public void testBrowseStoryList() {
 		//add in multiple stories into the list
-		addMultiStory();
-
+		for ({int i = 0; i < 15; i++) {
+			Button button = (Button) findViewByid(R.id.menu_add_story);
+			button.performClick();
+			Button button2 = (Button) findViewByid(R.id.editTextSave);
+			button2.performClick();
+		}
+		
 		//starts the activity
 		myChooseStoryActivity = this.getActivity();
-		availableStoryList; = (ListtView) myChooseStoryActivity.findViewById(ualberta.g12.adventurecreator.ChooseStoryActivity.R.id.StoryList);
+		ListView view = (ListView) myChooseStoryActivity.findViewById(ualberta.g12.adventurecreator.ChooseStoryActivity.R.id.main_activity_listview);
+		
+		//scroll textview
+		view.smoothScrollToPosition(100);
 		
 		//check that user can scroll through the list
-		assertTrue(scrollable(mView.getText()));
+		Assert.assertEquals(100, Robolectric.shadowOf(view).getSmoothScrolledPosition());
 	}
 
 	//Use Case 2, test 2/3
 	public void testBrowseNoScrollList() {
 		//add a single story into the list
-		addOneStory();
+		Button button = (Button) findViewByid(R.id.menu_add_story);
+		button.performClick();
+		Button button2 = (Button) findViewByid(R.id.editTextSave);
+		button2.performClick();
 
 		//starts the activity
 		myChooseStoryActivity = this.getActivity();
-		availableStoryList; = (ListView) myChooseStoryActivity.findViewById(ualberta.g12.adventurecreator.ChooseStoryActivity.R.id.StoryList);
+		ListView view = (ListView) myChooseStoryActivity.findViewById(ualberta.g12.adventurecreator.ChooseStoryActivity.R.id.main_activity_listview);
+		
+		//scroll textview
+		view.smoothScrollToPosition(100);
 		
 		//check if the list doesn't scroll with a single entry
-		assertFalse(scrollable(mView.getText()));
-	}
+		Assert.assertNotEquals(100, Robolectric.shadowOf(view).getSmoothScrolledPosition());
+		
+        }
 
 	//Use Case 2, test 3/3
 	public void testBrowseEmptyStoryList() {
+		//no notes added
+		
 		//starts the activity
 		myChooseStoryActivity = this.getActivity();
-		availableStoryList; = (ListView) myChooseStoryActivity.findViewById(ualberta.g12.adventurecreator.ChooseStoryActivity.R.id.StoryList);
-		
+		ListView view = (ListView) myChooseStoryActivity.findViewById(ualberta.g12.adventurecreator.ChooseStoryActivity.R.id.main_activity_listview);
+	
 		//string set to text in the list
-		String Story = myView.getText();
+		String Story = view.getText();
 		
 		//checks if the screen has no input with no stories
 		assertEquals(Story, null);
