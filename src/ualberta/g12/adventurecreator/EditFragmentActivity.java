@@ -41,6 +41,7 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.text.SimpleDateFormat;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -81,8 +82,6 @@ public class EditFragmentActivity extends Activity implements FView<Fragment> {
         mode = (String) editActIntent.getSerializableExtra("Mode");
         storyPos  = (Integer)editActIntent.getSerializableExtra("StoryPos");
         fragPos = (Integer)editActIntent.getSerializableExtra("FragmentPos"); //not reliable when in view mode
-        
-        Log.d(TAG, "storypos and frag pos"+ storyPos+" "+fragPos );
 
         //get widget references
         fragmentPartListView = (ListView) findViewById(R.id.FragmentPartList);
@@ -102,8 +101,6 @@ public class EditFragmentActivity extends Activity implements FView<Fragment> {
         storyList = offlineHelper.loadOfflineStories();
         story = storyList.getAllStories().get(storyPos);
         fragment = story.getFragments().get(fragPos);
-        
-        Log.d(TAG, "display order "+ fragment.getDisplayOrder().toString());
         	  
         //Make sure we have at least one part if in edit mode
         if (mode.equals("Edit") == true && fragment.getDisplayOrder().size()==0){
@@ -194,23 +191,19 @@ public class EditFragmentActivity extends Activity implements FView<Fragment> {
                         
                     } else if (mode.equals("View")){
                         //go to next fragment
-                        
-                        Log.d(TAG, "position = "+position);
+                      
                         //get the occurence number of the textSegment
                         int occurrence = 0;
                         for (int i = 0; i < position; i++){
                             if (fragment.getDisplayOrder().get(i).equals("c"))
                                 occurrence++;  
                         }
-                        Log.d(TAG, "occure = "+occurrence);
                         int newFragPos = fragment.getChoices().get(occurrence).getLinkedToFragmentPos();
-                        Log.d(TAG, "linkedtopos = "+newFragPos);
                         
                         if (newFragPos == -1){
                             // linked frag pos is invalid so don't use it
                             newFragPos = fragPos;
                         }
-                        Log.d(TAG, "linkedtopos = "+newFragPos);
                         
                         Intent intent = new Intent(EditFragmentActivity.this, EditFragmentActivity.class);
                         
@@ -397,19 +390,35 @@ public class EditFragmentActivity extends Activity implements FView<Fragment> {
                     }
                 }
                 try {
+
+                    Log.d(TAG,"path of image from camera"+ picturePath+""); 
  
                     BitmapFactory.Options bitmapOptions = new BitmapFactory.Options();
  
                     bitmap = BitmapFactory.decodeFile(f.getAbsolutePath(),
                             bitmapOptions);
-                    picturePath = f.getPath();
-                    picturePath = android.os.Environment   
+                    String path = f.getPath();                    
+                    
+                    long picTime = System.currentTimeMillis();
+                    path = android.os.Environment   
                             .getExternalStorageDirectory()
                             + File.separator
                             + "Phoenix" + File.separator + "default";
+                    
+                    String newPicName = new SimpleDateFormat("yyyy-MM-dd HH.mm.ss").format(picTime);
+
+                    Log.d(TAG,"path of image from camera"+ picturePath+""); 
+                    picturePath = android.os.Environment   
+                            .getExternalStorageDirectory()
+                            + File.separator
+                            + "DCIM" + File.separator + "Camera" + File.separator +newPicName+ ".jpg";
+
+                    Log.d(TAG,"path of image from camera"+ picturePath+""); 
+                    
                     f.delete();
                     OutputStream outFile = null;
-                    File file = new File(picturePath, String.valueOf(System.currentTimeMillis()) + ".jpg");
+                    File file = new File(path, String.valueOf(picTime)+".jpg");
+                    Log.d(TAG,"path of image from camera"+ picturePath+""); 
                     try {
                         outFile = new FileOutputStream(file);
                         bitmap.compress(Bitmap.CompressFormat.JPEG, 85, outFile);
@@ -435,8 +444,9 @@ public class EditFragmentActivity extends Activity implements FView<Fragment> {
                 picturePath = c.getString(columnIndex);
                 c.close();
                 bitmap = (BitmapFactory.decodeFile(picturePath));
-                Log.w("path of image from gallery......******************.........", picturePath+"");                
+                Log.d(TAG,"path of image from gallery"+ picturePath+"");              
             }
+            Log.d(TAG,"path of image END"+ picturePath+"");  
             if(picturePath != null){
                 if (pictureMode.equals("Add")){
                     System.out.println("add ill start");
@@ -448,7 +458,7 @@ public class EditFragmentActivity extends Activity implements FView<Fragment> {
                 saveFragment();
                 //fragmentPartListView.invalidateViews();
             } else
-                Log.d(TAG,"bitmap returned is null");
+                Log.d(TAG,"picturePath returned is null");
         }
     }
     
@@ -457,11 +467,11 @@ public class EditFragmentActivity extends Activity implements FView<Fragment> {
         String title = editTitleText.getText().toString();
         String idPageNum = idPageNumText.getText().toString();
         int idPage = -9;
-        try{
-            idPage = Integer.parseInt(idPageNum);
-        }catch(NumberFormatException e){
-            Log.d("Msg","There was a number format exception!");
-        }
+//        try{
+//            idPage = Integer.parseInt(idPageNum);
+//        }catch(NumberFormatException e){
+//            Log.d("Msg","There was a number format exception!");
+//        }
 
         fragment.setTitle(title);
         fragment.setId(idPage);
