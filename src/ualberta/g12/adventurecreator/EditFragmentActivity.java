@@ -360,7 +360,7 @@ public class EditFragmentActivity extends Activity implements FView<Fragment> {
  
                 }
                 else if (options[item].equals("Cancel")) {
-                    dialog.dismiss();
+                    dialog.dismiss(); 
                 }
             }
         });
@@ -374,6 +374,7 @@ public class EditFragmentActivity extends Activity implements FView<Fragment> {
             Bitmap bitmap=null;
             String picturePath=null;
             if (requestCode == 1) {
+                
                 File f = new File(Environment.getExternalStorageDirectory().toString());
                 for (File temp : f.listFiles()) {
                     if (temp.getName().equals("temp.jpg")) {
@@ -382,14 +383,16 @@ public class EditFragmentActivity extends Activity implements FView<Fragment> {
                     }
                 }
                 try {
+ 
                     BitmapFactory.Options bitmapOptions = new BitmapFactory.Options();
  
                     bitmap = BitmapFactory.decodeFile(f.getAbsolutePath(),
-                            bitmapOptions); 
-                    picturePath = android.os.Environment
+                            bitmapOptions);
+                    picturePath = f.getPath();
+                    /*picturePath = android.os.Environment   
                             .getExternalStorageDirectory()
                             + File.separator
-                            + "Phoenix" + File.separator + "default";
+                            + "Phoenix" + File.separator + "default";*/
                     f.delete();
                     OutputStream outFile = null;
                     File file = new File(picturePath, String.valueOf(System.currentTimeMillis()) + ".jpg");
