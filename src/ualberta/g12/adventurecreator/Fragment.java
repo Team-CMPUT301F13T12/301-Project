@@ -15,7 +15,7 @@ public class Fragment extends FModel implements Serializable{
     private String title;
     private int id;
     private List<String> textSegments;
-    private List<SerializableImage> illustrations;
+    private List<String> illustrations;
     // private List<Sound> sounds;
     // private List<Video> videos;
     private List<Choice> choices;
@@ -30,7 +30,7 @@ public class Fragment extends FModel implements Serializable{
 
     public Fragment() {
         textSegments = new LinkedList<String>();
-        illustrations = new LinkedList<SerializableImage>();
+        illustrations = new LinkedList<String>();
         choices = new LinkedList<Choice>();
         displayOrder = new LinkedList<String>();
     }
@@ -60,11 +60,11 @@ public class Fragment extends FModel implements Serializable{
         this.textSegments = textSegment;
     }
 
-    public List<SerializableImage> getIllustrations() {
+    public List<String> getIllustrations() {
         return illustrations;
     }
 
-    public void setIllustrations(List<SerializableImage> illustrations) {
+    public void setIllustrations(List<String> illustrations) {
         this.illustrations = illustrations;
     }
 
@@ -142,7 +142,7 @@ public class Fragment extends FModel implements Serializable{
         this.title = (String) in.readObject();
         this.id = (Integer) in.readObject();
         this.textSegments = (List<String>) in.readObject();
-        this.illustrations = (List<SerializableImage>) in.readObject();
+        this.illustrations = (List<String>) in.readObject();
         // this.sounds = (LinkedList<>) in.readObject();
         // this.videos = (LinkedList<>) in.readObject();
         this.choices = (List<Choice>) in.readObject();

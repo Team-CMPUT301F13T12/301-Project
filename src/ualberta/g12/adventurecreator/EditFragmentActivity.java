@@ -347,6 +347,7 @@ public class EditFragmentActivity extends Activity implements FView<Fragment> {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK) {
             Bitmap bitmap=null;
+            String picturePath=null;
             if (requestCode == 1) {
                 File f = new File(Environment.getExternalStorageDirectory().toString());
                 for (File temp : f.listFiles()) {
@@ -360,13 +361,13 @@ public class EditFragmentActivity extends Activity implements FView<Fragment> {
  
                     bitmap = BitmapFactory.decodeFile(f.getAbsolutePath(),
                             bitmapOptions); 
-                    String path = android.os.Environment
+                    picturePath = android.os.Environment
                             .getExternalStorageDirectory()
                             + File.separator
                             + "Phoenix" + File.separator + "default";
                     f.delete();
                     OutputStream outFile = null;
-                    File file = new File(path, String.valueOf(System.currentTimeMillis()) + ".jpg");
+                    File file = new File(picturePath, String.valueOf(System.currentTimeMillis()) + ".jpg");
                     try {
                         outFile = new FileOutputStream(file);
                         bitmap.compress(Bitmap.CompressFormat.JPEG, 85, outFile);
@@ -389,18 +390,18 @@ public class EditFragmentActivity extends Activity implements FView<Fragment> {
                 Cursor c = getContentResolver().query(selectedImage,filePath, null, null, null);
                 c.moveToFirst();
                 int columnIndex = c.getColumnIndex(filePath[0]);
-                String picturePath = c.getString(columnIndex);
+                picturePath = c.getString(columnIndex);
                 c.close();
-                bitmap = (BitmapFactory.decodeFile(picturePath));
+                //bitmap = (BitmapFactory.decodeFile(picturePath));
                 Log.w("path of image from gallery......******************.........", picturePath+"");                
             }
-            if(bitmap != null){
+            if(picturePath != null){
                 if (pictureMode.equals("Add")){
                     System.out.println("add ill start");
-                    FragmentController.addIllustration(fragment, bitmap, position);
+                    FragmentController.addIllustration(fragment, picturePath, position);
                 }else if (pictureMode.equals("Edit")){
                     FragmentController.deleteFragmentPart(fragment, position);
-                    FragmentController.addIllustration(fragment, bitmap, position);
+                    FragmentController.addIllustration(fragment, picturePath, position);
                 }
                 saveFragment();
                 //fragmentPartListView.invalidateViews();

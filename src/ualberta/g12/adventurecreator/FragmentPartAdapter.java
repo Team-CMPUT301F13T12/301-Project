@@ -5,6 +5,7 @@ import java.util.List;
 
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -72,7 +73,8 @@ public class FragmentPartAdapter extends ArrayAdapter{
             }
 
             System.out.println("probably dies here"+occurrence);
-            Bitmap illustration = FragmentController.getIllustrations(frag).get(occurrence);
+            String picturePath = FragmentController.getIllustrations(frag).get(occurrence);
+            Bitmap illustration = BitmapFactory.decodeFile(picturePath);
             System.out.println("betchs don't see me");
             if (illustration != null){
                 image.setVisibility(View.VISIBLE);
