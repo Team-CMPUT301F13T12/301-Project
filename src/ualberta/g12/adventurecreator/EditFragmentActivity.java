@@ -98,8 +98,19 @@ public class EditFragmentActivity extends Activity implements FView<Fragment> {
         //load save file
         storyList = offlineHelper.loadOfflineStories();
         story = storyList.getAllStories().get(storyPos);
+        /*
+        if (fragPos == 0 && mode.equals("View")){
+        	fragment = story.getFragments().get(fragPos);
+        }else if (fragPos != 0 && mode.equals("View")){
+        	//load the intent bro that has a fragment
+        	Intent editActIntent = getIntent();
+        	fragment = (Fragment) editActIntent.getSerializableExtra("nextFragment");
+        	//System.out.println(fragment.getTitle());
+        }else{
+        	fragment = story.getFragments().get(fragPos);
+        }
+        	*/
         fragment = story.getFragments().get(fragPos);
-        
         //Make sure we have at least one part if in edit mode
         if (mode.equals("Edit") == true && fragment.getDisplayOrder().size()==0){
             FragmentController.addEmptyPart(fragment);
@@ -193,18 +204,30 @@ public class EditFragmentActivity extends Activity implements FView<Fragment> {
                         //get the occurence number of the textSegment
                         int occurence = 0;
                         for (int i = 0; i < position; i++){
-                            if (fragment.getDisplayOrder().get(position).equals("t"))
+                            if (fragment.getDisplayOrder().get(position).equals("c"))
                                 occurence++;  
                         }
                         Fragment goToFrag = fragment.getChoices().get(occurence).getLinkedToFragment();
                         
                         Intent intent = new Intent(EditFragmentActivity.this, EditFragmentActivity.class);
+                        
+                        for (int i = 0 ; i < storyList.getAllStories().get(storyPos).getFragments().size();i++){
+                        	if (storyList.getAllStories().get(storyPos).getFragments().get(i).equals(goToFrag))
+                        		fragPos = i;
+                        }
+                        
+                        
+                        //Bundle theExtras = new Bundle();
                         intent.putExtra("Mode", "View");
                         intent.putExtra("StoryList", storyList);
                         intent.putExtra("StoryPos",storyPos);
                         intent.putExtra("Story", story);
-                        intent.putExtra("FragmentPos", fragPos);
+                        intent.putExtra("FragmentPos",fragPos);
                         intent.putExtra("Fragment", goToFrag);
+
+                        //theExtras.putSerializable("nextFragment", goToFrag);
+                       // System.out.println(goToFrag.getDisplayOrder().toString());
+                        //System.out.println(goToFrag.getTitle());
                         startActivity(intent);
                     }
                 }
@@ -290,7 +313,8 @@ public class EditFragmentActivity extends Activity implements FView<Fragment> {
             // create, add and save new choice
             int choicePos = fragment.getChoices().size();
             Choice choice = new Choice();
-            fragment.addChoice(choice);
+            //fragment.addChoice(choice);
+            FragmentController.addChoiceStatic(fragment, choice);
             saveFragment();
             
             //go to edit choice activity
