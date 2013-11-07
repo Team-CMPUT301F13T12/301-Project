@@ -88,16 +88,8 @@ public class Fragment extends FModel implements Serializable{
         return choices;
     }
 
-    public void addChoice(Choice c){
-        this.choices.add(c);
-    }
-
     public void setChoices(List<Choice> newChoices) {
         this.choices = newChoices;
-    }
-
-    public boolean removeChoice(Choice oldChoice) {
-        return this.choices.remove(oldChoice);
     }
 
     public List<String> getDisplayOrder() {

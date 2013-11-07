@@ -1,56 +1,77 @@
-//
-//package ualberta.g12.adventurecreator;
-//
-//import android.graphics.Bitmap;
-//
-///** Control of data in the Fragment model */
-//public interface FController {
-//
-//    /**
-//     * Edits the title of the fragment
-//     * 
-//     * @param t the new title of the fragment
-//     */
-//
-//    public void editTitle(Fragment f,String t);
-//    
-////  TODO
-////    /**
-////     * Edits the body text of the fragment
-////     * 
-////     * @param t the new body text of the fragment
-////     */
-////    public void edittextSegment(Fragment f, String b);
-//
-//    /**
-//     * Adds illustration to a fragment
-//     * 
-//     * @param i the illustration to add to the fragment
-//     */
-//    public void addIllustration(Fragment f, Bitmap i);
-//
-//    /**
-//     * Adds a choice to the list of choices that a fragment has
-//     * 
-//     * @param c the choice to add to the list
-//     */
-//    public void addChoice(Fragment f, Choice c);
-//
-//    /**
-//     * Removes a choice from the list of choices a fragment has
-//     * 
-//     * @param c the choice to remove
-//     * @return true is choice was removed else false
-//     */
-//    public boolean deleteChoice(Fragment f, Choice c);
-//    
-//    // TODO: Implement annotations
-//    // public void addAnnotation(Fragment f, Annotation a);
-//
-//    // Should these all be replaced by an addMedia(Fragment f, Media m) ?
-//    // TODO: Implement adding media
-//    // public void addPicture(Fragment f, Picture p);
-//    // public void addSound(Fragment f, Sound s);
-//    // public void addVideo(Fragment f, Video v);
-//
-//}
+
+package ualberta.g12.adventurecreator;
+
+import android.graphics.Bitmap;
+
+/** Control of data in the Fragment model */
+public interface FController {
+
+    /**
+     * Edits the title of the fragment
+     * 
+     *  @param frag is the Fragment to be changed
+     * @param newTitle the new title of the fragment
+     */
+    public void editTitle(Fragment frag, String newTitle);
+    
+    /**
+     * Adds textSegment to a fragment at specified position
+     * 
+     * @param frag is the Fragment to be changed
+     * @param textSegment is the textSegment to add to the fragment
+     * @param dispNum is position that the textSegment will be inserted
+     */
+    public boolean addTextSegment(Fragment frag, String textSegment, int dispNum);
+    
+    /**
+     * Adds illustration to a fragment at specified position
+     * 
+     * @param frag is the Fragment to be changed
+     * @param textSegment is the textSegment to add to the fragment
+     * @param dispNum is position that the textSegment will be inserted
+     */
+    public boolean addIllustration(Fragment frag, String illustration, int dispNum);
+
+    /**
+     * Adds a choice to the list of choices that a fragment has
+     * 
+     * @param frag is the Fragment to be changed
+     * @param cho the choice to add to the list
+     */
+    public void addChoice(Fragment frag, Choice cho);
+    
+    /**
+     * Adds an empty FragmentPart to the fragment 
+     * (for editing purposes only)
+     * 
+     * @param frag is the Fragment to be changed
+     */
+    public void addEmptyPart(Fragment frag);
+    
+    /**
+     * removes empty FragmentPart from the fragment 
+     * (for editing purposes only)
+     * 
+     * @param frag is the Fragment to be changed
+     */
+    public void removeEmptyPart(Fragment frag);
+    
+    /**
+     * removes the FragmentPart specified by its partNum 
+     * (it's number in the displayorder) from the fragment 
+     * 
+     * @param frag is the Fragment to be changed
+     * @param partNum the fragmentPart number of the 
+     * fragmentPart in the display order to be removed
+     */
+    public void deleteFragmentPart(Fragment frag, int partNum);
+
+    
+    // TODO: Implement annotations
+    // public void addAnnotation(Fragment frag, Annotation annotation);
+
+    // TODO: Implement adding media
+    // public void addSound(Fragment frag, Sound sound, int dispNum);
+    // public void addVideo(Fragment frag, Video video, int dispNum);
+
+}

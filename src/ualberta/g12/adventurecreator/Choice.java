@@ -4,39 +4,58 @@ import java.io.IOException;
 import java.io.Serializable;
 
 public class Choice implements Serializable{
-	private String choiceText;
-	private Fragment linkedToFragment;
-	
-	//default settings for a new choice
-	public Choice() {
-		this.choiceText = "Change My Text";
-		this.linkedToFragment = null;  //always check before linking from a choice that likedToPage != null
-	}
+    private String choiceText;
+    private int linkedToFragmentPos;
+    //private Fragment linkedToFragment;
 
-	public String getChoiceText() {
-		return choiceText;
-	}
+    //default settings for a new choice
+    public Choice() {
+        this.choiceText = "";
+        //this.linkedToFragment = null;  //always check before linking from a choice that likedToPage != null
+    }
 
-	public void setChoiceText(String choiceText) {
-		this.choiceText = choiceText;
-	}
+    public String getChoiceText() {
+        return choiceText;
+    }
 
-	public Fragment getLinkedToFragment() {
-		return linkedToFragment;
-	}
+    public void setChoiceText(String choiceText) {
+        this.choiceText = choiceText;
+    }
 
-	public void setLinkedToFragment(Fragment linkedToFragment) {
-		this.linkedToFragment = linkedToFragment;
-		linkedToFragment.setLinkedTo(true); //page is definitely linked to now
-	}
-	
-	  private void writeObject(java.io.ObjectOutputStream out) throws IOException{
-	        out.writeObject(this.choiceText);
-	        out.writeObject(this.linkedToFragment);
+    /**
+     * @return the linkedToFragmentPos
+     */
+    public int getLinkedToFragmentPos() {
+        return linkedToFragmentPos;
+    }
 
-	    }
-	    private void readObject(java.io.ObjectInputStream in) throws IOException, ClassNotFoundException{
-	        this.choiceText = (String) in.readObject();
-	        this.linkedToFragment = (Fragment) in.readObject();
-	    }
+    /**
+     * @param linkedToFragmentPos the linkedToFragmentPos to set
+     */
+    public void setLinkedToFragmentPos(int linkedToFragmentPos) {
+        this.linkedToFragmentPos = linkedToFragmentPos;
+    }
+
+    //	public Fragment getLinkedToFragment() {
+    //		return linkedToFragment;
+    //	}
+    //
+    //	public void setLinkedToFragment(Fragment linkedToFragment) {
+    //		this.linkedToFragment = linkedToFragment;
+    //		linkedToFragment.setLinkedTo(true); //page is definitely linked to now
+    //	}
+
+    private void writeObject(java.io.ObjectOutputStream out) throws IOException{
+        out.writeObject(this.choiceText);
+        //out.writeObject(this.linkedToFragment);
+        out.writeObject(this.linkedToFragmentPos);
+
+    }
+
+
+    private void readObject(java.io.ObjectInputStream in) throws IOException, ClassNotFoundException{
+        this.choiceText = (String) in.readObject();
+        //this.linkedToFragment = (Fragment) in.readObject();
+        this.linkedToFragmentPos = (Integer) in.readObject();
+    }
 }

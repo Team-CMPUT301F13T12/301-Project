@@ -6,6 +6,7 @@ import java.util.List;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -73,7 +74,7 @@ public class FragmentPartAdapter extends ArrayAdapter{
             }
 
             System.out.println("probably dies here"+occurrence);
-            String picturePath = FragmentController.getIllustrations(frag).get(occurrence);
+            String picturePath = frag.getIllustrations().get(occurrence);
             Bitmap illustration = BitmapFactory.decodeFile(picturePath);
             System.out.println("betchs don't see me");
             if (illustration != null){
@@ -99,6 +100,8 @@ public class FragmentPartAdapter extends ArrayAdapter{
                 if (choiceButton != null)
                     System.out.println("SET CHOICE");
                     choiceButton.setText(choice.getChoiceText());
+                    choiceButton.setBackgroundColor(Color.BLACK);
+                    choiceButton.setTextColor(Color.WHITE);
             }
         } else if (frag.getDisplayOrder().get(position).equals("e")){
             System.out.println("EMPTY "+position);

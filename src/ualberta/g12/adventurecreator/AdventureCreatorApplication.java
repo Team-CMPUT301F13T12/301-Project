@@ -19,6 +19,12 @@ public class AdventureCreatorApplication extends Application {
         return storyList;
     }
     
+    public static StoryListController getStoryListController() {
+        if (storyListController == null) {
+            storyListController = new StoryListController(getStoryList());
+        }
+        return storyListController;
+    }
     
     public static StoryController getStoryController() {
         if (storyController == null) {
@@ -27,11 +33,13 @@ public class AdventureCreatorApplication extends Application {
         return storyController;
     }
     
-    public static StoryListController getStoryListController() {
-        if (storyListController == null) {
-            storyListController = new StoryListController(getStoryList());
+    
+    
+    public static FragmentController getFragmentController() {
+        if (fragmentController == null) {
+            fragmentController = new FragmentController();
         }
-        return storyListController;
+        return fragmentController;
     }
     
     

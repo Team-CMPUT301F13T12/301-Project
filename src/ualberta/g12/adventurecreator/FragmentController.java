@@ -8,36 +8,15 @@ import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 
 
-public class FragmentController {//implements FController {
+public class FragmentController implements FController {
 
+    @Override
     public void editTitle(Fragment frag, String newTitle){
         frag.setTitle(newTitle);
     }
-
-    public static void addTextSegment(Fragment frag, String textSegment){
-        List<String> textSegments = frag.getTextSegments();
-        textSegments.add(textSegment);
-        frag.setTextSegments(textSegments);
-
-        //insert t into corresponding spot in display order
-        List<String> displayOrder = frag.getDisplayOrder();
-        
-        int i=0;        
-        while (i < displayOrder.size()){
-            if (displayOrder.get(i).equals("c"))
-                break;
-            i++;
-        }
-        if (displayOrder.size()==i){
-            displayOrder.add("t");
-        } else {
-            displayOrder.add(i, "t");
-        }
-        
-        frag.setDisplayOrder(displayOrder);
-    }
     
-    public static boolean addTextSegment(Fragment frag, String textSegment, int dispNum){
+    @Override
+    public boolean addTextSegment(Fragment frag, String textSegment, int dispNum){
         List<String> textSegments = frag.getTextSegments();
         List<String> displayOrder = frag.getDisplayOrder();
         
@@ -66,32 +45,7 @@ public class FragmentController {//implements FController {
         return true;
     }
     
-//  TODO  
-//    @Override
-//    public void editTextSegment(Fragment frag, String textSegment){
-//        //TODO
-//    }
-
-    public void deleteTextSegment(Fragment frag, String textSegment){
-        List<String> textSegments = frag.getTextSegments();
-        List<String> displayOrder = frag.getDisplayOrder();
-
-        //find the entry of display order that should be removed
-        int occurence = textSegments.indexOf(textSegment);
-        int i = 0;
-        while(occurence >= 0){
-            if (displayOrder.get(i) == "t"){
-                occurence--;
-            }
-            i++;
-        }
-        displayOrder.remove(1-1);
-        frag.setDisplayOrder(displayOrder);
-
-        textSegments.remove(textSegment);
-        frag.setTextSegments(textSegments);
-    }
-    
+   
     /**
      * Removes the text segment at the given dispNum
      * returns true if successful
@@ -99,7 +53,7 @@ public class FragmentController {//implements FController {
      * @param dispNum
      * @return
      */
-    private static boolean deleteTextSegment(Fragment frag, int dispNum){
+    private boolean deleteTextSegment(Fragment frag, int dispNum){
         List<String> textSegments = frag.getTextSegments();
         List<String> displayOrder = frag.getDisplayOrder();
 
@@ -118,36 +72,10 @@ public class FragmentController {//implements FController {
         displayOrder.remove(dispNum);
         frag.setDisplayOrder(displayOrder);
         return true;
-    }
-
-    public static List<String> getIllustrations(Fragment frag){
-        return frag.getIllustrations();
-    }
-    
-    
-    public void addIllustration(Fragment frag, String illustration){
-        List<String> illustrations = frag.getIllustrations();
-        illustrations.add(illustration);
-        frag.setIllustrations(illustrations);
-
-        //insert t into corresponding spot in display order
-        List<String> displayOrder = frag.getDisplayOrder();
-        int i=0;
+    }   
         
-        while (i < displayOrder.size()){
-            if (displayOrder.get(i).equals("c") || displayOrder.get(i).equals("e"))
-                break;
-            i++;
-        }
-        if (displayOrder.size()==i){
-            displayOrder.add("i");
-        } else {
-            displayOrder.add(i, "i");
-        }
-        frag.setDisplayOrder(displayOrder);
-    }
-    
-    public static boolean addIllustration(Fragment frag, String illustration, int dispNum){
+    @Override
+    public boolean addIllustration(Fragment frag, String illustration, int dispNum){
         List<String> illustrations = frag.getIllustrations();
         List<String> displayOrder = frag.getDisplayOrder();
         
@@ -179,26 +107,6 @@ public class FragmentController {//implements FController {
         
         return true;
     }
-
-    public void deleteIllustration(Fragment frag, Bitmap illustration){
-        List<String> illustrations = frag.getIllustrations();
-        List<String> displayOrder = frag.getDisplayOrder();
-
-        //find the entry of display order that should be removed
-        int occurence = illustrations.indexOf(illustration);
-        int i = 0;
-        while(occurence >= 0){
-            if (displayOrder.get(i) == "i"){
-                occurence--;
-            }
-            i++;
-        }
-        displayOrder.remove(1-1);
-        frag.setDisplayOrder(displayOrder);
-
-        illustrations.remove(illustration);
-        frag.setIllustrations(illustrations);
-    }
     
     /**
      * Removes the illustration at the given dispNum
@@ -207,7 +115,7 @@ public class FragmentController {//implements FController {
      * @param dispNum
      * @return
      */
-    private static boolean deleteIllustration(Fragment frag, int dispNum){
+    private boolean deleteIllustration(Fragment frag, int dispNum){
         List<String> illustrations = frag.getIllustrations();
         List<String> displayOrder = frag.getDisplayOrder();
 
@@ -228,7 +136,7 @@ public class FragmentController {//implements FController {
         return true;
     }
 
-
+    //  @Override
     //  public void addSound(Fragment frag, Sound sound){
     //      LinkedList<Sound> sounds = frag.getSounds();
     //      sounds.add(sound);
@@ -237,7 +145,8 @@ public class FragmentController {//implements FController {
     //      displayOrder.add("s");
     //      frag.setDisplayOrder(displayOrder);
     //  }
-    //  
+    //
+    //  @Override
     //  public void addVideo(Fragment frag, Video video){
     //      LinkedList<Video> videos = frag.getVideos();
     //      videos.add(video);
@@ -248,6 +157,7 @@ public class FragmentController {//implements FController {
     //  }
     //  
     
+    @Override
     public void addChoice(Fragment frag, Choice cho){
         List<Choice> choices = frag.getChoices();
         choices.add(cho);
@@ -256,36 +166,7 @@ public class FragmentController {//implements FController {
         displayOrder.add("c");
         frag.setDisplayOrder(displayOrder);
     }
-    
-    public static  void addChoiceStatic(Fragment frag, Choice cho){
-        List<Choice> choices = frag.getChoices();
-        choices.add(cho);
-        frag.setChoices(choices);
-        List<String> displayOrder = frag.getDisplayOrder();
-        displayOrder.add("c");
-        frag.setDisplayOrder(displayOrder);
-    }
 
-    public boolean deleteChoice(Fragment frag, Choice cho){
-        List<String> displayOrder = frag.getDisplayOrder();
-        List<Choice> choices = frag.getChoices();
-
-        //find the entry of display order that should be removed
-        int occurence = choices.indexOf(cho);
-        int i = 0;
-        while(occurence >= 0){
-            if (displayOrder.get(i) == "c"){
-                occurence--;
-            }
-            i++;
-        }
-        displayOrder.remove(1-1);
-        frag.setDisplayOrder(displayOrder);
-        
-        choices.remove(cho);
-        frag.setChoices(choices);
-        return true;
-    }
     /**
      * Removes the Choice at the given dispNum
      * returns true if successful
@@ -293,7 +174,7 @@ public class FragmentController {//implements FController {
      * @param dispNum
      * @return
      */
-    private static boolean deleteChoice(Fragment frag, int dispNum){
+    private boolean deleteChoice(Fragment frag, int dispNum){
         List<String> textSegments = frag.getTextSegments();
         List<String> displayOrder = frag.getDisplayOrder();
 
@@ -314,25 +195,29 @@ public class FragmentController {//implements FController {
         return true;
     }
      
-    public static void addEmptyPart(Fragment frag){
+    @Override
+    public void addEmptyPart(Fragment frag){
         List<String> displayOrder = frag.getDisplayOrder();
         displayOrder.add("e");
         frag.setDisplayOrder(displayOrder);
     }
     
-    public static void removeEmptyPart(Fragment frag){
+    @Override
+    public void removeEmptyPart(Fragment frag){
         List<String> displayOrder = frag.getDisplayOrder();
         displayOrder.remove("e");
         frag.setDisplayOrder(displayOrder);
     }
 
+    //  @Override
     //  public void addAnnotation(Fragment frag, Annotation annotation){
     //      Annotation annotations = frag.getAnnotations();
     //      annotations.addAnnotation(annotation);
     //      frag.setAnnotations(annotations);
     //  }
     
-    public static void deleteFragmentPart(Fragment frag, int partNum){
+    @Override
+    public void deleteFragmentPart(Fragment frag, int partNum){
         List<String> displayOrder = frag.getDisplayOrder();
         //check for invalid partNum
         if (partNum >= displayOrder.size())
