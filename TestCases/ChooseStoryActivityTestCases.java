@@ -83,11 +83,9 @@ public class ChooseStoryActivityTestCases extends ActivityInstrumentationTestCas
 		myChooseStoryActivity = this.getActivity();
 		ListView view = (ListView) myChooseStoryActivity.findViewById(ualberta.g12.adventurecreator.ChooseStoryActivity.R.id.main_activity_listview);
 	
-		//string set to text in the list
-		String Story = view.getText();
 		
-		//checks if the screen has no input with no stories
-		assertEquals(Story, null);
+		ActivityMonitor monitor = inst.addMonitor(intentFilter, null, false);
+    		assertEquals(0, monitor.getHits());
 	}
 
 	// Use case 5, test 1/3
@@ -99,7 +97,7 @@ public class ChooseStoryActivityTestCases extends ActivityInstrumentationTestCas
 	}
 	
 	//Use Case 16, test 1/1 
-	//Use Case 9 , test 1/3
+	//Use Cause 9 , test 1/3
 	public void testDowloadOtherUserStory() {
 		Story otherUserStory = new Story();
 		otherUserStory.setAuthor("OtherUser");
