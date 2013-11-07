@@ -229,6 +229,7 @@ public class EditFragmentActivity extends Activity implements FView<Fragment> {
                        // System.out.println(goToFrag.getDisplayOrder().toString());
                         //System.out.println(goToFrag.getTitle());
                         startActivity(intent);
+                        finish();
                     }
                 }
             }});

@@ -153,6 +153,7 @@ public class MainActivity extends Activity implements LView<StoryList>, OnItemCl
             i = new Intent(this, StoryEditActivity.class);
             i.putExtra("Mode", "Edit");
             i.putExtra("StoryPos", pos);
+            startActivity(i);
         } else {
             int fragPos = stories.get(pos).getStartFragPos();
 
@@ -162,6 +163,6 @@ public class MainActivity extends Activity implements LView<StoryList>, OnItemCl
             i.putExtra("FragmentPos", fragPos);
             startActivity(i);
         }
-        startActivity(i);
+        
     }
 }
