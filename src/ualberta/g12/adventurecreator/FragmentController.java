@@ -256,6 +256,15 @@ public class FragmentController {//implements FController {
         displayOrder.add("c");
         frag.setDisplayOrder(displayOrder);
     }
+    
+    public static  void addChoiceStatic(Fragment frag, Choice cho){
+        List<Choice> choices = frag.getChoices();
+        choices.add(cho);
+        frag.setChoices(choices);
+        List<String> displayOrder = frag.getDisplayOrder();
+        displayOrder.add("c");
+        frag.setDisplayOrder(displayOrder);
+    }
 
     public boolean deleteChoice(Fragment frag, Choice cho){
         List<String> displayOrder = frag.getDisplayOrder();

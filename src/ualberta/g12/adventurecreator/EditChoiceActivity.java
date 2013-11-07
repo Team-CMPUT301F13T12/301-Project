@@ -172,7 +172,9 @@ public class EditChoiceActivity extends Activity {
 		//sl.getAllStories().get(storyPos).getFragments().set(fragPos, fragment);
 		int i = fragment.getChoices().size();
 		Log.d("DID IT GROW?", String.format("%d", i));
-        sl.getAllStories().get(storyPos).getFragments().set(fragPos, fragment);
+        sl.getAllStories().get(storyPos).getFragments().get(fragPos).getChoices().set(choicePos, choice);
+        Choice c = sl.getAllStories().get(storyPos).getFragments().get(fragPos).getChoices().get(choicePos);
+        Log.d("The choices text is",c.getChoiceText());
         offlineHelper.saveOfflineStories(sl);
 		finish();
 		return true;

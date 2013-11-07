@@ -36,7 +36,7 @@ public class FragmentPartAdapter extends ArrayAdapter{
         }
         ImageView image = (ImageView) rowView.findViewById(R.id.fragmentPartIllustration);
         TextView text = (TextView) rowView.findViewById(R.id.fragmentPartTextPart);
-        Button choiceButton = (Button) rowView.findViewById(R.id.fragmentPartChoice);
+        TextView choiceButton = (TextView) rowView.findViewById(R.id.fragmentPartChoice);
                 
         //make all invisible
         image.setVisibility(View.GONE);
