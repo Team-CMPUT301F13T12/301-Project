@@ -392,7 +392,7 @@ public class EditFragmentActivity extends Activity implements FView<Fragment> {
                 int columnIndex = c.getColumnIndex(filePath[0]);
                 picturePath = c.getString(columnIndex);
                 c.close();
-                //bitmap = (BitmapFactory.decodeFile(picturePath));
+                bitmap = (BitmapFactory.decodeFile(picturePath));
                 Log.w("path of image from gallery......******************.........", picturePath+"");                
             }
             if(picturePath != null){

@@ -34,11 +34,11 @@ public class MainActivity extends Activity implements LView<StoryList>, OnItemCl
         setContentView(R.layout.activity_main);
         
         // Get our storyList instance from the application
-        //storyList = AdventureCreatorApplication.getStoryList();
+        storyList = AdventureCreatorApplication.getStoryList();
         
-        //Erases previous saves
+/*        //Erases previous saves
         storyList = new StoryList();
-        offlineHelper.saveOfflineStories(storyList);
+        offlineHelper.saveOfflineStories(storyList); */
 
         listView = (ListView) findViewById(R.id.main_activity_listview);
     }
