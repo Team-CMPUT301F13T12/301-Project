@@ -1,8 +1,6 @@
 
 package ualberta.g12.adventurecreator;
 
-import android.graphics.drawable.Drawable;
-
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
