@@ -55,14 +55,31 @@ public class StoryController implements SController {
         return s.removeFragment(f);
     }
     
+    /**
+     * gets all fragments in a List from story s
+     * @param s is the story to get fragments from
+     * @return a List<Fragment> containing all fragments of the story
+     */
     public List<Fragment> getFragments(Story s){
     	return s.getFragments();
     }
     
+    /**
+     * gets the fragment at a certain position of a story
+     * @param s is the story to get the fragment from
+     * @param fragPos is the position of the fragment in the story's fragment list
+     * @return the Fragment as fragPos
+     */
     public Fragment getFragmentsPos(Story s, int fragPos){
     	return s.getFragments().get(fragPos);
     }
     
+    /**
+     * sets(replaces) a fragment at position Pos within the story
+     * @param s is the story where the fragment is contained
+     * @param Pos is the Position of the fragment inside the story
+     * @param f is the new fragment we wish to set at Pos
+     */
     public void setFragmentAtLocation(Story s, int Pos, Fragment f){
     	s.getFragments().set(Pos, f);
     }

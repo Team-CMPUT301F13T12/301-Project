@@ -64,7 +64,7 @@ public class OfflineIOHelper {
     /**
      * Saves ourOfflineStories
      * 
-     * @param myStories
+     * @param myStories which is the stories to be saved
      */
 
     // TODO make sure to make each model object serializable

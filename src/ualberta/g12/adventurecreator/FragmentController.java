@@ -256,6 +256,12 @@ public class FragmentController implements FController {
     //      frag.setAnnotations(annotations);
     //  }
     
+    /**
+     * Deletes a fragment part which can be text, illustration, choice ,
+     * or empty from our "fragments parts". 
+     * @param frag is the fragment we wish to remove parts from
+     * @param partNum contains the part number of the part we wish to remove
+     */
     @Override
     public void deleteFragmentPart(Fragment frag, int partNum){
         List<String> displayOrder = frag.getDisplayOrder();
@@ -276,30 +282,72 @@ public class FragmentController implements FController {
 
     }
     
+    /**
+     * Provides the display order of the fragment parts,which is how
+     * they are listed when we view them 
+     * @param f is the fragment to be called
+     * @return List<String> which contains the display order
+     */
     public List<String> getDisplayOrder(Fragment f){
     	return f.getDisplayOrder();
     }
     
+    /**
+     * Retrieves the display type of the fragment part at Pos
+     * @param f is the fragment we want to get display type of 
+     * @param Pos is the position of the fragment part
+     * @return A string that signals the display type i.e "e","c","t" or "i"
+     * 
+     */
     public String getDisplayOrderAtPos(Fragment f, int Pos){
     	return f.getDisplayOrder().get(Pos);
     }
     
+    
+    /**
+     * Helps retrieve the position the fragment a particular choice is lined to
+     * @param f is the fragment that the choice is contained in
+     * @param Pos is the position of the choice 
+     * @return int which is the position of the linked to fragment in our fragments list
+     */
     public int getLinkedToFragmentPosOfChoice(Fragment f, int Pos){
     	return f.getChoices().get(Pos).getLinkedToFragmentPos();
     }
     
+    /**
+     * getTextSegments provides all text segments in the fragments parts
+     * @param f is the fragment we are looking for 
+     * @return List<String> of text fragments
+     */
     public List<String> getTextSegments(Fragment f){
     	return f.getTextSegments();
     }
     
+    /**
+     * changes the Id of a fragment at position id
+     * @param f is the fragment we wish to change the id to
+     * @param id is the id we wish to associciate with the fragment
+     */
     public void changeId(Fragment f, int id){
     	f.setId(id);
     }
     
+    /**
+     * Updates the choice at position POS in the choice list
+     * @param f is the fragment which contains the choice
+     * @param Pos is the position of the choice in the choice list
+     * @param text is the text we wish to updates 
+     */
     public void setChoiceTextAtPos(Fragment f,int Pos, String text){
     	f.getChoices().get(Pos).setChoiceText(text);
     }
     
+    /**
+     * Updates the position of the linked fragment in our choices
+     * @param f is the fragment the choice is contained int
+     * @param Pos is the position of the choice 
+     * @param linkedPos is the poisition of the linked fragment in the fragment list
+     */
     public void setLinkedFragmentOfChoiceAtPos(Fragment f, int Pos, int linkedPos){
     	f.getChoices().get(Pos).setLinkedToFragmentPos(linkedPos);
     }
