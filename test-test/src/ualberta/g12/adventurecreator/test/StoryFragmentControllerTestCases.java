@@ -1,16 +1,13 @@
 
 package ualberta.g12.adventurecreator.test;
 
-import java.util.List;
-
-import android.test.ActivityInstrumentationTestCase2;
-
 import junit.framework.TestCase;
 
 import ualberta.g12.adventurecreator.Choice;
-import ualberta.g12.adventurecreator.EditFragmentActivity;
 import ualberta.g12.adventurecreator.Fragment;
 import ualberta.g12.adventurecreator.FragmentController;
+
+import java.util.List;
 
 public class StoryFragmentControllerTestCases extends TestCase {
 
