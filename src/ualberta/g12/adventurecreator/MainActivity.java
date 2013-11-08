@@ -36,9 +36,9 @@ public class MainActivity extends Activity implements LView<StoryList>, OnItemCl
         // Get our storyList instance from the application
         storyList = AdventureCreatorApplication.getStoryList();
         
-/*        //Erases previous saves
-        storyList = new StoryList();
-        offlineHelper.saveOfflineStories(storyList); */
+//        //Erases previous saves - ONLY FOR TESTING - should be commented out 
+//        storyList = new StoryList();
+//        offlineHelper.saveOfflineStories(storyList); 
 
         listView = (ListView) findViewById(R.id.main_activity_listview);
     }
