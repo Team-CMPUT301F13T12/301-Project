@@ -3,19 +3,12 @@ package ualberta.g12.adventurecreator;
 
 import java.util.List;
 
-<<<<<<< HEAD
-import android.graphics.Bitmap;
-import android.graphics.drawable.Drawable;
-
 /**
  * Controller that dictates all fragment methods. Is responsible for all modification within a fragment.
  * Contains code that allows the user to add, edit or delete, the illustrations, text or choices within 
  * a fragment.  
  * 
  */
-=======
-
->>>>>>> 61c1e50a9457caec39513a676961fd5682c1c542
 public class FragmentController implements FController {
 
     @Override
