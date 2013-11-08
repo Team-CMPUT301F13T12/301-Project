@@ -14,18 +14,24 @@ package ualberta.g12.adventurecreator.test;
  * 
  */
 
+import android.app.Instrumentation;
+import android.app.Instrumentation.ActivityMonitor;
+import android.content.IntentFilter;
 import android.hardware.Camera;
 import android.test.ActivityInstrumentationTestCase2;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
+
+import ualberta.g12.adventurecreator.AdventureCreatorApplication;
 import ualberta.g12.adventurecreator.Choice;
 import ualberta.g12.adventurecreator.EditFragmentActivity;
 import ualberta.g12.adventurecreator.Fragment;
 import ualberta.g12.adventurecreator.FragmentPartAdapter;
 import ualberta.g12.adventurecreator.R;
 import ualberta.g12.adventurecreator.Story;
+import ualberta.g12.adventurecreator.StoryList;
 
 public class EditFragmentActivityTestCases extends
         ActivityInstrumentationTestCase2<EditFragmentActivity> {
@@ -157,39 +163,25 @@ public class EditFragmentActivityTestCases extends
 
     // Use Case 1, test 1/2
     public void testReadStoryFragments() {
-        // Start Activity
-        myEditFragmentActivity = this.getActivity();
+        Story UserStory = new Story();
+        StoryList sl = AdventureCreatorApplication.getStoryList();
+        sl.addStory(UserStory);
         
-        // set text in fragment info textview
-        //mView.setText("Test Text";
+        final Instrumentation inst = getInstrumentation();
+        final IntentFilter intentFilter = new IntentFilter();
         
-        //create new fragment
-        Button button = (Button) myEditFragmentActivity.findViewById(ualberta.g12.adventurecreator.R.id.add_fragment);
-        button.performClick();
-        Button button2 = (Button) myEditFragmentActivity.findViewById(ualberta.g12.adventurecreator.R.id.save_fragment);
-        button2.performClick();
-
-        // saves fragment text
-        // String fragment = myView.getText();
-
-        // checks if there is valid input in the fragment textview
-        assertNotNull(fragmentTitleTextView);
         
-        // assertEquals(fragment, null);
-       // assertTrue("testReadStoryFragments has not been implemented", false);
-    }
+        ActivityMonitor monitor = inst.addMonitor(intentFilter, null, false);
+        assertEquals(1, monitor.getHits());    }
 
     // Use Case 1, test 2/2
     public void testReadNoFragments() {
-        // Start Activity
-        myEditFragmentActivity = this.getActivity();
-
-        // saves fragment text
-        // String fragment = myView.getText();
-
-        // checks if no text is present in fragment info textview
-        assertNull(fragmentTitleTextView);
-        // assertTrue("testReadNoFragments has not been implemented", false);
+        
+        final Instrumentation inst = getInstrumentation();
+        final IntentFilter intentFilter = new IntentFilter();
+        
+        ActivityMonitor monitor = inst.addMonitor(intentFilter, null, false);
+        assertEquals(0, monitor.getHits());
     }
 
     // Use Case 14, test 1/1
