@@ -205,7 +205,7 @@ public class FragmentActivityTestCases extends
     public void testStoreFragment() {
         Fragment someFragment = new Fragment();
         // start activity
-        activity = this.getActivity();
+        activity     = this.getActivity();
 
         // choice a store choose from fragment choices
         /*
