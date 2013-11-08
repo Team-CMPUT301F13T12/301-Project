@@ -12,6 +12,8 @@ package ualberta.g12.adventurecreator.test;
  * 
  */
 
+import android.app.Activity;
+import android.app.Instrumentation.ActivityMonitor;
 import android.test.ActivityInstrumentationTestCase2;
 import android.view.MenuItem;
 import android.widget.Button;
@@ -22,16 +24,22 @@ import android.widget.TextView;
 import ualberta.g12.adventurecreator.MainActivity;
 import ualberta.g12.adventurecreator.R;
 import ualberta.g12.adventurecreator.Story;
+import junit.framework.Assert;
+import junit.framework.TestCase;
+import java.util.List;
 
-public class MainActivityTestCases extends
+public class MainActivityTestCases extends 
         ActivityInstrumentationTestCase2<MainActivity> {
-    private MainActivity activity;
-    private TextView myView;
-    private ListView availableStoryList;
+    private Activity MainActivity;
+    private TextView list_story_title;
+    private TextView list_story_author;
+    private ListView main_activity_listview;
     private PopupMenu storyListPopupMenu;
+    private List<Story> stories;
+    private StoryList sl;
 
     public MainActivityTestCases() {
-        super(MainActivity.class);
+        super(" ualberta.g12.adventurecreator.MainActivity", MainActivity.class);
     }
 
     @Override
@@ -46,11 +54,13 @@ public class MainActivityTestCases extends
     // Use Case 2, test 1/3
     public void testBrowseStoryList() {
                 //add in multiple stories into the list
-                /*for (int i = 0; i < 15; i++) {
-                        Button button = (Button) findViewByid(R.id.menu_add_story);
+                for (int i = 0; i < 15; i++) {
+                        Story UserStory = new Story();
+                        sl.addStory(UserStory);
+                      /*  Button button = (Button) findViewByid(R.id.menu_add_story);
                         button.performClick();
                         Button button2 = (Button) findViewByid(R.id.editTextSave);
-                        button2.performClick();
+                        button2.performClick();*/
                 }
                 
                 //starts the activity
@@ -61,17 +71,20 @@ public class MainActivityTestCases extends
                 view.smoothScrollToPosition(100);
                 
                 //check that user can scroll through the list
-                Assert.assertEquals(100, Robolectric.shadowOf(view).getSmoothScrolledPosition());*/
-            assertTrue("testBrowseStoryList is not yet implemented", false); // Test doesn't work yet
+                Assert.assertEquals(100, Robolectric.shadowOf(view).getSmoothScrolledPosition());
+         //   assertTrue("testBrowseStoryList is not yet implemented", false); // Test doesn't work yet
         }
 
     // Use Case 2, test 2/3
     public void testBrowseNoScrollList() {
         // add a single story into the list
+        Story UserStory = new Story();
+        sl.addStory(UserStory);
+        /*
         Button button = (Button) activity.findViewById(R.id.menu_add_story);
         button.performClick();
         Button button2 = (Button) activity.findViewById(R.id.editTextSave);
-        button2.performClick();
+        button2.performClick();*/
 
         ListView view = (ListView) activity
                 .findViewById(ualberta.g12.adventurecreator.R.id.main_activity_listview);
@@ -80,8 +93,8 @@ public class MainActivityTestCases extends
         view.smoothScrollToPosition(100);
 
         // check if the list doesn't scroll with a single entry
-        //Assert.assertNotEquals(100, Robolectric.shadowOf(view).getSmoothScrolledPosition());
-        assertTrue("testBrowseNoScrollList is not yet implemented", false); // Test does not work yet
+        Assert.assertEquals(0, Robolectric.shadowOf(view).getSmoothScrolledPosition());
+        //assertTrue("testBrowseNoScrollList is not yet implemented", false); // Test does not work yet
 
     }
 
@@ -93,9 +106,8 @@ public class MainActivityTestCases extends
         ListView view = (ListView) activity
                 .findViewById(ualberta.g12.adventurecreator.R.id.main_activity_listview);
 
-       // ActivityMonitor monitor = inst.addMonitor(intentFilter, null, false);
-        //assertEquals(0, monitor.getHits());
-        assertTrue("testBrowseEmptyStoryList is not yet implemented", false);
+        AssertNull(sl);
+        //assertTrue("testBrowseEmptyStoryList is not yet implemented", false);
     }
 
     // Use case 5, test 1/3

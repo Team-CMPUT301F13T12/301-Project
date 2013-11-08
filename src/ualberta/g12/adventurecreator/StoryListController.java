@@ -6,6 +6,10 @@ import java.util.List;
 
 // TODO implement interfaces
 
+/**
+ * controller that interacts with the listview of stories
+ * 
+ */
 public class StoryListController {
     // as we only have one story list for entire object (might be more later not
     // sure)
@@ -19,16 +23,16 @@ public class StoryListController {
     /**
      * Add a story to the story list
      * 
-     * @param s
+     * @param s story to be added to the list
      */
     public void addStory(Story s) {
         sc.addStory(s);
     }
 
     /**
-     * Delete a story list
+     * Delete a story from the list 
      * 
-     * @param s
+     * @param s story to be deleted
      */
     public void deleteStory(Story s) {
         sc.deleteStory(s);
@@ -37,8 +41,8 @@ public class StoryListController {
     /**
      * gets story from story list with object
      * 
-     * @param t
-     * @return null if blank other wise story
+     * @param s story to be retrieved 
+     * @return null if blank other wise desired story
      */
     public Story getStory(Story s) {
         return sc.getStory(s);
@@ -47,7 +51,7 @@ public class StoryListController {
     /**
      * gets story from story list from title
      * 
-     * @param t
+     * @param t title of the selected story 
      * @return null if blank other wise story
      */
     public Story getStory(String t) {

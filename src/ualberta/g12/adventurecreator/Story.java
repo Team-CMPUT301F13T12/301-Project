@@ -120,7 +120,8 @@ public class Story extends SModel implements Serializable{
     
     /**
      * will get id of the story (should be unique)
-     * @return
+     * 
+     * @return id of the story
      */
     public int getId(){
     	return this.id;
@@ -128,7 +129,8 @@ public class Story extends SModel implements Serializable{
     
     /**
      * will set id of the story (should be unique)
-     * @param newId
+     * 
+     * @param newId old id that was inititalized 
      */
     public void setId(int newId){
     	this.id = newId;

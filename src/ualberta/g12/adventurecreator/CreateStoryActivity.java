@@ -9,7 +9,12 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
-
+/**
+ * Activity when an author creates a new story. Will create a new story entry and
+ * save the title and author strings. Will take the user to corresponding activities 
+ * upon button clicks. 
+ * 
+ */
 public class CreateStoryActivity extends Activity {
     private Story story;
     private StoryList storyList;

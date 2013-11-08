@@ -16,6 +16,12 @@ import android.widget.ImageView;
 import android.widget.EditText;
 import android.widget.TextView;
 
+/**
+ * Adapter for communication between the fragment class and the 
+ * segments within the fragment. Makes views depending on what is selected and 
+ * orders the segments depending on what type they are.  
+ * 
+ */
 public class FragmentPartAdapter extends ArrayAdapter{
     private final Context context;
     private final int resource;
@@ -29,6 +35,13 @@ public class FragmentPartAdapter extends ArrayAdapter{
     }
 
     @Override
+    /**
+     * displays the corresponding view depending what was selected by the user
+     * 
+     * @param position  position of the segment that has been selected
+     * @param convertView   view type that must be made
+     * @param parent    fragment that the segment belongs to
+     */
     public View getView(int position, View convertView, ViewGroup parent){
         View rowView = convertView;
         if (rowView == null) {
@@ -108,7 +121,7 @@ public class FragmentPartAdapter extends ArrayAdapter{
             //Display a DefaultPart
             
             
-            String textSegment = "Add new text/image/chioce\n(This section will be removed when done editing)";
+            String textSegment = "Add new text/image/choice\n(This section will be removed when done editing)";
             if (textSegment != null){
                 text.setVisibility(View.VISIBLE);
                 if (text != null)

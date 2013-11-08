@@ -33,6 +33,7 @@ public class OfflineIOHelper {
 	
 	/**
 	 * loads our offline stories located at fileName location
+	 * 
 	 * @return Arraylist<Story>
 	 * 
 	 *
@@ -63,6 +64,7 @@ public class OfflineIOHelper {
 	
 	/**
 	 * Saves ourOfflineStories 
+	 * 
 	 * @param myStories
 	 */
 	

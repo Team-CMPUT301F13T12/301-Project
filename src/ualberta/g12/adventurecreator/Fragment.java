@@ -8,6 +8,12 @@ import java.util.LinkedList;
 import java.util.List;
 
 // TODO: parameterize to an FView
+/**
+ * Saves and returns all the corresponding fragment information upon fragment saving 
+ * or fragment recall. Will Store the parameters within the fragment and will be unique 
+ * to that fragment.  
+ *  
+ */
 public class Fragment extends FModel implements Serializable{
 
     private static int NEW_FRAGMENT_ID = -1;

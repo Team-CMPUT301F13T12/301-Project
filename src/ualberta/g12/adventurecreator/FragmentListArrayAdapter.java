@@ -13,7 +13,6 @@ import android.widget.TextView;
 
 import java.util.List;
 
-
 public class FragmentListArrayAdapter extends ArrayAdapter<Fragment> {
     private final Context context;
     private final int resource;

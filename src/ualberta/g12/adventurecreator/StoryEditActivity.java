@@ -156,6 +156,11 @@ public class StoryEditActivity extends Activity implements SView<Story> {
     }
     
 
+    /**
+     * opens the selected story fragment using intents
+     * 
+     * @param fragPos   position of the selected fragment in the listview
+     */
 	private void openEditFragment(int fragPos){
 	    //save before leaving activity
         saveChanges();
@@ -169,6 +174,10 @@ public class StoryEditActivity extends Activity implements SView<Story> {
         startActivity(intent);
 	}
 
+	/**
+	 * saves any changes that have been modified to a story 
+	 * 
+	 */
 	 private void saveChanges(){
         //save any changes
 	     story.setStoryTitle(titleText.getText().toString());

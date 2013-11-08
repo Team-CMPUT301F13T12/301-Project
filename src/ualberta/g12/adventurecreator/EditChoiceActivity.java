@@ -17,6 +17,12 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.support.v4.app.NavUtils;
 
+/**
+ * Activity used for choice editing within the selected story. Will allow the user to enter
+ * the text for the choice as well as select another fragment within the same story to link
+ * the selected fragment to. 
+ * 
+ */
 public class EditChoiceActivity extends Activity {
     private int ourFragmentId;
     private int ourStoryId;

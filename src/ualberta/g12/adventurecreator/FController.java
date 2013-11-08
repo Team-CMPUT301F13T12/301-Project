@@ -4,6 +4,12 @@ package ualberta.g12.adventurecreator;
 import android.graphics.Bitmap;
 
 /** Control of data in the Fragment model */
+
+/**
+ * Controllers fragment modifications within the selected fragment. Allows the user to
+ * add, delete or edit an illustration, text or a choice to the current fragment. 
+ * 
+ */
 public interface FController {
 
     /**

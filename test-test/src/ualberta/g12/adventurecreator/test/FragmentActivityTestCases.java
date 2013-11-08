@@ -23,7 +23,7 @@ import ualberta.g12.adventurecreator.Fragment;
 import ualberta.g12.adventurecreator.Story;
 
 public class FragmentActivityTestCases extends
-        ActivityInstrumentationTestCase2<EditFragmentActivity> {
+       ActivityInstrumentationTestCase2<EditFragmentActivity> {
     // declare activity and widgets
     private EditFragmentActivity myFragmentActivity;
     private TextView myView;
@@ -47,37 +47,44 @@ public class FragmentActivityTestCases extends
     // Use Case 1, test 1/2
     public void testReadStoryFragments() {
         // Start Activity
-        myFragmentActivity = this.getActivity();
-        // mView = (TextView)
-        // myFragmentActivity.findViewById(ualberta.g12.adventurecreator.FragemntActivity.R.id.FragmentInfoID);
+        Activity = this.getActivity();
+        mView = (TextView)
+        Activity.findViewById(ualberta.g12.adventurecreator.FragemntActivity.R.id.list_fragment_title);
 
         // set text in fragment info textview
-        // mView.setText("Test Text"));
+        //mView.setText("Test Text";
+        
+        //create new fragment
+        Button button = (Button) activity.findViewById(R.id.add_fragment);
+        button.performClick();
+        Button button2 = (Button) activity.findViewById(R.id.ave_fragment);
+        button2.performClick();
 
         // saves fragment text
         // String fragment = myView.getText();
 
         // checks if there is valid input in the fragment textview
-        // assertNotEquals(fragment, null);
-        assertTrue("testReadStoryFragments has not been implemented", false);
+        assertNotNull(mView)
+        
+        // assertEquals(fragment, null);
+       // assertTrue("testReadStoryFragments has not been implemented", false);
     }
 
-    // Use Case 2, test 2/2
+    // Use Case 1, test 2/2
     public void testReadNoFragments() {
         // Start Activity
-        myFragmentActivity = this.getActivity();
-        /*
-         * mView = (TextView) myFragmentActivity
-         * .findViewById(ualberta.g12.adventurecreator
-         * .FragemntActivity.R.id.FragmentInfoID);
-         */
+        Activity = this.getActivity();
+        
+          mView = (TextView) myFragmentActivity
+          .findViewById(ualberta.g12.adventurecreator.FragemntActivity.R.id.list_fragment_title);
+         
 
         // saves fragment text
         // String fragment = myView.getText();
 
         // checks if no text is present in fragment info textview
-        // assertEquals(fragment, null);
-        assertTrue("testReadNoFragments has not been implemented", false);
+         assertNull(mView);
+        //assertTrue("testReadNoFragments has not been implemented", false);
     }
 
     // Use Case 14, test 1/1

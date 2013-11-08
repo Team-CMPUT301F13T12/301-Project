@@ -52,6 +52,13 @@ import java.util.List;
 // and long clicking each one would let you edit/delete them 
 // TODO discuss with the team
 //
+
+/**
+ * Activity for editing a fragment. Will allow the author to add text, illustrations, or choices for the
+ * current fragment. Upon button clicks, the activity will save the current fragment information and
+ * take the user back to the fragment list of the current story.
+ * 
+ */
 public class EditFragmentActivity extends Activity implements FView<Fragment> {
 
     private int storyId, position, type, picturePosition;
@@ -345,6 +352,12 @@ public class EditFragmentActivity extends Activity implements FView<Fragment> {
         return true;
     }
 
+    /**
+     * Allows the user to import an image from either the camera or gallery through selection
+     * prompts. The image is put into a listview that is displayed for the current fragment. 
+     * The function branches to "onActivityResult" which handles the image processing.  
+     * 
+     */
     public void AddImage() {
         final CharSequence[] options = { "Take Photo", "Choose from Gallery","Cancel" };
         

@@ -12,6 +12,12 @@ import android.widget.TextView;
 
 import java.util.List;
 
+/**
+ * Adapter that communicates between the list of stories and the text corresponding
+ * to display the story in the list. Will retrieve and transfer the title and author 
+ * saved within the story editing and will display on the listview for the stories     
+ * 
+ */
 public class StoryListArrayAdapter extends ArrayAdapter<Story> {
     private final Context context;
 

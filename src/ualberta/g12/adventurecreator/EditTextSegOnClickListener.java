@@ -8,6 +8,11 @@ package ualberta.g12.adventurecreator;
 import android.view.View;
 import android.view.View.OnClickListener;
 
+/**
+ * Listener for a fragment modification. Listens for for a click in a position
+ * of a listview within a fragment to allow for the position to be passed back.
+ * 
+ */
 public class EditTextSegOnClickListener implements OnClickListener{
 
       int position;

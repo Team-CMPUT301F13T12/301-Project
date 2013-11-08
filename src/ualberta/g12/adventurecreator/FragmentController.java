@@ -7,15 +7,33 @@ import java.util.List;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 
-
+/**
+ * Controller that dictates all fragment methods. Is responsible for all modification within a fragment.
+ * Contains code that allows the user to add, edit or delete, the illustrations, text or choices within 
+ * a fragment.  
+ * 
+ */
 public class FragmentController implements FController {
 
     @Override
+    /**
+     * Edit the current title in place of the fragment
+     * 
+     * @param frag  fragment reference corresponding to the current fragment
+     * @param newTitle  title that has been previously stated
+     */
     public void editTitle(Fragment frag, String newTitle){
         frag.setTitle(newTitle);
     }
     
     @Override
+    /**
+     * Allows the user to add a text segment to the current fragment.
+     * 
+     * @param frag  fragment reference corresponding to the current fragment
+     * @param textSegment   reference to the text of the current segment
+     * @param dispNum   refers to the position of the text segment 
+     */
     public boolean addTextSegment(Fragment frag, String textSegment, int dispNum){
         List<String> textSegments = frag.getTextSegments();
         List<String> displayOrder = frag.getDisplayOrder();
@@ -49,9 +67,9 @@ public class FragmentController implements FController {
     /**
      * Removes the text segment at the given dispNum
      * returns true if successful
-     * @param frag
-     * @param dispNum
-     * @return
+     * 
+     * @param frag  fragment reference corresponding to the current fragment
+     * @param dispNum   refers to the position of the text segment
      */
     private boolean deleteTextSegment(Fragment frag, int dispNum){
         List<String> textSegments = frag.getTextSegments();
@@ -75,6 +93,14 @@ public class FragmentController implements FController {
     }   
         
     @Override
+    /**
+     * allows the author to add an illustration into a fragment
+     * 
+     * @param frag  fragment reference corresponding to the current fragment
+     * @param illustration  refers to the illustration that has been previously saved 
+     * @param dispNum   refers to the position of the text segment
+     * 
+     */
     public boolean addIllustration(Fragment frag, String illustration, int dispNum){
         List<String> illustrations = frag.getIllustrations();
         List<String> displayOrder = frag.getDisplayOrder();
@@ -111,9 +137,9 @@ public class FragmentController implements FController {
     /**
      * Removes the illustration at the given dispNum
      * returns true if successful
-     * @param frag
-     * @param dispNum
-     * @return
+     * 
+     * @param frag  fragment reference corresponding to the current fragment
+     * @param dispNum   refers to the position of the text segment
      */
     private boolean deleteIllustration(Fragment frag, int dispNum){
         List<String> illustrations = frag.getIllustrations();
@@ -158,6 +184,13 @@ public class FragmentController implements FController {
     //  
     
     @Override
+    /**
+     * Allows the user to add a choice to the fragment. This will allow the user to link two 
+     * fragments together.  
+     * 
+     * @param frag  fragment reference corresponding to the current fragment
+     * @param cho   reference to the old choice within that position (null if new)
+     */
     public void addChoice(Fragment frag, Choice cho){
         List<Choice> choices = frag.getChoices();
         choices.add(cho);
@@ -170,9 +203,9 @@ public class FragmentController implements FController {
     /**
      * Removes the Choice at the given dispNum
      * returns true if successful
-     * @param frag
-     * @param dispNum
-     * @return
+     * 
+     * @param frag  fragment reference corresponding to the current fragment
+     * @param dispNum   refers to the position of the text segment
      */
     private boolean deleteChoice(Fragment frag, int dispNum){
         List<String> textSegments = frag.getTextSegments();
@@ -196,6 +229,11 @@ public class FragmentController implements FController {
     }
      
     @Override
+    /**
+     * adds a new element into the listview so that a segment can be added.  
+     * 
+     * @param frag  fragment reference corresponding to the current fragment
+     */
     public void addEmptyPart(Fragment frag){
         List<String> displayOrder = frag.getDisplayOrder();
         displayOrder.add("e");
@@ -203,6 +241,11 @@ public class FragmentController implements FController {
     }
     
     @Override
+    /**
+     * deletes the selected segment when the user desires to delete a segment. 
+     * 
+     * @param frag  fragment reference corresponding to the current fragment
+     */
     public void removeEmptyPart(Fragment frag){
         List<String> displayOrder = frag.getDisplayOrder();
         displayOrder.remove("e");

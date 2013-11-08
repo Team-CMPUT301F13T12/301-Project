@@ -26,7 +26,7 @@ public class StoryList extends LModel implements Serializable{
     /**
      * gets all stories in story list
      * 
-     * @return
+     * @return the list of stories
      */
     public List<Story> getAllStories() {
         return this.stories;
@@ -35,16 +35,15 @@ public class StoryList extends LModel implements Serializable{
     /**
      * sets all stories in story list
      * 
-     * @return
      */
     public void setAllStories(List<Story> stories) {
         this.stories = stories;
     }
 
     /**
-     * adds a story
+     * adds a story to the story listview/application
      * 
-     * @param s
+     * @param s story that has been added
      */
     public void addStory(Story s) {
         stories.add(s);
@@ -52,9 +51,9 @@ public class StoryList extends LModel implements Serializable{
     }
 
     /**
-     * deletes a story
+     * deletes a story from the listview/application
      * 
-     * @param s
+     * @param s story to be deleted 
      */
     public void deleteStory(Story s) {
         stories.remove(s);
@@ -64,8 +63,8 @@ public class StoryList extends LModel implements Serializable{
     /**
      * finds if story list contains a story object
      * 
-     * @param s
-     * @return
+     * @param s storylist of stories 
+     * @return number of stoies within the story list
      */
     public Story getStory(Story s) {
         Story temp = null;
@@ -80,8 +79,8 @@ public class StoryList extends LModel implements Serializable{
     /**
      * finds and returns a story based on title
      * 
-     * @param title
-     * @return
+     * @param title tile of the story
+     * @return story based on title 
      */
     public Story getStory(String title) {
         // Shouldn't this method be called getSToryByTitle then?

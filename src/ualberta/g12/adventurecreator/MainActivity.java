@@ -15,6 +15,12 @@ import android.widget.ListView;
 
 import java.util.List;
 
+/**
+ * Activity displayed for the start of the application. Allows the user to browse through available
+ * stories, and edit or read those stories depending on what mode they are in.
+ * 
+ *
+ */
 public class MainActivity extends Activity implements LView<StoryList>, OnItemClickListener {
 
     private List<Story> stories;
@@ -138,6 +144,13 @@ public class MainActivity extends Activity implements LView<StoryList>, OnItemCl
     }
 
     @Override
+    /**
+     * Reloads the story listview from StoryList Model by notifying the ListView that 
+     * a change has occurred and will refresh all stories. The refreshing is done via 
+     * an adapter.
+     * 
+     *  @param model current model that is being used     
+     */
     public void update(StoryList model) {
         // Reload our stories from StoryList Model
         stories = storyList.getAllStories();
@@ -146,6 +159,15 @@ public class MainActivity extends Activity implements LView<StoryList>, OnItemCl
     }
 
     @Override
+    /**
+     * Function that deals with listview clicks within the list of stories. 
+     * Will open either edit or view story activities depending whether or 
+     * not "Author Mode" is enabled thought the menu.
+     * 
+     *  @param v    mode that is currently selected (either author or reader)
+     *  @param pos  position that the stories is in within the listview
+     *  @param id   id of the selected story
+     */
     public void onItemClick(AdapterView<?> parent, View v, int pos, long id) {
         // Open Edit/View story Activity with
         Intent i;
