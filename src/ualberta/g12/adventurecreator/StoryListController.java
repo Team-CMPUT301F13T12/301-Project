@@ -88,6 +88,7 @@ public class StoryListController {
      * @param id the id of the story to update
      * @param s the new story to replace it with
      */
+    @Deprecated
     public void updateStoryWithId(int id, Story s) {
         Story oldStory = sc.getStoryById(id);
         sc.deleteStory(oldStory);
