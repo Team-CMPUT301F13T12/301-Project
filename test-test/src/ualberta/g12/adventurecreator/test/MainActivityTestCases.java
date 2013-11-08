@@ -1,3 +1,4 @@
+
 package ualberta.g12.adventurecreator.test;
 
 /* Covers test cases for use cases:
@@ -24,22 +25,26 @@ import android.widget.TextView;
 import ualberta.g12.adventurecreator.MainActivity;
 import ualberta.g12.adventurecreator.R;
 import ualberta.g12.adventurecreator.Story;
+import ualberta.g12.adventurecreator.StoryList;
+
 import junit.framework.Assert;
 import junit.framework.TestCase;
+
 import java.util.List;
 
-public class MainActivityTestCases extends 
+public class MainActivityTestCases extends
         ActivityInstrumentationTestCase2<MainActivity> {
-    private Activity MainActivity;
+    private MainActivity activity;
     private TextView list_story_title;
     private TextView list_story_author;
     private ListView main_activity_listview;
     private PopupMenu storyListPopupMenu;
     private List<Story> stories;
     private StoryList sl;
+    private ListView availableStoryList;
 
     public MainActivityTestCases() {
-        super(" ualberta.g12.adventurecreator.MainActivity", MainActivity.class);
+        super(MainActivity.class);
     }
 
     @Override
@@ -53,27 +58,31 @@ public class MainActivityTestCases extends
 
     // Use Case 2, test 1/3
     public void testBrowseStoryList() {
-                //add in multiple stories into the list
-                for (int i = 0; i < 15; i++) {
-                        Story UserStory = new Story();
-                        sl.addStory(UserStory);
-                      /*  Button button = (Button) findViewByid(R.id.menu_add_story);
-                        button.performClick();
-                        Button button2 = (Button) findViewByid(R.id.editTextSave);
-                        button2.performClick();*/
-                }
-                
-                //starts the activity
-                activity = this.getActivity();
-                ListView view = (ListView) activity.findViewById(ualberta.g12.adventurecreator.MainActivity.R.id.main_activity_listview);
-                
-                //scroll textview
-                view.smoothScrollToPosition(100);
-                
-                //check that user can scroll through the list
-                Assert.assertEquals(100, Robolectric.shadowOf(view).getSmoothScrolledPosition());
-         //   assertTrue("testBrowseStoryList is not yet implemented", false); // Test doesn't work yet
+        // add in multiple stories into the list
+        for (int i = 0; i < 15; i++) {
+            Story UserStory = new Story();
+            sl.addStory(UserStory);
+            /*
+             * Button button = (Button) findViewByid(R.id.menu_add_story);
+             * button.performClick(); Button button2 = (Button)
+             * findViewByid(R.id.editTextSave); button2.performClick();
+             */
         }
+
+        // starts the activity
+        activity = this.getActivity();
+        ListView view = (ListView) activity
+                .findViewById(ualberta.g12.adventurecreator.R.id.main_activity_listview);
+
+        // scroll textview
+        view.smoothScrollToPosition(100);
+
+        // check that user can scroll through the list
+        // Assert.assertEquals(100,
+        // Robolectric.shadowOf(view).getSmoothScrolledPosition());
+        // assertTrue("testBrowseStoryList is not yet implemented", false); //
+        // Test doesn't work yet
+    }
 
     // Use Case 2, test 2/3
     public void testBrowseNoScrollList() {
@@ -81,10 +90,10 @@ public class MainActivityTestCases extends
         Story UserStory = new Story();
         sl.addStory(UserStory);
         /*
-        Button button = (Button) activity.findViewById(R.id.menu_add_story);
-        button.performClick();
-        Button button2 = (Button) activity.findViewById(R.id.editTextSave);
-        button2.performClick();*/
+         * Button button = (Button) activity.findViewById(R.id.menu_add_story);
+         * button.performClick(); Button button2 = (Button)
+         * activity.findViewById(R.id.editTextSave); button2.performClick();
+         */
 
         ListView view = (ListView) activity
                 .findViewById(ualberta.g12.adventurecreator.R.id.main_activity_listview);
@@ -93,8 +102,10 @@ public class MainActivityTestCases extends
         view.smoothScrollToPosition(100);
 
         // check if the list doesn't scroll with a single entry
-        Assert.assertEquals(0, Robolectric.shadowOf(view).getSmoothScrolledPosition());
-        //assertTrue("testBrowseNoScrollList is not yet implemented", false); // Test does not work yet
+        // Assert.assertEquals(0,
+        // Robolectric.shadowOf(view).getSmoothScrolledPosition());
+        // assertTrue("testBrowseNoScrollList is not yet implemented", false);
+        // // Test does not work yet
 
     }
 
@@ -106,17 +117,17 @@ public class MainActivityTestCases extends
         ListView view = (ListView) activity
                 .findViewById(ualberta.g12.adventurecreator.R.id.main_activity_listview);
 
-        AssertNull(sl);
-        //assertTrue("testBrowseEmptyStoryList is not yet implemented", false);
+        assertNull(sl);
+        // assertTrue("testBrowseEmptyStoryList is not yet implemented", false);
     }
 
     // Use case 5, test 1/3
     public void testEditExistingStory() {
         activity = this.getActivity();
-        //Story s = getStoryFromClick();
-        //editStory(s);
-        //assert (s != null);
-        
+        // Story s = getStoryFromClick();
+        // editStory(s);
+        // assert (s != null);
+
         assertTrue("testEditExistingStory is not yet implemented", false);
     }
 
@@ -127,15 +138,18 @@ public class MainActivityTestCases extends
         otherUserStory.setAuthor("OtherUser");
 
         // uploads/publishes story
-        //addStory(otherUserStory);
+        // addStory(otherUserStory);
 
         // starts the activity (which will automatically find all
         // available stories and load them into the availableStoryList)
         activity = this.getActivity();
         availableStoryList = (ListView) activity
                 .findViewById(ualberta.g12.adventurecreator.R.id.main_activity_listview);
-        /*storyListPopupMenu = (PopupMenu) activity
-                .findViewById(ualberta.g12.adventurecreator.MainActivity.R.id.storyListPoupMenuID);*/
+        /*
+         * storyListPopupMenu = (PopupMenu) activity
+         * .findViewById(ualberta.g12.adventurecreator
+         * .MainActivity.R.id.storyListPoupMenuID);
+         */
 
         // selects first (and only) story
         availableStoryList.setSelection(0);
@@ -150,7 +164,7 @@ public class MainActivityTestCases extends
         assertTrue(downloadOption.getTitle().equals("Download"));
 
         // check that story is written by another user
-        //assertFalse(someStory.getAuthor().equals(getCurrentUserName()));
+        // assertFalse(someStory.getAuthor().equals(getCurrentUserName()));
         assertTrue("testDownloadOtherUserStory is not yet implemented", false);
 
     }
@@ -161,18 +175,20 @@ public class MainActivityTestCases extends
         otherUserStory.setAuthor("OtherUser");
 
         // uploads/publishes story
-        //addStory(otherUserStory);
+        // addStory(otherUserStory);
 
         // starts the activity (which will automatically find all
         // available stories and load them into the availableStoryList)
         activity = this.getActivity();
         availableStoryList = (ListView) activity
                 .findViewById(ualberta.g12.adventurecreator.R.id.main_activity_listview);
-        /*storyListPopupMenu = (PopupMenu) activity
-                .findViewById(activity.R.id.storyListPoupMenuID);*/
+        /*
+         * storyListPopupMenu = (PopupMenu) activity
+         * .findViewById(activity.R.id.storyListPoupMenuID);
+         */
 
         // turn off the internet
-        //turnOffInternet();
+        // turnOffInternet();
 
         // selects first (and only) story
         availableStoryList.setSelection(0);
@@ -183,7 +199,7 @@ public class MainActivityTestCases extends
         // gets download option if available ( not available)
         MenuItem downloadOption = storyListPopupMenu.getMenu().getItem(2);
 
-        //assertTrue(downloadOption.equals(null));
+        // assertTrue(downloadOption.equals(null));
         assertTrue("testDownloadStoryNoInternet is not yet implemented", false);
 
     }
@@ -194,15 +210,18 @@ public class MainActivityTestCases extends
         otherUserStory.setAuthor("OtherUser");
 
         // uploads/publishes story
-        //addStory(otherUserStory);
+        // addStory(otherUserStory);
 
         // starts the activity (which will automatically find all
         // available stories and load them into the availableStoryList)
         activity = this.getActivity();
         availableStoryList = (ListView) activity
                 .findViewById(ualberta.g12.adventurecreator.R.id.main_activity_listview);
-/*        storyListPopupMenu = (PopupMenu) activity
-                .findViewById(ualberta.g12.adventurecreator.R.id.storyListPoupMenuID);*/
+        /*
+         * storyListPopupMenu = (PopupMenu) activity
+         * .findViewById(ualberta.g12.adventurecreator
+         * .R.id.storyListPoupMenuID);
+         */
 
         // selects first (and only) story
         availableStoryList.setSelection(0);
@@ -214,10 +233,10 @@ public class MainActivityTestCases extends
         MenuItem downloadOption = storyListPopupMenu.getMenu().getItem(2);
 
         // turn off the internet
-        //turnOffInternet();
+        // turnOffInternet();
 
         // asserts user can Download the story
-        //assertTrue(downloadOption.getTitle().equals("Download"));
+        // assertTrue(downloadOption.getTitle().equals("Download"));
         assertTrue("testDownloadStoryTurnOffInternet is not yet implemented", false);
     }
 
