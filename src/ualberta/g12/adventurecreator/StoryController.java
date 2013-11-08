@@ -54,5 +54,19 @@ public class StoryController implements SController {
     public boolean deleteFragment(Story s, Fragment f) {
         return s.removeFragment(f);
     }
+    
+    public List<Fragment> getFragments(Story s){
+    	return s.getFragments();
+    }
+    
+    public Fragment getFragmentsPos(Story s, int fragPos){
+    	return s.getFragments().get(fragPos);
+    }
+    
+    public void setFragmentAtLocation(Story s, int Pos, Fragment f){
+    	s.getFragments().set(Pos, f);
+    }
+    
+    
 
 }

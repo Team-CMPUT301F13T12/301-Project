@@ -275,4 +275,34 @@ public class FragmentController implements FController {
             removeEmptyPart(frag);
 
     }
+    
+    public List<String> getDisplayOrder(Fragment f){
+    	return f.getDisplayOrder();
+    }
+    
+    public String getDisplayOrderAtPos(Fragment f, int Pos){
+    	return f.getDisplayOrder().get(Pos);
+    }
+    
+    public int getLinkedToFragmentPosOfChoice(Fragment f, int Pos){
+    	return f.getChoices().get(Pos).getLinkedToFragmentPos();
+    }
+    
+    public List<String> getTextSegments(Fragment f){
+    	return f.getTextSegments();
+    }
+    
+    public void changeId(Fragment f, int id){
+    	f.setId(id);
+    }
+    
+    public void setChoiceTextAtPos(Fragment f,int Pos, String text){
+    	f.getChoices().get(Pos).setChoiceText(text);
+    }
+    
+    public void setLinkedFragmentOfChoiceAtPos(Fragment f, int Pos, int linkedPos){
+    	f.getChoices().get(Pos).setLinkedToFragmentPos(linkedPos);
+    }
+    
+    
 }

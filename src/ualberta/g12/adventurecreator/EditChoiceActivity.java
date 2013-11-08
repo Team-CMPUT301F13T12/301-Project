@@ -32,10 +32,14 @@ public class EditChoiceActivity extends Activity {
     private Fragment linked;
     private int requestKey;
     private int storyPos, fragPos, choicePos, linkedPos = -1;
-    private StoryList sl;
+    private StoryList storyList;
     private Fragment fragment;
     private OfflineIOHelper offlineHelper = new OfflineIOHelper(EditChoiceActivity.this);
     private EditText myTitleET;
+    private StoryListController storyListController = AdventureCreatorApplication.getStoryListController();
+    private StoryController storyController = AdventureCreatorApplication.getStoryController();
+    private FragmentController fragmentController = AdventureCreatorApplication
+            .getFragmentController();
     
     private static final boolean DEBUG = false;
 
@@ -45,9 +49,11 @@ public class EditChoiceActivity extends Activity {
         setContentView(R.layout.activity_edit_choice);
         // Show the Up button in the action bar.
         setupActionBar();
-
-        sl = offlineHelper.loadOfflineStories();
-
+        
+        
+        //storyList = offlineHelper.loadOfflineStories();
+        storyList = storyListController.loadStoryOffline(this);
+        
         Intent editChoiceIntent = getIntent();
         storyPos = (Integer) editChoiceIntent.getSerializableExtra("StoryPos");
         fragPos = (Integer) editChoiceIntent.getSerializableExtra("FragmentPos");
@@ -55,9 +61,9 @@ public class EditChoiceActivity extends Activity {
 
         // get widget reference
         myTitleET = (EditText) findViewById(R.id.choiceBody);
-        String choiceText = sl.getAllStories().get(storyPos).getFragments().get(fragPos)
-                .getChoices().get(choicePos).getChoiceText();
-        myTitleET.setText(choiceText);
+        //String choiceText = sl.getAllStories().get(storyPos).getFragments().get(fragPos)
+        //        .getChoices().get(choicePos).getChoiceText();
+        //myTitleET.setText(choiceText);
 
         /*
          * //load save file storyList = offlineHelper.loadOfflineStories();
@@ -72,16 +78,18 @@ public class EditChoiceActivity extends Activity {
         Button choiceButton = (Button) findViewById(R.id.choiceButton);
         // StoryList sl = AdventureCreatorApplication.getStoryList();
 
-        ourStory = sl.getAllStories().get(storyPos);
+        //ourStory = sl.getAllStories().get(storyPos);
         // Log.d("WHAT IS OUR STORY SIZE?", ourStory.getStoryTitle());
-        ourFragmentList = ourStory.getFragments();
-        fragment = ourFragmentList.get(fragPos);
-        if(DEBUG) Log.d("HURR DURR", "HEER HERR");
-        if(DEBUG) Log.d("WHAT AM BEFORE", String.format("%d", ourFragmentList.size()));
+        //ourFragmentList = ourStory.getFragments();
+        //fragment = ourFragmentList.get(fragPos);
+        
+        ourStory = storyListController.getStoryAtPos(storyPos);
+        
+        fragment = storyController.getFragmentsPos(ourStory,fragPos);
         choiceButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                dialogz();
+                createADialog();
 
             }
         }
@@ -92,10 +100,11 @@ public class EditChoiceActivity extends Activity {
 
     // http://stackoverflow.com/questions/4473940/android-best-practice-returning-values-from-a-dialog
     // TODO: What does this method do? The name is bad
-    private void dialogz() {
+    private void createADialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Pick a Fragment to link {NONE} means end");
-        possibleChoices = getFragmentTitleList(ourFragmentList);
+        //StoryController sc = new StoryController();
+        possibleChoices = getFragmentTitleList(storyController.getFragments(ourStory));
         CharSequence[] chars = possibleChoices.toArray(new CharSequence[possibleChoices.size()]);
 
         builder.setItems(chars, new DialogInterface.OnClickListener() {
@@ -168,24 +177,29 @@ public class EditChoiceActivity extends Activity {
         // ));
         // Log.d("WHAT?!", frag.getChoices().get(0).getChoiceText());
         // TODO CHANGE THIS AND REFACTOR ALL CODE IN CLASS
-        FragmentController fc = new FragmentController();
         String Title = myTitleET.getText().toString();
         // Choice newChoice = new Choice();
         Choice choice = fragment.getChoices().get(choicePos);
+        fragmentController.setChoiceTextAtPos(fragment, choicePos, Title);
+        fragmentController.setLinkedFragmentOfChoiceAtPos(fragment, choicePos, linkedPos);
         // TODO needs to be checked;need controller
-        choice.setChoiceText(Title);
-        choice.setLinkedToFragmentPos(linkedPos);
+        //choice.setChoiceText(Title);
+        // choice.setLinkedToFragmentPos(linkedPos);
         // fc.addChoice(fragment, newChoice);
         // sl.getAllStories().get(storyPos).getFragments().set(fragPos,
         // fragment);
-        int i = fragment.getChoices().size();
-        if(DEBUG) Log.d("DID IT GROW?", String.format("%d", i));
-        sl.getAllStories().get(storyPos).getFragments().get(fragPos).getChoices()
-                .set(choicePos, choice);
-        int c = sl.getAllStories().get(storyPos).getFragments().get(fragPos).getChoices()
-                .get(choicePos).getLinkedToFragmentPos();
-        if(DEBUG) Log.d("EDITCHOICE", "The choices linked to is " + c);
-        offlineHelper.saveOfflineStories(sl);
+        //int i = fragment.getChoices().size();
+        //if(DEBUG) Log.d("DID IT GROW?", String.format("%d", i));
+        //sl.getAllStories().get(storyPos).getFragments().get(fragPos).getChoices()
+        //        .set(choicePos, choice);
+        // ourStory = storyListController.getAllStories().get(storyPos);
+        //StoryController sc = new StoryController();
+        //sc.setFragmentAtLocation(ourStory, fragPos, fragment);
+        //int c = sl.getAllStories().get(storyPos).getFragments().get(fragPos).getChoices()
+        //        .get(choicePos).getLinkedToFragmentPos();
+        //if(DEBUG) Log.d("EDITCHOICE", "The choices linked to is " + c);
+        storyListController.saveOfflineStories(this, storyList);
+        //offlineHelper.saveOfflineStories(sl);
         finish();
         return true;
     }

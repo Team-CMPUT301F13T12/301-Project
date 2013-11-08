@@ -3,6 +3,8 @@ package ualberta.g12.adventurecreator;
 
 import java.util.List;
 
+import android.content.Context;
+
 // TODO implement interfaces
 
 /**
@@ -93,5 +95,28 @@ public class StoryListController {
         sc.deleteStory(oldStory);
         sc.addStory(s);
     }
+    
+    public StoryList loadStoryOffline(Context context){
+    	OfflineIOHelper offlineHelper = new OfflineIOHelper(context);
+    	sc = offlineHelper.loadOfflineStories();
+    	return sc;
+    }
+    
+    public void saveOfflineStories(Context context , StoryList storyList){
+    	OfflineIOHelper offlineHelper = new OfflineIOHelper(context);
+    	offlineHelper.saveOfflineStories(storyList);
+    	
+    }
+    
+    public Story getStoryAtPos(int Pos){
+    	return sc.getAllStories().get(Pos);
+    }
+    
+    public void createBlankStory(){
+    	Story story = new Story();
+    	sc.addStory(story);
+    }
+    
+    
 
 }

@@ -20,7 +20,8 @@ public class CreateStoryActivity extends Activity {
     private StoryList storyList;
     private OfflineIOHelper offlineHelper = new OfflineIOHelper(CreateStoryActivity.this);
     private int storyPos;
-    
+    private StoryListController storyListController = AdventureCreatorApplication.getStoryListController();
+    private StoryController storyController = AdventureCreatorApplication.getStoryController();
 	private Button createButton;
 
     @Override
@@ -34,14 +35,17 @@ public class CreateStoryActivity extends Activity {
         Intent editActIntent = getIntent();
         storyPos = (Integer)editActIntent.getSerializableExtra("StoryPos");
         
+        
         setListeners();
     }
 
     @Override
     protected void onStart() {
         super.onStart();
-        storyList = offlineHelper.loadOfflineStories();
-        story = storyList.getAllStories().get(storyPos);      
+        //storyList = offlineHelper.loadOfflineStories();
+        //story = storyList.getAllStories().get(storyPos);    
+        storyList = storyListController.loadStoryOffline(this);
+        story = storyListController.getAllStories().get(storyPos);
     }
     
     @Override
@@ -70,8 +74,12 @@ public class CreateStoryActivity extends Activity {
                 EditText author = (EditText) findViewById(R.id.editStoryAuthor);
                 
                 // create a new story (might want to use a controller here instead!)
-                story.setStoryTitle(title.getText().toString());
-                story.setAuthor(author.getText().toString());
+                //story.setStoryTitle(title.getText().toString());
+                //story.setAuthor(author.getText().toString());
+                
+                
+                storyController.setTitle(story, title.getText().toString());
+                storyController.setAuthor(story, author.getText().toString());
                 
                 //save the new story
                 saveStory();
@@ -82,7 +90,10 @@ public class CreateStoryActivity extends Activity {
     }
 	
 	private void saveStory(){
-	    storyList.getAllStories().set(storyPos, story);
-        offlineHelper.saveOfflineStories(storyList);
+		
+	    //storyList.getAllStories().set(storyPos, story);
+        //offlineHelper.saveOfflineStories(storyList);
+		
+		storyListController.saveOfflineStories(this, storyList);
 	}
 }
