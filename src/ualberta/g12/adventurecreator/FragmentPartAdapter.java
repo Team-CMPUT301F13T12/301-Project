@@ -1,3 +1,4 @@
+
 package ualberta.g12.adventurecreator;
 
 import android.content.Context;
@@ -13,23 +14,26 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 /**
- * Adapter for communication between the fragment class and the 
- * segments within the fragment. Makes views depending on what is selected and 
- * orders the segments depending on what type they are.  
- * 
+ * Adapter for communication between the fragment class and the segments within
+ * the fragment. Makes views depending on what is selected and orders the
+ * segments depending on what type they are.
  */
-public class FragmentPartAdapter extends ArrayAdapter{
+public class FragmentPartAdapter extends ArrayAdapter {
     private final Context context;
     private final int resource;
     private final Fragment frag;
-    
-    private static final String TAG= "FragmentPartAdapter";
+
+    private static final String TAG = "FragmentPartAdapter";
     private static final boolean DEBUG = true;
 
-    /**Sold constructor for the FragmentPartAdapter. Sets up the context, resource and fragment.
+    /**
+     * Sold constructor for the FragmentPartAdapter. Sets up the context,
+     * resource and fragment.
+     * 
      * @param context the context of the calling activity
      * @param resource the resource to load
-     * @param frag the Fragment to display*/
+     * @param frag the Fragment to display
+     */
     public FragmentPartAdapter(Context context, int resource, Fragment frag) {
         super(context, resource, frag.getDisplayOrder());
         this.context = context;
@@ -45,95 +49,102 @@ public class FragmentPartAdapter extends ArrayAdapter{
      * @param convertView   view type that must be made
      * @param parent    fragment that the segment belongs to
      */
-    public View getView(int position, View convertView, ViewGroup parent){
+    public View getView(int position, View convertView, ViewGroup parent) {
         View rowView = convertView;
         if (rowView == null) {
-            LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            LayoutInflater inflater = (LayoutInflater) context
+                    .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             rowView = inflater.inflate(R.layout.listview_fragment_part_list, parent, false);
         }
         ImageView image = (ImageView) rowView.findViewById(R.id.fragmentPartIllustration);
         TextView text = (TextView) rowView.findViewById(R.id.fragmentPartTextPart);
         TextView choiceButton = (TextView) rowView.findViewById(R.id.fragmentPartChoice);
-                
-        //make all invisible
+
+        // make all invisible
         image.setVisibility(View.GONE);
         text.setVisibility(View.GONE);
         choiceButton.setVisibility(View.GONE);
-        
-        if(DEBUG) Log.d(TAG, "POSITION "+position);
-        if (frag.getDisplayOrder().get(position).equals("t")){
-            if(DEBUG) Log.d(TAG, "TEXT "+position);
-            //Display a text segment
 
-            //get the occurrence number of the textSegment
+        if (DEBUG)
+            Log.d(TAG, "POSITION " + position);
+        if (frag.getDisplayOrder().get(position).equals("t")) {
+            if (DEBUG)
+                Log.d(TAG, "TEXT " + position);
+            // Display a text segment
+
+            // get the occurrence number of the textSegment
             int occurrence = 0;
-            for (int i = 0; i < position; i++){
+            for (int i = 0; i < position; i++) {
                 if (frag.getDisplayOrder().get(i).equals("t"))
-                    occurrence++;  
+                    occurrence++;
             }
 
             String textSegment = frag.getTextSegments().get(occurrence);
-            if (textSegment != null){
+            if (textSegment != null) {
                 text.setVisibility(View.VISIBLE);
                 if (text != null)
                     text.setText(textSegment);
             }
-        } else if (frag.getDisplayOrder().get(position).equals("i")){
-            if(DEBUG) Log.d(TAG, "IMAGE "+position);
-            //Display an illustration
-            
-            //get the occurrence number of the illustration
+        } else if (frag.getDisplayOrder().get(position).equals("i")) {
+            if (DEBUG)
+                Log.d(TAG, "IMAGE " + position);
+            // Display an illustration
+
+            // get the occurrence number of the illustration
             int occurrence = 0;
-            for (int i = 0; i < position; i++){
+            for (int i = 0; i < position; i++) {
                 if (frag.getDisplayOrder().get(i).equals("i"))
-                    occurrence++;  
+                    occurrence++;
             }
 
-            if(DEBUG) Log.d(TAG, "probably dies here"+occurrence);
+            if (DEBUG)
+                Log.d(TAG, "probably dies here" + occurrence);
             String picturePath = frag.getIllustrations().get(occurrence);
             Bitmap illustration = BitmapFactory.decodeFile(picturePath);
-            if(DEBUG) Log.d(TAG, "betchs don't see me");
-            if (illustration != null){
+            if (DEBUG)
+                Log.d(TAG, "betchs don't see me");
+            if (illustration != null) {
                 image.setVisibility(View.VISIBLE);
                 if (image != null)
-                    if(DEBUG) Log.d(TAG,"SET IMAGE");
-                    image.setImageBitmap(illustration);
+                    if (DEBUG)
+                        Log.d(TAG, "SET IMAGE");
+                image.setImageBitmap(illustration);
             }
-        } else if (frag.getDisplayOrder().get(position).equals("c")){
-            if(DEBUG) Log.d(TAG, "CHOICE "+position);
-            //Display a choice
-            
-            //get the occurrence number of the illustration
+        } else if (frag.getDisplayOrder().get(position).equals("c")) {
+            if (DEBUG)
+                Log.d(TAG, "CHOICE " + position);
+            // Display a choice
+
+            // get the occurrence number of the illustration
             int occurrence = 0;
-            for (int i = 0; i < position; i++){
+            for (int i = 0; i < position; i++) {
                 if (frag.getDisplayOrder().get(i).equals("c"))
-                    occurrence++;  
+                    occurrence++;
             }
 
             Choice choice = frag.getChoices().get(occurrence);
-            if (choice != null){
+            if (choice != null) {
                 choiceButton.setVisibility(View.VISIBLE);
                 if (choiceButton != null)
-                    if(DEBUG) Log.d(TAG, "SET CHOICE");
-                    choiceButton.setText(choice.getChoiceText());
-                    choiceButton.setBackgroundColor(Color.BLACK);
-                    choiceButton.setTextColor(Color.WHITE);
+                    if (DEBUG)
+                        Log.d(TAG, "SET CHOICE");
+                choiceButton.setText(choice.getChoiceText());
+                choiceButton.setBackgroundColor(Color.BLACK);
+                choiceButton.setTextColor(Color.WHITE);
             }
-        } else if (frag.getDisplayOrder().get(position).equals("e")){
-            if(DEBUG) Log.d(TAG, "EMPTY "+position);
-            //Display a DefaultPart
-            
-            
+        } else if (frag.getDisplayOrder().get(position).equals("e")) {
+            if (DEBUG)
+                Log.d(TAG, "EMPTY " + position);
+            // Display a DefaultPart
+
             String textSegment = "Add new text/image/choice\n(This section will be removed when done editing)";
-            if (textSegment != null){
+            if (textSegment != null) {
                 text.setVisibility(View.VISIBLE);
                 if (text != null)
                     text.setText(textSegment);
             }
-        } 
-        
+        }
+
         return rowView;
     }
 }
-
-

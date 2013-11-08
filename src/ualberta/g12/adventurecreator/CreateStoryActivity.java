@@ -1,3 +1,4 @@
+
 package ualberta.g12.adventurecreator;
 
 import android.app.Activity;
@@ -10,44 +11,43 @@ import android.widget.Button;
 import android.widget.EditText;
 
 /**
- * Activity when an author creates a new story. Will create a new story entry and
- * save the title and author strings. Will take the user to corresponding activities 
- * upon button clicks. 
- * 
+ * Activity when an author creates a new story. Will create a new story entry
+ * and save the title and author strings. Will take the user to corresponding
+ * activities upon button clicks.
  */
 public class CreateStoryActivity extends Activity {
     private Story story;
     private StoryList storyList;
     private OfflineIOHelper offlineHelper = new OfflineIOHelper(CreateStoryActivity.this);
     private int storyPos;
-    private StoryListController storyListController = AdventureCreatorApplication.getStoryListController();
+    private StoryListController storyListController = AdventureCreatorApplication
+            .getStoryListController();
     private StoryController storyController = AdventureCreatorApplication.getStoryController();
-	private Button createButton;
+    private Button createButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_story);
-        
+
         createButton = (Button) findViewById(R.id.editTextSave);
 
-        //obtain the intent
+        // obtain the intent
         Intent editActIntent = getIntent();
-        storyPos = (Integer)editActIntent.getSerializableExtra("StoryPos");
-        
-        
+        storyPos = (Integer) editActIntent.getSerializableExtra("StoryPos");
+
         setListeners();
     }
 
     @Override
     protected void onStart() {
         super.onStart();
-        //storyList = offlineHelper.loadOfflineStories();
-        //story = storyList.getAllStories().get(storyPos);    
+        // storyList = offlineHelper.loadOfflineStories();
+        // story = storyList.getAllStories().get(storyPos);
         storyList = storyListController.loadStoryOffline(this);
         story = storyListController.getAllStories().get(storyPos);
     }
-    
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -55,45 +55,44 @@ public class CreateStoryActivity extends Activity {
         return true;
     }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // TODO Auto-generated method stub
+        return super.onOptionsItemSelected(item);
+    }
 
-	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
-		// TODO Auto-generated method stub
-		return super.onOptionsItemSelected(item);
-	}
-	
-	private void setListeners(){
+    private void setListeners() {
 
         createButton.setOnClickListener(new View.OnClickListener() {
-            
+
             @Override
             public void onClick(View arg0) {
-                
+
                 // get the editTexts!
                 EditText title = (EditText) findViewById(R.id.editStoryTitle);
                 EditText author = (EditText) findViewById(R.id.editStoryAuthor);
-                
-                // create a new story (might want to use a controller here instead!)
-                //story.setStoryTitle(title.getText().toString());
-                //story.setAuthor(author.getText().toString());
-                
-                
+
+                // create a new story (might want to use a controller here
+                // instead!)
+                // story.setStoryTitle(title.getText().toString());
+                // story.setAuthor(author.getText().toString());
+
                 storyController.setTitle(story, title.getText().toString());
                 storyController.setAuthor(story, author.getText().toString());
-                
-                //save the new story
+
+                // save the new story
                 saveStory();
-                
+
                 finish();
             }
         });
     }
-	
-	private void saveStory(){
-		
-	    //storyList.getAllStories().set(storyPos, story);
-        //offlineHelper.saveOfflineStories(storyList);
-		
-		storyListController.saveOfflineStories(this, storyList);
-	}
+
+    private void saveStory() {
+
+        // storyList.getAllStories().set(storyPos, story);
+        // offlineHelper.saveOfflineStories(storyList);
+
+        storyListController.saveOfflineStories(this, storyList);
+    }
 }

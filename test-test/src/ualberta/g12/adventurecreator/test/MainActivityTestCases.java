@@ -73,7 +73,7 @@ public class MainActivityTestCases extends
         // check that user can scroll through the list
         // Assert.assertEquals(100,
         // Robolectric.shadowOf(view).getSmoothScrolledPosition());
-        // assertTrue("testBrowseStoryList is not yet implemented", false); //
+         assertTrue("testBrowseStoryList is not yet implemented", false); //
         // Test doesn't work yet
     }
 
@@ -97,7 +97,7 @@ public class MainActivityTestCases extends
         // check if the list doesn't scroll with a single entry
         // Assert.assertEquals(0,
         // Robolectric.shadowOf(view).getSmoothScrolledPosition());
-        // assertTrue("testBrowseNoScrollList is not yet implemented", false);
+        assertTrue("testBrowseNoScrollList is not yet implemented", false);
         // // Test does not work yet
 
     }

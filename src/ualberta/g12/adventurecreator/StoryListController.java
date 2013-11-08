@@ -91,54 +91,55 @@ public class StoryListController {
      * @param s the new story to replace it with
      */
     public void updateStoryWithId(int id, Story s) {
-    	//TODO WARNING the way I see it it updates story but changes position -V 
+        // TODO WARNING the way I see it it updates story but changes position
+        // -V
         Story oldStory = sc.getStoryById(id);
         sc.deleteStory(oldStory);
         sc.addStory(s);
     }
-    
+
     /**
-     * This method will load our localled cached stories from 
-     * the phones memory. 
+     * This method will load our localled cached stories from the phones memory.
+     * 
      * @param context is the activity that we are in right now
      * @return
      */
-    
-    public StoryList loadStoryOffline(Context context){
-    	OfflineIOHelper offlineHelper = new OfflineIOHelper(context);
-    	sc = offlineHelper.loadOfflineStories();
-    	return sc;
+
+    public StoryList loadStoryOffline(Context context) {
+        OfflineIOHelper offlineHelper = new OfflineIOHelper(context);
+        sc = offlineHelper.loadOfflineStories();
+        return sc;
     }
-    
+
     /**
      * This method saves all our local stories to the phones memory
+     * 
      * @param context is the activity that we are in right now
-     * @param storyList is the storyList that we want to save 
+     * @param storyList is the storyList that we want to save
      */
-    public void saveOfflineStories(Context context , StoryList storyList){
-    	OfflineIOHelper offlineHelper = new OfflineIOHelper(context);
-    	offlineHelper.saveOfflineStories(storyList);
-    	
+    public void saveOfflineStories(Context context, StoryList storyList) {
+        OfflineIOHelper offlineHelper = new OfflineIOHelper(context);
+        offlineHelper.saveOfflineStories(storyList);
+
     }
-    
+
     /**
      * This method helps get the Story in our storyList at a certain position
+     * 
      * @param Pos is the position of the story to retrieve
      * @return
      */
-    public Story getStoryAtPos(int Pos){
-    	return sc.getAllStories().get(Pos);
+    public Story getStoryAtPos(int Pos) {
+        return sc.getAllStories().get(Pos);
     }
-    
+
     /**
-     * This methods creates a blank story and adds it to the storyList
-     * The story is added to the end of the story List
+     * This methods creates a blank story and adds it to the storyList The story
+     * is added to the end of the story List
      */
-    public void createBlankStory(){
-    	Story story = new Story();
-    	sc.addStory(story);
+    public void createBlankStory() {
+        Story story = new Story();
+        sc.addStory(story);
     }
-    
-    
 
 }

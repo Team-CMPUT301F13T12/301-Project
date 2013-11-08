@@ -70,7 +70,8 @@ public class EditFragmentActivity extends Activity implements FView<Fragment> {
     private Story story;
     private int storyPos, fragPos;
     private Fragment fragment;
-    private StoryListController storyListController = AdventureCreatorApplication.getStoryListController();
+    private StoryListController storyListController = AdventureCreatorApplication
+            .getStoryListController();
     private StoryController storyController = AdventureCreatorApplication.getStoryController();
 
     @Override
@@ -100,16 +101,15 @@ public class EditFragmentActivity extends Activity implements FView<Fragment> {
         super.onStart();
 
         // TODO: This should be in its own method
-        
+
         // load save file
-        //storyList = offlineHelper.loadOfflineStories();
-        
-        
+        // storyList = offlineHelper.loadOfflineStories();
+
         storyList = storyListController.loadStoryOffline(this);
         story = storyListController.getAllStories().get(storyPos);
-        //fragment = story.getFragments().get(fragPos)
-        
-        fragment = storyController.getFragmentsPos(story,fragPos);
+        // fragment = story.getFragments().get(fragPos)
+
+        fragment = storyController.getFragmentsPos(story, fragPos);
 
         // Make sure we have at least one part if in edit mode
         if (mode.equals("Edit") == true && fragment.getDisplayOrder().size() == 0) {
@@ -196,8 +196,7 @@ public class EditFragmentActivity extends Activity implements FView<Fragment> {
 
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-            	
-            	
+
                 if (fragmentController.getDisplayOrderAtPos(fragment, position).equals("c")) {
                     if (mode.equals("Edit")) {
                         // TODO open edit choice activity
@@ -208,10 +207,11 @@ public class EditFragmentActivity extends Activity implements FView<Fragment> {
                         // get the occurence number of the textSegment
                         int occurrence = 0;
                         for (int i = 0; i < position; i++) {
-                            if (fragmentController.getDisplayOrderAtPos(fragment,i).equals("c"))
+                            if (fragmentController.getDisplayOrderAtPos(fragment, i).equals("c"))
                                 occurrence++;
                         }
-                        int newFragPos = fragmentController.getLinkedToFragmentPosOfChoice(fragment, occurrence);
+                        int newFragPos = fragmentController.getLinkedToFragmentPosOfChoice(
+                                fragment, occurrence);
 
                         if (newFragPos == -1) {
                             // linked frag pos is invalid so don't use it
@@ -269,7 +269,7 @@ public class EditFragmentActivity extends Activity implements FView<Fragment> {
             AddImage();
 
         } else if (itemTitle.equals("Edit")) {
-            String type = fragmentController.getDisplayOrderAtPos(fragment,position);
+            String type = fragmentController.getDisplayOrderAtPos(fragment, position);
             if (type.equals("t") || type.equals("e")) {
                 RelativeLayout curLayout = new RelativeLayout(this);
 
@@ -284,10 +284,11 @@ public class EditFragmentActivity extends Activity implements FView<Fragment> {
                 if (type.equals("t")) {
                     int occurrence = 0;
                     for (int i = 0; i < position; i++) {
-                        if (fragmentController.getDisplayOrderAtPos(fragment,i).equals("t"))
+                        if (fragmentController.getDisplayOrderAtPos(fragment, i).equals("t"))
                             occurrence++;
                     }
-                    editTextSegView.setText(fragmentController.getTextSegments(fragment).get(occurrence));
+                    editTextSegView.setText(fragmentController.getTextSegments(fragment).get(
+                            occurrence));
                 }
 
                 Button editTextSave = (Button) editTextWindow.getContentView().findViewById(
@@ -353,9 +354,9 @@ public class EditFragmentActivity extends Activity implements FView<Fragment> {
             intent.putExtra("ChoicePos", choicePos);
             startActivity(intent);
 
-        } //else if (itemTitle.equals("Delete")) {
-            //fragmentController.deleteFragmentPart(fragment, position);
-        //}
+        } // else if (itemTitle.equals("Delete")) {
+          // fragmentController.deleteFragmentPart(fragment, position);
+        // }
         // Make sure the fragment isn't completely empty
         if (fragment.getDisplayOrder().size() == 0)
             fragmentController.addEmptyPart(fragment);
@@ -462,7 +463,7 @@ public class EditFragmentActivity extends Activity implements FView<Fragment> {
 
                 Uri selectedImage = data.getData();
                 String[] filePath = {
-                    MediaStore.Images.Media.DATA
+                        MediaStore.Images.Media.DATA
                 };
                 Cursor c = getContentResolver().query(selectedImage, filePath, null, null, null);
                 c.moveToFirst();
@@ -498,12 +499,12 @@ public class EditFragmentActivity extends Activity implements FView<Fragment> {
         // }catch(NumberFormatException e){
         // Log.d("Msg","There was a number format exception!");
         // }
-        
-        //fragment.setTitle(title);
-        //fragment.setId(idPage);
-        
+
+        // fragment.setTitle(title);
+        // fragment.setId(idPage);
+
         fragmentController.editTitle(fragment, title);
-        fragmentController.changeId(fragment,idPage);
+        fragmentController.changeId(fragment, idPage);
     }
 
     private void saveFragment() {
@@ -511,11 +512,12 @@ public class EditFragmentActivity extends Activity implements FView<Fragment> {
         fragmentController.removeEmptyPart(fragment);
 
         setTitleAndPageId();
-        //storyList.getAllStories().get(storyPos).getFragments().set(fragPos, fragment);
+        // storyList.getAllStories().get(storyPos).getFragments().set(fragPos,
+        // fragment);
         Story s = storyListController.getAllStories().get(storyPos);
         storyController.setFragmentAtLocation(s, fragPos, fragment);
-        //StoryList storyList = storyListController.;
-        //offlineHelper.saveOfflineStories(storyList);
+        // StoryList storyList = storyListController.;
+        // offlineHelper.saveOfflineStories(storyList);
         storyListController.saveOfflineStories(this, storyList);
     }
 }

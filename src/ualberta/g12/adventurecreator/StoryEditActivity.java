@@ -31,10 +31,10 @@ public class StoryEditActivity extends Activity implements SView<Story> {
     public static final String INTENT_STORY_ID = "storyid";
     public static final int INVALID_STORY_ID = -1;
 
-    //edit or add contants
+    // edit or add contants
     public static final int EDIT = 0;
     public static final int ADD = 1;
-    
+
     // Logging info
     private static final String TAG = "StoryEditActivity";
     private static final boolean DEBUG_LOG = true;
@@ -43,7 +43,6 @@ public class StoryEditActivity extends Activity implements SView<Story> {
     private EditText titleText;
     private EditText authorText;
     private ListView lView;
-    
 
     private OfflineIOHelper offlineHelper = new OfflineIOHelper(StoryEditActivity.this);
     private FragmentListArrayAdapter adapter;
@@ -56,18 +55,18 @@ public class StoryEditActivity extends Activity implements SView<Story> {
         setContentView(R.layout.android_story_editor);
 
         // Load our story from the intent
-        Intent i = getIntent(); 
-        storyPos = (Integer)i.getSerializableExtra("StoryPos"); 
+        Intent i = getIntent();
+        storyPos = (Integer) i.getSerializableExtra("StoryPos");
 
-        //get widget references
+        // get widget references
         titleText = (EditText) findViewById(R.id.story_editor_title_edit);
         authorText = (EditText) findViewById(R.id.story_editor_author_edit);
         lView = (ListView) findViewById(R.id.story_editor_listview);
-        
+
         // Set up all listeners
         setUpOnClickListeners();
     }
-    
+
     /** Updates all of the Ui Elements for this Activity */
     @Override
     protected void onStart() {
@@ -75,7 +74,7 @@ public class StoryEditActivity extends Activity implements SView<Story> {
         update(story);
 
     }
-    
+
     @Override
     public void onResume() {
         super.onResume();
@@ -112,21 +111,21 @@ public class StoryEditActivity extends Activity implements SView<Story> {
     public boolean onOptionsItemSelected(MenuItem item) {
         // TODO Auto-generated method stub
         switch (item.getItemId()) {
-            case R.id.add_fragment:           
-                
+            case R.id.add_fragment:
+
                 // Create and add new fragment
                 Fragment newFrag = new Fragment();
                 int fragPos = story.getFragments().size();
                 storyController.addFragment(story, newFrag);
-                
-                //pass new fragment to edit fragment intent
+
+                // pass new fragment to edit fragment intent
                 openEditFragment(fragPos);
                 return true;
-                
+
             case R.id.save_story:
                 // Save values
                 saveChanges();
-                                
+
                 // Leave activity
                 finish();
                 return true;
@@ -136,53 +135,51 @@ public class StoryEditActivity extends Activity implements SView<Story> {
 
     @Override
     public void update(Story model) {
-        // Update our local story variable   	
+        // Update our local story variable
         // Reload value from our story into fields - notify adapter our
         // story has changed
         storyList = offlineHelper.loadOfflineStories();
-        
+
         story = storyList.getAllStories().get(storyPos);
-        
-        //update title and author
+
+        // update title and author
         titleText.setText(story.getStoryTitle());
         authorText.setText(story.getAuthor());
 
-        //populate the fragment list
+        // populate the fragment list
         fragmentList = story.getFragments();
         adapter = new FragmentListArrayAdapter(this, R.layout.listview_fragment_list, fragmentList);
         lView.setAdapter(adapter);
 
     }
-    
 
     /**
      * opens the selected story fragment using intents
      * 
-     * @param fragPos   position of the selected fragment in the listview
+     * @param fragPos position of the selected fragment in the listview
      */
-	private void openEditFragment(int fragPos){
-	    //save before leaving activity
+    private void openEditFragment(int fragPos) {
+        // save before leaving activity
         saveChanges();
-        
+
         Intent intent = new Intent(this, EditFragmentActivity.class);
         intent.putExtra("Mode", "Edit");
-        intent.putExtra("StoryPos",storyPos);
+        intent.putExtra("StoryPos", storyPos);
         intent.putExtra("FragmentPos", fragPos);
-        
-        Log.d("This",String.format("The story id was: %d", storyId));
-        startActivity(intent);
-	}
 
-	/**
-	 * saves any changes that have been modified to a story 
-	 * 
-	 */
-	 private void saveChanges(){
-        //save any changes
-	     story.setStoryTitle(titleText.getText().toString());
-         story.setAuthor(authorText.getText().toString());
-         
-	    storyList.getAllStories().set(storyPos, story);
+        Log.d("This", String.format("The story id was: %d", storyId));
+        startActivity(intent);
+    }
+
+    /**
+     * saves any changes that have been modified to a story
+     */
+    private void saveChanges() {
+        // save any changes
+        story.setStoryTitle(titleText.getText().toString());
+        story.setAuthor(authorText.getText().toString());
+
+        storyList.getAllStories().set(storyPos, story);
         offlineHelper.saveOfflineStories(storyList);
     }
 }

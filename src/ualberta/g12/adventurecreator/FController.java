@@ -1,24 +1,21 @@
 
 package ualberta.g12.adventurecreator;
 
-
-/** Control of data in the Fragment model */
-
 /**
- * Controllers fragment modifications within the selected fragment. Allows the user to
- * add, delete or edit an illustration, text or a choice to the current fragment. 
- * 
+ * Control of data in the Fragment model. Controls fragment modifications
+ * within the selected fragment. Allows the user to add, delete or edit an
+ * illustration, text or a choice to the current fragment.
  */
 public interface FController {
 
     /**
      * Edits the title of the fragment
      * 
-     *  @param frag is the Fragment to be changed
+     * @param frag is the Fragment to be changed
      * @param newTitle the new title of the fragment
      */
     public void editTitle(Fragment frag, String newTitle);
-    
+
     /**
      * Adds textSegment to a fragment at specified position
      * 
@@ -27,7 +24,7 @@ public interface FController {
      * @param dispNum is position that the textSegment will be inserted
      */
     public boolean addTextSegment(Fragment frag, String textSegment, int dispNum);
-    
+
     /**
      * Adds illustration to a fragment at specified position
      * 
@@ -44,34 +41,31 @@ public interface FController {
      * @param cho the choice to add to the list
      */
     public void addChoice(Fragment frag, Choice cho);
-    
+
     /**
-     * Adds an empty FragmentPart to the fragment 
-     * (for editing purposes only)
+     * Adds an empty FragmentPart to the fragment (for editing purposes only)
      * 
      * @param frag is the Fragment to be changed
      */
     public void addEmptyPart(Fragment frag);
-    
+
     /**
-     * removes empty FragmentPart from the fragment 
-     * (for editing purposes only)
+     * removes empty FragmentPart from the fragment (for editing purposes only)
      * 
      * @param frag is the Fragment to be changed
      */
     public void removeEmptyPart(Fragment frag);
-    
+
     /**
-     * removes the FragmentPart specified by its partNum 
-     * (it's number in the displayorder) from the fragment 
+     * removes the FragmentPart specified by its partNum (it's number in the
+     * displayorder) from the fragment
      * 
      * @param frag is the Fragment to be changed
-     * @param partNum the fragmentPart number of the 
-     * fragmentPart in the display order to be removed
+     * @param partNum the fragmentPart number of the fragmentPart in the display
+     *            order to be removed
      */
     public void deleteFragmentPart(Fragment frag, int partNum);
 
-    
     // TODO: Implement annotations
     // public void addAnnotation(Fragment frag, Annotation annotation);
 

@@ -26,6 +26,7 @@ public class OfflineIOHelper {
      * Sole constructor for the OfflineIOHelper class. Loads in context from the
      * calling application that is used for the FileInputStream and
      * FileOuputStreams.
+     * 
      * @param context the context to load.
      */
     public OfflineIOHelper(Context context) {

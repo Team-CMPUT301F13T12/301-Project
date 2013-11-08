@@ -10,15 +10,16 @@ import java.util.List;
  * Models a story that would be created by an Author. Contains a list of
  * Fragments as well as an author and a title.
  */
-public class Story extends SModel implements Serializable{
-    
+public class Story extends SModel implements Serializable {
+
     private static int NEW_STORY_ID = -1;
-    
+
     private String storyTitle;
     private String author;
-    private int id = 1; // TODO: should be unique 
-    private List<Fragment> fragments; // list of all fragments in story (no particular order)
-    private int startFragPos;     // start page
+    private int id = 1; // TODO: should be unique
+    private List<Fragment> fragments; // list of all fragments in story (no
+                                      // particular order)
+    private int startFragPos; // start page
 
     public Story() {
         this.startFragPos = 0;
@@ -31,7 +32,7 @@ public class Story extends SModel implements Serializable{
     public Story(String title, String author) {
         this();
         setStoryTitle(title);
-        setAuthor(author);   
+        setAuthor(author);
     }
 
     public String getStoryTitle() {
@@ -70,10 +71,10 @@ public class Story extends SModel implements Serializable{
         return this.fragments.remove(oldFragment);
     }
 
-    public void setFragments(List<Fragment> f){
+    public void setFragments(List<Fragment> f) {
         this.fragments = f;
     }
-    
+
     public void addLinkToNewPage() {
 
     }
@@ -82,59 +83,62 @@ public class Story extends SModel implements Serializable{
 
     }
 
-//    // For merging stories (should happen when a choice is set to a page in
-//    // another story)
-//    public void afterPageLinkedToAnotherStory(Story newStory, Fragment pageLinkedTo,
-//            Choice choiceToSet) {
-//        // adds all pages of newStory to the current story
-//        for (int i = 0; i < newStory.getFragments().size(); i++) {
-//            this.fragments.add(newStory.getFragments().get(i));
-//        }
-//        choiceToSet.setLinkedToFragment(pageLinkedTo);
-//    }
+    // // For merging stories (should happen when a choice is set to a page in
+    // // another story)
+    // public void afterPageLinkedToAnotherStory(Story newStory, Fragment
+    // pageLinkedTo,
+    // Choice choiceToSet) {
+    // // adds all pages of newStory to the current story
+    // for (int i = 0; i < newStory.getFragments().size(); i++) {
+    // this.fragments.add(newStory.getFragments().get(i));
+    // }
+    // choiceToSet.setLinkedToFragment(pageLinkedTo);
+    // }
 
-//    // finds isolated pages and sets their isLinkedTo flag to false
-//    // should be run before each time a list of pages in the story is displayed
-//    // or only before the pages are displayed and change flag is true.
-//    // would need to create a change flag
-//    public void findAndMarkIsolatedPages() {
-//        LinkedList<Fragment> copyOfPages = new LinkedList<Fragment>();
-//        // copies pages list
-//        for (int i = 0; i < this.fragments.size(); i++) {
-//            copyOfPages.add(fragments.get(i));
-//        }
-//        // removes all pages from copyOfPages that are referenced
-//        for (int i = 0; i < this.fragments.size(); i++) {
-//            for (int j = 0; j < fragments.get(i).getChoices().size(); j++) {
-//                Fragment tempPage = fragments.get(i).getChoices().get(j).getLinkedToFragment();
-//                copyOfPages.remove(tempPage);
-//            }
-//        }
-//        // only unreferenced pages remain
-//        for (int i = 0; i < copyOfPages.size(); i++) {
-//            copyOfPages.get(i).setLinkedTo(false);
-//        }
-//    }
-    
+    // // finds isolated pages and sets their isLinkedTo flag to false
+    // // should be run before each time a list of pages in the story is
+    // displayed
+    // // or only before the pages are displayed and change flag is true.
+    // // would need to create a change flag
+    // public void findAndMarkIsolatedPages() {
+    // LinkedList<Fragment> copyOfPages = new LinkedList<Fragment>();
+    // // copies pages list
+    // for (int i = 0; i < this.fragments.size(); i++) {
+    // copyOfPages.add(fragments.get(i));
+    // }
+    // // removes all pages from copyOfPages that are referenced
+    // for (int i = 0; i < this.fragments.size(); i++) {
+    // for (int j = 0; j < fragments.get(i).getChoices().size(); j++) {
+    // Fragment tempPage =
+    // fragments.get(i).getChoices().get(j).getLinkedToFragment();
+    // copyOfPages.remove(tempPage);
+    // }
+    // }
+    // // only unreferenced pages remain
+    // for (int i = 0; i < copyOfPages.size(); i++) {
+    // copyOfPages.get(i).setLinkedTo(false);
+    // }
+    // }
+
     /**
      * will get id of the story (should be unique)
      * 
      * @return id of the story
      */
-    public int getId(){
-    	return this.id;
+    public int getId() {
+        return this.id;
     }
-    
+
     /**
      * will set id of the story (should be unique)
      * 
-     * @param newId old id that was inititalized 
+     * @param newId old id that was inititalized
      */
-    public void setId(int newId){
-    	this.id = newId;
+    public void setId(int newId) {
+        this.id = newId;
     }
-    
-    private void writeObject(java.io.ObjectOutputStream out) throws IOException{
+
+    private void writeObject(java.io.ObjectOutputStream out) throws IOException {
         out.writeObject(this.NEW_STORY_ID);
         out.writeObject(this.storyTitle);
         out.writeObject(this.author);
@@ -142,7 +146,9 @@ public class Story extends SModel implements Serializable{
         out.writeObject(this.fragments);
         out.writeObject(this.startFragPos);
     }
-    private void readObject(java.io.ObjectInputStream in) throws IOException, ClassNotFoundException{
+
+    private void readObject(java.io.ObjectInputStream in) throws IOException,
+            ClassNotFoundException {
         this.NEW_STORY_ID = (Integer) in.readObject();
         this.storyTitle = (String) in.readObject();
         this.author = (String) in.readObject();

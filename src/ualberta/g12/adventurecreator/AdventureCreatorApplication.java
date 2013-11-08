@@ -30,6 +30,7 @@ public class AdventureCreatorApplication extends Application {
     /**
      * Returns the StoryListController Singleton. If one doesn't exist, we
      * create one off of our StoryList singleton
+     * 
      * @return the StoryListController singleton
      */
     public static StoryListController getStoryListController() {
@@ -40,8 +41,11 @@ public class AdventureCreatorApplication extends Application {
     }
 
     /**
-     * Returns the StoryController Singleton. If one doesn't exist, we initialize it and then return
-     * @return the StoryController Singleton */
+     * Returns the StoryController Singleton. If one doesn't exist, we
+     * initialize it and then return
+     * 
+     * @return the StoryController Singleton
+     */
     public static StoryController getStoryController() {
         if (storyController == null) {
             storyController = new StoryController();
@@ -50,8 +54,11 @@ public class AdventureCreatorApplication extends Application {
     }
 
     /**
-     * Returns the FragmentController Singleton. If one doesn't exist, we initialize it and then return it.
-     * @return the FragmentController Singleton*/
+     * Returns the FragmentController Singleton. If one doesn't exist, we
+     * initialize it and then return it.
+     * 
+     * @return the FragmentController Singleton
+     */
     public static FragmentController getFragmentController() {
         if (fragmentController == null) {
             fragmentController = new FragmentController();
