@@ -3,15 +3,20 @@ package ualberta.g12.adventurecreator.test;
 
 import java.util.List;
 
+import android.test.ActivityInstrumentationTestCase2;
+
 import junit.framework.TestCase;
 
 import ualberta.g12.adventurecreator.Choice;
+import ualberta.g12.adventurecreator.EditFragmentActivity;
 import ualberta.g12.adventurecreator.Fragment;
 import ualberta.g12.adventurecreator.FragmentController;
 
 public class StoryFragmentControllerTestCases extends TestCase {
 
-    private FragmentController fc;
+  
+
+	private FragmentController fc;
     private Fragment sf;
 
     @Override
@@ -20,7 +25,9 @@ public class StoryFragmentControllerTestCases extends TestCase {
         fc = new FragmentController();
     }
 
-    // test editing Body Text
+    /**
+     * Tests editing the title of a story fragment with a story Fragment Controller
+     */
     public void testEditTitle() {
         sf = new Fragment();
         fc.editTitle(sf, "LUNCH");
@@ -28,7 +35,9 @@ public class StoryFragmentControllerTestCases extends TestCase {
          assert(sf.getTitle().equals("LUNCH"));
     }
 
-     
+    /**
+     * Tests adding Text Segments to a  story fragment with a story Fragment Controller
+     */
     public void testAddTextSegment() {
 
     	sf = new Fragment();
@@ -38,7 +47,10 @@ public class StoryFragmentControllerTestCases extends TestCase {
 
     }
 
-    // tests deleting Choice
+
+    /**
+     * Tests deleting an existing choice of a  story fragment with a story Fragment Controller
+     */
     public void testDeleteStory() {
 
     	sf = new Fragment();
@@ -51,6 +63,9 @@ public class StoryFragmentControllerTestCases extends TestCase {
 
     }
     
+    /**
+     * Tests inserting an "Illustration"  to a  story fragment with a story Fragment Controller
+     */
     public void testInsertIllustration(){
     	sf = new Fragment();
     	fc.addIllustration(sf, "illustration1", 0);
@@ -59,6 +74,10 @@ public class StoryFragmentControllerTestCases extends TestCase {
     	assertTrue(sf.getIllustrations().size() == 1);
     }
     
+    
+    /**
+     * Tests deleting an "Illustration"  of a  story fragment with a story Fragment Controller
+     */
     public void testDeleteIllustration(){
     	sf = new Fragment();
     	fc.addIllustration(sf, "illustration1", 0);
@@ -69,6 +88,10 @@ public class StoryFragmentControllerTestCases extends TestCase {
     	assertTrue(sf.getIllustrations().size() == 0);
     }
     
+    
+    /**
+     * Tests adding a choice to a Story Fragment with a story Controller fragment 
+     */
     public void testAddChoice(){
     	sf = new Fragment();
     	Choice c = new Choice();
