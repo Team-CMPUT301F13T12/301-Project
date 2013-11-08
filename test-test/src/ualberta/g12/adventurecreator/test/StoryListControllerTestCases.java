@@ -75,5 +75,65 @@ public class StoryListControllerTestCases extends TestCase {
         assertTrue("Stories don't have same titles", s.getStoryTitle().equals(s2.getStoryTitle()));
         assertTrue("Stories don't have same authors", s.getAuthor().equals(s2.getAuthor()));
     }
+    
+    // tests setting a story
+    public void testSetStory() {
+
+        // add a story to our storyList
+        sl = new StoryList();
+        slc = new StoryListController(sl);
+        Story s = new Story("Book", "Dan Dude");
+        slc.addStory(s);
+        assertTrue(sl.getAllStories().get(1).getAuthor().equals("Dan Dude"));
+        Story s2 = new Story("Bok", "Dude Dan");
+        slc.setStory(s2, 0);
+        assertTrue(sl.getAllStories().get(0).getAuthor().equals("Dude Dan"));
+        
+    }
+    
+    // update Story with Id
+    public void testUpdatingAStoryWithId() {
+
+        // add a story to our storyList
+        sl = new StoryList();
+        slc = new StoryListController(sl);
+        Story s = new Story("Book", "Dan Dude");
+        s.setId(1);
+        slc.addStory(s);
+        assertTrue(sl.getAllStories().get(0).getAuthor().equals("Dan Dude"));
+        Story s2 = new Story("Bok", "Dude Dan");
+        slc.updateStoryWithId(1, s2);
+        assertTrue(sl.getAllStories().get(0).getAuthor().equals("Dude Dan"));
+        
+    }
+    
+    // testing getting a story at Position
+    public void testGetStoryAtPos() {
+
+        // add a story to our storyList
+        sl = new StoryList();
+        slc = new StoryListController(sl);
+        Story s = new Story("Book", "Dan Dude");
+        s.setId(1);
+        slc.addStory(s);
+        assertTrue(sl.getAllStories().get(0).getAuthor().equals("Dan Dude"));
+        Story s2 = slc.getStoryAtPos(0);
+        assertTrue(s2.equals(s));
+        
+    }
+    
+    // testing getting a story at Position
+    public void testCreateBlankStory() {
+
+        // add a story to our storyList
+        sl = new StoryList();
+        slc = new StoryListController(sl);
+        assertTrue(slc.getAllStories().size() == 0);
+        slc.createBlankStory();
+        assertTrue(slc.getAllStories().size() == 1);
+        
+    }
+    
+    //TODO load/save offline story tests
 
 }

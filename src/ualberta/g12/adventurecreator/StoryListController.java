@@ -91,6 +91,7 @@ public class StoryListController {
      * @param s the new story to replace it with
      */
     public void updateStoryWithId(int id, Story s) {
+    	//TODO WARNING the way I see it it updates story but changes position -V 
         Story oldStory = sc.getStoryById(id);
         sc.deleteStory(oldStory);
         sc.addStory(s);
