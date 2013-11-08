@@ -15,11 +15,18 @@ import android.view.View.OnClickListener;
  */
 public class EditTextSegOnClickListener implements OnClickListener{
 
-      int position;
+      private int position;
+      /**Sets the position.
+       * @param position the position to set for this OnClickListener*/
       public EditTextSegOnClickListener(int position) {
            this.position = position;
       }
 
+      /**@return the position*/
+      public int getPosition(){
+          return this.position;
+      }
+      
       @Override
       public void onClick(View v)
       {

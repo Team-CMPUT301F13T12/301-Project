@@ -1,3 +1,4 @@
+
 package ualberta.g12.adventurecreator;
 
 import android.app.Activity;
@@ -17,10 +18,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Activity used for choice editing within the selected story. Will allow the user to enter
- * the text for the choice as well as select another fragment within the same story to link
- * the selected fragment to. 
- * 
+ * Activity used for choice editing within the selected story. Will allow the
+ * user to enter the text for the choice as well as select another fragment
+ * within the same story to link the selected fragment to.
  */
 public class EditChoiceActivity extends Activity {
     private int ourFragmentId;
@@ -31,68 +31,68 @@ public class EditChoiceActivity extends Activity {
     private List<String> possibleChoices;
     private Fragment linked;
     private int requestKey;
-    private int storyPos,fragPos ,choicePos, linkedPos=-1;
-    private StoryList sl ;
+    private int storyPos, fragPos, choicePos, linkedPos = -1;
+    private StoryList sl;
     private Fragment fragment;
     private OfflineIOHelper offlineHelper = new OfflineIOHelper(EditChoiceActivity.this);
     private EditText myTitleET;
     
+    private static final boolean DEBUG = false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_choice);
         // Show the Up button in the action bar.
         setupActionBar();
-        
-        sl  = offlineHelper.loadOfflineStories();
+
+        sl = offlineHelper.loadOfflineStories();
 
         Intent editChoiceIntent = getIntent();
-        storyPos  = (Integer)editChoiceIntent.getSerializableExtra("StoryPos");
-        fragPos = (Integer)editChoiceIntent.getSerializableExtra("FragmentPos"); 
-        choicePos = (Integer)editChoiceIntent.getSerializableExtra("ChoicePos"); 
-        
-        // get widget reference
-        myTitleET = (EditText)findViewById(R.id.choiceBody);
-        String choiceText = sl.getAllStories().get(storyPos).getFragments().get(fragPos).getChoices().get(choicePos).getChoiceText();
-        myTitleET.setText(choiceText);
-        
-        /*
-			 //load save file
-			        storyList = offlineHelper.loadOfflineStories();
-			        story = storyList.getAllStories().get(storyPos);
-			        fragment = story.getFragments().get(fragPos);
-			        Choice choice fragment.getChoices().get(choicePos);
+        storyPos = (Integer) editChoiceIntent.getSerializableExtra("StoryPos");
+        fragPos = (Integer) editChoiceIntent.getSerializableExtra("FragmentPos");
+        choicePos = (Integer) editChoiceIntent.getSerializableExtra("ChoicePos");
 
+        // get widget reference
+        myTitleET = (EditText) findViewById(R.id.choiceBody);
+        String choiceText = sl.getAllStories().get(storyPos).getFragments().get(fragPos)
+                .getChoices().get(choicePos).getChoiceText();
+        myTitleET.setText(choiceText);
+
+        /*
+         * //load save file storyList = offlineHelper.loadOfflineStories();
+         * story = storyList.getAllStories().get(storyPos); fragment =
+         * story.getFragments().get(fragPos); Choice choice
+         * fragment.getChoices().get(choicePos);
          */
         Intent i = getIntent();
-        //Bundle extras = i.getExtras();
-        //ourStoryId = extras.getInt("OurStoryId");
-        //ourFragmentId = extras.getInt("OurFragmentId");
-        Button choiceButton  = (Button) findViewById(R.id.choiceButton);
-        //StoryList sl = AdventureCreatorApplication.getStoryList();
-        
+        // Bundle extras = i.getExtras();
+        // ourStoryId = extras.getInt("OurStoryId");
+        // ourFragmentId = extras.getInt("OurFragmentId");
+        Button choiceButton = (Button) findViewById(R.id.choiceButton);
+        // StoryList sl = AdventureCreatorApplication.getStoryList();
+
         ourStory = sl.getAllStories().get(storyPos);
-        //Log.d("WHAT IS OUR STORY SIZE?", ourStory.getStoryTitle());
+        // Log.d("WHAT IS OUR STORY SIZE?", ourStory.getStoryTitle());
         ourFragmentList = ourStory.getFragments();
         fragment = ourFragmentList.get(fragPos);
-        Log.d("HURR DURR", "HEER HERR");
-        Log.d("WHAT AM BEFORE", String.format("%d",ourFragmentList.size() ));
+        if(DEBUG) Log.d("HURR DURR", "HEER HERR");
+        if(DEBUG) Log.d("WHAT AM BEFORE", String.format("%d", ourFragmentList.size()));
         choiceButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
                 dialogz();
 
-
             }
         }
-
 
                 );
 
     }
 
-    //http://stackoverflow.com/questions/4473940/android-best-practice-returning-values-from-a-dialog
-    private void dialogz(){
+    // http://stackoverflow.com/questions/4473940/android-best-practice-returning-values-from-a-dialog
+    // TODO: What does this method do? The name is bad
+    private void dialogz() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Pick a Fragment to link {NONE} means end");
         possibleChoices = getFragmentTitleList(ourFragmentList);
@@ -105,34 +105,32 @@ public class EditChoiceActivity extends Activity {
         });
         AlertDialog alert = builder.create();
         alert.show();
-        Log.d("Morning", "HI");
+        if(DEBUG) Log.d("Morning", "HI");
 
     }
+
     /**
      * Set up the {@link android.app.ActionBar}.
      */
     private void setupActionBar() {
 
-        //getActionBar().setDisplayHomeAsUpEnabled(true);
+        // getActionBar().setDisplayHomeAsUpEnabled(true);
 
     }
 
-
-
-
-    private void doneSelecting(int result){
-        Log.d("the size of possible choices is ",String.format("%d", possibleChoices.size()));
-        Log.d("the number of result is ",String.format("%d", result));
-        if (result!=(possibleChoices.size()-1)){
+    private void doneSelecting(int result) {
+        if(DEBUG) Log.d("the size of possible choices is ", String.format("%d", possibleChoices.size()));
+        if(DEBUG) Log.d("the number of result is ", String.format("%d", result));
+        if (result != (possibleChoices.size() - 1)) {
             linkedPos = result;
         }
     }
 
-    private List<String> getFragmentTitleList(List<Fragment> fragList){
+    private List<String> getFragmentTitleList(List<Fragment> fragList) {
         List<String> temp = new ArrayList<String>();
-        Log.d("PSADF", String.format("%d",fragList.size() ));
-        for(int i = 0; i < fragList.size() ; i++){
-            temp.add( fragList.get(i).getTitle());
+        if(DEBUG) Log.d("PSADF", String.format("%d", fragList.size()));
+        for (int i = 0; i < fragList.size(); i++) {
+            temp.add(fragList.get(i).getTitle());
         }
         temp.add("{NONE}");
         return temp;
@@ -141,7 +139,7 @@ public class EditChoiceActivity extends Activity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        //TODO make own 
+        // TODO make own
         getMenuInflater().inflate(R.menu.story_menu, menu);
         return true;
     }
@@ -149,44 +147,44 @@ public class EditChoiceActivity extends Activity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         /*
-		switch (item.getItemId()) {
-		case android.R.id.home:
-			// This ID represents the Home or Up button. In the case of this
-			// activity, the Up button is shown. Use NavUtils to allow users
-			// to navigate up one level in the application structure. For
-			// more details, see the Navigation pattern on Android Design:
-			//
-			// http://developer.android.com/design/patterns/navigation.html#up-vs-back
-			//
-			NavUtils.navigateUpFromSameTask(this);
-			return true;
-		}
-		return super.onOptionsItemSelected(item);
+         * switch (item.getItemId()) { case android.R.id.home: // This ID
+         * represents the Home or Up button. In the case of this // activity,
+         * the Up button is shown. Use NavUtils to allow users // to navigate up
+         * one level in the application structure. For // more details, see the
+         * Navigation pattern on Android Design: // //
+         * http://developer.android.com
+         * /design/patterns/navigation.html#up-vs-back //
+         * NavUtils.navigateUpFromSameTask(this); return true; } return
+         * super.onOptionsItemSelected(item);
          */
 
-        //Fragment frag = null; 
+        // Fragment frag = null;
         // TODO SEARCH FOR FRAGMENT BY FRAGMENT ID?
-        //for (int i = 0; i < ourFragmentList.size(); i++){
-        //	if (ourFragmentList.get(i).getId() == ourFragmentId)
-        //		frag = ourFragmentList.get(i);
-        //}
-        //Log.d("WHAT AM BEFORE", String.format("%d",frag.getChoices().size() ));
-        //Log.d("WHAT?!", frag.getChoices().get(0).getChoiceText());
-        //TODO CHANGE THIS AND REFACTOR ALL CODE IN CLASS
+        // for (int i = 0; i < ourFragmentList.size(); i++){
+        // if (ourFragmentList.get(i).getId() == ourFragmentId)
+        // frag = ourFragmentList.get(i);
+        // }
+        // Log.d("WHAT AM BEFORE", String.format("%d",frag.getChoices().size()
+        // ));
+        // Log.d("WHAT?!", frag.getChoices().get(0).getChoiceText());
+        // TODO CHANGE THIS AND REFACTOR ALL CODE IN CLASS
         FragmentController fc = new FragmentController();
         String Title = myTitleET.getText().toString();
-        //Choice newChoice = new Choice();
-        Choice choice  = fragment.getChoices().get(choicePos);
+        // Choice newChoice = new Choice();
+        Choice choice = fragment.getChoices().get(choicePos);
         // TODO needs to be checked;need controller
         choice.setChoiceText(Title);
         choice.setLinkedToFragmentPos(linkedPos);
-        //fc.addChoice(fragment, newChoice);
-        //sl.getAllStories().get(storyPos).getFragments().set(fragPos, fragment);
+        // fc.addChoice(fragment, newChoice);
+        // sl.getAllStories().get(storyPos).getFragments().set(fragPos,
+        // fragment);
         int i = fragment.getChoices().size();
-        Log.d("DID IT GROW?", String.format("%d", i));
-        sl.getAllStories().get(storyPos).getFragments().get(fragPos).getChoices().set(choicePos, choice);
-        int c = sl.getAllStories().get(storyPos).getFragments().get(fragPos).getChoices().get(choicePos).getLinkedToFragmentPos();
-        Log.d("EDITCHOICE","The choices linked to is "+c);
+        if(DEBUG) Log.d("DID IT GROW?", String.format("%d", i));
+        sl.getAllStories().get(storyPos).getFragments().get(fragPos).getChoices()
+                .set(choicePos, choice);
+        int c = sl.getAllStories().get(storyPos).getFragments().get(fragPos).getChoices()
+                .get(choicePos).getLinkedToFragmentPos();
+        if(DEBUG) Log.d("EDITCHOICE", "The choices linked to is " + c);
         offlineHelper.saveOfflineStories(sl);
         finish();
         return true;

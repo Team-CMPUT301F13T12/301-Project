@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,7 +22,14 @@ public class FragmentPartAdapter extends ArrayAdapter{
     private final Context context;
     private final int resource;
     private final Fragment frag;
+    
+    private static final String TAG= "FragmentPartAdapter";
+    private static final boolean DEBUG = true;
 
+    /**Sold constructor for the FragmentPartAdapter. Sets up the context, resource and fragment.
+     * @param context the context of the calling activity
+     * @param resource the resource to load
+     * @param frag the Fragment to display*/
     public FragmentPartAdapter(Context context, int resource, Fragment frag) {
         super(context, resource, frag.getDisplayOrder());
         this.context = context;
@@ -52,9 +60,9 @@ public class FragmentPartAdapter extends ArrayAdapter{
         text.setVisibility(View.GONE);
         choiceButton.setVisibility(View.GONE);
         
-        System.out.println("POSITION "+position);
+        if(DEBUG) Log.d(TAG, "POSITION "+position);
         if (frag.getDisplayOrder().get(position).equals("t")){
-            System.out.println("TEXT "+position);
+            if(DEBUG) Log.d(TAG, "TEXT "+position);
             //Display a text segment
 
             //get the occurrence number of the textSegment
@@ -71,7 +79,7 @@ public class FragmentPartAdapter extends ArrayAdapter{
                     text.setText(textSegment);
             }
         } else if (frag.getDisplayOrder().get(position).equals("i")){
-            System.out.println("IMAGE "+position);
+            if(DEBUG) Log.d(TAG, "IMAGE "+position);
             //Display an illustration
             
             //get the occurrence number of the illustration
@@ -81,18 +89,18 @@ public class FragmentPartAdapter extends ArrayAdapter{
                     occurrence++;  
             }
 
-            System.out.println("probably dies here"+occurrence);
+            if(DEBUG) Log.d(TAG, "probably dies here"+occurrence);
             String picturePath = frag.getIllustrations().get(occurrence);
             Bitmap illustration = BitmapFactory.decodeFile(picturePath);
-            System.out.println("betchs don't see me");
+            if(DEBUG) Log.d(TAG, "betchs don't see me");
             if (illustration != null){
                 image.setVisibility(View.VISIBLE);
                 if (image != null)
-                    System.out.println("SET IMAGE");
+                    if(DEBUG) Log.d(TAG,"SET IMAGE");
                     image.setImageBitmap(illustration);
             }
         } else if (frag.getDisplayOrder().get(position).equals("c")){
-            System.out.println("CHOICE "+position);
+            if(DEBUG) Log.d(TAG, "CHOICE "+position);
             //Display a choice
             
             //get the occurrence number of the illustration
@@ -106,13 +114,13 @@ public class FragmentPartAdapter extends ArrayAdapter{
             if (choice != null){
                 choiceButton.setVisibility(View.VISIBLE);
                 if (choiceButton != null)
-                    System.out.println("SET CHOICE");
+                    if(DEBUG) Log.d(TAG, "SET CHOICE");
                     choiceButton.setText(choice.getChoiceText());
                     choiceButton.setBackgroundColor(Color.BLACK);
                     choiceButton.setTextColor(Color.WHITE);
             }
         } else if (frag.getDisplayOrder().get(position).equals("e")){
-            System.out.println("EMPTY "+position);
+            if(DEBUG) Log.d(TAG, "EMPTY "+position);
             //Display a DefaultPart
             
             

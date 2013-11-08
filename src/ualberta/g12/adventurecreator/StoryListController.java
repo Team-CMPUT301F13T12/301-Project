@@ -7,14 +7,16 @@ import java.util.List;
 
 /**
  * controller that interacts with the listview of stories
- * 
  */
 public class StoryListController {
-    // as we only have one story list for entire object (might be more later not
-    // sure)
-    // can be a singleton and also have sc = our main storylist
-    StoryList sc = null;
+    private StoryList sc = null;
 
+    /**
+     * Sole Constructor for the StoryListController. Initializes a
+     * StoryListController Object with a StoryList.
+     * 
+     * @param sc The StoryList to set up the StoryListController with
+     */
     public StoryListController(StoryList sc) {
         this.sc = sc;
     }
@@ -29,7 +31,7 @@ public class StoryListController {
     }
 
     /**
-     * Delete a story from the list 
+     * Delete a story from the list
      * 
      * @param s story to be deleted
      */
@@ -40,7 +42,7 @@ public class StoryListController {
     /**
      * gets story from story list with object
      * 
-     * @param s story to be retrieved 
+     * @param s story to be retrieved
      * @return null if blank other wise desired story
      */
     public Story getStory(Story s) {
@@ -50,19 +52,30 @@ public class StoryListController {
     /**
      * gets story from story list from title
      * 
-     * @param t title of the selected story 
+     * @param t title of the selected story
      * @return null if blank other wise story
      */
     public Story getStory(String t) {
         return sc.getStory(t);
     }
 
+    /**
+     * Returns all of the stories in the StoryList.
+     * 
+     * @return a list of all of the stories in the StoryList
+     */
     public List<Story> getAllStories() {
         return sc.getAllStories();
 
     }
-    
-    public void setStory(Story s, int pos){
+
+    /**
+     * Replaces the story currently at position {@link pos} with {@link s}
+     * 
+     * @param s the story to replace with
+     * @param pos the position to replace the story at
+     */
+    public void setStory(Story s, int pos) {
         List<Story> stories = sc.getAllStories();
         stories.set(pos, s);
         sc.setAllStories(stories);

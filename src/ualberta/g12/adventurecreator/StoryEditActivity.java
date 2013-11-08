@@ -1,20 +1,19 @@
 
 package ualberta.g12.adventurecreator;
 
-import java.util.List;
-
 import android.app.Activity;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.EditText;
 import android.widget.ListView;
-import android.widget.AdapterView.OnItemClickListener;
+
+import java.util.List;
 
 /**
  * View for editing a Story using a StoryController.<br>
@@ -73,19 +72,8 @@ public class StoryEditActivity extends Activity implements SView<Story> {
     @Override
     protected void onStart() {
         super.onStart();
-        
-        storyList = offlineHelper.loadOfflineStories();
-        
-        story = storyList.getAllStories().get(storyPos);
-        
-        //update title and author
-        titleText.setText(story.getStoryTitle());
-        authorText.setText(story.getAuthor());
+        update(story);
 
-        //populate the fragment list
-        fragmentList = story.getFragments();
-        adapter = new FragmentListArrayAdapter(this, R.layout.listview_fragment_list, fragmentList);
-        lView.setAdapter(adapter);      
     }
     
     @Override
@@ -151,7 +139,18 @@ public class StoryEditActivity extends Activity implements SView<Story> {
         // Update our local story variable   	
         // Reload value from our story into fields - notify adapter our
         // story has changed
-        onStart();
+        storyList = offlineHelper.loadOfflineStories();
+        
+        story = storyList.getAllStories().get(storyPos);
+        
+        //update title and author
+        titleText.setText(story.getStoryTitle());
+        authorText.setText(story.getAuthor());
+
+        //populate the fragment list
+        fragmentList = story.getFragments();
+        adapter = new FragmentListArrayAdapter(this, R.layout.listview_fragment_list, fragmentList);
+        lView.setAdapter(adapter);
 
     }
     
