@@ -100,6 +100,9 @@ public class StoryFragmentControllerTestCases extends TestCase {
     	assertTrue(sf.getChoices().get(0).getChoiceText().equals("Test"));
     }
     
+    /**
+     * tests deleting a choice in the story fragment
+     */
     public void testDeleteChoice(){
        	sf = new Fragment();
     	Choice c = new Choice();
@@ -111,6 +114,9 @@ public class StoryFragmentControllerTestCases extends TestCase {
     	
     }
     
+    /**
+     * tests adding an empty part to our Story fragment
+     */
     public void testAddEmptyPart(){
     	sf = new Fragment();
     	fc.addEmptyPart(sf);
@@ -118,6 +124,9 @@ public class StoryFragmentControllerTestCases extends TestCase {
     	
     }
     
+    /**
+     * tests removing an empty part of a story fragment
+     */
     public void testRemoveEmptyPart(){
     	sf = new Fragment();
     	fc.addEmptyPart(sf);
@@ -127,6 +136,9 @@ public class StoryFragmentControllerTestCases extends TestCase {
     	
     }
     
+    /**
+     * tests deleting a fragment part of a story fragment
+     */
     public void testDeleteFragmentPart(){
     	sf = new Fragment();
     	fc.addTextSegment(sf,"Text",0);
@@ -135,5 +147,92 @@ public class StoryFragmentControllerTestCases extends TestCase {
     	fc.deleteFragmentPart(sf, 0);
     	assertTrue(sf.getDisplayOrder().size() == 0);
     }
+    
+    /**
+     * tests getting the display orders of the fragments parts in a story fragment
+     */
+    public void testGetDisplayOrder(){
+    	sf = new Fragment();
+    	fc.addTextSegment(sf,"Text",0);
+    	List<String> myList = sf.getTextSegments();
+    	assertTrue(myList.size() == 1);
+    	List<String> dispOrder = fc.getDisplayOrder(sf);
+    	assertTrue( dispOrder.size() == myList.size());
+    }
+    
+    /**
+     * tests getting the display type of the fragments parts at a position in a story fragment
+     */
+    public void testGetDisplayOrderAtPos(){
+    	sf = new Fragment();
+    	fc.addTextSegment(sf,"Text",0);
+    	List<String> myList = sf.getTextSegments();
+    	assertTrue(myList.size() == 1);
+    	String dispOrder = fc.getDisplayOrderAtPos(sf,0);
+    	assertTrue( dispOrder.equals(myList.get(0)));
+    }
+    
+    /**
+     * tests getting the linked to fragment of a choice which is the position of the fragment it is linked to
+     */
+    public void testGetLinkedToFragmentPosOfChoice(){
+    	sf = new Fragment();
+    	Choice c = new Choice();
+    	c.setLinkedToFragmentPos(0);
+    	int pos = c.getLinkedToFragmentPos();
+    	int test = fc.getLinkedToFragmentPosOfChoice(sf, 0);
+    	assertTrue(pos == test);
+    }
+    
+    /**
+     * tests getting all text segments inside a fragment part 
+     */
+    public void testGetTexSegments(){
+    	sf = new Fragment();
+    	fc.addTextSegment(sf,"Text",0);
+    	List<String> myList = sf.getTextSegments();
+    	assertTrue(myList.size() == 1);
+    	assertTrue(fc.getTextSegments(sf).size() == myList.size());
+    }
+    
+    
+    /**
+     * tests the setting of Id from a fragment at position pos
+     */
 
+    public void testChangeId(){
+    	sf = new Fragment();
+    	sf.setId(32);
+    	assertTrue(sf.getId() == 32);
+    	fc.changeId(sf, 31);
+    	assertTrue(sf.getId() == 31);
+    }
+    
+    /**
+     * tests the setting of text of a choice 
+     */
+
+    public void testChangeChoiceText(){
+    	sf = new Fragment();
+    	Choice c = new Choice();
+    	c.setChoiceText("Before");
+    	assertTrue(c.getChoiceText().equals("Before"));
+    	sf.getChoices().add(c);
+    	fc.setChoiceTextAtPos(sf, 0, "After");
+    	assertTrue(c.getChoiceText().equals("After"));
+    }
+    
+    /**
+     * Changes the LinkedFragment position of a choice
+     */
+    public void testChangeChoiceLinkedTo(){
+    	sf = new Fragment();
+    	Choice c = new Choice();
+    	c.setLinkedToFragmentPos(4);
+    	assertTrue(c.getLinkedToFragmentPos() == 4);
+    	sf.getChoices().add(c);
+    	fc.setLinkedFragmentOfChoiceAtPos(sf, 0, 5);
+    	assertTrue(c.getLinkedToFragmentPos() == 5);
+    }
+    
 }
