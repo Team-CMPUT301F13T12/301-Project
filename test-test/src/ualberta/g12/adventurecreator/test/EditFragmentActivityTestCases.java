@@ -16,6 +16,7 @@ package ualberta.g12.adventurecreator.test;
 
 import android.app.Instrumentation;
 import android.app.Instrumentation.ActivityMonitor;
+import android.content.Intent;
 import android.content.IntentFilter;
 import android.hardware.Camera;
 import android.test.ActivityInstrumentationTestCase2;
@@ -28,20 +29,27 @@ import ualberta.g12.adventurecreator.AdventureCreatorApplication;
 import ualberta.g12.adventurecreator.Choice;
 import ualberta.g12.adventurecreator.EditFragmentActivity;
 import ualberta.g12.adventurecreator.Fragment;
+import ualberta.g12.adventurecreator.FragmentController;
 import ualberta.g12.adventurecreator.FragmentPartAdapter;
+import ualberta.g12.adventurecreator.OfflineIOHelper;
 import ualberta.g12.adventurecreator.R;
 import ualberta.g12.adventurecreator.Story;
 import ualberta.g12.adventurecreator.StoryList;
+import ualberta.g12.adventurecreator.StoryListController;
 
 public class EditFragmentActivityTestCases extends
         ActivityInstrumentationTestCase2<EditFragmentActivity> {
-	
-	//declare activity and widgets
-	private EditFragmentActivity myEditFragmentActivity;
-	private TextView fragmentTitleTextView;
+    
+  //declare activity and widgets
+    private EditFragmentActivity myEditFragmentActivity;
+    private TextView fragmentTitleTextView;
     private ListView fragmentPartListView;
     private EditText editTitleText;
     private EditText fragmentId;
+    StoryList storyList;
+    OfflineIOHelper offlineHelper;
+    FragmentController fragmentController;
+    StoryListController storyListController;
 	
     public EditFragmentActivityTestCases() {
         super(EditFragmentActivity.class);
@@ -53,12 +61,31 @@ public class EditFragmentActivityTestCases extends
     @Override
     protected void setUp() throws Exception {
         super.setUp();
+        storyList = new StoryList();
+        offlineHelper.saveOfflineStories(storyList);
+        
+        Fragment frag = new Fragment();
+        fragmentController = new FragmentController();
+        storyListController = new StoryListController(storyList);
+        
+        fragmentController.addTextSegment(frag, "Look! Text!", 0);
+        storyList.getAllStories().get(0).addFragment(frag);
+        
+        Intent FragmentIntent = new Intent();
+        FragmentIntent.putExtra("Mode", "Edit");
+        FragmentIntent.putExtra("StoryPos", 0);
+        FragmentIntent.putExtra("FragmentPos", 0); // pass intent
+        setActivityIntent(FragmentIntent);
+        
         myEditFragmentActivity = getActivity();
+        
+        storyListController.saveOfflineStories(myEditFragmentActivity, storyList);
         
         fragmentPartListView = (ListView) myEditFragmentActivity.findViewById(R.id.FragmentPartList);
         fragmentTitleTextView = (TextView) myEditFragmentActivity.findViewById(R.id.fragmentTitleText);
         editTitleText = (EditText) myEditFragmentActivity.findViewById(R.id.fragmentTitle);
         
+        myEditFragmentActivity.recreate();
     }
 
     /* Test Cases - all start with "test" */
