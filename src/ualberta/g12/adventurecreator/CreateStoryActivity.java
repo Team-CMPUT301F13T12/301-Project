@@ -1,7 +1,4 @@
-<<<<<<< HEAD
-=======
 
->>>>>>> vincet1234
 package ualberta.g12.adventurecreator;
 
 import android.app.Activity;
@@ -11,12 +8,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-<<<<<<< HEAD
-
-public class CreateStoryActivity extends Activity {
-	
-	Button createButton;
-=======
 import android.widget.EditText;
 
 /**
@@ -33,24 +24,11 @@ public class CreateStoryActivity extends Activity {
             .getStoryListController();
     private StoryController storyController = AdventureCreatorApplication.getStoryController();
     private Button createButton;
->>>>>>> vincet1234
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_story);
-<<<<<<< HEAD
-        
-        createButton = (Button) findViewById(R.id.button1);
-        createButton.setOnClickListener(new View.OnClickListener() {
-			
-			@Override
-			public void onClick(View arg0) {
-				// TODO Auto-generated method stub
-				startActivity(new Intent(getApplication(), StoryEditActivity.class));
-			}
-		});
-=======
 
         createButton = (Button) findViewById(R.id.editTextSave);
 
@@ -68,7 +46,6 @@ public class CreateStoryActivity extends Activity {
         // story = storyList.getAllStories().get(storyPos);
         storyList = storyListController.loadStoryOffline(this);
         story = storyListController.getAllStories().get(storyPos);
->>>>>>> vincet1234
     }
 
     @Override
@@ -78,16 +55,6 @@ public class CreateStoryActivity extends Activity {
         return true;
     }
 
-<<<<<<< HEAD
-
-	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
-		// TODO Auto-generated method stub
-		return super.onOptionsItemSelected(item);
-	}
-    
-    
-=======
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // TODO Auto-generated method stub
@@ -128,5 +95,4 @@ public class CreateStoryActivity extends Activity {
 
         storyListController.saveOfflineStories(this, storyList);
     }
->>>>>>> vincet1234
 }

@@ -4,17 +4,6 @@
     android:layout_height="match_parent" >
 
     <TextView
-<<<<<<< HEAD
-        android:id="@+id/textView1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
-        android:textSize="20sp"
-        android:text="Add a story Fragment!" />
-
-</RelativeLayout>
-=======
         android:id="@+id/story_editor_title_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -86,4 +75,3 @@
     </EditText>
 
 </RelativeLayout>
->>>>>>> vincet1234

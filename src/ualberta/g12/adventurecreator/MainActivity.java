@@ -1,18 +1,8 @@
-<<<<<<< HEAD
-=======
 
->>>>>>> vincet1234
 package ualberta.g12.adventurecreator;
 
 import android.app.Activity;
 import android.content.Intent;
-<<<<<<< HEAD
-import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
-
-public class MainActivity extends Activity {
-=======
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
@@ -44,16 +34,11 @@ public class MainActivity extends Activity implements LView<StoryList>, OnItemCl
     private static boolean isAuthor = false;
 
     private StoryListController storyListController;
->>>>>>> vincet1234
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-<<<<<<< HEAD
-    }
-
-=======
 
         // Get our storyList instance from the application
         storyListController = AdventureCreatorApplication.getStoryListController();
@@ -115,7 +100,6 @@ public class MainActivity extends Activity implements LView<StoryList>, OnItemCl
         // Commit the edits
         editor.commit();
     }
->>>>>>> vincet1234
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -124,24 +108,6 @@ public class MainActivity extends Activity implements LView<StoryList>, OnItemCl
         return true;
     }
 
-<<<<<<< HEAD
-
-	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
-		// TODO Auto-generated method stub
-		switch(item.getItemId()){
-		case R.id.add_story:
-		    startActivity(new Intent(this, CreateStoryActivity.class));
-			break;
-			
-		case R.id.settings:
-			break;
-		}
-		return super.onOptionsItemSelected(item);
-	}
-    
-    
-=======
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
         // Make sure check box is checked if it needs to be
@@ -228,5 +194,4 @@ public class MainActivity extends Activity implements LView<StoryList>, OnItemCl
         }
 
     }
->>>>>>> vincet1234
 }

@@ -3,22 +3,6 @@
 
     <string name="app_name">AdventureCreator</string>
     <string name="action_settings">Settings</string>
-<<<<<<< HEAD
-    <string name="hello_world">Hello world!</string>
-    <string name="title_activity_new_story">NewStory</string>
-    <string name="title_section1">Section 1</string>
-    <string name="title_section2">Section 2</string>
-    <string name="title_section3">Section 3</string>
-    <string name="title_activity_fragment_editor">FragmentEditor</string>
-    <string name="title_activity_activity_read_story">Activity_read_story</string>
-    <string name="title_activity_activity_read_fragment">ActivityReadFragment</string>
-    <string name="annotate">Annotate With Photo</string>
-    <string name="InsertFromPhoto">Add Illustration With Camera</string>
-    <string name="InsertFromGallery">Add Illustration From Gallery</string>
-
-
-</resources>
-=======
     <string name="title_activity_new_story">NewStory</string>
     <string name="title_activity_fragment_editor">FragmentEditor</string>
     <string name="title_activity_activity_read_story">Activity_read_story</string>
@@ -48,4 +32,3 @@
     <string name="story_edit_fragment">Fragments</string>
 
 </resources>
->>>>>>> vincet1234

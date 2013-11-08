@@ -1,18 +1,9 @@
-<<<<<<< HEAD
-=======
 
->>>>>>> vincet1234
 package ualberta.g12.adventurecreator;
 
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-<<<<<<< HEAD
-import android.view.Menu;
-import android.view.MenuItem;
-
-public class StoryEditActivity extends Activity{
-=======
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -57,16 +48,11 @@ public class StoryEditActivity extends Activity implements SView<Story> {
     private FragmentListArrayAdapter adapter;
     private int storyId, storyPos;
     private List<Fragment> fragmentList;
->>>>>>> vincet1234
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.android_story_editor);
-<<<<<<< HEAD
-    }
-    
-=======
 
         // Load our story from the intent
         Intent i = getIntent();
@@ -114,28 +100,11 @@ public class StoryEditActivity extends Activity implements SView<Story> {
         });
     }
 
->>>>>>> vincet1234
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.story_menu, menu);
         return true;
-<<<<<<< HEAD
-    } 
-
-
-	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
-		// TODO Auto-generated method stub
-		switch(item.getItemId()){
-		case R.id.add_fragment:
-			startActivity(new Intent(this, EditFragmentActivity.class));
-			break;
-		}
-		return super.onOptionsItemSelected(item);
-	}
-	
-=======
     }
 
     @Override
@@ -213,5 +182,4 @@ public class StoryEditActivity extends Activity implements SView<Story> {
         storyList.getAllStories().set(storyPos, story);
         offlineHelper.saveOfflineStories(storyList);
     }
->>>>>>> vincet1234
 }
