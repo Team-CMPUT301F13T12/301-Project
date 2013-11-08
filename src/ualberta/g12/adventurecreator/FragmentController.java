@@ -1,11 +1,7 @@
 
 package ualberta.g12.adventurecreator;
 
-import java.util.LinkedList;
 import java.util.List;
-
-import android.graphics.Bitmap;
-import android.graphics.drawable.Drawable;
 
 
 public class FragmentController implements FController {
