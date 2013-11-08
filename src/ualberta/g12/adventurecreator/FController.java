@@ -1,7 +1,6 @@
 
 package ualberta.g12.adventurecreator;
 
-import android.graphics.Bitmap;
 
 /** Control of data in the Fragment model */
 

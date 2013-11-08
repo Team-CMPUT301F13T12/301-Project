@@ -1,8 +1,6 @@
 package ualberta.g12.adventurecreator;
 
-import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.io.ObjectStreamException;
 import java.io.Serializable;
 import java.util.LinkedList;
 import java.util.List;

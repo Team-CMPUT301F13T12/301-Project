@@ -2,8 +2,6 @@ package ualberta.g12.adventurecreator;
 
 import android.app.Application;
 
-import java.util.List;
-
 public class AdventureCreatorApplication extends Application {
     // So many singletons!
     private transient static StoryController storyController = null;
