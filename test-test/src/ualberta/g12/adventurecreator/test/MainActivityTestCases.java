@@ -13,22 +13,15 @@ package ualberta.g12.adventurecreator.test;
  * 
  */
 
-import android.app.Activity;
-import android.app.Instrumentation.ActivityMonitor;
 import android.test.ActivityInstrumentationTestCase2;
 import android.view.MenuItem;
-import android.widget.Button;
 import android.widget.ListView;
 import android.widget.PopupMenu;
 import android.widget.TextView;
 
 import ualberta.g12.adventurecreator.MainActivity;
-import ualberta.g12.adventurecreator.R;
 import ualberta.g12.adventurecreator.Story;
 import ualberta.g12.adventurecreator.StoryList;
-
-import junit.framework.Assert;
-import junit.framework.TestCase;
 
 import java.util.List;
 
