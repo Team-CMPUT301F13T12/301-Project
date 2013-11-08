@@ -3,7 +3,7 @@ package ualberta.g12.adventurecreator;
 
 import java.util.List;
 
-<<<<<<< HEAD
+
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 
@@ -13,9 +13,8 @@ import android.graphics.drawable.Drawable;
  * a fragment.  
  * 
  */
-=======
 
->>>>>>> 61c1e50a9457caec39513a676961fd5682c1c542
+
 public class FragmentController implements FController {
 
     @Override
