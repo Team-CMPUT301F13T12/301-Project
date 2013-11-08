@@ -23,9 +23,9 @@ import ualberta.g12.adventurecreator.Fragment;
 import ualberta.g12.adventurecreator.Story;
 
 public class FragmentActivityTestCases extends
-       ActivityInstrumentationTestCase2<EditFragmentActivity> {
+        ActivityInstrumentationTestCase2<EditFragmentActivity> {
     // declare activity and widgets
-    private EditFragmentActivity myFragmentActivity;
+    private EditFragmentActivity activity;
     private TextView myView;
     private Button annotateButton;
     private Camera camera;
@@ -47,24 +47,24 @@ public class FragmentActivityTestCases extends
     // Use Case 1, test 1/2
     public void testReadStoryFragments() {
         // Start Activity
-        Activity = this.getActivity();
-        mView = (TextView)
-        Activity.findViewById(ualberta.g12.adventurecreator.FragemntActivity.R.id.list_fragment_title);
+        activity = this.getActivity();
+        myView = (TextView)
+        activity.findViewById(ualberta.g12.adventurecreator.R.id.list_fragment_title);
 
         // set text in fragment info textview
         //mView.setText("Test Text";
         
         //create new fragment
-        Button button = (Button) activity.findViewById(R.id.add_fragment);
+        Button button = (Button) activity.findViewById(ualberta.g12.adventurecreator.R.id.add_fragment);
         button.performClick();
-        Button button2 = (Button) activity.findViewById(R.id.ave_fragment);
+        Button button2 = (Button) activity.findViewById(ualberta.g12.adventurecreator.R.id.save_fragment);
         button2.performClick();
 
         // saves fragment text
         // String fragment = myView.getText();
 
         // checks if there is valid input in the fragment textview
-        assertNotNull(mView)
+        assertNotNull(myView);
         
         // assertEquals(fragment, null);
        // assertTrue("testReadStoryFragments has not been implemented", false);
@@ -73,18 +73,17 @@ public class FragmentActivityTestCases extends
     // Use Case 1, test 2/2
     public void testReadNoFragments() {
         // Start Activity
-        Activity = this.getActivity();
-        
-          mView = (TextView) myFragmentActivity
-          .findViewById(ualberta.g12.adventurecreator.FragemntActivity.R.id.list_fragment_title);
-         
+        activity = this.getActivity();
+
+        myView = (TextView) activity
+                .findViewById(ualberta.g12.adventurecreator.R.id.list_fragment_title);
 
         // saves fragment text
         // String fragment = myView.getText();
 
         // checks if no text is present in fragment info textview
-         assertNull(mView);
-        //assertTrue("testReadNoFragments has not been implemented", false);
+        assertNull(myView);
+        // assertTrue("testReadNoFragments has not been implemented", false);
     }
 
     // Use Case 14, test 1/1
@@ -109,7 +108,7 @@ public class FragmentActivityTestCases extends
         // setActivityIntent(FragmentIntent);
 
         // Start Activity
-        myFragmentActivity = this.getActivity();
+        activity = this.getActivity();
         /*
          * annotateButton = (Button) myFragmentActivity
          * .findViewById(ualberta.g12
@@ -155,7 +154,7 @@ public class FragmentActivityTestCases extends
          */
 
         // Start Activity
-        myFragmentActivity = this.getActivity();
+        activity = this.getActivity();
         /*
          * annotateButton = (Button) myFragmentActivity
          * .findViewById(ualberta.g12
@@ -186,7 +185,7 @@ public class FragmentActivityTestCases extends
     public void testPostPhotoToAnnotateFragment() {
         Fragment someFragment = new Fragment();
         // start activity
-        myFragmentActivity = this.getActivity();
+        activity = this.getActivity();
         /*
          * annotateButton = (Button) myFragemntActivity
          * .findViewById(ualberta.g12
@@ -206,7 +205,7 @@ public class FragmentActivityTestCases extends
     public void testStoreFragment() {
         Fragment someFragment = new Fragment();
         // start activity
-        myFragmentActivity = this.getActivity();
+        activity = this.getActivity();
 
         // choice a store choose from fragment choices
         /*
