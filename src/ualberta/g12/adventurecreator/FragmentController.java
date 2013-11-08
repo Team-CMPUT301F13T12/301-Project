@@ -204,7 +204,7 @@ public class FragmentController implements FController {
      * @param frag  fragment reference corresponding to the current fragment
      * @param dispNum   refers to the position of the text segment
      */
-    private boolean deleteChoice(Fragment frag, int dispNum){
+    public boolean deleteChoice(Fragment frag, int dispNum){
         List<String> textSegments = frag.getTextSegments();
         List<String> displayOrder = frag.getDisplayOrder();
 

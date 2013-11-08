@@ -1,8 +1,11 @@
 
 package ualberta.g12.adventurecreator.test;
 
+import java.util.List;
+
 import junit.framework.TestCase;
 
+import ualberta.g12.adventurecreator.Choice;
 import ualberta.g12.adventurecreator.Fragment;
 import ualberta.g12.adventurecreator.FragmentController;
 
@@ -18,38 +21,96 @@ public class StoryFragmentControllerTestCases extends TestCase {
     }
 
     // test editing Body Text
-    public void testEditText() {
+    public void testEditTitle() {
         sf = new Fragment();
-        // sfc.editBodyText(sf , "who eats lunch");
+        fc.editTitle(sf, "LUNCH");
 
-        // assert(sf.bodyText == "who eats lunch");
-
-        assertTrue("testEditText has not yet been implemented", false);
+         assert(sf.getTitle().equals("LUNCH"));
     }
 
-    // tests add choice
-    public void testAddChoice() {
+     
+    public void testAddTextSegment() {
 
-        /*
-         * sf = new sf("Lunch", "You eat lunch mmmm"); sfc.editTitle(sf ,
-         * "Dinner"); Choice c = new Choice("To the kitchen!", 39);
-         * sfc.editAddChoice(sf, c); assert(sfc.choices.contains(c));
-         */
-        assertTrue("testAddChoice has not yet been implemented", false);
+    	sf = new Fragment();
+    	fc.addTextSegment(sf,"Text",0);
+    	List<String> myList = sf.getTextSegments();
+    	assertTrue(myList.get(0).equals("Text"));
 
     }
 
     // tests deleting Choice
     public void testDeleteStory() {
 
-        /*
-         * sf = new sf("Lunch", "You eat lunch mmmm"); sfc.editTitle(sf ,
-         * "Dinner"); Choice c = new Choice("To the kitchen!", 39);
-         * sfc.editAddChoice(c); assert(sfc.choices.contains(c));
-         * sfc.deleteChoice(sf, c); assert(!sfc.choice.contains(c));
-         */
-        assertTrue("testDeleteStory has not been implemented", false);
+    	sf = new Fragment();
+    	fc.addTextSegment(sf,"Text",0);
+    	List<String> myList = sf.getTextSegments();
+    	assertTrue(myList.get(0).equals("Text"));
+    	assertTrue(sf.getTextSegments().size() == 1);
+    	fc.deleteFragmentPart(sf, 0);
+        assertTrue(sf.getTextSegments().size() == 0);
 
+    }
+    
+    public void testInsertIllustration(){
+    	sf = new Fragment();
+    	fc.addIllustration(sf, "illustration1", 0);
+    	List<String>myList = sf.getIllustrations();
+    	assertTrue(myList.get(0).equals("illustration1"));
+    	assertTrue(sf.getIllustrations().size() == 1);
+    }
+    
+    public void testDeleteIllustration(){
+    	sf = new Fragment();
+    	fc.addIllustration(sf, "illustration1", 0);
+    	List<String>myList = sf.getIllustrations();
+    	assertTrue(myList.get(0).equals("illustration1"));
+    	assertTrue(sf.getIllustrations().size() == 1);
+    	fc.deleteFragmentPart(sf, 0);
+    	assertTrue(sf.getIllustrations().size() == 0);
+    }
+    
+    public void testAddChoice(){
+    	sf = new Fragment();
+    	Choice c = new Choice();
+    	c.setChoiceText("Test");
+    	fc.addChoice(sf, c);
+    	assertTrue(sf.getChoices().get(0).getChoiceText().equals("Test"));
+    }
+    
+    public void testDeleteChoice(){
+       	sf = new Fragment();
+    	Choice c = new Choice();
+    	c.setChoiceText("Test");
+    	fc.addChoice(sf, c);
+    	assertTrue(sf.getChoices().get(0).getChoiceText().equals("Test"));
+    	fc.deleteChoice(sf,0);
+    	assertTrue(sf.getChoices().size() == 0);
+    	
+    }
+    
+    public void testAddEmptyPart(){
+    	sf = new Fragment();
+    	fc.addEmptyPart(sf);
+    	assertTrue(sf.getDisplayOrder().get(0).equals("e"));
+    	
+    }
+    
+    public void testRemoveEmptyPart(){
+    	sf = new Fragment();
+    	fc.addEmptyPart(sf);
+    	assertTrue(sf.getDisplayOrder().get(0).equals("e"));
+    	fc.removeEmptyPart(sf);
+    	assertTrue(sf.getDisplayOrder().size() == 0);
+    	
+    }
+    
+    public void testDeleteFragmentPart(){
+    	sf = new Fragment();
+    	fc.addTextSegment(sf,"Text",0);
+    	List<String> myList = sf.getTextSegments();
+    	assertTrue(myList.get(0).equals("Text"));
+    	fc.deleteFragmentPart(sf, 0);
+    	assertTrue(sf.getDisplayOrder().size() == 0);
     }
 
 }
