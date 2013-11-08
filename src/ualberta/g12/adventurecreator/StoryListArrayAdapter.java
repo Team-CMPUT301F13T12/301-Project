@@ -3,7 +3,6 @@ package ualberta.g12.adventurecreator;
 
 import android.app.Activity;
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,10 +12,10 @@ import android.widget.TextView;
 import java.util.List;
 
 /**
- * Adapter that communicates between the list of stories and the text corresponding
- * to display the story in the list. Will retrieve and transfer the title and author 
- * saved within the story editing and will display on the listview for the stories     
- * 
+ * Adapter that communicates between the list of stories and the text
+ * corresponding to display the story in the list. Will retrieve and transfer
+ * the title and author saved within the story editing and will display on the
+ * listview for the stories
  */
 public class StoryListArrayAdapter extends ArrayAdapter<Story> {
     private final Context context;
@@ -24,11 +23,17 @@ public class StoryListArrayAdapter extends ArrayAdapter<Story> {
     private static final boolean DEBUG_LOG = true;
     private static final String TAG = "StoryListArrayAdapter";
 
+    /**
+     * Sole Constructor for the StoryListArrayAdapter. Creates an Adapter that
+     * can be used with a list of stories.
+     * 
+     * @param context the Context that this will be used in
+     * @param id the layout of the listview
+     * @param list the list of stories
+     */
     public StoryListArrayAdapter(Context context, int id, List<Story> list) {
         super(context, id, list);
         this.context = context;
-        if (DEBUG_LOG)
-            Log.d(TAG, "Creating a story list array adapter k?");
     }
 
     private class ViewHolder {
@@ -37,6 +42,7 @@ public class StoryListArrayAdapter extends ArrayAdapter<Story> {
     }
 
     @Override
+    /**Returns the inflated view that will be displayed as a listview row.*/
     public View getView(int position, View convertView, ViewGroup parent) {
         ViewHolder holder = null;
         Story story = getItem(position);

@@ -21,7 +21,7 @@ public class CreateStoryActivity extends Activity {
     private OfflineIOHelper offlineHelper = new OfflineIOHelper(CreateStoryActivity.this);
     private int storyPos;
     
-	Button createButton;
+	private Button createButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
