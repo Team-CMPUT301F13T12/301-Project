@@ -28,13 +28,11 @@ public class StoryListControllerTestCases extends TestCase {
         // add a story to our storyList
         sl = new StoryList();
         slc = new StoryListController(sl);
+        int oldSize = sl.getAllStories().size();
         Story s = new Story("Book", "Dan Dude");
         slc.addStory(s);
-        // int numBooks = slc.getSize();
 
-        // assert(numBooks != 0);
-
-        assertTrue("testAddStory has not been implemented", false);
+        assertTrue("StoryList size didn't increase", oldSize < sl.getAllStories().size());
 
     }
 
@@ -46,16 +44,14 @@ public class StoryListControllerTestCases extends TestCase {
         slc = new StoryListController(sl);
         Story s = new Story("Book", "Dan Dude");
         slc.addStory(s);
+        int oldSize = sl.getAllStories().size();
         slc.deleteStory(s);
-        // int numBooks = slc.getSize();
-
-        // assert(numBooks == 0);
-        assertTrue("testDeleteStory has not been implemented", false);
+        assertTrue("StoryList size dien't decrease", oldSize > sl.getAllStories().size());
 
     }
 
     // tests getting a story
-    public void getStoryWithObject() {
+    public void testGetStoryWithObject() {
 
         // add a story to our storyList
         sl = new StoryList();
@@ -63,14 +59,12 @@ public class StoryListControllerTestCases extends TestCase {
         Story s = new Story("Book", "Dan Dude");
         slc.addStory(s);
         Story s2 = slc.getStory(s);
-
-        // assert(s == s2);
-        assertTrue("getStoryWithObject has not been implemented", false);
-
+        assertTrue("Stories don't have same titles", s.getStoryTitle().equals(s2.getStoryTitle()));
+        assertTrue("Stories don't have same authors", s.getAuthor().equals(s2.getAuthor()));
     }
 
     // tests getting a story
-    public void getStoryWithTitle() {
+    public void testGetStoryWithTitle() {
 
         // add a story to our storyList
         sl = new StoryList();
@@ -78,10 +72,8 @@ public class StoryListControllerTestCases extends TestCase {
         Story s = new Story("Book", "Dan Dude");
         slc.addStory(s);
         Story s2 = slc.getStory("Book");
-
-        // assert(s == s2);
-        assertTrue("getStoryWithTitle has not been implemented", false);
-
+        assertTrue("Stories don't have same titles", s.getStoryTitle().equals(s2.getStoryTitle()));
+        assertTrue("Stories don't have same authors", s.getAuthor().equals(s2.getAuthor()));
     }
 
 }
