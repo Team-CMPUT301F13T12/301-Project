@@ -1,6 +1,7 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android" >
 
     <item
+<<<<<<< HEAD
         android:id="@+id/add_story"
         android:icon="@android:drawable/ic_menu_add"
         android:orderInCategory="100"
@@ -12,5 +13,20 @@
         android:showAsAction="collapseActionView"
         android:title="Settings"
         />
+=======
+        android:id="@+id/menu_add_story"
+        android:icon="@android:drawable/ic_menu_add"
+        android:orderInCategory="100"
+        android:showAsAction="always"
+        android:title="@string/menu_add_story"/>
+
+    <group android:checkableBehavior="all" >
+        <item
+            android:id="@+id/menu_check_box_author"
+            android:checked="false"
+            android:orderInCategory="200"
+            android:title="@string/menu_check_box_author"/>
+    </group>
+>>>>>>> vincet1234
 
 </menu>

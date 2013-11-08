@@ -2,17 +2,30 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="ualberta.g12.adventurecreator"
     android:versionCode="1"
+<<<<<<< HEAD
     android:versionName="1.0" >
 
     <uses-sdk
         android:minSdkVersion="15"
         android:targetSdkVersion="18" />
 
+=======
+    android:versionName="0.1" >
+
+    <uses-sdk
+        android:minSdkVersion="15"
+        android:targetSdkVersion="19" />
+        
+>>>>>>> vincet1234
     <application
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
+<<<<<<< HEAD
+=======
+        
+>>>>>>> vincet1234
         <activity
             android:name="ualberta.g12.adventurecreator.MainActivity"
             android:label="Adventures!" >
@@ -35,12 +48,25 @@
             android:label="@string/title_activity_fragment_editor" >
         </activity>
         <activity
+<<<<<<< HEAD
             android:name="ualberta.g12.adventurecreator.Activity_read_story"
             android:label="@string/title_activity_activity_read_story" >
         </activity>
         <activity
             android:name="ualberta.g12.adventurecreator.ActivityReadFragment"
             android:label="@string/title_activity_activity_read_fragment" >
+=======
+            android:name="ualberta.g12.adventurecreator.StoryViewActivity"
+            android:label="@string/title_activity_story_view" >
+        </activity>
+        <activity
+            android:name="ualberta.g12.adventurecreator.EditChoiceActivity"
+            android:label="@string/title_activity_edit_choice"
+            android:parentActivityName="ualberta.g12.adventurecreator.EditFragmentActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="ualberta.g12.adventurecreator.EditFragmentActivity" />
+>>>>>>> vincet1234
         </activity>
     </application>
 

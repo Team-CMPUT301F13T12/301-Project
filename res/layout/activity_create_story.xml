@@ -27,7 +27,11 @@
         android:text="Author of story:" />
 
     <EditText
+<<<<<<< HEAD
         android:id="@+id/editText1"
+=======
+        android:id="@+id/editStoryTitle"
+>>>>>>> vincet1234
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/textView1"
@@ -39,7 +43,11 @@
     </EditText>
 
     <EditText
+<<<<<<< HEAD
         android:id="@+id/editText2"
+=======
+        android:id="@+id/editStoryAuthor"
+>>>>>>> vincet1234
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/textView2"
@@ -48,12 +56,21 @@
         android:ems="10" />
 
     <Button
+<<<<<<< HEAD
         android:id="@+id/button1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/textView2"
         android:layout_below="@+id/editText2"
         android:layout_marginTop="61dp"
+=======
+        android:id="@+id/editTextSave"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/textView2"
+        android:layout_below="@+id/editStoryAuthor"
+        android:layout_marginTop="88dp"
+>>>>>>> vincet1234
         android:text="Create!" />
 
 </RelativeLayout>

@@ -8,6 +8,7 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context=".MainActivity" >
 
+<<<<<<< HEAD
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -17,3 +18,12 @@
         android:text="No stories available" />
 
 </RelativeLayout>
+=======
+    <ListView
+        android:id="@+id/main_activity_listview"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" >
+    </ListView>
+
+</RelativeLayout>
+>>>>>>> vincet1234

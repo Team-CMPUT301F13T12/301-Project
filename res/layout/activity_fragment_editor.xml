@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
       xmlns:tools="http://schemas.android.com/tools"
   android:layout_width="fill_parent"
@@ -84,3 +85,59 @@
 
 </RelativeLayout>
 </ScrollView>
+=======
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context=".EditFragmentActivity" 
+    android:padding="6dip">
+
+    <EditText
+        android:id="@+id/fragmentTitle"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/fragmentTitleText"
+        android:ems="10"
+        android:hint="Title of Fragment" >
+
+        <requestFocus />
+    </EditText>
+
+    <EditText
+        android:id="@+id/idPageNum"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/fragmentTitle"
+        android:layout_centerHorizontal="true"
+        android:ems="10"
+        android:hint="ID/Page Number"
+        android:inputType="number" />
+
+    <ListView
+        android:id="@+id/FragmentPartList"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/idPageNum" >
+
+    </ListView>
+
+    <TextView
+        android:id="@+id/fragmentTitleText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:ems="10"
+        android:textSize="3mm"
+        android:textStyle="bold" />
+
+</RelativeLayout>
+>>>>>>> vincet1234
