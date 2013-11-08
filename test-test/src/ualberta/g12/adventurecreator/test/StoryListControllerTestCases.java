@@ -161,7 +161,7 @@ public class StoryListControllerTestCases extends TestCase {
                 oldSize < stories.size());
     }
 
-    public void testSetStory() {
+    public void testSetStory2() {
         Story s = new Story("The Winds of Winter", "George R.R. Martin");
         Story s1 = new Story("A Storm of Swords", "George R.R. Martin");
         Story s2 = new Story("A Clash of Kings", "George R.R. Martin");
