@@ -14,7 +14,7 @@ public interface FController {
      * @param frag is the Fragment to be changed
      * @param newTitle the new title of the fragment
      */
-    public void editTitle(Fragment frag, String newTitle);
+    public void setTitle(Fragment frag, String newTitle);
 
     /**
      * Adds textSegment to a fragment at specified position

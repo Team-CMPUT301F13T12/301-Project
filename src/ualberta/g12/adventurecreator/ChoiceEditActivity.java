@@ -22,19 +22,19 @@ import java.util.List;
  * user to enter the text for the choice as well as select another fragment
  * within the same story to link the selected fragment to.
  */
-public class EditChoiceActivity extends Activity {
+public class ChoiceEditActivity extends Activity {
     private int ourFragmentId;
     private int ourStoryId;
-    private Story ourStory;
+    private Story story;
     private List<Fragment> ourFragmentList;
     private int userPicked;
     private List<String> possibleChoices;
-    private Fragment linked;
     private int requestKey;
     private int storyPos, fragPos, choicePos, linkedPos = -1;
     private StoryList storyList;
     private Fragment fragment;
-    private OfflineIOHelper offlineHelper = new OfflineIOHelper(EditChoiceActivity.this);
+    private static final String TAG = "ChoiceEditActivity";
+    private OfflineIOHelper offlineHelper = new OfflineIOHelper(ChoiceEditActivity.this);
     private EditText myTitleET;
     private StoryListController storyListController = AdventureCreatorApplication
             .getStoryListController();
@@ -51,14 +51,20 @@ public class EditChoiceActivity extends Activity {
         // Show the Up button in the action bar.
         setupActionBar();
 
+        Log.d(TAG,"got in");
+        
         // storyList = offlineHelper.loadOfflineStories();
         storyList = storyListController.loadStoryOffline(this);
+        
+        Log.d(TAG,"loaded");
 
         Intent editChoiceIntent = getIntent();
         storyPos = (Integer) editChoiceIntent.getSerializableExtra("StoryPos");
         fragPos = (Integer) editChoiceIntent.getSerializableExtra("FragmentPos");
         choicePos = (Integer) editChoiceIntent.getSerializableExtra("ChoicePos");
 
+        Log.d(TAG,"got intents");
+        
         // get widget reference
         myTitleET = (EditText) findViewById(R.id.choiceBody);
         // String choiceText =
@@ -72,7 +78,6 @@ public class EditChoiceActivity extends Activity {
          * story.getFragments().get(fragPos); Choice choice
          * fragment.getChoices().get(choicePos);
          */
-        Intent i = getIntent();
         // Bundle extras = i.getExtras();
         // ourStoryId = extras.getInt("OurStoryId");
         // ourFragmentId = extras.getInt("OurFragmentId");
@@ -84,9 +89,12 @@ public class EditChoiceActivity extends Activity {
         // ourFragmentList = ourStory.getFragments();
         // fragment = ourFragmentList.get(fragPos);
 
-        ourStory = storyListController.getStoryAtPos(storyPos);
+        story = storyListController.getStoryAtPos(storyPos);
 
-        fragment = storyController.getFragmentsPos(ourStory, fragPos);
+        fragment = storyController.getFragmentAtPos(story, fragPos);
+        
+        Log.d(TAG,"stroy and fragment");
+        
         choiceButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -105,7 +113,7 @@ public class EditChoiceActivity extends Activity {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Pick a Fragment to link {NONE} means end");
         // StoryController sc = new StoryController();
-        possibleChoices = getFragmentTitleList(storyController.getFragments(ourStory));
+        possibleChoices = getFragmentTitleList(storyController.getFragments(story));
         CharSequence[] chars = possibleChoices.toArray(new CharSequence[possibleChoices.size()]);
 
         builder.setItems(chars, new DialogInterface.OnClickListener() {
@@ -186,7 +194,18 @@ public class EditChoiceActivity extends Activity {
         // Choice newChoice = new Choice();
         Choice choice = fragment.getChoices().get(choicePos);
         fragmentController.setChoiceTextAtPos(fragment, choicePos, Title);
-        fragmentController.setLinkedFragmentOfChoiceAtPos(fragment, choicePos, linkedPos);
+        fragmentController.setLinkedFragmentPosOfChoice(fragment, choicePos, linkedPos);
+        Log.d(TAG, "linkedpos, "+linkedPos);
+        Fragment linkedFragment;
+        if (linkedPos == -1){
+            linkedFragment = null;
+
+            Log.d(TAG, "entered, "+linkedFragment);
+        } else {
+            linkedFragment= storyController.getFragmentAtPos(story, linkedPos);
+        }
+        Log.d(TAG, "linkedfrag, "+linkedFragment);
+        fragmentController.setLinkedFragmentOfChoice(fragment, choicePos, linkedFragment);
         // TODO needs to be checked;need controller
         // choice.setChoiceText(Title);
         // choice.setLinkedToFragmentPos(linkedPos);

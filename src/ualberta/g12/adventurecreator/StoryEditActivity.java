@@ -162,7 +162,7 @@ public class StoryEditActivity extends Activity implements SView<Story> {
         // save before leaving activity
         saveChanges();
 
-        Intent intent = new Intent(this, EditFragmentActivity.class);
+        Intent intent = new Intent(this, FragmentEditActivity.class);
         intent.putExtra("Mode", "Edit");
         intent.putExtra("StoryPos", storyPos);
         intent.putExtra("FragmentPos", fragPos);
