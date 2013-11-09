@@ -72,7 +72,7 @@ public class StoryController implements SController {
      *            list
      * @return the Fragment as fragPos
      */
-    public Fragment getFragmentsPos(Story s, int fragPos) {
+    public Fragment getFragmentAtPos(Story s, int fragPos) {
         return s.getFragments().get(fragPos);
     }
 

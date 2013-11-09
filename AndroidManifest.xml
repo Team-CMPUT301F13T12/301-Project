@@ -5,7 +5,7 @@
     android:versionName="0.1" >
 
     <uses-sdk
-        android:minSdkVersion="15"
+        android:minSdkVersion="8"
         android:targetSdkVersion="19" />
         
     <application
@@ -32,17 +32,20 @@
             android:label="Story Editor" >
         </activity>
         <activity
-            android:name="ualberta.g12.adventurecreator.EditFragmentActivity"
+            android:name="ualberta.g12.adventurecreator.FragmentEditActivity"
             android:label="@string/title_activity_fragment_editor" >
+        </activity>
+        <activity android:name=".FragmentViewActivity"
+            android:label="@string/title_activity_fragment_view">
         </activity>
         <activity
             android:name="ualberta.g12.adventurecreator.StoryViewActivity"
             android:label="@string/title_activity_story_view" >
         </activity>
         <activity
-            android:name="ualberta.g12.adventurecreator.EditChoiceActivity"
+            android:name="ualberta.g12.adventurecreator.ChoiceEditActivity"
             android:label="@string/title_activity_edit_choice"
-            android:parentActivityName="ualberta.g12.adventurecreator.EditFragmentActivity" >
+            android:parentActivityName="ualberta.g12.adventurecreator.FragmentEditActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="ualberta.g12.adventurecreator.EditFragmentActivity" />

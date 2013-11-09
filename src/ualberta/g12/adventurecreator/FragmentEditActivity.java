@@ -51,10 +51,9 @@ import java.text.SimpleDateFormat;
  * activity will save the current fragment information and take the user back to
  * the fragment list of the current story.
  */
-public class EditFragmentActivity extends Activity implements FView<Fragment> {
+public class FragmentEditActivity extends Activity implements FView<Fragment> {
 
     private int storyId, position, type, picturePosition;
-    private TextView fragmentTitleTextView;
     private ListView fragmentPartListView;
     private FragmentPartAdapter adapter;
     private FragmentController fragmentController = AdventureCreatorApplication
@@ -63,9 +62,9 @@ public class EditFragmentActivity extends Activity implements FView<Fragment> {
     public static final int ADD = 1;
     private EditText editTitleText, idPageNumText;
     private static final int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 100;
-    private static final String TAG = "EditFragmentActivity";
-    private OfflineIOHelper offlineHelper = new OfflineIOHelper(EditFragmentActivity.this);
-    private String mode, pictureMode;
+    private static final String TAG = "FragmentEditActivity";
+    private OfflineIOHelper offlineHelper = new OfflineIOHelper(FragmentEditActivity.this);
+    private String pictureMode;
     private StoryList storyList;
     private Story story;
     private int storyPos, fragPos;
@@ -81,19 +80,13 @@ public class EditFragmentActivity extends Activity implements FView<Fragment> {
 
         // obtain the intent
         Intent editActIntent = getIntent();
-        // TODO: what if mode is null?
-        mode = "";
-        mode = (String) editActIntent.getSerializableExtra("Mode");
         storyPos = (Integer) editActIntent.getSerializableExtra("StoryPos");
         // Not reliable when in view mode
         fragPos = (Integer) editActIntent.getSerializableExtra("FragmentPos");
         // get widget references
         fragmentPartListView = (ListView) findViewById(R.id.FragmentPartList);
-        fragmentTitleTextView = (TextView) findViewById(R.id.fragmentTitleText);
         editTitleText = (EditText) findViewById(R.id.fragmentTitle);
-        idPageNumText = (EditText) findViewById(R.id.idPageNum);
 
-        setListClickListener();
     }
 
     @Override
@@ -103,16 +96,12 @@ public class EditFragmentActivity extends Activity implements FView<Fragment> {
         // TODO: This should be in its own method
 
         // load save file
-        // storyList = offlineHelper.loadOfflineStories();
-
         storyList = storyListController.loadStoryOffline(this);
         story = storyListController.getAllStories().get(storyPos);
-        // fragment = story.getFragments().get(fragPos)
+        fragment = storyController.getFragmentAtPos(story, fragPos);
 
-        fragment = storyController.getFragmentsPos(story, fragPos);
-
-        // Make sure we have at least one part if in edit mode
-        if (mode.equals("Edit") == true && fragment.getDisplayOrder().size() == 0) {
+        // Make sure we have at least one part
+        if (fragment.getDisplayOrder().size() == 0) {
             fragmentController.addEmptyPart(fragment);
         }
 
@@ -121,48 +110,20 @@ public class EditFragmentActivity extends Activity implements FView<Fragment> {
         adapter = new FragmentPartAdapter(this, R.layout.activity_fragment_editor, fragment);
         fragmentPartListView.setAdapter(adapter);
 
-        if (mode.equals("Edit")) {
-            // don't want textview
-            fragmentTitleTextView.setVisibility(View.GONE);
+        // want the context menu for list parts
+        registerForContextMenu(fragmentPartListView);
 
-            // want the context menu for list parts
-            registerForContextMenu(fragmentPartListView);
+        // Loads title
+        if (editTitleText != null) 
+            editTitleText.setText(fragment.getTitle());
 
-            // Loads title
-            String title = fragment.getTitle();
-            if (editTitleText != null) {
-                if (title != null)
-                    editTitleText.setText(title);
-                else
-                    editTitleText.setText("");
-            }
-
-        } else if (mode.equals("View")) {
-            // don't want edit text views
-            editTitleText.setVisibility(View.GONE);
-            idPageNumText.setVisibility(View.GONE);
-
-            // Loads title
-            String title = fragment.getTitle();
-            if (fragmentTitleTextView != null) {
-                if (title != null)
-                    fragmentTitleTextView.setText(title);
-                else
-                    fragmentTitleTextView.setText("Error - No title found");
-            }
-        } else {
-            // Invalid mode
-            Log.e(TAG, String.format("Invalid mode: %s", mode));
-        }
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
 
-        // we only want the menu when in edit mode
-        if (mode.equals("Edit"))
-            getMenuInflater().inflate(R.menu.fragment_editor, menu);
+        getMenuInflater().inflate(R.menu.fragment_editor, menu);
         return true;
     }
 
@@ -175,8 +136,7 @@ public class EditFragmentActivity extends Activity implements FView<Fragment> {
 
             case R.id.save_fragment:
                 // Save values
-                if (mode.equals("Edit"))
-                    saveFragment();
+                saveFragment();
 
                 // Leave activity
                 finish();
@@ -189,59 +149,6 @@ public class EditFragmentActivity extends Activity implements FView<Fragment> {
     public void update(Fragment model) {
         // TODO reload all fields based on new info from model
 
-    }
-
-    private void setListClickListener() {
-        fragmentPartListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
-                if (fragmentController.getDisplayOrderAtPos(fragment, position).equals("c")) {
-                    if (mode.equals("Edit")) {
-                        // TODO open edit choice activity
-
-                    } else if (mode.equals("View")) {
-                        // go to next fragment
-
-                        // get the occurence number of the textSegment
-                        int occurrence = 0;
-                        for (int i = 0; i < position; i++) {
-                            if (fragmentController.getDisplayOrderAtPos(fragment, i).equals("c"))
-                                occurrence++;
-                        }
-                        int newFragPos = fragmentController.getLinkedToFragmentPosOfChoice(
-                                fragment, occurrence);
-
-                        if (newFragPos == -1) {
-                            // linked frag pos is invalid so don't use it
-                            newFragPos = fragPos;
-                        }
-
-                        Intent intent = new Intent(EditFragmentActivity.this,
-                                EditFragmentActivity.class);
-
-                        // for (int i = 0 ; i <
-                        // storyList.getAllStories().get(storyPos).getFragments().size();i++){
-                        // if
-                        // (storyList.getAllStories().get(storyPos).getFragments().get(i).equals(goToFrag))
-                        // fragPos = i;
-                        // }
-
-                        intent.putExtra("Mode", "View");
-                        intent.putExtra("StoryPos", storyPos);
-                        intent.putExtra("FragmentPos", newFragPos);
-
-                        // theExtras.putSerializable("nextFragment", goToFrag);
-                        // System.out.println(goToFrag.getDisplayOrder().toString());
-                        // System.out.println(goToFrag.getTitle());
-                        startActivity(intent);
-                        finish();
-
-                    }
-                }
-            }
-        });
     }
 
     @Override
@@ -269,7 +176,7 @@ public class EditFragmentActivity extends Activity implements FView<Fragment> {
             AddImage();
 
         } else if (itemTitle.equals("Edit")) {
-            String type = fragmentController.getDisplayOrderAtPos(fragment, position);
+            String type = fragmentController.getDisplayTypeAtPos(fragment, position);
             if (type.equals("t") || type.equals("e")) {
                 RelativeLayout curLayout = new RelativeLayout(this);
 
@@ -284,7 +191,7 @@ public class EditFragmentActivity extends Activity implements FView<Fragment> {
                 if (type.equals("t")) {
                     int occurrence = 0;
                     for (int i = 0; i < position; i++) {
-                        if (fragmentController.getDisplayOrderAtPos(fragment, i).equals("t"))
+                        if (fragmentController.getDisplayTypeAtPos(fragment, i).equals("t"))
                             occurrence++;
                     }
                     editTextSegView.setText(fragmentController.getTextSegments(fragment).get(
@@ -332,7 +239,7 @@ public class EditFragmentActivity extends Activity implements FView<Fragment> {
                 }
 
                 // go to edit choice activity
-                Intent intent = new Intent(this, EditChoiceActivity.class);
+                Intent intent = new Intent(this, ChoiceEditActivity.class);
                 intent.putExtra("StoryPos", storyPos);
                 intent.putExtra("FragmentPos", fragPos);
                 intent.putExtra("ChoicePos", choicePos);
@@ -343,23 +250,23 @@ public class EditFragmentActivity extends Activity implements FView<Fragment> {
             // create, add and save new choice
             int choicePos = fragment.getChoices().size();
             Choice choice = new Choice();
-            // fragment.addChoice(choice);
             fragmentController.addChoice(fragment, choice);
             saveFragment();
 
             // go to edit choice activity
-            Intent intent = new Intent(this, EditChoiceActivity.class);
+            Intent intent = new Intent(this, ChoiceEditActivity.class);
             intent.putExtra("StoryPos", storyPos);
             intent.putExtra("FragmentPos", fragPos);
             intent.putExtra("ChoicePos", choicePos);
             startActivity(intent);
 
-        } // else if (itemTitle.equals("Delete")) {
-          // fragmentController.deleteFragmentPart(fragment, position);
-        // }
-        // Make sure the fragment isn't completely empty
-        if (fragment.getDisplayOrder().size() == 0)
-            fragmentController.addEmptyPart(fragment);
+        } else if (itemTitle.equals("Delete")) {
+            fragmentController.deleteFragmentPart(fragment, position);
+            
+         // Make sure the fragment isn't completely empty
+            if (fragment.getDisplayOrder().size() == 0)
+                fragmentController.addEmptyPart(fragment);
+        }
 
         // reset listview to display any changes
         // adapter.notifyDataSetChanged();
@@ -378,7 +285,7 @@ public class EditFragmentActivity extends Activity implements FView<Fragment> {
                 "Take Photo", "Choose from Gallery", "Cancel"
         };
 
-        AlertDialog.Builder builder = new AlertDialog.Builder(EditFragmentActivity.this);
+        AlertDialog.Builder builder = new AlertDialog.Builder(FragmentEditActivity.this);
         builder.setTitle("Add Photo!");
         builder.setItems(options, new DialogInterface.OnClickListener() {
             @Override
@@ -492,7 +399,6 @@ public class EditFragmentActivity extends Activity implements FView<Fragment> {
     private void setTitleAndPageId() {
 
         String title = editTitleText.getText().toString();
-        String idPageNum = idPageNumText.getText().toString();
         int idPage = -9;
         // try{
         // idPage = Integer.parseInt(idPageNum);
@@ -503,19 +409,23 @@ public class EditFragmentActivity extends Activity implements FView<Fragment> {
         // fragment.setTitle(title);
         // fragment.setId(idPage);
 
-        fragmentController.editTitle(fragment, title);
-        fragmentController.changeId(fragment, idPage);
+        fragmentController.setTitle(fragment, title);
+        fragmentController.setId(fragment, idPage);
     }
 
     private void saveFragment() {
+        Log.d(TAG, "removing empty");
+        
         // make sure fragment does not have any empty parts
         fragmentController.removeEmptyPart(fragment);
+        
+        Log.d(TAG, "removed empty");
 
         setTitleAndPageId();
         // storyList.getAllStories().get(storyPos).getFragments().set(fragPos,
         // fragment);
-        Story s = storyListController.getAllStories().get(storyPos);
-        storyController.setFragmentAtLocation(s, fragPos, fragment);
+        Log.d(TAG, "set titel and page");
+        storyController.setFragmentAtLocation(story, fragPos, fragment);
         // StoryList storyList = storyListController.;
         // offlineHelper.saveOfflineStories(storyList);
         storyListController.saveOfflineStories(this, storyList);

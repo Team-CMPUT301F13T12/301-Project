@@ -9,24 +9,25 @@
     tools:context=".FragmentEditActivity" 
     android:padding="6dip">
 
-    <EditText
-        android:id="@+id/fragmentTitle"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:hint="Title of Fragment" >
-
-        <requestFocus />
-    </EditText>
-
     <ListView
-        android:id="@+id/FragmentPartList"
+        android:id="@+id/FragmentViewPartList"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_alignParentRight="true"
-        android:layout_below="@+id/fragmentTitle" >
+        android:layout_below="@+id/fragmentTitleText" >
 
     </ListView>
+
+    <TextView
+        android:id="@+id/fragmentTitleText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:ems="10"
+        android:textSize="3mm"
+        android:textStyle="bold" />
 
 </RelativeLayout>

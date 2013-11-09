@@ -30,5 +30,7 @@
     <string name="save">Save</string>
     <string name="title_activity_edit_choice">EditChoiceActivity</string>
     <string name="story_edit_fragment">Fragments</string>
+    <string name="title_activity_fragment_viewer">FragmentViewer</string>
+    <string name="title_activity_fragment_view">FragmentViewActivity</string>
 
 </resources>

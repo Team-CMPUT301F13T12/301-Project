@@ -38,6 +38,7 @@ public class Fragment extends FModel implements Serializable {
      * are used by a Fragment
      */
     public Fragment() {
+        title = "";
         textSegments = new LinkedList<String>();
         illustrations = new LinkedList<String>();
         choices = new LinkedList<Choice>();

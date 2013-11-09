@@ -28,12 +28,12 @@ public class MainActivity extends Activity implements LView<StoryList>, OnItemCl
     private static final String TAG = "MainActivity";
     private ListView listView;
     private StoryListArrayAdapter adapter;
-    private OfflineIOHelper offlineHelper = new OfflineIOHelper(MainActivity.this);
+    private StoryListController storyListController = AdventureCreatorApplication
+            .getStoryListController();
+    private StoryController storyController = AdventureCreatorApplication.getStoryController();
 
     private static final String SHARED_PREF_IS_AUTHOR_FLAG = "isAuthor";
     private static boolean isAuthor = false;
-
-    private StoryListController storyListController;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,12 +41,11 @@ public class MainActivity extends Activity implements LView<StoryList>, OnItemCl
         setContentView(R.layout.activity_main);
 
         // Get our storyList instance from the application
-        storyListController = AdventureCreatorApplication.getStoryListController();
         storyList = AdventureCreatorApplication.getStoryList();
 
-        // //Erases previous saves - ONLY FOR TESTING - should be commented out
-        // storyList = new StoryList();
-        // offlineHelper.saveOfflineStories(storyList);
+//         //Erases previous saves - ONLY FOR TESTING - should be commented out
+//         storyList = new StoryList();
+//         storyListController.saveOfflineStories(this, storyList);
 
         listView = (ListView) findViewById(R.id.main_activity_listview);
     }
@@ -58,8 +57,6 @@ public class MainActivity extends Activity implements LView<StoryList>, OnItemCl
         // Load our local stories from the StoryList Model
 
         storyList = storyListController.loadStoryOffline(MainActivity.this);
-        // storyList = offlineHelper.loadOfflineStories();
-        // stories = storyList.getAllStories();
         stories = storyListController.getAllStories();
 
         if (DEBUG_LOG)
@@ -180,16 +177,16 @@ public class MainActivity extends Activity implements LView<StoryList>, OnItemCl
         Intent i;
         if (isAuthor) {
             i = new Intent(this, StoryEditActivity.class);
-            i.putExtra("Mode", "Edit");
             i.putExtra("StoryPos", pos);
             startActivity(i);
         } else {
-            int fragPos = stories.get(pos).getStartFragPos();
-
-            i = new Intent(this, EditFragmentActivity.class);
-            i.putExtra("Mode", "View");
-            i.putExtra("StoryPos", pos);
-            i.putExtra("FragmentPos", fragPos);
+            
+            Story story = storyListController.getStoryAtPos(pos);
+            int fragPos = story.getStartFragPos();
+            Fragment goToFrag = storyController.getFragmentAtPos(story, fragPos);
+            
+            i = new Intent(this, FragmentViewActivity.class);
+            i.putExtra("Fragment", goToFrag);
             startActivity(i);
         }
 

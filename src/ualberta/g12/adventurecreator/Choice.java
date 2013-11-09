@@ -12,8 +12,7 @@ import java.io.Serializable;
 public class Choice implements Serializable {
     private String choiceText;
     private int linkedToFragmentPos;
-
-    // private Fragment linkedToFragment;
+    private Fragment linkedToFragment;
 
     // default settings for a new choice
     /**
@@ -64,18 +63,19 @@ public class Choice implements Serializable {
         this.linkedToFragmentPos = linkedToFragmentPos;
     }
 
-    // public Fragment getLinkedToFragment() {
-    // return linkedToFragment;
-    // }
-    //
-    // public void setLinkedToFragment(Fragment linkedToFragment) {
-    // this.linkedToFragment = linkedToFragment;
-    // linkedToFragment.setLinkedTo(true); //page is definitely linked to now
-    // }
+     public Fragment getLinkedToFragment() {
+     return linkedToFragment;
+     }
+    
+     public void setLinkedToFragment(Fragment linkedToFragment) {
+         this.linkedToFragment = linkedToFragment;
+         if (linkedToFragment != null)
+             linkedToFragment.setLinkedTo(true); //page is definitely linked to now
+     }
 
     private void writeObject(java.io.ObjectOutputStream out) throws IOException {
         out.writeObject(this.choiceText);
-        // out.writeObject(this.linkedToFragment);
+        out.writeObject(this.linkedToFragment);
         out.writeObject(this.linkedToFragmentPos);
 
     }
@@ -83,7 +83,7 @@ public class Choice implements Serializable {
     private void readObject(java.io.ObjectInputStream in) throws IOException,
             ClassNotFoundException {
         this.choiceText = (String) in.readObject();
-        // this.linkedToFragment = (Fragment) in.readObject();
+        this.linkedToFragment = (Fragment) in.readObject();
         this.linkedToFragmentPos = (Integer) in.readObject();
     }
 }
