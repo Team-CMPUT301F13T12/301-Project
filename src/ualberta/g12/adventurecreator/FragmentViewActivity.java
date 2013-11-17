@@ -25,7 +25,7 @@ public class FragmentViewActivity extends Activity implements FView<Fragment> {
     private FragmentPartAdapter adapter;
     private FragmentController fragmentController = AdventureCreatorApplication
             .getFragmentController();
-    private static final String TAG = "FragmentViewActivity";
+    //private static final String TAG = "FragmentViewActivity";
     private Fragment fragment;
 
     @Override

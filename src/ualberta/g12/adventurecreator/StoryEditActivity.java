@@ -31,13 +31,13 @@ public class StoryEditActivity extends Activity implements SView<Story> {
     public static final String INTENT_STORY_ID = "storyid";
     public static final int INVALID_STORY_ID = -1;
 
-    // edit or add contants
+    // edit or add contents
     public static final int EDIT = 0;
     public static final int ADD = 1;
 
     // Logging info
-    private static final String TAG = "StoryEditActivity";
-    private static final boolean DEBUG_LOG = true;
+   // private static final String TAG = "StoryEditActivity";
+   // private static final boolean DEBUG_LOG = true;
 
     // UI Elements
     private EditText titleText;
@@ -94,7 +94,7 @@ public class StoryEditActivity extends Activity implements SView<Story> {
         {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id)
             {
-                Fragment selectedFrag = fragmentList.get(position);
+                //Fragment selectedFrag = fragmentList.get(position);
                 openEditFragment(position);
             }
         });

@@ -20,7 +20,7 @@ import android.widget.TextView;
  */
 public class FragmentPartAdapter extends ArrayAdapter {
     private final Context context;
-    private final int resource;
+    public final int resource;
     private final Fragment frag;
 
     private static final String TAG = "FragmentPartAdapter";

@@ -20,8 +20,8 @@ import java.util.List;
 public class StoryListArrayAdapter extends ArrayAdapter<Story> {
     private final Context context;
 
-    private static final boolean DEBUG_LOG = true;
-    private static final String TAG = "StoryListArrayAdapter";
+    //private static final boolean DEBUG_LOG = true;
+    //private static final String TAG = "StoryListArrayAdapter";
 
     /**
      * Sole Constructor for the StoryListArrayAdapter. Creates an Adapter that

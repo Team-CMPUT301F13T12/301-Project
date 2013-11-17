@@ -29,14 +29,12 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
-import android.widget.TextView;
 
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
-import java.text.SimpleDateFormat;
 
 // Right now we are making Fragments here and also choice
 // What i was thinking was maybe just make the general fragment here
@@ -53,17 +51,16 @@ import java.text.SimpleDateFormat;
  */
 public class FragmentEditActivity extends Activity implements FView<Fragment> {
 
-    private int storyId, position, type, picturePosition;
+    private int position;
+    public int picturePosition;
     private ListView fragmentPartListView;
     private FragmentPartAdapter adapter;
     private FragmentController fragmentController = AdventureCreatorApplication
             .getFragmentController();
     public static final int EDIT = 0;
     public static final int ADD = 1;
-    private EditText editTitleText, idPageNumText;
-    private static final int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 100;
+    private EditText editTitleText;
     private static final String TAG = "FragmentEditActivity";
-    private OfflineIOHelper offlineHelper = new OfflineIOHelper(FragmentEditActivity.this);
     private String pictureMode;
     private StoryList storyList;
     private Story story;
@@ -339,8 +336,6 @@ public class FragmentEditActivity extends Activity implements FView<Fragment> {
                     // String path = f.getPath();
 
                     long picTime = System.currentTimeMillis();
-
-                    String newPicName = new SimpleDateFormat("yyyy-MM-dd HH.mm.ss").format(picTime);
 
                     Log.d(TAG, "path of image from camera" + picturePath + "");
                     picturePath = f.getPath();

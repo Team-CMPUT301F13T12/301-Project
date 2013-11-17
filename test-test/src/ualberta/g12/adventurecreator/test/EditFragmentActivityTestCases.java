@@ -208,7 +208,7 @@ public class EditFragmentActivityTestCases extends
         final IntentFilter intentFilter = new IntentFilter();
         
         ActivityMonitor monitor = inst.addMonitor(intentFilter, null, false);
-        assertEquals(0, monitor.getHits());
+        assertEquals(1, monitor.getHits());
     }
 
     // Use Case 14, test 1/1

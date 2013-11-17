@@ -14,7 +14,7 @@ import java.util.List;
 /** An extension of ArrayAdapter that is used to display Fragments in a ListView */
 public class FragmentListArrayAdapter extends ArrayAdapter<Fragment> {
     private final Context context;
-    private final int resource;
+    public final int resource;
     private final List<Fragment> frags;
 
     private static final boolean DEBUG_LOG = true;
