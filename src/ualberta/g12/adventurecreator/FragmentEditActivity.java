@@ -166,7 +166,7 @@ public class FragmentEditActivity extends Activity implements FView<Fragment> {
             fragmentController.addTextSegment(fragment, "New text", position);
 
         } else if (itemTitle.equals("Insert Illustration")) {
-            System.out.println("insert ill start");
+            Log.d(TAG,"insert ill start");
             saveFragment();
             pictureMode = "Add";
             picturePosition = position;
