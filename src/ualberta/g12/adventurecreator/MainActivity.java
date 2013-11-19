@@ -18,7 +18,6 @@ import java.util.List;
 /**
  * Activity displayed for the start of the application. Allows the user to browse through available
  * stories, and edit or read those stories depending on what mode they are in.
- * 
  *
  */
 public class MainActivity extends Activity implements LView<StoryList>, OnItemClickListener {
