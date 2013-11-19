@@ -29,14 +29,18 @@ public class AdventureCreator extends Application {
     }
 
     /**
-     * Returns the StoryList Singleton. If one doesn't exist, we initialize it
+     * Returns the StoryList Singleton. If one currently doesn't exist, we 
+     * try and load it from the OfflineIOHelper. If that doesn't work, we 
+     * create a new StoryList and return that.
      * 
      * @return the StoryList singleton
      */
     public static StoryList getStoryList() {
-
         if (storyList == null) {
-            storyList = new StoryList();
+            storyList = getOfflineIOHelper().loadOfflineStories();
+            if(storyList == null){
+                storyList = new StoryList();
+            }
         }
         return storyList;
     }
