@@ -1,8 +1,4 @@
-
 package ualberta.g12.adventurecreator;
-
-import android.content.Context;
-import android.util.Log;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -10,6 +6,9 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+
+import android.content.Context;
+import android.util.Log;
 
 /**
  * Will Handle loading and saving of our offline(cached) stories from local
@@ -20,15 +19,21 @@ public class OfflineIOHelper {
     private String fileName = "myStories.sav";
     private Context storyContext;
 
+    private static final boolean DEBUG = true;
     private static final String TAG = "OfflineIOHelper";
 
     /**
      * Sole constructor for the OfflineIOHelper class. Loads in context from the
      * calling application that is used for the FileInputStream and
      * FileOuputStreams.
-     * @param context the context to load.
+     * 
+     * @param context
+     *            the context to load.
      */
     public OfflineIOHelper(Context context) {
+        if(context == null){
+            Log.d(TAG, "Context was null");
+        }
         this.storyContext = context;
     }
 
@@ -40,7 +45,6 @@ public class OfflineIOHelper {
     public StoryList loadOfflineStories() {
         StoryList stories = new StoryList();
         try {
-
             FileInputStream fis = storyContext.openFileInput(this.fileName);
             ObjectInputStream ois = new ObjectInputStream(fis);
             stories = (StoryList) ois.readObject();
@@ -72,7 +76,8 @@ public class OfflineIOHelper {
         if (myStories == null)
             Log.d(TAG, "Saving a null StoryList");
         try {
-            FileOutputStream fos = storyContext.openFileOutput(this.fileName, 0);
+            FileOutputStream fos = storyContext
+                    .openFileOutput(this.fileName, 0);
             ObjectOutputStream oos = new ObjectOutputStream(fos);
             oos.writeObject(myStories);
             fos.close();

@@ -34,7 +34,7 @@ public class EditChoiceActivity extends Activity {
     private int storyPos, fragPos, choicePos, linkedPos = -1;
     private StoryList sl;
     private Fragment fragment;
-    private OfflineIOHelper offlineHelper = new OfflineIOHelper(EditChoiceActivity.this);
+    private OfflineIOHelper offlineHelper;
     private EditText myTitleET;
     
     private static final boolean DEBUG = false;
@@ -46,7 +46,7 @@ public class EditChoiceActivity extends Activity {
         // Show the Up button in the action bar.
         setupActionBar();
 
-        sl = offlineHelper.loadOfflineStories();
+        sl = AdventureCreator.getStoryList();
 
         Intent editChoiceIntent = getIntent();
         storyPos = (Integer) editChoiceIntent.getSerializableExtra("StoryPos");
@@ -59,6 +59,7 @@ public class EditChoiceActivity extends Activity {
                 .getChoices().get(choicePos).getChoiceText();
         myTitleET.setText(choiceText);
 
+        offlineHelper = AdventureCreator.getOfflineIOHelper();
         /*
          * //load save file storyList = offlineHelper.loadOfflineStories();
          * story = storyList.getAllStories().get(storyPos); fragment =
@@ -185,6 +186,7 @@ public class EditChoiceActivity extends Activity {
         int c = sl.getAllStories().get(storyPos).getFragments().get(fragPos).getChoices()
                 .get(choicePos).getLinkedToFragmentPos();
         if(DEBUG) Log.d("EDITCHOICE", "The choices linked to is " + c);
+        
         offlineHelper.saveOfflineStories(sl);
         finish();
         return true;

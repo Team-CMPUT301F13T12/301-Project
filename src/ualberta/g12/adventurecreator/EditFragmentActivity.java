@@ -57,14 +57,14 @@ public class EditFragmentActivity extends Activity implements FView<Fragment> {
     private TextView fragmentTitleTextView;
     private ListView fragmentPartListView;
     private FragmentPartAdapter adapter;
-    private FragmentController fragmentController = AdventureCreatorApplication
+    private FragmentController fragmentController = AdventureCreator
             .getFragmentController();
     public static final int EDIT = 0;
     public static final int ADD = 1;
     private EditText editTitleText, idPageNumText;
     private static final int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 100;
     private static final String TAG = "EditFragmentActivity";
-    private OfflineIOHelper offlineHelper = new OfflineIOHelper(EditFragmentActivity.this);
+    private OfflineIOHelper offlineHelper;
     private String mode, pictureMode;
     private StoryList storyList;
     private Story story;
@@ -100,7 +100,7 @@ public class EditFragmentActivity extends Activity implements FView<Fragment> {
         // TODO: This should be in its own method
         
         // load save file
-        storyList = offlineHelper.loadOfflineStories();
+        storyList = AdventureCreator.getStoryList();
         story = storyList.getAllStories().get(storyPos);
         fragment = story.getFragments().get(fragPos);
 
@@ -502,6 +502,7 @@ public class EditFragmentActivity extends Activity implements FView<Fragment> {
 
         setTitleAndPageId();
         storyList.getAllStories().get(storyPos).getFragments().set(fragPos, fragment);
+        offlineHelper = AdventureCreator.getOfflineIOHelper();
         offlineHelper.saveOfflineStories(storyList);
     }
 }

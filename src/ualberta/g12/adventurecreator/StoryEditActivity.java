@@ -45,7 +45,7 @@ public class StoryEditActivity extends Activity implements SView<Story> {
     private ListView lView;
     
 
-    private OfflineIOHelper offlineHelper = new OfflineIOHelper(StoryEditActivity.this);
+    private OfflineIOHelper offlineHelper;
     private FragmentListArrayAdapter adapter;
     private int storyId, storyPos;
     private List<Fragment> fragmentList;
@@ -58,6 +58,8 @@ public class StoryEditActivity extends Activity implements SView<Story> {
         // Load our story from the intent
         Intent i = getIntent(); 
         storyPos = (Integer)i.getSerializableExtra("StoryPos"); 
+        
+        offlineHelper = AdventureCreator.getOfflineIOHelper();
 
         //get widget references
         titleText = (EditText) findViewById(R.id.story_editor_title_edit);
@@ -136,10 +138,10 @@ public class StoryEditActivity extends Activity implements SView<Story> {
 
     @Override
     public void update(Story model) {
-        // Update our local story variable   	
+        // Update our local story variable       
         // Reload value from our story into fields - notify adapter our
         // story has changed
-        storyList = offlineHelper.loadOfflineStories();
+        storyList = AdventureCreator.getStoryList();
         
         story = storyList.getAllStories().get(storyPos);
         
@@ -160,8 +162,8 @@ public class StoryEditActivity extends Activity implements SView<Story> {
      * 
      * @param fragPos   position of the selected fragment in the listview
      */
-	private void openEditFragment(int fragPos){
-	    //save before leaving activity
+    private void openEditFragment(int fragPos){
+        //save before leaving activity
         saveChanges();
         
         Intent intent = new Intent(this, EditFragmentActivity.class);
@@ -171,18 +173,18 @@ public class StoryEditActivity extends Activity implements SView<Story> {
         
         Log.d("This",String.format("The story id was: %d", storyId));
         startActivity(intent);
-	}
+    }
 
-	/**
-	 * saves any changes that have been modified to a story 
-	 * 
-	 */
-	 private void saveChanges(){
+    /**
+     * saves any changes that have been modified to a story 
+     * 
+     */
+     private void saveChanges(){
         //save any changes
-	     story.setStoryTitle(titleText.getText().toString());
+         story.setStoryTitle(titleText.getText().toString());
          story.setAuthor(authorText.getText().toString());
          
-	    storyList.getAllStories().set(storyPos, story);
+        storyList.getAllStories().set(storyPos, story);
         offlineHelper.saveOfflineStories(storyList);
     }
 }

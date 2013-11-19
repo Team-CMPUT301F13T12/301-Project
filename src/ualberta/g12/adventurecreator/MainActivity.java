@@ -29,7 +29,7 @@ public class MainActivity extends Activity implements LView<StoryList>, OnItemCl
     private static final String TAG = "MainActivity";
     private ListView listView;
     private StoryListArrayAdapter adapter;
-    private OfflineIOHelper offlineHelper = new OfflineIOHelper(MainActivity.this);
+    private OfflineIOHelper offlineHelper;
 
     private static final String SHARED_PREF_IS_AUTHOR_FLAG = "isAuthor";
     private static boolean isAuthor = false;
@@ -40,7 +40,7 @@ public class MainActivity extends Activity implements LView<StoryList>, OnItemCl
         setContentView(R.layout.activity_main);
         
         // Get our storyList instance from the application
-        storyList = AdventureCreatorApplication.getStoryList();
+        storyList = AdventureCreator.getStoryList();
         
 //        //Erases previous saves - ONLY FOR TESTING - should be commented out 
 //        storyList = new StoryList();
@@ -54,13 +54,18 @@ public class MainActivity extends Activity implements LView<StoryList>, OnItemCl
         super.onStart();
 
       // Load our local stories from the StoryList Model
-      storyList = offlineHelper.loadOfflineStories();
+      storyList = AdventureCreator.getStoryList();
+      if(storyList == null){
+    	  storyList = AdventureCreator.getStoryList();
+      }
       stories = storyList.getAllStories();
       
       if (DEBUG_LOG)
           Log.d(TAG, String.format("Number of stories is: %d", stories.size()));
       // Add ourself to the StoryList Model
       storyList.addView(this);
+      
+      offlineHelper = AdventureCreator.getOfflineIOHelper();
       
       // Set up ListView Stuff
       adapter = new StoryListArrayAdapter(this, R.layout.listview_story_list, stories);
