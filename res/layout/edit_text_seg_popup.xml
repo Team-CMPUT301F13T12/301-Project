@@ -17,12 +17,13 @@
         android:background="@color/lightblue" >
         
         <EditText
-        android:id="@+id/editTextSeg"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentTop="true" />
+            android:id="@+id/editTextSeg"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentTop="true"
+            android:inputType="text" />
 
     <Button
         android:id="@+id/editTextCancel"

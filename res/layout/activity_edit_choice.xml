@@ -12,7 +12,7 @@
         android:id="@+id/textView1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Enter your Choice&apos;s Text Here:" />
+        android:text="@string/Enter" />
 
     <EditText
         android:id="@+id/choiceBody"
@@ -34,8 +34,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/choiceBody"
-        android:layout_below="@+id/scrollView1"
         android:layout_marginTop="88dp"
-        android:text="Select a Choice Here" />
+        android:text="@string/Select" />
 
 </RelativeLayout>

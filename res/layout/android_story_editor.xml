@@ -11,7 +11,7 @@
         android:layout_alignParentRight="true"
         android:layout_alignParentTop="true"
         android:layout_margin="5dp"
-        android:text="@string/story_edit_title"
+        android:text="@string/Title"
         android:textStyle="bold" />
 
     <EditText
@@ -57,7 +57,7 @@
         android:layout_alignParentRight="true"
         android:layout_below="@+id/story_editor_title_edit"
         android:layout_margin="5dp"
-        android:text="@string/story_edit_author"
+        android:text="@string/Author"
         android:textStyle="bold" />
     
     <EditText

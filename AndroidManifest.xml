@@ -39,10 +39,6 @@
             android:label="@string/title_activity_fragment_view">
         </activity>
         <activity
-            android:name="ualberta.g12.adventurecreator.StoryViewActivity"
-            android:label="@string/title_activity_story_view" >
-        </activity>
-        <activity
             android:name="ualberta.g12.adventurecreator.ChoiceEditActivity"
             android:label="@string/title_activity_edit_choice"
             android:parentActivityName="ualberta.g12.adventurecreator.FragmentEditActivity" >

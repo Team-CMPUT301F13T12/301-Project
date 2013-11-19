@@ -15,7 +15,7 @@
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="21dp"
-        android:text="Title of story:" />
+        android:text="@string/Title_of_story:" />
 
     <TextView
         android:id="@+id/textView2"
@@ -24,7 +24,7 @@
         android:layout_alignLeft="@+id/textView1"
         android:layout_below="@+id/textView1"
         android:layout_marginTop="56dp"
-        android:text="Author of story:" />
+        android:text="@string/Author_of_story:" />
 
     <EditText
         android:id="@+id/editStoryTitle"
@@ -32,7 +32,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/textView1"
         android:layout_centerHorizontal="true"
-        android:hint="Title"
+        android:hint="@string/Title"
         android:ems="10" >
 
         <requestFocus />
@@ -44,7 +44,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/textView2"
         android:layout_centerHorizontal="true"
-        android:hint="Author"
+        android:hint="@string/Author"
         android:ems="10" />
 
     <Button
@@ -54,6 +54,6 @@
         android:layout_alignLeft="@+id/textView2"
         android:layout_below="@+id/editStoryAuthor"
         android:layout_marginTop="88dp"
-        android:text="Create!" />
+        android:text="@string/Create" />
 
 </RelativeLayout>
