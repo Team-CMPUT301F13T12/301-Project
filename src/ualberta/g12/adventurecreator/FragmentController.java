@@ -3,6 +3,7 @@ package ualberta.g12.adventurecreator;
 
 import android.util.Log;
 
+import java.io.File;
 import java.util.List;
 
 /**
@@ -151,6 +152,10 @@ public class FragmentController implements FController {
             if (displayOrder.get(i).equals("i"))
                 illustrationNum++;
         }
+        
+        //delete the associated file from memory
+        File ill = new File(illustrations.get(illustrationNum));
+        ill.delete();
 
         illustrations.remove(illustrationNum);
         frag.setIllustrations(illustrations);

@@ -381,7 +381,8 @@ public class FragmentEditActivity extends Activity implements FView<Fragment> {
                 //then write the picture to picturePath
                 try {
                     OutputStream outFile = new FileOutputStream(file);
-                    //TODO decide on quality size
+                    //TODO decide on quality size and figure out how 
+                    //to decrease picture dimensions?
                     bitmap.compress(Bitmap.CompressFormat.JPEG, 30, outFile);
                     outFile.flush();
                     outFile.close();
