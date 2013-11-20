@@ -47,7 +47,7 @@ import java.text.SimpleDateFormat;
 
 /**
  * Activity for editing a fragment. Will allow the author to add text,
- * illustrations, or choices for the current fragment. Upon button clicks, the
+ * illustration s, or choices for the current fragment. Upon button clicks, the
  * activity will save the current fragment information and take the user back to
  * the fragment list of the current story.
  */
@@ -329,40 +329,15 @@ public class FragmentEditActivity extends Activity implements FView<Fragment> {
                     }
                 }
                 try {
-
-                    Log.d(TAG, "path of image from camera" + picturePath + "");
-
                     BitmapFactory.Options bitmapOptions = new BitmapFactory.Options();
 
                     bitmap = BitmapFactory.decodeFile(f.getAbsolutePath(),
                             bitmapOptions);
-                    // String path = f.getPath();
 
-                    long picTime = System.currentTimeMillis();
-
-                    String newPicName = new SimpleDateFormat("yyyy-MM-dd HH.mm.ss").format(picTime);
-
-                    Log.d(TAG, "path of image from camera" + picturePath + "");
-                    picturePath = f.getPath();
-
-                    Log.d(TAG, "path of image from camera" + picturePath + "");
-
+                    Log.d(TAG, "path of image from camera" + f.getAbsolutePath() + "");
                     f.delete();
-                    OutputStream outFile = null;
-                    File file = new File(picturePath, String.valueOf(picTime) + ".jpg");
-                    Log.d(TAG, "path of image from camera" + picturePath + "");
-                    try {
-                        outFile = new FileOutputStream(file);
-                        bitmap.compress(Bitmap.CompressFormat.JPEG, 85, outFile);
-                        outFile.flush();
-                        outFile.close();
-                    } catch (FileNotFoundException e) {
-                        e.printStackTrace();
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
+                    
+                    
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -380,8 +355,46 @@ public class FragmentEditActivity extends Activity implements FView<Fragment> {
                 bitmap = (BitmapFactory.decodeFile(picturePath));
                 Log.d(TAG, "path of image from gallery" + picturePath + "");
             }
-            Log.d(TAG, "path of image END" + picturePath + "");
-            if (picturePath != null) {
+            
+            //following line modified from https://groups.google.com/forum/#!topic/android-developers/YjGcve7s5CQ
+            //by Derek
+            CharSequence appName = this.getResources().getText(this.getResources().getIdentifier("app_name", "string", this.getPackageName()));          
+            
+            File folder = new File(Environment.getExternalStorageDirectory().toString(), appName.toString());
+            Log.d(TAG, "path of folder " + folder.getAbsolutePath() + "");
+            boolean folderExists = true; //assume true
+
+            Log.d(TAG, "path of exist? " + folder.exists() + "");
+            if (!folder.exists()) {
+                folderExists = folder.mkdirs();
+                Log.d(TAG, "path of exists " + folderExists + "");
+            }
+            if (folderExists) {
+                //once folder exists finish creating picturePath
+                long picTime = System.currentTimeMillis();
+                String newPicName = new SimpleDateFormat("yyyy-MM-dd HH.mm.ss").format(picTime);
+                //TODO incorporate unique story ID in picture name
+                picturePath = folder.getAbsolutePath() + "/" + newPicName + ".jpg";
+                File file = new File(picturePath);
+                Log.d(TAG, "path of image preend " + picturePath + "");
+                
+                //then write the picture to picturePath
+                try {
+                    OutputStream outFile = new FileOutputStream(file);
+                    //TODO decide on quality size and figure out how 
+                    //to decrease picture dimensions?
+                    bitmap.compress(Bitmap.CompressFormat.JPEG, 30, outFile);
+                    outFile.flush();
+                    outFile.close();
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                
+                //finish by updating the fragment part
                 if (pictureMode.equals("Add")) {
                     System.out.println("add ill start");
                     fragmentController.addIllustration(fragment, picturePath, position);
@@ -391,8 +404,11 @@ public class FragmentEditActivity extends Activity implements FView<Fragment> {
                 }
                 saveFragment();
                 // fragmentPartListView.invalidateViews();
-            } else
-                Log.d(TAG, "picturePath returned is null");
+            } else {
+                //unable to create folder
+            }
+            
+            Log.d(TAG, "path of image END" + picturePath + "");
         }
     }
 
@@ -424,7 +440,6 @@ public class FragmentEditActivity extends Activity implements FView<Fragment> {
         setTitleAndPageId();
         // storyList.getAllStories().get(storyPos).getFragments().set(fragPos,
         // fragment);
-        Log.d(TAG, "set titel and page");
         storyController.setFragmentAtLocation(story, fragPos, fragment);
         // StoryList storyList = storyListController.;
         // offlineHelper.saveOfflineStories(storyList);

@@ -1,4 +1,3 @@
-
 package ualberta.g12.adventurecreator;
 
 import android.app.Activity;
@@ -13,10 +12,8 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 /**
- * Activity for viewing a fragment. Will allow the author to add text,
- * illustrations, or choices for the current fragment. Upon button clicks, the
- * activity will save the current fragment information and take the user back to
- * the fragment list of the current story.
+ * Activity for viewing a fragment.  User can follow choices and will
+ * be taken to the next fragment.
  */
 public class FragmentViewActivity extends Activity implements FView<Fragment> {
 
