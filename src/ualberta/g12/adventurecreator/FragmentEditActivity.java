@@ -353,56 +353,58 @@ public class FragmentEditActivity extends Activity implements FView<Fragment> {
                 Log.d(TAG, "path of image from gallery" + picturePath + "");
             }
             
-            //following line modified from https://groups.google.com/forum/#!topic/android-developers/YjGcve7s5CQ
-            //by Derek
-            CharSequence appName = this.getResources().getText(this.getResources().getIdentifier("app_name", "string", this.getPackageName()));          
-            
-            File folder = new File(Environment.getExternalStorageDirectory().toString(), appName.toString());
-            Log.d(TAG, "path of folder " + folder.getAbsolutePath() + "");
-            boolean folderExists = true; //assume true
-
-            Log.d(TAG, "path of exist? " + folder.exists() + "");
-            if (!folder.exists()) {
-                folderExists = folder.mkdirs();
-                Log.d(TAG, "path of exists " + folderExists + "");
-            }
-            if (folderExists) {
-                //once folder exists finish creating picturePath
-                long picTime = System.currentTimeMillis();
-                String newPicName = new SimpleDateFormat("yyyy-MM-dd HH.mm.ss").format(picTime);
-                //TODO incorporate unique story ID in picture name
-                picturePath = folder.getAbsolutePath() + "/" + newPicName + ".jpg";
-                File file = new File(picturePath);
-                Log.d(TAG, "path of image preend " + picturePath + "");
+            if (bitmap != null){
+                //following line modified from https://groups.google.com/forum/#!topic/android-developers/YjGcve7s5CQ
+                //by Derek
+                CharSequence appName = this.getResources().getText(this.getResources().getIdentifier("app_name", "string", this.getPackageName()));          
                 
-                //then write the picture to picturePath
-                try {
-                    OutputStream outFile = new FileOutputStream(file);
-                    //TODO decide on quality size and figure out how 
-                    //to decrease picture dimensions?
-                    bitmap.compress(Bitmap.CompressFormat.JPEG, 30, outFile);
-                    outFile.flush();
-                    outFile.close();
-                } catch (FileNotFoundException e) {
-                    e.printStackTrace();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                } catch (Exception e) {
-                    e.printStackTrace();
+                File folder = new File(Environment.getExternalStorageDirectory().toString(), appName.toString());
+                Log.d(TAG, "path of folder " + folder.getAbsolutePath() + "");
+                boolean folderExists = true; //assume true
+    
+                Log.d(TAG, "path of exist? " + folder.exists() + "");
+                if (!folder.exists()) {
+                    folderExists = folder.mkdirs();
+                    Log.d(TAG, "path of exists " + folderExists + "");
                 }
-                
-                //finish by updating the fragment part
-                if (pictureMode.equals("Add")) {
-                    System.out.println("add ill start");
-                    fragmentController.addIllustration(fragment, picturePath, position);
-                } else if (pictureMode.equals("Edit")) {
-                    fragmentController.deleteFragmentPart(fragment, position);
-                    fragmentController.addIllustration(fragment, picturePath, position);
+                if (folderExists) {
+                    //once folder exists finish creating picturePath
+                    long picTime = System.currentTimeMillis();
+                    String newPicName = new SimpleDateFormat("yyyy-MM-dd HH.mm.ss").format(picTime);
+                    //TODO incorporate unique story ID in picture name
+                    picturePath = folder.getAbsolutePath() + "/" + newPicName + ".jpg";
+                    File file = new File(picturePath);
+                    Log.d(TAG, "path of image preend " + picturePath + "");
+                    
+                    //then write the picture to picturePath
+                    try {
+                        OutputStream outFile = new FileOutputStream(file);
+                        //TODO decide on quality size and figure out how 
+                        //to decrease picture dimensions?
+                        bitmap.compress(Bitmap.CompressFormat.JPEG, 30, outFile);
+                        outFile.flush();
+                        outFile.close();
+                    } catch (FileNotFoundException e) {
+                        e.printStackTrace();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                    
+                    //finish by updating the fragment part
+                    if (pictureMode.equals("Add")) {
+                        System.out.println("add ill start");
+                        fragmentController.addIllustration(fragment, picturePath, position);
+                    } else if (pictureMode.equals("Edit")) {
+                        fragmentController.deleteFragmentPart(fragment, position);
+                        fragmentController.addIllustration(fragment, picturePath, position);
+                    }
+                    saveFragment();
+                    // fragmentPartListView.invalidateViews();
+                } else {
+                    //unable to create folder
                 }
-                saveFragment();
-                // fragmentPartListView.invalidateViews();
-            } else {
-                //unable to create folder
             }
             
             Log.d(TAG, "path of image END" + picturePath + "");
