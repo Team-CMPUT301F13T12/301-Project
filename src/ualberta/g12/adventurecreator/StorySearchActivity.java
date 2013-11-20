@@ -42,7 +42,7 @@ public class StorySearchActivity extends Activity implements LView<StoryList>, O
         storyList = AdventureCreator.getStoryList();
 
         // Load our local stories from the storyListModel
-        stories = storyList.getAllStories();
+        stories = new ArrayList<Story>(storyList.getAllStories());
 
         // Set up listView
         listView = (ListView) findViewById(R.id.story_search_activity_listview);
@@ -63,8 +63,12 @@ public class StorySearchActivity extends Activity implements LView<StoryList>, O
     private void handleIntent(Intent i) {
         // Set up the isAuthor flag
         isAuthor = i.getBooleanExtra(MainActivity.IS_AUTHOR_FLAG, false);
-        
-        if (SearchManager.QUERY.equals(i.getAction())) {
+
+        /*
+         * If it's null we don't have a search turn and don't have to change anything
+         */
+        if (i.getStringExtra(SearchManager.QUERY) != null) {
+            Log.d(TAG, "There was some Search stuff");
             String query = i.getStringExtra(SearchManager.QUERY).toLowerCase(Locale.CANADA);
             if (DEBUG)
                 Log.d(TAG, String.format("Search query was: %s", query));
@@ -77,6 +81,8 @@ public class StorySearchActivity extends Activity implements LView<StoryList>, O
     
     private void performSearch(){
         if (stories != null && this.query != null) {
+            if(DEBUG) Log.d(TAG, String.format("Searching for query: %s", this.query));
+            
             List<Story> sl = new ArrayList<Story>();
             sl.addAll(stories);
             if (DEBUG)

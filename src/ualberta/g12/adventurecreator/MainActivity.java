@@ -47,7 +47,7 @@ public class MainActivity extends Activity implements LView<StoryList>, OnItemCl
 
         // Load our local stories from the StoryList Model
         stories = storyList.getAllStories();
-
+        
         // //Erases previous saves - ONLY FOR TESTING - should be commented out
         // storyList = new StoryList();
         // offlineHelper.saveOfflineStories(storyList);
