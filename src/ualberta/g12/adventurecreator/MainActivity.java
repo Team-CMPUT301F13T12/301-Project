@@ -49,9 +49,6 @@ public class MainActivity extends Activity implements LView<StoryList>, OnItemCl
         // Load our local stories from the StoryList Model
         stories = storyList.getAllStories();
 
-        // Lets see who started us
-        handleIntent(getIntent());
-
         // //Erases previous saves - ONLY FOR TESTING - should be commented out
         // storyList = new StoryList();
         // offlineHelper.saveOfflineStories(storyList);
@@ -63,12 +60,20 @@ public class MainActivity extends Activity implements LView<StoryList>, OnItemCl
         listView.setAdapter(adapter);
         listView.setOnItemClickListener(this);
 
+        // Lets see who started us
+        if (DEBUG_LOG)
+            Log.d(TAG, "onCreate");
+        handleIntent(getIntent());
+
         offlineHelper = AdventureCreator.getOfflineIOHelper();
     }
 
     @Override
     protected void onNewIntent(Intent intent) {
         // If we got searched lets search
+        if (DEBUG_LOG)
+            Log.d(TAG, "onNewIntent");
+        setIntent(intent);
         handleIntent(intent);
     }
 
@@ -82,17 +87,30 @@ public class MainActivity extends Activity implements LView<StoryList>, OnItemCl
 
             if (stories != null) {
                 List<Story> sl = new ArrayList<Story>();
-                for (Story s : stories) {
+                sl.addAll(stories);
+                if (DEBUG_LOG)
+                    Log.d(TAG, String.format("SL: %d, stories: %d", sl.size(), stories.size()));
+                stories.clear();
+                for (Story s : sl) {
                     if (s.getStoryTitle() == null || s.getAuthor() == null) {
-
+                        // Do nothing this is a story with a null title or
+                        // author
                     } else {
                         if (s.getStoryTitle().toLowerCase(Locale.CANADA).contains(query)
                                 || s.getAuthor().toLowerCase(Locale.CANADA).contains(query)) {
-                            sl.add(s);
+                            if (DEBUG_LOG)
+                                Log.d(TAG, "Adding a story");
+                            stories.add(s);
                         }
                     }
                 }
-                stories = sl;
+
+                if (DEBUG_LOG)
+                    Log.d(TAG, String.format("SL: %d, stories: %d", sl.size(), stories.size()));
+
+                if (DEBUG_LOG)
+                    Log.d(TAG, "About to notify adapater");
+                adapter.notifyDataSetChanged();
             }
         }
     }
@@ -117,8 +135,6 @@ public class MainActivity extends Activity implements LView<StoryList>, OnItemCl
         super.onResume();
         SharedPreferences settings = getPreferences(MODE_PRIVATE);
         isAuthor = settings.getBoolean(SHARED_PREF_IS_AUTHOR_FLAG, false);
-        listView.invalidateViews();
-
     }
 
     @Override

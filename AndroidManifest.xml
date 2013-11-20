@@ -17,7 +17,9 @@
         
         <activity
             android:name="ualberta.g12.adventurecreator.MainActivity"
-            android:label="Adventures!" >
+            android:label="Adventures!" 
+            android:launchMode="singleTop"
+            >
             <meta-data android:name="android.app.searchable"
                 android:resource="@xml/story_search"
             />
