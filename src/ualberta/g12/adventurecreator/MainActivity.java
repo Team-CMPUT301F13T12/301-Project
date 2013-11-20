@@ -18,6 +18,7 @@ import android.widget.SearchView;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * Activity displayed for the start of the application. Allows the user to
@@ -73,7 +74,7 @@ public class MainActivity extends Activity implements LView<StoryList>, OnItemCl
 
     private void handleIntent(Intent intent) {
         if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
-            String query = intent.getStringExtra(SearchManager.QUERY);
+            String query = intent.getStringExtra(SearchManager.QUERY).toLowerCase(Locale.CANADA);
             if (DEBUG_LOG)
                 Log.d(TAG, String.format("Search query was: %s", query));
             // If we are here we want to reload the ListView with the searched
@@ -85,7 +86,8 @@ public class MainActivity extends Activity implements LView<StoryList>, OnItemCl
                     if (s.getStoryTitle() == null || s.getAuthor() == null) {
 
                     } else {
-                        if (s.getStoryTitle().contains(query) || s.getAuthor().contains(query)) {
+                        if (s.getStoryTitle().toLowerCase(Locale.CANADA).contains(query)
+                                || s.getAuthor().toLowerCase(Locale.CANADA).contains(query)) {
                             sl.add(s);
                         }
                     }
