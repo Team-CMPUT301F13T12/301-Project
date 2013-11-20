@@ -13,6 +13,7 @@
     <!-- MainActivity Menu Strings -->
     <string name="menu_check_box_author">Author Mode</string>
     <string name="menu_add_story">Add</string>
+    <string name="menu_random_story">Im Feeling Lucky!</string>
     <string name="title_activity_story_view">StoryViewActivity</string>
     <string name="hello_world">Hello world!</string>
 

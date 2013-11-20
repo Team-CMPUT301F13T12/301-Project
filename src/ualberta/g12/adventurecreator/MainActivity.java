@@ -2,6 +2,8 @@
 package ualberta.g12.adventurecreator;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -11,9 +13,12 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import java.util.List;
+import java.util.Random;
 
 /**
  * Activity displayed for the start of the application. Allows the user to
@@ -34,6 +39,7 @@ public class MainActivity extends Activity implements LView<StoryList>, OnItemCl
 
     private static final String SHARED_PREF_IS_AUTHOR_FLAG = "isAuthor";
     private static boolean isAuthor = false;
+    private Story currentRandStory;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -143,7 +149,58 @@ public class MainActivity extends Activity implements LView<StoryList>, OnItemCl
                 // Set the flag now
                 isAuthor = item.isChecked();
                 return true;
+                
+            case R.id.menu_random_story:
+            	if (!isAuthor && storyListController.getAllStories().size() > 0){
+            		//http://stackoverflow.com/questions/363681/generating-random-numbers-in-a-range-with-java
+            		Random random = new Random();
+            		int max = storyListController.getAllStories().size() -1;
+            	    int randPos = random.nextInt((max - 0) + 1) + 0;
+            	    
+            	     currentRandStory = storyListController.getStoryAtPos(randPos);
+                    int fragPos = currentRandStory.getStartFragPos();
+                    Fragment goToFrag = storyController.getFragmentAtPos(currentRandStory, fragPos);
+                    
+                    //http://www.androidsnippets.com/prompt-user-input-with-an-alertdialog
+                    AlertDialog.Builder popup = new AlertDialog.Builder(this);
+
+                    popup.setTitle("Title");
+                    popup.setMessage("Message");
+
+                    // display the fragments name
+                    TextView msg = new TextView(this);
+                    msg.setText("Going to go to: "+currentRandStory.getStoryTitle()+" OK?");
+                    popup.setView(msg);
+                   
+                    popup.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int whichButton) {
+                        Intent i = new Intent( getApplicationContext(), FragmentViewActivity.class);
+                        storyListController.getAllStories();
+                        int fragPos = currentRandStory.getStartFragPos();
+                        Fragment goToFrag = storyController.getFragmentAtPos(currentRandStory, fragPos);
+                        i.putExtra("Fragment", goToFrag);
+                        startActivity(i);
+                	    Log.d("Where am I going to ?","I'm going to go to FragmentViewAcvtivity!");
+                      }
+                    });
+
+                    popup.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                      public void onClick(DialogInterface dialog, int whichButton) {
+                        // Canceled.
+                      }
+                    });
+
+                    popup.show();
+                    
+                    
+
+            	    return true;
+            		
+            	}
+            	return true;
         }
+        
+        
         return super.onOptionsItemSelected(item);
     }
 

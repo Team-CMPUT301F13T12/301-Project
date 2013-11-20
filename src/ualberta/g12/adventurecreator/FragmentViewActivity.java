@@ -1,6 +1,8 @@
 
 package ualberta.g12.adventurecreator;
 
+import java.util.Random;
+
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -72,15 +74,28 @@ public class FragmentViewActivity extends Activity implements FView<Fragment> {
 
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
-                Fragment goToFrag = fragmentController.getLinkedToFragmentOfChoice(fragment, position);
-                
+            	Fragment goToFrag = null;
+            	if(fragment.getChoices().get(position).getisRandom()){
+            		boolean notSamePos = false;
+            		while(notSamePos == false){
+            			Random random = new Random();
+            			int max = fragment.getChoices().size() -1;
+            			int randPos = random.nextInt((max - 0) + 1) + 0;
+            			if (position != randPos){
+            				goToFrag = fragmentController.getLinkedToFragmentOfChoice(fragment, randPos);
+            				notSamePos = true;
+            			}
+            		}
+            	}else{
+            		goToFrag = fragmentController.getLinkedToFragmentOfChoice(fragment, position);
+            	}
                 if (goToFrag != null){
                     Intent intent = new Intent(FragmentViewActivity.this, FragmentViewActivity.class);
                     intent.putExtra("Fragment", goToFrag);
                     startActivity(intent);
                     //finish();
                 }
+                
             }
         });
     }

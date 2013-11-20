@@ -136,8 +136,11 @@ public class ChoiceEditActivity extends Activity {
             Log.d("the size of possible choices is ", String.format("%d", possibleChoices.size()));
         if (DEBUG)
             Log.d("the number of result is ", String.format("%d", result));
-        if (result != (possibleChoices.size() - 1)) {
+        if (result != (possibleChoices.size() - 1)||result != (possibleChoices.size() - 2)) {
             linkedPos = result;
+        }
+        if (result == (possibleChoices.size() - 1)) {
+            linkedPos = -420;
         }
     }
 
@@ -149,6 +152,7 @@ public class ChoiceEditActivity extends Activity {
             temp.add(fragList.get(i).getTitle());
         }
         temp.add("{NONE}");
+        temp.add("{RANDOM}");
         return temp;
     }
 
@@ -193,13 +197,15 @@ public class ChoiceEditActivity extends Activity {
         Fragment linkedFragment;
         if (linkedPos == -1){
             linkedFragment = null;
-
+            fragmentController.setLinkedFragmentOfChoice(fragment, choicePos, linkedFragment);
             Log.d(TAG, "entered, "+linkedFragment);
-        } else {
+        } else if (linkedPos == -420) {
+        	fragment.getChoices().get(choicePos).setisRandom(true);
+        }else {
             linkedFragment= storyController.getFragmentAtPos(story, linkedPos);
+            fragmentController.setLinkedFragmentOfChoice(fragment, choicePos, linkedFragment);
         }
-        Log.d(TAG, "linkedfrag, "+linkedFragment);
-        fragmentController.setLinkedFragmentOfChoice(fragment, choicePos, linkedFragment);
+        //Log.d(TAG, "linkedfrag, "+linkedFragment);
         // TODO needs to be checked;need controller
         // choice.setChoiceText(Title);
         // choice.setLinkedToFragmentPos(linkedPos);

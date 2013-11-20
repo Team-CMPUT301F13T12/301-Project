@@ -6,6 +6,13 @@
         android:orderInCategory="100"
         android:showAsAction="always"
         android:title="@string/menu_add_story"/>
+    
+        <item
+        android:id="@+id/menu_random_story"
+        android:icon="@android:drawable/ic_menu_help"
+        android:orderInCategory="100"
+        android:showAsAction="always"
+        android:title="@string/menu_random_story"/>
 
     <group android:checkableBehavior="all" >
         <item
