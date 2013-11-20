@@ -94,6 +94,7 @@ public class Choice implements Serializable {
         out.writeObject(this.choiceText);
         out.writeObject(this.linkedToFragment);
         out.writeObject(this.linkedToFragmentPos);
+        out.writeObject(this.isRandom);
 
     }
 
@@ -102,5 +103,6 @@ public class Choice implements Serializable {
         this.choiceText = (String) in.readObject();
         this.linkedToFragment = (Fragment) in.readObject();
         this.linkedToFragmentPos = (Integer) in.readObject();
+        this.isRandom = (Boolean)in.readObject();
     }
 }

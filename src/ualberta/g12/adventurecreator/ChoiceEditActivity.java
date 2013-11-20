@@ -201,6 +201,8 @@ public class ChoiceEditActivity extends Activity {
             Log.d(TAG, "entered, "+linkedFragment);
         } else if (linkedPos == -420) {
         	fragment.getChoices().get(choicePos).setisRandom(true);
+        	Log.d("YEP", "HAS BEEN SET");
+        	System.out.println(fragment.getChoices().get(choicePos).getisRandom());
         }else {
             linkedFragment= storyController.getFragmentAtPos(story, linkedPos);
             fragmentController.setLinkedFragmentOfChoice(fragment, choicePos, linkedFragment);
