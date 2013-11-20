@@ -103,18 +103,18 @@ public class FragmentController implements FController {
         List<String> illustrations = frag.getIllustrations();
         List<String> displayOrder = frag.getDisplayOrder();
 
-        System.out.println("add ill start2");
+        Log.d(TAG,"add ill start2");
         // check for invalid dispNum
         if (displayOrder.size() < dispNum)
             return false;
-        System.out.println("ill 3");
+        Log.d(TAG,"ill 3");
         // Insert the text segment
         int illNum = 0;
         for (int i = 0; i < dispNum; i++) {
             if (displayOrder.get(i).equals("i"))
                 illNum++;
         }
-        System.out.println("illNum " + illNum);
+        Log.d("illNum ", String.format("%d", illNum));
         if (illustrations.size() == illNum) {
             illustrations.add(illustration);
         } else {
@@ -126,8 +126,8 @@ public class FragmentController implements FController {
 
         frag.setDisplayOrder(displayOrder);
         frag.setIllustrations(illustrations);
-        System.out.println("ill disord " + displayOrder.toString());
-        System.out.println("ill size " + illustrations.size());
+        Log.d("ill disord ", String.format("%d", displayOrder.toString()));
+        Log.d("ill size ", String.format("%d", illustrations.size()));
 
         return true;
     }

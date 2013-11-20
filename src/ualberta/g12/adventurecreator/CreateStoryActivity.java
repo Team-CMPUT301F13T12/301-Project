@@ -18,7 +18,7 @@ import android.widget.EditText;
 public class CreateStoryActivity extends Activity {
     private Story story;
     private StoryList storyList;
-    private OfflineIOHelper offlineHelper = new OfflineIOHelper(CreateStoryActivity.this);
+    //private OfflineIOHelper offlineHelper = new OfflineIOHelper(CreateStoryActivity.this);
     private int storyPos;
     private StoryListController storyListController = AdventureCreatorApplication
             .getStoryListController();

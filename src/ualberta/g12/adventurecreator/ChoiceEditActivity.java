@@ -23,18 +23,12 @@ import java.util.List;
  * within the same story to link the selected fragment to.
  */
 public class ChoiceEditActivity extends Activity {
-    private int ourFragmentId;
-    private int ourStoryId;
     private Story story;
-    private List<Fragment> ourFragmentList;
-    private int userPicked;
     private List<String> possibleChoices;
-    private int requestKey;
     private int storyPos, fragPos, choicePos, linkedPos = -1;
     private StoryList storyList;
     private Fragment fragment;
     private static final String TAG = "ChoiceEditActivity";
-    private OfflineIOHelper offlineHelper = new OfflineIOHelper(ChoiceEditActivity.this);
     private EditText myTitleET;
     private StoryListController storyListController = AdventureCreatorApplication
             .getStoryListController();
@@ -192,7 +186,7 @@ public class ChoiceEditActivity extends Activity {
         // TODO CHANGE THIS AND REFACTOR ALL CODE IN CLASS
         String Title = myTitleET.getText().toString();
         // Choice newChoice = new Choice();
-        Choice choice = fragment.getChoices().get(choicePos);
+        //Choice choice = fragment.getChoices().get(choicePos);
         fragmentController.setChoiceTextAtPos(fragment, choicePos, Title);
         fragmentController.setLinkedFragmentPosOfChoice(fragment, choicePos, linkedPos);
         Log.d(TAG, "linkedpos, "+linkedPos);
