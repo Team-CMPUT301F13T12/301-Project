@@ -16,7 +16,6 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 import android.widget.SearchView;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
@@ -35,7 +34,7 @@ public class MainActivity extends Activity implements LView<StoryList>, OnItemCl
     private StoryListArrayAdapter adapter;
     private OfflineIOHelper offlineHelper;
 
-    private static final String SHARED_PREF_IS_AUTHOR_FLAG = "isAuthor";
+    public static final String IS_AUTHOR_FLAG = "isAuthor";
     private static boolean isAuthor = false;
 
     @Override
@@ -61,8 +60,6 @@ public class MainActivity extends Activity implements LView<StoryList>, OnItemCl
         listView.setOnItemClickListener(this);
 
         // Lets see who started us
-        if (DEBUG_LOG)
-            Log.d(TAG, "onCreate");
         handleIntent(getIntent());
 
         offlineHelper = AdventureCreator.getOfflineIOHelper();
@@ -71,8 +68,6 @@ public class MainActivity extends Activity implements LView<StoryList>, OnItemCl
     @Override
     protected void onNewIntent(Intent intent) {
         // If we got searched lets search
-        if (DEBUG_LOG)
-            Log.d(TAG, "onNewIntent");
         setIntent(intent);
         handleIntent(intent);
     }
@@ -80,38 +75,10 @@ public class MainActivity extends Activity implements LView<StoryList>, OnItemCl
     private void handleIntent(Intent intent) {
         if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
             String query = intent.getStringExtra(SearchManager.QUERY).toLowerCase(Locale.CANADA);
-            if (DEBUG_LOG)
-                Log.d(TAG, String.format("Search query was: %s", query));
-            // If we are here we want to reload the ListView with the searched
-            // things
-
-            if (stories != null) {
-                List<Story> sl = new ArrayList<Story>();
-                sl.addAll(stories);
-                if (DEBUG_LOG)
-                    Log.d(TAG, String.format("SL: %d, stories: %d", sl.size(), stories.size()));
-                stories.clear();
-                for (Story s : sl) {
-                    if (s.getStoryTitle() == null || s.getAuthor() == null) {
-                        // Do nothing this is a story with a null title or
-                        // author
-                    } else {
-                        if (s.getStoryTitle().toLowerCase(Locale.CANADA).contains(query)
-                                || s.getAuthor().toLowerCase(Locale.CANADA).contains(query)) {
-                            if (DEBUG_LOG)
-                                Log.d(TAG, "Adding a story");
-                            stories.add(s);
-                        }
-                    }
-                }
-
-                if (DEBUG_LOG)
-                    Log.d(TAG, String.format("SL: %d, stories: %d", sl.size(), stories.size()));
-
-                if (DEBUG_LOG)
-                    Log.d(TAG, "About to notify adapater");
-                adapter.notifyDataSetChanged();
-            }
+            Intent searchIntent = new Intent(getApplicationContext(), StorySearchActivity.class);
+            searchIntent.putExtra(SearchManager.QUERY, query);
+            searchIntent.putExtra(MainActivity.IS_AUTHOR_FLAG, isAuthor);
+            startActivity(searchIntent);
         }
     }
 
@@ -134,7 +101,7 @@ public class MainActivity extends Activity implements LView<StoryList>, OnItemCl
     public void onResume() {
         super.onResume();
         SharedPreferences settings = getPreferences(MODE_PRIVATE);
-        isAuthor = settings.getBoolean(SHARED_PREF_IS_AUTHOR_FLAG, false);
+        isAuthor = settings.getBoolean(IS_AUTHOR_FLAG, false);
     }
 
     @Override
@@ -143,7 +110,7 @@ public class MainActivity extends Activity implements LView<StoryList>, OnItemCl
 
         SharedPreferences settings = getPreferences(MODE_PRIVATE);
         SharedPreferences.Editor editor = settings.edit();
-        editor.putBoolean(SHARED_PREF_IS_AUTHOR_FLAG, isAuthor);
+        editor.putBoolean(IS_AUTHOR_FLAG, isAuthor);
 
         // Commit the edits
         editor.commit();
