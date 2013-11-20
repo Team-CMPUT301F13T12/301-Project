@@ -27,11 +27,15 @@ public class FragmentController implements FController {
         frag.setTitle(newTitle);
     }
 
-    public FragmentPart<?> addNewFragmentPart(Fragment frag, String type){
+    public FragmentPart<?> addNewFragmentPart(Fragment frag, String type, int pos){
         FragmentPartFactory factory = new FragmentPartFactory();
         FragmentPart<?> newPart = factory.createFragmentPart(type);
         List<FragmentPart<?>> parts = frag.getParts();
-        parts.add(newPart);
+        try{
+            parts.add(pos, newPart);
+        } catch (IndexOutOfBoundsException e){
+            return null;
+        }
         frag.setParts(parts);
         return newPart;
     }

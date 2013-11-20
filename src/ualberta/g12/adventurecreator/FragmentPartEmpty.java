@@ -4,7 +4,7 @@ public class FragmentPartEmpty extends FragmentPart<String> {
     String text;
     
     public FragmentPartEmpty(){
-        this.text = "New Text";
+        this.text = "";
     }
 
     @Override

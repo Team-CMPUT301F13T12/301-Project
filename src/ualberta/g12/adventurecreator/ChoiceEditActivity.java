@@ -24,6 +24,7 @@ import java.util.List;
  */
 public class ChoiceEditActivity extends Activity {
     private Story story;
+    private Choice choice;
     private List<String> possibleChoices;
     private int storyPos, fragPos, choicePos, linkedPos = -1;
     private StoryList storyList;
@@ -55,7 +56,7 @@ public class ChoiceEditActivity extends Activity {
         Intent editChoiceIntent = getIntent();
         storyPos = (Integer) editChoiceIntent.getSerializableExtra("StoryPos");
         fragPos = (Integer) editChoiceIntent.getSerializableExtra("FragmentPos");
-        choicePos = (Integer) editChoiceIntent.getSerializableExtra("ChoicePos");
+        choice = (Choice) editChoiceIntent.getSerializableExtra("Choice");
 
         Log.d(TAG,"got intents");
         
@@ -187,8 +188,9 @@ public class ChoiceEditActivity extends Activity {
         String Title = myTitleET.getText().toString();
         // Choice newChoice = new Choice();
         //Choice choice = fragment.getChoices().get(choicePos);
-        fragmentController.setChoiceTextAtPos(fragment, choicePos, Title);
-        fragmentController.setLinkedFragmentPosOfChoice(fragment, choicePos, linkedPos);
+        choice.setChoiceText(Title);
+        choice.setLinkedToFragmentPos(linkedPos);
+        
         Log.d(TAG, "linkedpos, "+linkedPos);
         Fragment linkedFragment;
         if (linkedPos == -1){
@@ -199,7 +201,7 @@ public class ChoiceEditActivity extends Activity {
             linkedFragment= storyController.getFragmentAtPos(story, linkedPos);
         }
         Log.d(TAG, "linkedfrag, "+linkedFragment);
-        fragmentController.setLinkedFragmentOfChoice(fragment, choicePos, linkedFragment);
+        choice.setLinkedToFragment(linkedFragment);
         // TODO needs to be checked;need controller
         // choice.setChoiceText(Title);
         // choice.setLinkedToFragmentPos(linkedPos);
