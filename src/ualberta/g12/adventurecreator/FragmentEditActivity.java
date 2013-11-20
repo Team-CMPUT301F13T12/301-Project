@@ -128,8 +128,8 @@ public class FragmentEditActivity extends Activity implements FView<Fragment> {
     public boolean onOptionsItemSelected(MenuItem item) {
         // TODO Auto-generated method stub
         switch (item.getItemId()) {
-            case R.id.add_option:
-                return true;
+          //  case R.id.add_option:
+           //     return true;
 
             case R.id.save_fragment:
                 // Save values
