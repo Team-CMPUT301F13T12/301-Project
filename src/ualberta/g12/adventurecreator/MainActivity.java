@@ -2,6 +2,8 @@
 package ualberta.g12.adventurecreator;
 
 import android.app.Activity;
+import android.app.SearchManager;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -12,13 +14,15 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
+import android.widget.SearchView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Activity displayed for the start of the application. Allows the user to browse through available
- * stories, and edit or read those stories depending on what mode they are in.
- *
+ * Activity displayed for the start of the application. Allows the user to
+ * browse through available stories, and edit or read those stories depending on
+ * what mode they are in.
  */
 public class MainActivity extends Activity implements LView<StoryList>, OnItemClickListener {
 
@@ -37,43 +41,70 @@ public class MainActivity extends Activity implements LView<StoryList>, OnItemCl
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        
+
         // Get our storyList instance from the application
         storyList = AdventureCreator.getStoryList();
-        
-//        //Erases previous saves - ONLY FOR TESTING - should be commented out 
-//        storyList = new StoryList();
-//        offlineHelper.saveOfflineStories(storyList); 
+
+        // Load our local stories from the StoryList Model
+        stories = storyList.getAllStories();
+
+        // Lets see who started us
+        handleIntent(getIntent());
+
+        // //Erases previous saves - ONLY FOR TESTING - should be commented out
+        // storyList = new StoryList();
+        // offlineHelper.saveOfflineStories(storyList);
 
         listView = (ListView) findViewById(R.id.main_activity_listview);
+
+        // Set up ListView Stuff
+        adapter = new StoryListArrayAdapter(this, R.layout.listview_story_list, stories);
+        listView.setAdapter(adapter);
+        listView.setOnItemClickListener(this);
+
+        offlineHelper = AdventureCreator.getOfflineIOHelper();
     }
-    
+
+    @Override
+    protected void onNewIntent(Intent intent) {
+        // If we got searched lets search
+        handleIntent(intent);
+    }
+
+    private void handleIntent(Intent intent) {
+        if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
+            String query = intent.getStringExtra(SearchManager.QUERY);
+            if (DEBUG_LOG)
+                Log.d(TAG, String.format("Search query was: %s", query));
+            // If we are here we want to reload the ListView with the searched
+            // things
+
+            if (stories != null) {
+                List<Story> sl = new ArrayList<Story>();
+                for (Story s : stories) {
+                    if (s.getStoryTitle() == null || s.getAuthor() == null) {
+
+                    } else {
+                        if (s.getStoryTitle().contains(query) || s.getAuthor().contains(query)) {
+                            sl.add(s);
+                        }
+                    }
+                }
+                stories = sl;
+            }
+        }
+    }
+
     @Override
     protected void onStart() {
         super.onStart();
 
-      // Load our local stories from the StoryList Model
-      storyList = AdventureCreator.getStoryList();
-      if(storyList == null){
-    	  storyList = AdventureCreator.getStoryList();
-      }
-      stories = storyList.getAllStories();
-      
-      if (DEBUG_LOG)
-          Log.d(TAG, String.format("Number of stories is: %d", stories.size()));
-      // Add ourself to the StoryList Model
-      storyList.addView(this);
-      
-      offlineHelper = AdventureCreator.getOfflineIOHelper();
-      
-      // Set up ListView Stuff
-      adapter = new StoryListArrayAdapter(this, R.layout.listview_story_list, stories);
-      listView.setAdapter(adapter);
-      listView.setOnItemClickListener(this);
+        // Add ourself to the StoryList Model
+        storyList.addView(this);
     }
-    
+
     @Override
-    public void onDestroy(){
+    public void onDestroy() {
         super.onDestroy();
         // Remove ourselves from the story list
         storyList.deleteView(this);
@@ -104,6 +135,11 @@ public class MainActivity extends Activity implements LView<StoryList>, OnItemCl
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.main, menu);
+
+        // Associate searchable configuration with the searchview
+        SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
+        SearchView searchView = (SearchView) menu.findItem(R.id.story_search).getActionView();
+        searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
         return true;
     }
 
@@ -122,10 +158,10 @@ public class MainActivity extends Activity implements LView<StoryList>, OnItemCl
                 int storyPos = storyList.getAllStories().size();
                 Story story = new Story();
                 storyList.addStory(story);
-                
-                //save the newly added story
+
+                // save the newly added story
                 offlineHelper.saveOfflineStories(storyList);
-                
+
                 Intent i = new Intent(this, CreateStoryActivity.class);
                 i.putExtra("StoryPos", storyPos);
                 startActivity(i);
@@ -185,10 +221,10 @@ public class MainActivity extends Activity implements LView<StoryList>, OnItemCl
 
             i = new Intent(this, EditFragmentActivity.class);
             i.putExtra("Mode", "View");
-            i.putExtra("StoryPos",pos);
+            i.putExtra("StoryPos", pos);
             i.putExtra("FragmentPos", fragPos);
             startActivity(i);
         }
-        
+
     }
 }

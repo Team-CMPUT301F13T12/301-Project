@@ -8,7 +8,9 @@
     <string name="title_activity_activity_read_story">Activity_read_story</string>
 
     <!-- MainActivity Strings -->
-
+    <string name="story_search_title">Search</string>
+    <string name="story_search_hint">Search for a story...</string>
+    
 
     <!-- MainActivity Menu Strings -->
     <string name="menu_check_box_author">Author Mode</string>
