@@ -37,6 +37,7 @@ public class StoryList extends LModel implements Serializable {
      */
     public void setAllStories(List<Story> stories) {
         this.stories = stories;
+        notifyViews();
     }
 
     /**
