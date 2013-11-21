@@ -18,7 +18,6 @@ import android.widget.EditText;
 public class CreateStoryActivity extends Activity {
     private Story story;
     private StoryList storyList;
-    private OfflineIOHelper offlineHelper;
     private StoryListController storyListController;
     private StoryController storyController;
     private int storyPos;
@@ -29,7 +28,6 @@ public class CreateStoryActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_story);
 
-        offlineHelper = AdventureCreator.getOfflineIOHelper();
         createButton = (Button) findViewById(R.id.editTextSave);
 
         storyListController = AdventureCreator.getStoryListController();
@@ -90,6 +88,7 @@ public class CreateStoryActivity extends Activity {
     }
 
     private void saveStory() {
+        storyListController.setStory(story, storyPos);
         storyListController.saveOfflineStories(storyList);
     }
 }
