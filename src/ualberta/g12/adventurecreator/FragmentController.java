@@ -126,8 +126,6 @@ public class FragmentController implements FController {
 
         frag.setDisplayOrder(displayOrder);
         frag.setIllustrations(illustrations);
-        Log.d("ill disord ", String.format("%d", displayOrder.toString()));
-        Log.d("ill size ", String.format("%d", illustrations.size()));
 
         return true;
     }
