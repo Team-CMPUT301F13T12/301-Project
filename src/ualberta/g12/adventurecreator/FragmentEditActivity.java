@@ -52,23 +52,35 @@ import java.text.SimpleDateFormat;
  */
 public class FragmentEditActivity extends Activity implements FView<Fragment> {
 
-    private int position;
-    public int picturePosition;
+    // UI Objects
+    private EditText editTitleText;
     private ListView fragmentPartListView;
     private FragmentPartAdapter adapter;
-    private FragmentController fragmentController;
-    public static final int EDIT = 0;
-    public static final int ADD = 1;
-    private EditText editTitleText;
-    private static final String TAG = "FragmentEditActivity";
+    
+    // Fragment stuff
+    private Fragment fragment;
+    private int position;
+    public int picturePosition;
     private String pictureMode;
+
     private StoryList storyList;
     private Story story;
     private int storyPos, fragPos;
-    private Fragment fragment;
+    
+    // Controllers
     private StoryListController storyListController;
     private StoryController storyController;
+    private FragmentController fragmentController;
+    
+    // Constants
+    public static final int EDIT = 0;
+    public static final int ADD = 1;
 
+    // Logging info
+    private static final String TAG = "FragmentEditActivity";
+    private static final boolean DEBUG = true;
+    
+    
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -86,37 +98,38 @@ public class FragmentEditActivity extends Activity implements FView<Fragment> {
         // get widget references
         fragmentPartListView = (ListView) findViewById(R.id.FragmentPartList);
         editTitleText = (EditText) findViewById(R.id.fragmentTitle);
-
-    }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-
-        // TODO: This should be in its own method
-
+        
         // load save file
         storyList = AdventureCreator.getStoryList();
         story = storyList.getAllStories().get(storyPos);
         fragment = story.getFragments().get(fragPos);
 
-        // Make sure we have at least one part
-        if (fragment.getDisplayOrder().size() == 0) {
+        // Load title
+        editTitleText.setText(fragment.getTitle());
+        
+        // Make user we have at least one part
+        if(fragment.getDisplayOrder().size() == 0){
             fragmentController.addEmptyPart(fragment);
         }
-
-        // First load fragment parts as that is the same for both modes
-        // Loads fragment parts (text, images, videos, sounds, etc)
+        
         adapter = new FragmentPartAdapter(this, R.layout.activity_fragment_editor, fragment);
         fragmentPartListView.setAdapter(adapter);
-
-        // want the context menu for list parts
+        
+        // Need some context menu for the list parts
         registerForContextMenu(fragmentPartListView);
+        
+    }
 
-        // Loads title
-        if (editTitleText != null) 
-            editTitleText.setText(fragment.getTitle());
-
+    @Override
+    protected void onStart() {
+        super.onStart();
+        fragment.addView(this);
+    }
+    
+    @Override
+    protected void onDestroy(){
+        super.onDestroy();
+        fragment.deleteView(this);
     }
 
     @Override
@@ -147,8 +160,10 @@ public class FragmentEditActivity extends Activity implements FView<Fragment> {
 
     @Override
     public void update(Fragment model) {
-        // TODO reload all fields based on new info from model
-
+        editTitleText.setText(model.getTitle());
+        
+        fragment = model;
+        adapter.notifyDataSetChanged();
     }
 
     @Override

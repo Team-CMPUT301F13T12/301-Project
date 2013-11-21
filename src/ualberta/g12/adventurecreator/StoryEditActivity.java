@@ -48,6 +48,9 @@ public class StoryEditActivity extends Activity implements SView<Story> {
     private FragmentListArrayAdapter adapter;
     private int storyId, storyPos;
     private List<Fragment> fragmentList;
+    
+    // Logging
+    private static final String TAG = "StoryEditActivity";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -157,7 +160,7 @@ public class StoryEditActivity extends Activity implements SView<Story> {
         authorText.setText(model.getAuthor());
 
         story = model;
-
+        Log.d(TAG, "Updating");
         // populate the fragment list
         adapter.notifyDataSetChanged();
     }
