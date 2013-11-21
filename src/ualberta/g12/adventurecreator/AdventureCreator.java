@@ -2,27 +2,46 @@
 package ualberta.g12.adventurecreator;
 
 import android.app.Application;
+import android.content.Context;
+import android.util.Log;
 
 /**
  * Application object for the Application. Used as a static singleton throughout
  * other activities which returns other singletons
  */
-public class AdventureCreatorApplication extends Application {
+public class AdventureCreator extends Application {
+
+    private static final String TAG = "AdventureCreatorApplication";
+    private static boolean DEBUG = true;
+
     // So many singletons!
     private transient static StoryController storyController = null;
     private transient static FragmentController fragmentController = null;
     private transient static StoryList storyList;
     private transient static StoryListController storyListController = null;
+    private transient static OfflineIOHelper offlineIOHelper = null;
+
+    private static Context context;
+
+    @Override
+    public void onCreate() {
+        super.onCreate();
+        context = getApplicationContext();
+    }
 
     /**
-     * Returns the StoryList Singleton. If one doesn't exist, we initialize it
+     * Returns the StoryList Singleton. If one currently doesn't exist, we try
+     * and load it from the OfflineIOHelper. If that doesn't work, we create a
+     * new StoryList and return that.
      * 
      * @return the StoryList singleton
      */
     public static StoryList getStoryList() {
-
         if (storyList == null) {
-            storyList = new StoryList();
+            storyList = getOfflineIOHelper().loadOfflineStories();
+            if (storyList == null) {
+                storyList = new StoryList();
+            }
         }
         return storyList;
     }
@@ -35,7 +54,7 @@ public class AdventureCreatorApplication extends Application {
      */
     public static StoryListController getStoryListController() {
         if (storyListController == null) {
-            storyListController = new StoryListController(getStoryList());
+            storyListController = new StoryListController(getStoryList(), getOfflineIOHelper());
         }
         return storyListController;
     }
@@ -66,5 +85,17 @@ public class AdventureCreatorApplication extends Application {
         return fragmentController;
     }
 
+    /**
+     * Returns the OfflineIOHelper Singleton. If one doesn't exist, we
+     * initialize it and then return it
+     * 
+     * @return the OfflineIOHelper Singleton
+     */
+    public static OfflineIOHelper getOfflineIOHelper() {
+        if (offlineIOHelper == null) {
+            offlineIOHelper = new OfflineIOHelper(context);
+        }
+        return offlineIOHelper;
+    }
     // TODO: Implement getters for all of the singletons
 }

@@ -56,8 +56,7 @@ public class FragmentEditActivity extends Activity implements FView<Fragment> {
     public int picturePosition;
     private ListView fragmentPartListView;
     private FragmentPartAdapter adapter;
-    private FragmentController fragmentController = AdventureCreatorApplication
-            .getFragmentController();
+    private FragmentController fragmentController;
     public static final int EDIT = 0;
     public static final int ADD = 1;
     private EditText editTitleText;
@@ -67,15 +66,18 @@ public class FragmentEditActivity extends Activity implements FView<Fragment> {
     private Story story;
     private int storyPos, fragPos;
     private Fragment fragment;
-    private StoryListController storyListController = AdventureCreatorApplication
-            .getStoryListController();
-    private StoryController storyController = AdventureCreatorApplication.getStoryController();
+    private StoryListController storyListController;
+    private StoryController storyController;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_fragment_editor);
 
+        storyListController = AdventureCreator.getStoryListController();
+        storyController = AdventureCreator.getStoryController();
+        fragmentController = AdventureCreator.getFragmentController();
+        
         // obtain the intent
         Intent editActIntent = getIntent();
         storyPos = (Integer) editActIntent.getSerializableExtra("StoryPos");
@@ -94,9 +96,9 @@ public class FragmentEditActivity extends Activity implements FView<Fragment> {
         // TODO: This should be in its own method
 
         // load save file
-        storyList = storyListController.loadStoryOffline(this);
-        story = storyListController.getAllStories().get(storyPos);
-        fragment = storyController.getFragmentAtPos(story, fragPos);
+        storyList = AdventureCreator.getStoryList();
+        story = storyList.getAllStories().get(storyPos);
+        fragment = story.getFragments().get(fragPos);
 
         // Make sure we have at least one part
         if (fragment.getDisplayOrder().size() == 0) {
@@ -435,11 +437,7 @@ public class FragmentEditActivity extends Activity implements FView<Fragment> {
         Log.d(TAG, "removed empty");
 
         setTitleAndPageId();
-        // storyList.getAllStories().get(storyPos).getFragments().set(fragPos,
-        // fragment);
         storyController.setFragmentAtLocation(story, fragPos, fragment);
-        // StoryList storyList = storyListController.;
-        // offlineHelper.saveOfflineStories(storyList);
-        storyListController.saveOfflineStories(this, storyList);
+        storyListController.saveOfflineStories(storyList);
     }
 }

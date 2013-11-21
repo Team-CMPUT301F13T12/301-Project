@@ -31,20 +31,20 @@ public class StoryEditActivity extends Activity implements SView<Story> {
     public static final String INTENT_STORY_ID = "storyid";
     public static final int INVALID_STORY_ID = -1;
 
-    // edit or add contents
+    // edit or add constants
     public static final int EDIT = 0;
     public static final int ADD = 1;
 
     // Logging info
-   // private static final String TAG = "StoryEditActivity";
-   // private static final boolean DEBUG_LOG = true;
+    // private static final String TAG = "StoryEditActivity";
+    // private static final boolean DEBUG_LOG = true;
 
     // UI Elements
     private EditText titleText;
     private EditText authorText;
     private ListView lView;
 
-    private OfflineIOHelper offlineHelper = new OfflineIOHelper(StoryEditActivity.this);
+    private OfflineIOHelper offlineHelper;
     private FragmentListArrayAdapter adapter;
     private int storyId, storyPos;
     private List<Fragment> fragmentList;
@@ -58,10 +58,23 @@ public class StoryEditActivity extends Activity implements SView<Story> {
         Intent i = getIntent();
         storyPos = (Integer) i.getSerializableExtra("StoryPos");
 
+        offlineHelper = AdventureCreator.getOfflineIOHelper();
+
+        storyList = AdventureCreator.getStoryList();
+
+        story = storyList.getAllStories().get(storyPos);
+
         // get widget references
         titleText = (EditText) findViewById(R.id.story_editor_title_edit);
         authorText = (EditText) findViewById(R.id.story_editor_author_edit);
+        titleText.setText(story.getStoryTitle());
+        authorText.setText(story.getAuthor());
+
         lView = (ListView) findViewById(R.id.story_editor_listview);
+        fragmentList = story.getFragments();
+
+        adapter = new FragmentListArrayAdapter(this, R.layout.listview_fragment_list, fragmentList);
+        lView.setAdapter(adapter);
 
         // Set up all listeners
         setUpOnClickListeners();
@@ -71,8 +84,13 @@ public class StoryEditActivity extends Activity implements SView<Story> {
     @Override
     protected void onStart() {
         super.onStart();
-        update(story);
+        story.addView(this);
+    }
 
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        story.deleteView(this);
     }
 
     @Override
@@ -94,7 +112,6 @@ public class StoryEditActivity extends Activity implements SView<Story> {
         {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id)
             {
-                //Fragment selectedFrag = fragmentList.get(position);
                 openEditFragment(position);
             }
         });
@@ -135,22 +152,14 @@ public class StoryEditActivity extends Activity implements SView<Story> {
 
     @Override
     public void update(Story model) {
-        // Update our local story variable
-        // Reload value from our story into fields - notify adapter our
-        // story has changed
-        storyList = offlineHelper.loadOfflineStories();
-
-        story = storyList.getAllStories().get(storyPos);
-
         // update title and author
-        titleText.setText(story.getStoryTitle());
-        authorText.setText(story.getAuthor());
+        titleText.setText(model.getStoryTitle());
+        authorText.setText(model.getAuthor());
+
+        story = model;
 
         // populate the fragment list
-        fragmentList = story.getFragments();
-        adapter = new FragmentListArrayAdapter(this, R.layout.listview_fragment_list, fragmentList);
-        lView.setAdapter(adapter);
-
+        adapter.notifyDataSetChanged();
     }
 
     /**

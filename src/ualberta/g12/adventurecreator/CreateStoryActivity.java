@@ -18,11 +18,10 @@ import android.widget.EditText;
 public class CreateStoryActivity extends Activity {
     private Story story;
     private StoryList storyList;
-    //private OfflineIOHelper offlineHelper = new OfflineIOHelper(CreateStoryActivity.this);
+    private OfflineIOHelper offlineHelper;
+    private StoryListController storyListController;
+    private StoryController storyController;
     private int storyPos;
-    private StoryListController storyListController = AdventureCreatorApplication
-            .getStoryListController();
-    private StoryController storyController = AdventureCreatorApplication.getStoryController();
     private Button createButton;
 
     @Override
@@ -30,7 +29,11 @@ public class CreateStoryActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_story);
 
+        offlineHelper = AdventureCreator.getOfflineIOHelper();
         createButton = (Button) findViewById(R.id.editTextSave);
+
+        storyListController = AdventureCreator.getStoryListController();
+        storyController = AdventureCreator.getStoryController();
 
         // obtain the intent
         Intent editActIntent = getIntent();
@@ -42,10 +45,8 @@ public class CreateStoryActivity extends Activity {
     @Override
     protected void onStart() {
         super.onStart();
-        // storyList = offlineHelper.loadOfflineStories();
-        // story = storyList.getAllStories().get(storyPos);
-        storyList = storyListController.loadStoryOffline(this);
-        story = storyListController.getAllStories().get(storyPos);
+        storyList = AdventureCreator.getStoryList();
+        story = storyList.getAllStories().get(storyPos);
     }
 
     @Override
@@ -89,10 +90,6 @@ public class CreateStoryActivity extends Activity {
     }
 
     private void saveStory() {
-
-        // storyList.getAllStories().set(storyPos, story);
-        // offlineHelper.saveOfflineStories(storyList);
-
-        storyListController.saveOfflineStories(this, storyList);
+        storyListController.saveOfflineStories(storyList);
     }
 }

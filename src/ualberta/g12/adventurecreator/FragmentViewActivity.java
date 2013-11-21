@@ -20,8 +20,7 @@ public class FragmentViewActivity extends Activity implements FView<Fragment> {
     private TextView fragmentTitleTextView;
     private ListView fragmentPartListView;
     private FragmentPartAdapter adapter;
-    private FragmentController fragmentController = AdventureCreatorApplication
-            .getFragmentController();
+    private FragmentController fragmentController;
     //private static final String TAG = "FragmentViewActivity";
     private Fragment fragment;
 
@@ -30,12 +29,14 @@ public class FragmentViewActivity extends Activity implements FView<Fragment> {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_fragment_viewer);
 
+        fragmentController = AdventureCreator.getFragmentController();
+        
         // obtain the intent
         Intent viewFragIntent = getIntent();
         fragment = (Fragment) viewFragIntent.getSerializableExtra("Fragment");
         
         // get widget references
-        fragmentPartListView = (ListView) findViewById(R.id.FragmentViewPartList);
+        fragmentPartListView = (ListView) findViewById(R.id.fragmentViewPartList);
         fragmentTitleTextView = (TextView) findViewById(R.id.fragmentTitleText);
 
         setListClickListener();

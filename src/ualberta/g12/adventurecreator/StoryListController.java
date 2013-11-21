@@ -12,6 +12,8 @@ import android.content.Context;
  */
 public class StoryListController {
     private StoryList sc = null;
+    
+    private OfflineIOHelper offlineIOHelper;
 
     /**
      * Sole Constructor for the StoryListController. Initializes a
@@ -19,8 +21,9 @@ public class StoryListController {
      * 
      * @param sc The StoryList to set up the StoryListController with
      */
-    public StoryListController(StoryList sc) {
+    public StoryListController(StoryList sc, OfflineIOHelper oih) {
         this.sc = sc;
+        this.offlineIOHelper = oih;
     }
 
     /**
@@ -102,25 +105,21 @@ public class StoryListController {
     /**
      * This method will load our localled cached stories from the phones memory.
      * 
-     * @param context is the activity that we are in right now
      * @return
      */
 
-    public StoryList loadStoryOffline(Context context) {
-        OfflineIOHelper offlineHelper = new OfflineIOHelper(context);
-        sc = offlineHelper.loadOfflineStories();
+    public StoryList loadStoryOffline() {
+        sc = offlineIOHelper.loadOfflineStories();
         return sc;
     }
 
     /**
      * This method saves all our local stories to the phones memory
      * 
-     * @param context is the activity that we are in right now
      * @param storyList is the storyList that we want to save
      */
-    public void saveOfflineStories(Context context, StoryList storyList) {
-        OfflineIOHelper offlineHelper = new OfflineIOHelper(context);
-        offlineHelper.saveOfflineStories(storyList);
+    public void saveOfflineStories(StoryList storyList) {
+        this.offlineIOHelper.saveOfflineStories(storyList);
 
     }
 
