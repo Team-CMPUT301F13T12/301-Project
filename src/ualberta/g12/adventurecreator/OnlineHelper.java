@@ -35,6 +35,7 @@ public class OnlineHelper {
 
 	// JSON Utilities
 	private Gson gson = new Gson();
+	
 	private static String testServer = "http://cmput301.softwareprocess.es:8080/testing/";
 	private static String ourServer = "http://cmput301.softwareprocess.es:8080/cmput301f13t12/";		
 
@@ -43,7 +44,7 @@ public class OnlineHelper {
 	 * @throws IOException 
 	 * @throws IllegalStateException 
 	 */
-	public void insertRecipe(Story story) throws IllegalStateException, IOException{
+	public void insertStory(Story story) throws IllegalStateException, IOException{
 		HttpPost httpPost = new HttpPost(testServer+story.getId());
 		StringEntity stringentity = null;
 		try {
@@ -88,10 +89,11 @@ public class OnlineHelper {
 	/**
 	 * Consumes the Get operation of the service
 	 */
-	public void getRecipe(){
+	public Story getStory(int storyId){
+		Story story = null;
 		try{
 			//HttpGet getRequest = new HttpGet("http://cmput301.softwareprocess.es:8080/testing/lab02/999?pretty=1");//S4bRPFsuSwKUDSJImbCE2g?pretty=1
-			HttpGet getRequest = new HttpGet(testServer+"ID?pretty=1");//S4bRPFsuSwKUDSJImbCE2g?pretty=1
+			HttpGet getRequest = new HttpGet(testServer+storyId+"?pretty=1");//S4bRPFsuSwKUDSJImbCE2g?pretty=1
 			getRequest.addHeader("Accept","application/json");
 
 			HttpResponse response = httpclient.execute(getRequest);
@@ -106,7 +108,7 @@ public class OnlineHelper {
 			// Now we expect to get a Recipe response
 			ElasticSearchResponse<Story> esResponse = gson.fromJson(json, elasticSearchResponseType);
 			// We get the recipe from it!
-			Story story = esResponse.getSource();
+			story = esResponse.getSource();
 			System.out.println(story.toString());
 			//getRequest.releaseConnection();
 
@@ -118,16 +120,57 @@ public class OnlineHelper {
 
 			e.printStackTrace();
 		}
+		
+		return story;
+	}
+	
+	public ArrayList<Story> getAllStories(){
+		ArrayList<Story> allStories = new ArrayList<Story>();
+		try{
+			//HttpGet getRequest = new HttpGet("http://cmput301.softwareprocess.es:8080/testing/lab02/999?pretty=1");//S4bRPFsuSwKUDSJImbCE2g?pretty=1
+			HttpGet getRequest = new HttpGet(testServer+"?pretty=1");//S4bRPFsuSwKUDSJImbCE2g?pretty=1
+			getRequest.addHeader("Accept","application/json");
+
+			HttpResponse response = httpclient.execute(getRequest);
+
+			String status = response.getStatusLine().toString();
+			System.out.println(status);
+
+			String json = getEntityContent(response);
+
+			// We have to tell GSON what type we expect
+			Type elasticSearchSearchResponseType = new TypeToken<ElasticSearchSearchResponse<Story>>(){}.getType();
+			// Now we expect to get a Recipe response
+			ElasticSearchSearchResponse<Story> esResponse = gson.fromJson(json, elasticSearchSearchResponseType);
+			// We get the recipe from it!
+            for (ElasticSearchResponse<Story> s : esResponse.getHits()) {
+                Story story = s.getSource();
+                allStories.add(story);
+                System.out.println(story.toString());
+            }
+			
+			//getRequest.releaseConnection();
+
+		} catch (ClientProtocolException e) {
+
+			e.printStackTrace();
+
+		} catch (IOException e) {
+
+			e.printStackTrace();
+		}
+		
+		return allStories;
 	}
 
 	/**
 	 * search by keywords
 	 */
-	public void searchRecipes(String str) throws ClientProtocolException, IOException {
+	public ArrayList<Story> searchStories(String str) throws ClientProtocolException, IOException {
 		//HttpGet searchRequest = new HttpGet("http://cmput301.softwareprocess.es:8080/testing/lab02/_search?pretty=1&q=" +
 		//                java.net.URLEncoder.encode(str,"UTF-8"));
-		HttpGet searchRequest = new HttpGet(testServer+"_search?pretty=1&q="+
-				java.net.URLEncoder.encode(str,"UTF-8"));
+		ArrayList<Story> resultList = new ArrayList<Story>();
+		HttpGet searchRequest = new HttpGet(testServer+"_search?pretty=1");
 		searchRequest.setHeader("Accept","application/json");
 		HttpResponse response = httpclient.execute(searchRequest);
 		String status = response.getStatusLine().toString();
@@ -138,17 +181,20 @@ public class OnlineHelper {
 		Type elasticSearchSearchResponseType = new TypeToken<ElasticSearchSearchResponse<Story>>(){}.getType();
 		ElasticSearchSearchResponse<Story> esResponse = gson.fromJson(json, elasticSearchSearchResponseType);
 		System.err.println(esResponse);
-		for (ElasticSearchResponse<Story> r : esResponse.getHits()) {
-			Story story = r.getSource();
+		for (ElasticSearchResponse<Story> s : esResponse.getHits()) {
+			Story story = s.getSource();
+			resultList.add(story);
 			System.err.println(story);
 		}
+		return resultList;
 		//searchRequest.releaseConnection();
 	}        
 
 	/**
 	 * advanced search (logical operators)
 	 */
-	public void searchsearchRecipes(String str) throws ClientProtocolException, IOException {
+	public ArrayList<Story> searchsearchStories(String str) throws ClientProtocolException, IOException {
+		ArrayList<Story> resultList = new ArrayList<Story>();
 		HttpPost searchRequest = new HttpPost(testServer+"_search?pretty=1");
 		String query =         "{\"query\" : {\"query_string\" : {\"default_field\" : \"ingredients\",\"query\" : \"" + str + "\"}}}";
 		StringEntity stringentity = new StringEntity(query);
@@ -165,58 +211,60 @@ public class OnlineHelper {
 		Type elasticSearchSearchResponseType = new TypeToken<ElasticSearchSearchResponse<Story>>(){}.getType();
 		ElasticSearchSearchResponse<Story> esResponse = gson.fromJson(json, elasticSearchSearchResponseType);
 		System.err.println(esResponse);
-		for (ElasticSearchResponse<Story> r : esResponse.getHits()) {
-			Story story = r.getSource();
+		for (ElasticSearchResponse<Story> s : esResponse.getHits()) {
+			Story story = s.getSource();
+			resultList.add(story);
 			System.err.println(story);
 		}
+		return resultList;
 		//searchRequest.releaseConnection();
 	}        
 
 
-	/**
-	 * update a field in a recipe
-	 */
-	public void updateRecipes(String str) throws ClientProtocolException, IOException {
-		//HttpPost updateRequest = new HttpPost("http://cmput301.softwareprocess.es:8080/testing/lab02/1/_update");
-		HttpPost updateRequest = new HttpPost(testServer+"1/_update");
-		String query =         "{\"script\" : \"ctx._source." + str + "}";
-		StringEntity stringentity = new StringEntity(query);
+//	/**
+//	 * update a field in a Story
+//	 */
+//	public void updateStories(String str) throws ClientProtocolException, IOException {
+//		//HttpPost updateRequest = new HttpPost("http://cmput301.softwareprocess.es:8080/testing/lab02/1/_update");
+//		HttpPost updateRequest = new HttpPost(testServer+"1/_update");
+//		String query =         "{\"script\" : \"ctx._source." + str + "}";
+//		StringEntity stringentity = new StringEntity(query);
+//
+//		updateRequest.setHeader("Accept","application/json");
+//		updateRequest.setEntity(stringentity);
+//
+//		HttpResponse response = httpclient.execute(updateRequest);
+//		String status = response.getStatusLine().toString();
+//		System.out.println(status);
+//
+//		String json = getEntityContent(response);
+//		//updateRequest.releaseConnection();
+//	}        
 
-		updateRequest.setHeader("Accept","application/json");
-		updateRequest.setEntity(stringentity);
-
-		HttpResponse response = httpclient.execute(updateRequest);
-		String status = response.getStatusLine().toString();
-		System.out.println(status);
-
-		String json = getEntityContent(response);
-		//updateRequest.releaseConnection();
-	}        
-
-	/**
-	 * delete an entry specified by the id
-	 */
-	public void deleteRecipe() throws IOException {
-		//HttpDelete httpDelete = new HttpDelete("http://cmput301.softwareprocess.es:8080/testing/lab02/1");
-		HttpDelete httpDelete = new HttpDelete(testServer+"1");
-		httpDelete.addHeader("Accept","application/json");
-
-		HttpResponse response = httpclient.execute(httpDelete);
-
-		String status = response.getStatusLine().toString();
-		System.out.println(status);
-
-		HttpEntity entity = response.getEntity();
-		BufferedReader br = new BufferedReader(new InputStreamReader(entity.getContent()));
-		String output;
-		System.err.println("Output from Server -> ");
-		while ((output = br.readLine()) != null) {
-			System.err.println(output);
-		}
-		entity.consumeContent();
-
-		//httpDelete.releaseConnection();
-	}
+//	/**
+//	 * delete an entry specified by the id
+//	 */
+//	public void deleteStories() throws IOException {
+//		//HttpDelete httpDelete = new HttpDelete("http://cmput301.softwareprocess.es:8080/testing/lab02/1");
+//		HttpDelete httpDelete = new HttpDelete(testServer+"1");
+//		httpDelete.addHeader("Accept","application/json");
+//
+//		HttpResponse response = httpclient.execute(httpDelete);
+//
+//		String status = response.getStatusLine().toString();
+//		System.out.println(status);
+//
+//		HttpEntity entity = response.getEntity();
+//		BufferedReader br = new BufferedReader(new InputStreamReader(entity.getContent()));
+//		String output;
+//		System.err.println("Output from Server -> ");
+//		while ((output = br.readLine()) != null) {
+//			System.err.println(output);
+//		}
+//		entity.consumeContent();
+//
+//		//httpDelete.releaseConnection();
+//	}
 
 	/**
 	 * get the http response and return json string
@@ -290,12 +338,14 @@ public class OnlineHelper {
             }*/
 
 		//delete a recipe
+		/*
 		try {
 			client.deleteRecipe();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		*/
 	}
 
 
