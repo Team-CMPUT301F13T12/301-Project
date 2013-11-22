@@ -150,5 +150,16 @@ public class Story extends SModel implements Serializable{
         this.fragments = (List<Fragment>) in.readObject();
         this.startFragPos = (Integer) in.readObject();
     }
+    
+    @Override
+    /**
+     *  Changes our story to a string (JSON) !
+     */
+	public String toString(){
+        return "Recipe [id=" + id + ", storyTitle=" + storyTitle + ", author=" + author + ", fragments="
+                + fragments + ", startFragPos=" + startFragPos + "]";
+    			
+    	
+    }
 
 }
