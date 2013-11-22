@@ -7,10 +7,15 @@ import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.ListView;
+
+import java.util.List;
 
 public class OnlineStoryViewActivity extends Activity {
 
-    Button mainButton;
+    private Button mainButton;
+    private ListView storyListView;
+    private List<TitleAuthor> titleAuthors;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,4 +44,11 @@ public class OnlineStoryViewActivity extends Activity {
         return true;
     }
 
+    public class TitleAuthor{
+        public final String title, author;
+        public TitleAuthor(String t, String a){
+            this.title = t;
+            this.author = a;
+        }
+    }
 }

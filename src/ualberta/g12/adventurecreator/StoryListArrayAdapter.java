@@ -24,8 +24,9 @@ public class StoryListArrayAdapter extends ArrayAdapter<Story> {
     private static final String TAG = "StoryListArrayAdapter";
 
     /**
-     * Sole Constructor for the StoryListArrayAdapter. Creates an Adapter that
+     * Constructor for the StoryListArrayAdapter. Creates an Adapter that
      * can be used with a list of stories.
+     * Used Primarily by {@link MainActivity}
      * 
      * @param context the Context that this will be used in
      * @param id the layout of the listview
@@ -35,6 +36,7 @@ public class StoryListArrayAdapter extends ArrayAdapter<Story> {
         super(context, id, list);
         this.context = context;
     }
+    
 
     private class ViewHolder {
         TextView title;
