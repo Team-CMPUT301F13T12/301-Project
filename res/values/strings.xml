@@ -20,6 +20,7 @@
 
     <!-- Online Strings -->
     <string name="start_main_from_online">Offline Mode</string>
+    <string name="online_download_mode">Download Mode</string>
     
     <!-- StoryEditActivity Strings -->
     <string name="story_edit_title">Title</string>
