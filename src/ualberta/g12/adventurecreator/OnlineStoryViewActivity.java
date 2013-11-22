@@ -45,21 +45,26 @@ public class OnlineStoryViewActivity extends Activity implements OnItemClickList
          * authors
          */
         titleAuthors = new ArrayList<TitleAuthor>();
-        titleAuthors.add(new TitleAuthor("And so I cry sometimes", "when I'm lying in bed"));
-        titleAuthors.add(new TitleAuthor("Just to get it all out,", "what's in my head"));
-        titleAuthors.add(new TitleAuthor("And I,", "I am feeling peculiar"));
-        titleAuthors.add(new TitleAuthor("And so I wake up in the morning", "and I step outside"));
-        titleAuthors.add(new TitleAuthor("And I take a big breath", "and I get real high"));
-        titleAuthors.add(new TitleAuthor("And I scream", "from the top of my lungs,"));
-        titleAuthors.add(new TitleAuthor("What's goin' on", "ooh"));
-        titleAuthors.add(new TitleAuthor("And I say", "hey-yeah-yeah-yeah-yeah hey-yeah-yeah"));
-        titleAuthors.add(new TitleAuthor("I said hey", "What's going on"));
-        titleAuthors.add(new TitleAuthor("And I say", "hey-yeah-yeah-yeah-yeah hey-yeah-yeah"));
-        titleAuthors.add(new TitleAuthor("And I said hey", "What's going on"));
-        titleAuthors.add(new TitleAuthor("And I try", "Oh my god, do I try"));
-        titleAuthors.add(new TitleAuthor("I try all the time", "in this institution"));
-        titleAuthors.add(new TitleAuthor("And I pray,", "Oh my God, do I pray"));
-        titleAuthors.add(new TitleAuthor("I pray every single day", "FOR A REVOLUTION!"));
+        
+        DownloadTitleAuthors dta = new DownloadTitleAuthors();
+        dta.execute(new Void[] {});
+        
+//        titleAuthors = new ArrayList<TitleAuthor>();
+//        titleAuthors.add(new TitleAuthor("And so I cry sometimes", "when I'm lying in bed"));
+//        titleAuthors.add(new TitleAuthor("Just to get it all out,", "what's in my head"));
+//        titleAuthors.add(new TitleAuthor("And I,", "I am feeling peculiar"));
+//        titleAuthors.add(new TitleAuthor("And so I wake up in the morning", "and I step outside"));
+//        titleAuthors.add(new TitleAuthor("And I take a big breath", "and I get real high"));
+//        titleAuthors.add(new TitleAuthor("And I scream", "from the top of my lungs,"));
+//        titleAuthors.add(new TitleAuthor("What's goin' on", "ooh"));
+//        titleAuthors.add(new TitleAuthor("And I say", "hey-yeah-yeah-yeah-yeah hey-yeah-yeah"));
+//        titleAuthors.add(new TitleAuthor("I said hey", "What's going on"));
+//        titleAuthors.add(new TitleAuthor("And I say", "hey-yeah-yeah-yeah-yeah hey-yeah-yeah"));
+//        titleAuthors.add(new TitleAuthor("And I said hey", "What's going on"));
+//        titleAuthors.add(new TitleAuthor("And I try", "Oh my god, do I try"));
+//        titleAuthors.add(new TitleAuthor("I try all the time", "in this institution"));
+//        titleAuthors.add(new TitleAuthor("And I pray,", "Oh my God, do I pray"));
+//        titleAuthors.add(new TitleAuthor("I pray every single day", "FOR A REVOLUTION!"));
     }
 
     private void setUpUi() {
@@ -202,6 +207,53 @@ public class OnlineStoryViewActivity extends Activity implements OnItemClickList
             Toast.makeText(getApplicationContext(), result, Toast.LENGTH_SHORT).show();
             super.onPostExecute(result);
         }
+    }
+    
+    private class DownloadTitleAuthors extends AsyncTask<Void, String, List<TitleAuthor>>{
+
+        private List<TitleAuthor> tas;
+        
+        @Override
+        protected List<TitleAuthor> doInBackground(Void... params) {
+            // TODO: Call The OnlineHelper get Titles and Authors method here plz
+            
+            // Pretend we're getting this from the intenets
+            tas = new ArrayList<TitleAuthor>();
+            tas.add(new TitleAuthor("And who", "Are you"));
+            tas.add(new TitleAuthor("The proud lord said", "That I must bow so low?"));
+            tas.add(new TitleAuthor("Only a cat", "of a different coat,"));
+            tas.add(new TitleAuthor("that's all", "the truth I know."));
+            tas.add(new TitleAuthor("In a coat of gold", "or a coat of red"));
+            tas.add(new TitleAuthor("a lion still has claws", ""));
+            tas.add(new TitleAuthor("And mine are long and sharp", "my lord"));
+            tas.add(new TitleAuthor("as long and sharp as yours", ""));
+            tas.add(new TitleAuthor("And so he spoke", "and so he spoke"));
+            tas.add(new TitleAuthor("that lord of", "Castamere"));
+            
+            return null;
+        }
+        
+        @Override
+        protected void onPreExecute(){
+            Toast.makeText(getApplicationContext(), "Loading stories", Toast.LENGTH_SHORT).show();
+            super.onPreExecute();
+        }
+
+        @Override
+        protected void onCancelled() {
+            Toast.makeText(getApplicationContext(), "Story Loading Cancelled", Toast.LENGTH_SHORT).show();
+            super.onCancelled();
+        }
+
+        @Override
+        protected void onPostExecute(List<TitleAuthor> result) {
+            titleAuthors.clear();
+            titleAuthors.addAll(tas);
+            adapter.notifyDataSetChanged();
+            Toast.makeText(getApplicationContext(), "Stories Loaded." + titleAuthors.size(), Toast.LENGTH_SHORT).show();
+            super.onPostExecute(result);
+        }
+        
     }
 
 }
