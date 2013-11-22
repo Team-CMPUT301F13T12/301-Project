@@ -3,6 +3,7 @@ package ualberta.g12.adventurecreator;
 
 import android.app.Activity;
 import android.content.SharedPreferences;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -151,6 +152,10 @@ public class OnlineStoryViewActivity extends Activity implements OnItemClickList
             // Download story lol
             Toast.makeText(this, String.format("Downloading story %s", ta.title),
                     Toast.LENGTH_SHORT).show();
+
+            DownloadStory ds = new DownloadStory();
+            ds.execute(new TitleAuthor[] {ta});
+            
         } else {
             // Stream story
             Toast.makeText(this, String.format("Loading story %s", ta.title), Toast.LENGTH_SHORT)
@@ -158,4 +163,45 @@ public class OnlineStoryViewActivity extends Activity implements OnItemClickList
             // Send some stuff to FragmentViewActivity
         }
     }
+
+    private class DownloadStory extends AsyncTask<TitleAuthor, Void, String> {
+
+        private Story s;
+        
+        @SuppressWarnings("unused")
+        @Override
+        protected String doInBackground(TitleAuthor... params) {
+            // TODO Actually download the story here - this thread will actually do something
+            s = new Story(params[0].title, params[0].author);
+
+            // Once we're actually downloading the story this will matter
+            if (true) {
+                return String.format("%s Download complete", params[0].title);
+            } else {
+                return String.format("%s Download Failed", params[0].title);
+            }
+
+        }
+
+        @Override
+        protected void onCancelled() {
+            Toast.makeText(getApplicationContext(), "Story Download Cancelled", Toast.LENGTH_SHORT).show();
+            super.onCancelled();
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+            StoryListController slc = AdventureCreator.getStoryListController();
+            // Add the story to the list
+            slc.addStory(s);
+            
+            OfflineIOHelper offlineHelper = AdventureCreator.getOfflineIOHelper();
+            // Save our list of stories
+            offlineHelper.saveOfflineStories(AdventureCreator.getStoryList());
+            
+            Toast.makeText(getApplicationContext(), result, Toast.LENGTH_SHORT).show();
+            super.onPostExecute(result);
+        }
+    }
+
 }
