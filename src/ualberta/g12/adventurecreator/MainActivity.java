@@ -11,8 +11,10 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.SearchView;
 
@@ -31,6 +33,7 @@ public class MainActivity extends Activity implements LView<StoryList>, OnItemCl
     private static final boolean DEBUG_LOG = true;
     private static final String TAG = "MainActivity";
     private ListView listView;
+    private Button onlineButton;
     private StoryListArrayAdapter adapter;
     private OfflineIOHelper offlineHelper;
 
@@ -53,6 +56,15 @@ public class MainActivity extends Activity implements LView<StoryList>, OnItemCl
         // offlineHelper.saveOfflineStories(storyList);
 
         listView = (ListView) findViewById(R.id.main_activity_listview);
+        onlineButton = (Button) findViewById(R.id.main_activity_start_online_mode);
+        onlineButton.setOnClickListener(new OnClickListener() {
+            
+            @Override
+            public void onClick(View v) {
+                // TODO Auto-generated method stub
+                startActivity(new Intent(getApplicationContext(), OnlineStoryViewActivity.class));
+            }
+        });
 
         // Set up ListView Stuff
         adapter = new StoryListArrayAdapter(this, R.layout.listview_story_list, stories);
