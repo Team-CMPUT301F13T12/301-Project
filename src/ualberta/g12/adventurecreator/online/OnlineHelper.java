@@ -185,10 +185,11 @@ public class OnlineHelper {
 		return allStories;
 	}
 	
-	public ArrayList<String> getAllStoryTitlesIdAuthor() throws ClientProtocolException, IOException{
-		ArrayList<String> resultList = new ArrayList<String>();
+	public ArrayList<Story> getAllStoryTitlesIdAuthor() throws ClientProtocolException, IOException{
+		ArrayList<Story> resultList = new ArrayList<Story>();
 		HttpPost searchRequest = new HttpPost(ourServer+"_search?pretty=1");
-		String query =         "{\"query_string\" :  {\"fields\" : \"[storyTitle.*\"],\"query\" : \"" + "story" + "\"}}";
+		//String query =         "{\"query\" :  {\"fields\" : \"[storyTitle.*\",\"author\"],\"query\" :{ }}";
+		String query =         "{\"fields\" : [\"storyTitle\",\"author\"], \"query\" :{ \"match_all\" : {}    }}";
 		StringEntity stringentity = new StringEntity(query);
 
 		searchRequest.setHeader("Accept","application/json");
@@ -200,11 +201,11 @@ public class OnlineHelper {
 
 		String json = getEntityContent(response);
 
-		Type elasticSearchSearchResponseType = new TypeToken<ElasticSearchSearchResponse<String>>(){}.getType();
-		ElasticSearchSearchResponse<String> esResponse = gson.fromJson(json, elasticSearchSearchResponseType);
+		Type elasticSearchSearchResponseType = new TypeToken<ElasticSearchSearchResponse<Story>>(){}.getType();
+		ElasticSearchSearchResponse<Story> esResponse = gson.fromJson(json, elasticSearchSearchResponseType);
 		System.err.println(esResponse);
-		for (ElasticSearchResponse<String> s : esResponse.getHits()) {
-			String story = s.getSource();
+		for (ElasticSearchResponse<Story> s : esResponse.getHits()) {
+			Story story = s.getSource();
 			resultList.add(story);
 			System.err.println(story);
 		}
