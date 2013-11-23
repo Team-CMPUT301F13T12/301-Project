@@ -3,6 +3,7 @@
     <item
         android:id="@+id/online_download_mode"
         android:checkable="true"
+        android:checked="true"
         android:orderInCategory="100"
         android:showAsAction="never"
         android:title="@string/online_download_mode"/>
