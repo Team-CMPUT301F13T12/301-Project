@@ -37,29 +37,7 @@ public class OnlineHelper {
 	private static String testServer = "http://cmput301.softwareprocess.es:8080/testing/";
 	private static String ourServer = "http://cmput301.softwareprocess.es:8080/cmput301f13t12/";	
 	
-	
-	  private Story initializeRecipe() {
 
-          Story r = new Story();
-          Fragment f = new Fragment();
-          Fragment f1 = new Fragment();
-          r.setId(1);
-          r.setAuthor("Vincent");
-          r.setStoryTitle("1st story ");
-          r.setStartFragPos(0);
-          
-          f.setTitle("fragment1");
-          f.setId(0);
-          f1.setTitle("Second fRagment");
-          
-          r.addFragment(f);
-          r.addFragment(f1);
-         
-          
-
-
-          return r;
-  }
 
 	/**
 	 * Consumes the POST/Insert operation of the service
@@ -228,6 +206,40 @@ public class OnlineHelper {
 		return resultList;
 	}        
 	
+	
+	/**
+	 * checks if there is already a story with the same id in our database
+	 * This function can be used to check for a storyId already on the system to prevent the case of accidental 
+	 * overwriting 
+	 * 
+	 * @param id int value which is our story id ( should be unique)
+	 * @return
+	 * @throws ClientProtocolException
+	 * @throws IOException
+	 */
+	public boolean checkId(int id) throws ClientProtocolException, IOException {
+		
+		
+		// lets prepare our query to only get our required fields 
+		HttpPost searchRequest = new HttpPost(ourServer+"_search?pretty=1");
+		String query =         "{\"fields\" : [\"id\"], \"query\" :{ \"term\" : { \"id\" : \""+id+"\"}    }  }";
+		StringEntity stringentity = new StringEntity(query);
+
+		// set our header let it know json!
+		searchRequest.setHeader("Accept","application/json");
+		searchRequest.setEntity(stringentity);
+
+		// get our json string back ..
+		HttpResponse response = httpclient.execute(searchRequest);
+		System.out.println(response.getStatusLine());
+		String json = getEntityContent(response);
+		Type elasticSearchSearchResponseType = new TypeToken<ElasticSearchSearchResponse<Story>>(){}.getType();
+		ElasticSearchSearchResponse<Story> esResponse = gson.fromJson(json, elasticSearchSearchResponseType);
+		if (esResponse.getHits().size() > 0) 
+			return true;
+		else
+			return false;
+	}       
 
 	/**
 	 * search by keywords
@@ -287,26 +299,6 @@ public class OnlineHelper {
 	}        
 
 
-//	/**
-//	 * update a field in a Story
-//	 */
-//	public void updateStories(String str) throws ClientProtocolException, IOException {
-//		//HttpPost updateRequest = new HttpPost("http://cmput301.softwareprocess.es:8080/testing/lab02/1/_update");
-//		HttpPost updateRequest = new HttpPost(testServer+"1/_update");
-//		String query =         "{\"script\" : \"ctx._source." + str + "}";
-//		StringEntity stringentity = new StringEntity(query);
-//
-//		updateRequest.setHeader("Accept","application/json");
-//		updateRequest.setEntity(stringentity);
-//
-//		HttpResponse response = httpclient.execute(updateRequest);
-//		String status = response.getStatusLine().toString();
-//		System.out.println(status);
-//
-//		String json = getEntityContent(response);
-//		//updateRequest.releaseConnection();
-//	}        
-
 
 	/**
 	 * delete an entry specified by the id
@@ -346,85 +338,9 @@ public class OnlineHelper {
 			System.err.println(output);
 			json += output;
 		}
-		System.err.println("JSON:"+json);
+		//System.err.println("JSON:"+json);
 		return json;
 	}
-
-
-
-
-	// Main Test
-	public static void main(String [] args) throws IOException{
-		System.out.println("?");
-		OnlineHelper client = new OnlineHelper();
-		/*                Recipe recipe = client.initializeRecipe();
-            System.out.println("Recipe is -> "+ recipe.toString());
-
-            //insert a recipe
-            try {
-                    client.insertRecipe(recipe);
-            } catch (IllegalStateException e) {
-                    // TODO Auto-generated catch block
-                    e.printStackTrace();
-            } catch (IOException e) {
-                    // TODO Auto-generated catch block
-                    e.printStackTrace();
-            }
-
-            //get a recipe
-            client.getRecipe();*/
-		//Story s = client.initializeRecipe();
-		//client.insertStory(s);
-		ArrayList<Story>stories  = client.getAllStories();
-		ArrayList<Story>partialStories = client.getAllStoryTitlesIdAuthor();
-		for (int i =0;i < partialStories.size();i++){
-			System.out.println(partialStories.get(i).getAuthor() +" "+
-					partialStories.get(i).getStoryTitle() + " "+ partialStories.get(i).getId());
-		}
-		//client.deleteStories();
-		
-
-		//search by keywords
-		/*                try {
-                client.searchRecipes("egg");
-            } catch (Exception e) {
-                e.printStackTrace();
-            }*/
-
-
-		//advanced search
-		/*                try {
-                    client.searchsearchRecipes("cheese AND egg");
-            } catch (ClientProtocolException e) {
-                    // TODO Auto-generated catch block
-                    e.printStackTrace();
-            } catch (IOException e) {
-                    // TODO Auto-generated catch block
-                    e.printStackTrace();
-            }*/
-
-		//update a new field
-		/*                                try {
-                    client.updateRecipes("directions = \\\"chop and fry\\\"\"");
-            } catch (ClientProtocolException e) {
-                    // TODO Auto-generated catch block
-                    e.printStackTrace();
-            } catch (IOException e) {
-                    // TODO Auto-generated catch block
-                    e.printStackTrace();
-            }*/
-
-		//delete a recipe
-		/*
-		try {
-			client.deleteRecipe();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		*/
-	}
-
 
 
 }
