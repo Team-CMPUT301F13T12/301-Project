@@ -110,11 +110,11 @@ public class OnlineStorySearchActivity extends Activity implements OnItemClickLi
                     // author
                 } else {
                     if (t.title.toLowerCase(Locale.CANADA).contains(this.query)
-                            || t.author.toLowerCase(Locale.CANADA).contains(this.query))
-                        ;
-                    if (DEBUG)
-                        Log.d(TAG, String.format("Adding story %s", t.title));
-                    titleAuthors.add(t);
+                            || t.author.toLowerCase(Locale.CANADA).contains(this.query)) {
+                        if (DEBUG)
+                            Log.d(TAG, String.format("Adding story %s", t.title));
+                        titleAuthors.add(t);
+                    }
                 }
             }
             adapter.notifyDataSetChanged();
@@ -152,10 +152,25 @@ public class OnlineStorySearchActivity extends Activity implements OnItemClickLi
     }
 
     @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        menu.findItem(R.id.online_download_mode).setChecked(downloadMode);
+        return true;
+
+    }
+
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
                 NavUtils.navigateUpFromSameTask(this);
+                return true;
+            case R.id.online_download_mode:
+                boolean alreadyChecked = item.isChecked();
+                // Set it to the opposite of what it was previously
+                item.setChecked(!alreadyChecked);
+
+                // Update the flag
+                downloadMode = item.isChecked();
                 return true;
         }
 
