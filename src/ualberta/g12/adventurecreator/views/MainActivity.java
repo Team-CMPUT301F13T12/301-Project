@@ -2,8 +2,10 @@
 package ualberta.g12.adventurecreator.views;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.SearchManager;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -14,6 +16,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.SearchView;
@@ -56,7 +59,7 @@ public class MainActivity extends Activity implements LView<StoryList>, OnItemCl
 
         // Load our local stories from the StoryList Model
         stories = storyList.getAllStories();
-        
+
         // //Erases previous saves - ONLY FOR TESTING - should be commented out
         // storyList = new StoryList();
         // offlineHelper.saveOfflineStories(storyList);
@@ -64,7 +67,7 @@ public class MainActivity extends Activity implements LView<StoryList>, OnItemCl
         listView = (ListView) findViewById(R.id.main_activity_listview);
         onlineButton = (Button) findViewById(R.id.main_activity_start_online_mode);
         onlineButton.setOnClickListener(new OnClickListener() {
-            
+
             @Override
             public void onClick(View v) {
                 // TODO Auto-generated method stub
@@ -72,15 +75,56 @@ public class MainActivity extends Activity implements LView<StoryList>, OnItemCl
             }
         });
 
-        // Set up ListView Stuff
-        adapter = new StoryListArrayAdapter(this, R.layout.listview_story_list, stories);
-        listView.setAdapter(adapter);
-        listView.setOnItemClickListener(this);
+        setupListView();
 
         // Lets see who started us
         handleIntent(getIntent());
 
         offlineHelper = AdventureCreator.getOfflineIOHelper();
+    }
+
+    private void setupListView() {
+        // Set up ListView Stuff
+        adapter = new StoryListArrayAdapter(this, R.layout.listview_story_list, stories);
+        listView.setAdapter(adapter);
+        listView.setOnItemClickListener(this);
+
+        listView.setOnItemLongClickListener(new OnItemLongClickListener() {
+
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, final int position, long id) {
+                if(DEBUG_LOG) Log.d(TAG, "LONG CLICK");
+                AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+                builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        publishStory(position);
+                    }
+                });
+                builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                         // Cancel the dialog.
+                        
+                    }
+                });
+                builder.setTitle("Do you want to publish this story?");
+                AlertDialog dialog = builder.create();
+                dialog.show();
+                // We don't want onItemClickListener to fire
+                return true; 
+            }
+
+        });
+    }
+
+    /**
+     * @param position the position of the story
+     */
+    private void publishStory(int position) {
+
     }
 
     @Override
@@ -228,6 +272,6 @@ public class MainActivity extends Activity implements LView<StoryList>, OnItemCl
             i.putExtra("FragmentPos", fragPos);
             startActivity(i);
         }
-
     }
+
 }
