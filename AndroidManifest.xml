@@ -9,13 +9,13 @@
         android:targetSdkVersion="19" />
 
     <application
-        android:name="ualberta.g12.adventurecreator.AdventureCreator"
+        android:name="ualberta.g12.adventurecreator.data.AdventureCreator"
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <activity
-            android:name="ualberta.g12.adventurecreator.MainActivity"
+            android:name="ualberta.g12.adventurecreator.views.MainActivity"
             android:label="Adventures!"
             android:launchMode="singleTop" >
             <meta-data
@@ -30,57 +30,55 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="ualberta.g12.adventurecreator.CreateStoryActivity"
-            android:label="@string/title_activity_new_story" >
-        </activity>
-        <activity
-            android:name="ualberta.g12.adventurecreator.StoryEditActivity"
+            android:name="ualberta.g12.adventurecreator.views.StoryEditActivity"
             android:label="Story Editor" >
         </activity>
         <activity
-            android:name="ualberta.g12.adventurecreator.EditFragmentActivity"
+            android:name="ualberta.g12.adventurecreator.views.EditFragmentActivity"
             android:label="@string/title_activity_fragment_editor" >
         </activity>
         <activity
-            android:name="ualberta.g12.adventurecreator.StoryViewActivity"
+            android:name="ualberta.g12.adventurecreator.views.StoryViewActivity"
             android:label="@string/title_activity_story_view" >
         </activity>
         <activity
-            android:name="ualberta.g12.adventurecreator.EditChoiceActivity"
-            android:label="@string/title_activity_edit_choice"
-            android:parentActivityName="ualberta.g12.adventurecreator.EditFragmentActivity" >
+            android:name="ualberta.g12.adventurecreator.views.EditChoiceActivity"
+            android:label="@string/title_activity_story_view"
+            android:parentActivityName="ualberta.g12.adventurecreator.views.EditChoiceActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="ualberta.g12.adventurecreator.EditFragmentActivity" />
+                android:value="ualberta.g12.adventurecreator.views.EditFragmentActivity" />
         </activity>
         <activity
-            android:name="ualberta.g12.adventurecreator.StorySearchActivity"
+            android:name="ualberta.g12.adventurecreator.views.StorySearchActivity"
             android:label="@string/title_activity_story_search"
             android:launchMode="singleTop"
-            android:parentActivityName="ualberta.g12.adventurecreator.MainActivity" >
+            android:parentActivityName="ualberta.g12.adventurecreator.views.MainActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="ualberta.g12.adventurecreator.MainActivity" />
+                android:value="ualberta.g12.adventurecreator.views.MainActivity" >
+            </meta-data>
         </activity>
         <activity
-            android:name="ualberta.g12.adventurecreator.OnlineStoryViewActivity"
+            android:name="ualberta.g12.adventurecreator.views.OnlineStoryViewActivity"
             android:label="@string/title_activity_online_story_view"
             android:launchMode="singleTop" >
             <meta-data
                 android:name="android.app.searchable"
                 android:resource="@xml/online_story_search" />
+
             <intent-filter>
                 <action android:name="android.intent.action.SEARCH" />
             </intent-filter>
         </activity>
         <activity
-            android:name="ualberta.g12.adventurecreator.OnlineStorySearchActivity"
+            android:name="ualberta.g12.adventurecreator.views.OnlineStorySearchActivity"
             android:label="@string/title_activity_online_story_search"
             android:launchMode="singleTop"
-            android:parentActivityName="ualberta.g12.adventurecreator.OnlineStoryViewActivity" >
+            android:parentActivityName="ualberta.g12.adventurecreator.views.OnlineStory" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="ualberta.g12.andventurecreator.OnlineStoryViewActivity" />
+                android:value="ualberta.g12.adventurecreator.views.OnlineStoryViewActivity" />
         </activity>
     </application>
 
