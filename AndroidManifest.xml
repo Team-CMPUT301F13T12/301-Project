@@ -79,7 +79,7 @@
             android:name="ualberta.g12.adventurecreator.views.OnlineStorySearchActivity"
             android:label="@string/title_activity_online_story_search"
             android:launchMode="singleTop"
-            android:parentActivityName="ualberta.g12.adventurecreator.views.OnlineStory" >
+            android:parentActivityName="ualberta.g12.adventurecreator.views.OnlineStoryViewActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="ualberta.g12.adventurecreator.views.OnlineStoryViewActivity" />
