@@ -135,7 +135,6 @@ public class Story extends SModel implements Serializable{
     }
     
     private void writeObject(java.io.ObjectOutputStream out) throws IOException{
-        out.writeObject(this.NEW_STORY_ID);
         out.writeObject(this.storyTitle);
         out.writeObject(this.author);
         out.writeObject(this.id);
@@ -143,7 +142,6 @@ public class Story extends SModel implements Serializable{
         out.writeObject(this.startFragPos);
     }
     private void readObject(java.io.ObjectInputStream in) throws IOException, ClassNotFoundException{
-        this.NEW_STORY_ID = (Integer) in.readObject();
         this.storyTitle = (String) in.readObject();
         this.author = (String) in.readObject();
         this.id = (Integer) in.readObject();
