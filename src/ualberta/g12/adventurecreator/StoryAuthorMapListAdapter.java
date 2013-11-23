@@ -9,8 +9,6 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
-import ualberta.g12.adventurecreator.OnlineStoryViewActivity.TitleAuthor;
-
 import java.util.List;
 
 /**

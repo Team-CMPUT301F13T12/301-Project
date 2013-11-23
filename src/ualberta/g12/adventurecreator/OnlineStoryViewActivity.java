@@ -2,9 +2,13 @@
 package ualberta.g12.adventurecreator;
 
 import android.app.Activity;
+import android.app.SearchManager;
+import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -13,6 +17,7 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.SearchView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -26,7 +31,7 @@ public class OnlineStoryViewActivity extends Activity implements OnItemClickList
     private List<TitleAuthor> titleAuthors;
 
     private static boolean downloadMode = true;
-    private static final String DOWNLOAD_MODE = "download_mode";
+    public static final String DOWNLOAD_MODE = "download_mode";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,6 +42,25 @@ public class OnlineStoryViewActivity extends Activity implements OnItemClickList
 
         setUpUi();
 
+        // Lets see who started us
+        handleIntent(getIntent());
+    }
+
+    @Override
+    protected void onNewIntent(Intent intent) {
+        setIntent(intent);
+        handleIntent(intent);
+    }
+
+    private void handleIntent(Intent intent) {
+        if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
+            String query = intent.getStringExtra(SearchManager.QUERY);
+            Intent searchIntent = new Intent(getApplicationContext(),
+                    OnlineStorySearchActivity.class);
+            searchIntent.putExtra(SearchManager.QUERY, query);
+            searchIntent.putExtra(OnlineStoryViewActivity.DOWNLOAD_MODE, downloadMode);
+            startActivity(searchIntent);
+        }
     }
 
     private void loadTitleAuthors() {
@@ -45,26 +69,38 @@ public class OnlineStoryViewActivity extends Activity implements OnItemClickList
          * authors
          */
         titleAuthors = new ArrayList<TitleAuthor>();
-        
+
         DownloadTitleAuthors dta = new DownloadTitleAuthors();
         dta.execute(new Void[] {});
-        
-//        titleAuthors = new ArrayList<TitleAuthor>();
-//        titleAuthors.add(new TitleAuthor("And so I cry sometimes", "when I'm lying in bed"));
-//        titleAuthors.add(new TitleAuthor("Just to get it all out,", "what's in my head"));
-//        titleAuthors.add(new TitleAuthor("And I,", "I am feeling peculiar"));
-//        titleAuthors.add(new TitleAuthor("And so I wake up in the morning", "and I step outside"));
-//        titleAuthors.add(new TitleAuthor("And I take a big breath", "and I get real high"));
-//        titleAuthors.add(new TitleAuthor("And I scream", "from the top of my lungs,"));
-//        titleAuthors.add(new TitleAuthor("What's goin' on", "ooh"));
-//        titleAuthors.add(new TitleAuthor("And I say", "hey-yeah-yeah-yeah-yeah hey-yeah-yeah"));
-//        titleAuthors.add(new TitleAuthor("I said hey", "What's going on"));
-//        titleAuthors.add(new TitleAuthor("And I say", "hey-yeah-yeah-yeah-yeah hey-yeah-yeah"));
-//        titleAuthors.add(new TitleAuthor("And I said hey", "What's going on"));
-//        titleAuthors.add(new TitleAuthor("And I try", "Oh my god, do I try"));
-//        titleAuthors.add(new TitleAuthor("I try all the time", "in this institution"));
-//        titleAuthors.add(new TitleAuthor("And I pray,", "Oh my God, do I pray"));
-//        titleAuthors.add(new TitleAuthor("I pray every single day", "FOR A REVOLUTION!"));
+
+        // titleAuthors = new ArrayList<TitleAuthor>();
+        // titleAuthors.add(new TitleAuthor("And so I cry sometimes",
+        // "when I'm lying in bed"));
+        // titleAuthors.add(new TitleAuthor("Just to get it all out,",
+        // "what's in my head"));
+        // titleAuthors.add(new TitleAuthor("And I,", "I am feeling peculiar"));
+        // titleAuthors.add(new TitleAuthor("And so I wake up in the morning",
+        // "and I step outside"));
+        // titleAuthors.add(new TitleAuthor("And I take a big breath",
+        // "and I get real high"));
+        // titleAuthors.add(new TitleAuthor("And I scream",
+        // "from the top of my lungs,"));
+        // titleAuthors.add(new TitleAuthor("What's goin' on", "ooh"));
+        // titleAuthors.add(new TitleAuthor("And I say",
+        // "hey-yeah-yeah-yeah-yeah hey-yeah-yeah"));
+        // titleAuthors.add(new TitleAuthor("I said hey", "What's going on"));
+        // titleAuthors.add(new TitleAuthor("And I say",
+        // "hey-yeah-yeah-yeah-yeah hey-yeah-yeah"));
+        // titleAuthors.add(new TitleAuthor("And I said hey",
+        // "What's going on"));
+        // titleAuthors.add(new TitleAuthor("And I try",
+        // "Oh my god, do I try"));
+        // titleAuthors.add(new TitleAuthor("I try all the time",
+        // "in this institution"));
+        // titleAuthors.add(new TitleAuthor("And I pray,",
+        // "Oh my God, do I pray"));
+        // titleAuthors.add(new TitleAuthor("I pray every single day",
+        // "FOR A REVOLUTION!"));
     }
 
     private void setUpUi() {
@@ -111,6 +147,12 @@ public class OnlineStoryViewActivity extends Activity implements OnItemClickList
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.online_story_view, menu);
+
+        // Associate searchable configuration with the searchview
+        SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
+        SearchView searchView = (SearchView) menu.findItem(R.id.online_story_search)
+                .getActionView();
+        searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
         return true;
     }
 
@@ -137,18 +179,6 @@ public class OnlineStoryViewActivity extends Activity implements OnItemClickList
         }
     }
 
-    /**
-     * A holder class that contains the Title and Author of a story
-     */
-    public class TitleAuthor {
-        public final String title, author;
-
-        public TitleAuthor(String t, String a) {
-            this.title = t;
-            this.author = a;
-        }
-    }
-
     @Override
     public void onItemClick(AdapterView<?> parent, View v, int pos, long id) {
         // Download or stream story
@@ -159,8 +189,10 @@ public class OnlineStoryViewActivity extends Activity implements OnItemClickList
                     Toast.LENGTH_SHORT).show();
 
             DownloadStory ds = new DownloadStory();
-            ds.execute(new TitleAuthor[] {ta});
-            
+            ds.execute(new TitleAuthor[] {
+                    ta
+            });
+
         } else {
             // Stream story
             Toast.makeText(this, String.format("Loading story %s", ta.title), Toast.LENGTH_SHORT)
@@ -169,14 +201,15 @@ public class OnlineStoryViewActivity extends Activity implements OnItemClickList
         }
     }
 
-    private class DownloadStory extends AsyncTask<TitleAuthor, Void, String> {
+    public class DownloadStory extends AsyncTask<TitleAuthor, Void, String> {
 
         private Story s;
-        
+
         @SuppressWarnings("unused")
         @Override
         protected String doInBackground(TitleAuthor... params) {
-            // TODO Actually download the story here - this thread will actually do something
+            // TODO Actually download the story here - this thread will actually
+            // do something
             s = new Story(params[0].title, params[0].author);
 
             // Once we're actually downloading the story this will matter
@@ -190,7 +223,8 @@ public class OnlineStoryViewActivity extends Activity implements OnItemClickList
 
         @Override
         protected void onCancelled() {
-            Toast.makeText(getApplicationContext(), "Story Download Cancelled", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), "Story Download Cancelled", Toast.LENGTH_SHORT)
+                    .show();
             super.onCancelled();
         }
 
@@ -199,24 +233,25 @@ public class OnlineStoryViewActivity extends Activity implements OnItemClickList
             StoryListController slc = AdventureCreator.getStoryListController();
             // Add the story to the list
             slc.addStory(s);
-            
+
             OfflineIOHelper offlineHelper = AdventureCreator.getOfflineIOHelper();
             // Save our list of stories
             offlineHelper.saveOfflineStories(AdventureCreator.getStoryList());
-            
+
             Toast.makeText(getApplicationContext(), result, Toast.LENGTH_SHORT).show();
             super.onPostExecute(result);
         }
     }
-    
-    private class DownloadTitleAuthors extends AsyncTask<Void, String, List<TitleAuthor>>{
+
+    private class DownloadTitleAuthors extends AsyncTask<Void, String, List<TitleAuthor>> {
 
         private List<TitleAuthor> tas;
-        
+
         @Override
         protected List<TitleAuthor> doInBackground(Void... params) {
-            // TODO: Call The OnlineHelper get Titles and Authors method here plz
-            
+            // TODO: Call The OnlineHelper get Titles and Authors method here
+            // plz
+
             // Pretend we're getting this from the intenets
             tas = new ArrayList<TitleAuthor>();
             tas.add(new TitleAuthor("And who", "Are you"));
@@ -229,19 +264,20 @@ public class OnlineStoryViewActivity extends Activity implements OnItemClickList
             tas.add(new TitleAuthor("as long and sharp as yours", ""));
             tas.add(new TitleAuthor("And so he spoke", "and so he spoke"));
             tas.add(new TitleAuthor("that lord of", "Castamere"));
-            
+
             return null;
         }
-        
+
         @Override
-        protected void onPreExecute(){
+        protected void onPreExecute() {
             Toast.makeText(getApplicationContext(), "Loading stories", Toast.LENGTH_SHORT).show();
             super.onPreExecute();
         }
 
         @Override
         protected void onCancelled() {
-            Toast.makeText(getApplicationContext(), "Story Loading Cancelled", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), "Story Loading Cancelled", Toast.LENGTH_SHORT)
+                    .show();
             super.onCancelled();
         }
 
@@ -250,10 +286,11 @@ public class OnlineStoryViewActivity extends Activity implements OnItemClickList
             titleAuthors.clear();
             titleAuthors.addAll(tas);
             adapter.notifyDataSetChanged();
-            Toast.makeText(getApplicationContext(), "Stories Loaded." + titleAuthors.size(), Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), "Stories Loaded." + titleAuthors.size(),
+                    Toast.LENGTH_SHORT).show();
             super.onPostExecute(result);
         }
-        
+
     }
 
 }

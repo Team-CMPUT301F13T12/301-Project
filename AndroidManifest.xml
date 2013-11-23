@@ -64,7 +64,23 @@
         </activity>
         <activity
             android:name="ualberta.g12.adventurecreator.OnlineStoryViewActivity"
-            android:label="@string/title_activity_online_story_view" >
+            android:label="@string/title_activity_online_story_view"
+            android:launchMode="singleTop" >
+            <meta-data
+                android:name="android.app.searchable"
+                android:resource="@xml/online_story_search" />
+            <intent-filter>
+                <action android:name="android.intent.action.SEARCH" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="ualberta.g12.adventurecreator.OnlineStorySearchActivity"
+            android:label="@string/title_activity_online_story_search"
+            android:launchMode="singleTop"
+            android:parentActivityName="ualberta.g12.adventurecreator.OnlineStoryViewActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="ualberta.g12.andventurecreator.OnlineStoryViewActivity" />
         </activity>
     </application>
 

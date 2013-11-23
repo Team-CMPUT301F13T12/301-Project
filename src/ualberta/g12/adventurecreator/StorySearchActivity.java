@@ -65,7 +65,8 @@ public class StorySearchActivity extends Activity implements LView<StoryList>, O
         isAuthor = i.getBooleanExtra(MainActivity.IS_AUTHOR_FLAG, false);
 
         /*
-         * If it's null we don't have a search turn and don't have to change anything
+         * If it's null we don't have a search term and don't have to change
+         * anything
          */
         if (i.getStringExtra(SearchManager.QUERY) != null) {
             Log.d(TAG, "There was some Search stuff");
@@ -78,15 +79,14 @@ public class StorySearchActivity extends Activity implements LView<StoryList>, O
             performSearch();
         }
     }
-    
-    private void performSearch(){
-        if (stories != null && this.query != null) {
-            if(DEBUG) Log.d(TAG, String.format("Searching for query: %s", this.query));
-            
+
+    private void performSearch() {
+        if (this.stories != null && this.query != null) {
+            if (DEBUG)
+                Log.d(TAG, String.format("Searching for query: %s", this.query));
+
             List<Story> sl = new ArrayList<Story>();
             sl.addAll(stories);
-            if (DEBUG)
-                Log.d(TAG, String.format("SL: %d, stories: %d", sl.size(), stories.size()));
             stories.clear();
             for (Story s : sl) {
                 if (s.getStoryTitle() == null || s.getAuthor() == null) {
@@ -112,20 +112,20 @@ public class StorySearchActivity extends Activity implements LView<StoryList>, O
     }
 
     @Override
-    protected void onStart(){
+    protected void onStart() {
         super.onStart();
-        
+
         // Add ourself to the storyList Model
         storyList.addView(this);
     }
-    
+
     @Override
-    public void onDestroy(){
+    public void onDestroy() {
         super.onDestroy();
         // Remove ourselves from the storylist model
         storyList.deleteView(this);
     }
-    
+
     /**
      * Set up the {@link android.app.ActionBar}.
      */
@@ -134,22 +134,22 @@ public class StorySearchActivity extends Activity implements LView<StoryList>, O
         getActionBar().setDisplayHomeAsUpEnabled(true);
 
     }
-    
+
     @Override
-    public void onResume(){
+    public void onResume() {
         super.onResume();
         SharedPreferences settings = getPreferences(MODE_PRIVATE);
         isAuthor = settings.getBoolean(MainActivity.IS_AUTHOR_FLAG, false);
     }
-    
+
     @Override
-    public void onPause(){
+    public void onPause() {
         super.onPause();
-        
+
         SharedPreferences settings = getPreferences(MODE_PRIVATE);
         SharedPreferences.Editor editor = settings.edit();
         editor.putBoolean(MainActivity.IS_AUTHOR_FLAG, isAuthor);
-        
+
         editor.commit();
     }
 
@@ -176,24 +176,24 @@ public class StorySearchActivity extends Activity implements LView<StoryList>, O
         }
         return super.onOptionsItemSelected(item);
     }
-    
+
     @Override
-    public void onItemClick(AdapterView<?> parent, View v, int pos, long id){
+    public void onItemClick(AdapterView<?> parent, View v, int pos, long id) {
         Intent i;
-        if(isAuthor){
+        if (isAuthor) {
             i = new Intent(this, StoryEditActivity.class);
             i.putExtra("Mode", "Edit");
             i.putExtra("StoryPos", pos);
             startActivity(i);
         } else {
             int fragPos = stories.get(pos).getStartFragPos();
-            
+
             i = new Intent(this, EditFragmentActivity.class);
             i.putExtra("Mode", "View");
             i.putExtra("StoryPos", pos);
             i.putExtra("FragmentPos", fragPos);
             startActivity(i);
-            
+
         }
     }
 
@@ -201,12 +201,12 @@ public class StorySearchActivity extends Activity implements LView<StoryList>, O
     public void update(StoryList model) {
         // Reload our stories from StoryList Model
         stories = model.getAllStories();
-        
+
         // Notify our listview adapter that our array has changed
         adapter.notifyDataSetChanged();
-        
+
         // Perform search if there has been a previous search
-            performSearch();
+        performSearch();
     }
 
 }
