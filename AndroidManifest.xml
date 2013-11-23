@@ -30,6 +30,10 @@
             </intent-filter>
         </activity>
         <activity
+            android:name="ualberta.g12.adventurecreator.views.CreateStoryActivity"
+            android:label="@string/title_activity_new_story" >
+        </activity>
+        <activity
             android:name="ualberta.g12.adventurecreator.views.StoryEditActivity"
             android:label="Story Editor" >
         </activity>
