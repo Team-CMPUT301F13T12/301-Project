@@ -7,8 +7,13 @@ public class ElasticSearchResponse<T> {
 	int _version;
 	boolean exists;
 	T _source;
+	T fields;
 	double max_score;
 	public T getSource() {
 		return _source;
+	}
+	
+	public T getFields() {
+		return fields;
 	}
 }

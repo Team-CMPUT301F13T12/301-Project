@@ -19,6 +19,14 @@ public class ElasticSearchSearchResponse<T> {
         }
         return out;
     }
+    
+    public Collection<T> getFields(){
+        Collection<T> out = new ArrayList<T>();
+        for (ElasticSearchResponse<T> essrt : getHits()) {
+            out.add( essrt.getFields() );
+        }
+        return out;
+    }
     public String toString() {
         return (super.toString() + ":" + took + "," + _shards + "," + exists + ","  + hits);     
     }

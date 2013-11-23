@@ -109,7 +109,9 @@ public class OnlineHelper {
 	}
 
 	/**
-	 * Consumes the Get operation of the service
+	 * Gets the story by the id from our server
+	 * @param storyID is the id in which we are searching for ( should be unique also)
+	 * 
 	 */
 	public Story getStory(int storyId){
 		Story story = null;
@@ -146,6 +148,10 @@ public class OnlineHelper {
 		return story;
 	}
 	
+	/**
+	 * Obtains all story objects stored in the server 
+	 * @return
+	 */
 	public ArrayList<Story> getAllStories(){
 		ArrayList<Story> allStories = new ArrayList<Story>();
 		try{
@@ -185,32 +191,41 @@ public class OnlineHelper {
 		return allStories;
 	}
 	
+	/**
+	 * Obtains all stories from the server but is only a partial representation of the object
+	 * Will search only the storyTitle, author and Id of a story 
+	 * This method is used to quickly find all the different stories in our server without having to also 
+	 * downloading all the potentially large media associated with it 
+	 * @return
+	 * @throws ClientProtocolException
+	 * @throws IOException
+	 */
 	public ArrayList<Story> getAllStoryTitlesIdAuthor() throws ClientProtocolException, IOException{
+		
 		ArrayList<Story> resultList = new ArrayList<Story>();
+		
+		// lets prepare our query to only get our required fields 
 		HttpPost searchRequest = new HttpPost(ourServer+"_search?pretty=1");
-		//String query =         "{\"query\" :  {\"fields\" : \"[storyTitle.*\",\"author\"],\"query\" :{ }}";
-		String query =         "{\"fields\" : [\"storyTitle\",\"author\"], \"query\" :{ \"match_all\" : {}    }}";
+		String query =         "{\"fields\" : [\"storyTitle\",\"author\", \"id\"], \"query\" :{ \"match_all\" : {}    }}";
 		StringEntity stringentity = new StringEntity(query);
 
+		// set our header let it know json!
 		searchRequest.setHeader("Accept","application/json");
 		searchRequest.setEntity(stringentity);
 
+		// get our json string back ..
 		HttpResponse response = httpclient.execute(searchRequest);
-		String status = response.getStatusLine().toString();
-		System.out.println(status);
-
 		String json = getEntityContent(response);
 
 		Type elasticSearchSearchResponseType = new TypeToken<ElasticSearchSearchResponse<Story>>(){}.getType();
 		ElasticSearchSearchResponse<Story> esResponse = gson.fromJson(json, elasticSearchSearchResponseType);
-		System.err.println(esResponse);
+		
+		// now we want to change all our response objects back into stories by obtaining the fields we got back 
 		for (ElasticSearchResponse<Story> s : esResponse.getHits()) {
-			Story story = s.getSource();
+			Story story = s.getFields();
 			resultList.add(story);
-			System.err.println(story);
 		}
 		return resultList;
-		//searchRequest.releaseConnection();
 	}        
 	
 
@@ -361,7 +376,11 @@ public class OnlineHelper {
 		//Story s = client.initializeRecipe();
 		//client.insertStory(s);
 		ArrayList<Story>stories  = client.getAllStories();
-		client.getAllStoryTitlesIdAuthor();
+		ArrayList<Story>partialStories = client.getAllStoryTitlesIdAuthor();
+		for (int i =0;i < partialStories.size();i++){
+			System.out.println(partialStories.get(i).getAuthor() +" "+
+					partialStories.get(i).getStoryTitle() + " "+ partialStories.get(i).getId());
+		}
 		//client.deleteStories();
 		
 
