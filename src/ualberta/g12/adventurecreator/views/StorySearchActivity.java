@@ -166,6 +166,12 @@ public class StorySearchActivity extends Activity implements LView<StoryList>, O
     }
 
     @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        menu.findItem(R.id.menu_check_box_author).setChecked(isAuthor);
+        return true;
+    }
+
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
@@ -177,6 +183,12 @@ public class StorySearchActivity extends Activity implements LView<StoryList>, O
                 // http://developer.android.com/design/patterns/navigation.html#up-vs-back
                 //
                 NavUtils.navigateUpFromSameTask(this);
+                return true;
+            case R.id.menu_check_box_author:
+                boolean alreadyChecked = item.isChecked();
+                item.setChecked(!alreadyChecked);
+
+                isAuthor = item.isChecked();
                 return true;
         }
         return super.onOptionsItemSelected(item);
