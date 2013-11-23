@@ -292,7 +292,7 @@ public class OnlineStoryViewActivity extends Activity implements OnItemClickList
             titleAuthors.clear();
             titleAuthors.addAll(tas);
             adapter.notifyDataSetChanged();
-            Toast.makeText(getApplicationContext(), "Stories Loaded." + titleAuthors.size(),
+            Toast.makeText(getApplicationContext(), "Stories Loaded " + titleAuthors.size(),
                     Toast.LENGTH_SHORT).show();
             super.onPostExecute(result);
         }
