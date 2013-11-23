@@ -1,3 +1,4 @@
+
 package ualberta.g12.adventurecreator.data;
 
 import android.app.Application;
@@ -6,7 +7,7 @@ import android.content.Context;
 import ualberta.g12.adventurecreator.controllers.FragmentController;
 import ualberta.g12.adventurecreator.controllers.StoryController;
 import ualberta.g12.adventurecreator.controllers.StoryListController;
-
+import ualberta.g12.adventurecreator.online.OnlineHelper;
 
 /**
  * Application object for the Application. Used as a static singleton throughout
@@ -23,6 +24,7 @@ public class AdventureCreator extends Application {
     private transient static StoryList storyList;
     private transient static StoryListController storyListController = null;
     private transient static OfflineIOHelper offlineIOHelper = null;
+    private transient static OnlineHelper onlineHelper = null;
 
     private static Context context;
 
@@ -33,16 +35,16 @@ public class AdventureCreator extends Application {
     }
 
     /**
-     * Returns the StoryList Singleton. If one currently doesn't exist, we 
-     * try and load it from the OfflineIOHelper. If that doesn't work, we 
-     * create a new StoryList and return that.
+     * Returns the StoryList Singleton. If one currently doesn't exist, we try
+     * and load it from the OfflineIOHelper. If that doesn't work, we create a
+     * new StoryList and return that.
      * 
      * @return the StoryList singleton
      */
     public static StoryList getStoryList() {
         if (storyList == null) {
             storyList = getOfflineIOHelper().loadOfflineStories();
-            if(storyList == null){
+            if (storyList == null) {
                 storyList = new StoryList();
             }
         }
@@ -100,5 +102,14 @@ public class AdventureCreator extends Application {
         }
         return offlineIOHelper;
     }
+
     // TODO: Implement getters for all of the singletons
+
+    /** Returns the OnlineHelper Singleton. If one doesn't exist, we make it */
+    public static OnlineHelper getOnlineHelper() {
+        if(onlineHelper == null){
+            onlineHelper = new OnlineHelper();
+        }
+        return onlineHelper;
+    }
 }
