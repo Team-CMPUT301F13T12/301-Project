@@ -47,19 +47,6 @@ public class CreateStoryActivity extends Activity {
         story = storyList.getAllStories().get(storyPos);
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.main, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // TODO Auto-generated method stub
-        return super.onOptionsItemSelected(item);
-    }
-
     private void setListeners() {
 
         createButton.setOnClickListener(new View.OnClickListener() {
