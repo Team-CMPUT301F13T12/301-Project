@@ -79,6 +79,8 @@ public class TryPublishStoryTask extends AsyncTask<Story, Void, Boolean> {
 
     private void publishStory() {
         Toast.makeText(context, "Publishing story..", Toast.LENGTH_SHORT).show();
+        PublishStoryTask publishTask = new PublishStoryTask(context);
+        publishTask.execute(s);
     }
 
 }
