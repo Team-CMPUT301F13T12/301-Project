@@ -221,7 +221,7 @@ public class OnlineHelper {
      * prevent the case of accidental overwriting
      * 
      * @param id int value which is our story id ( should be unique)
-     * @return
+     * @return true if a story with id exists, else false
      * @throws ClientProtocolException
      * @throws IOException
      */
