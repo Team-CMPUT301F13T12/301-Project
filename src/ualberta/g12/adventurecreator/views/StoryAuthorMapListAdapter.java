@@ -54,8 +54,8 @@ public class StoryAuthorMapListAdapter extends ArrayAdapter<TitleAuthor> {
             holder = (ViewHolder) convertView.getTag();
         }
         
-        holder.title.setText(ta.title);
-        holder.author.setText(ta.author);
+        holder.title.setText(ta.getTitle());
+        holder.author.setText(ta.getAuthor());
         
         return convertView;
     }

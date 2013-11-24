@@ -191,7 +191,7 @@ public class OnlineStoryViewActivity extends Activity implements OnItemClickList
         TitleAuthor ta = titleAuthors.get(pos);
         if (downloadMode) {
             // Download story lol
-            Toast.makeText(this, String.format("Downloading story %s", ta.title),
+            Toast.makeText(this, String.format("Downloading story %s", ta.getTitle()),
                     Toast.LENGTH_SHORT).show();
 
             DownloadStory ds = new DownloadStory();
@@ -201,7 +201,7 @@ public class OnlineStoryViewActivity extends Activity implements OnItemClickList
 
         } else {
             // Stream story
-            Toast.makeText(this, String.format("Loading story %s", ta.title), Toast.LENGTH_SHORT)
+            Toast.makeText(this, String.format("Loading story %s", ta.getTitle()), Toast.LENGTH_SHORT)
                     .show();
             // Send some stuff to FragmentViewActivity
         }
@@ -216,13 +216,13 @@ public class OnlineStoryViewActivity extends Activity implements OnItemClickList
         protected String doInBackground(TitleAuthor... params) {
             // TODO Actually download the story here - this thread will actually
             // do something
-            s = new Story(params[0].title, params[0].author);
+            s = new Story(params[0].getTitle(), params[0].getAuthor());
 
             // Once we're actually downloading the story this will matter
             if (true) {
-                return String.format("%s Download complete", params[0].title);
+                return String.format("%s Download complete", params[0].getTitle());
             } else {
-                return String.format("%s Download Failed", params[0].title);
+                return String.format("%s Download Failed", params[0].getTitle());
             }
 
         }
@@ -260,16 +260,16 @@ public class OnlineStoryViewActivity extends Activity implements OnItemClickList
 
             // Pretend we're getting this from the intenets
             tas = new ArrayList<TitleAuthor>();
-            tas.add(new TitleAuthor("And who", "Are you"));
-            tas.add(new TitleAuthor("The proud lord said", "That I must bow so low?"));
-            tas.add(new TitleAuthor("Only a cat", "of a different coat,"));
-            tas.add(new TitleAuthor("that's all", "the truth I know."));
-            tas.add(new TitleAuthor("In a coat of gold", "or a coat of red"));
-            tas.add(new TitleAuthor("a lion still has claws", ""));
-            tas.add(new TitleAuthor("And mine are long and sharp", "my lord"));
-            tas.add(new TitleAuthor("as long and sharp as yours", ""));
-            tas.add(new TitleAuthor("And so he spoke", "and so he spoke"));
-            tas.add(new TitleAuthor("that lord of", "Castamere"));
+            tas.add(new TitleAuthor("And who", "Are you", 4));
+            tas.add(new TitleAuthor("The proud lord said", "That I must bow so low?", 8));
+            tas.add(new TitleAuthor("Only a cat", "of a different coat,", 15));
+            tas.add(new TitleAuthor("that's all", "the truth I know.", 16));
+            tas.add(new TitleAuthor("In a coat of gold", "or a coat of red", 23));
+            tas.add(new TitleAuthor("a lion still has claws", "", 42));
+            tas.add(new TitleAuthor("And mine are long and sharp", "my lord", 108));
+            tas.add(new TitleAuthor("as long and sharp as yours", "", 10));
+            tas.add(new TitleAuthor("And so he spoke", "and so he spoke", 20));
+            tas.add(new TitleAuthor("that lord of", "Castamere", 30));
 
             return null;
         }

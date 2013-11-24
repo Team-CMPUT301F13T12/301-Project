@@ -25,7 +25,7 @@ import java.util.Locale;
 
 public class OnlineStorySearchActivity extends Activity implements OnItemClickListener {
 
-    private List<TitleAuthor> titleAuthors;
+    private List<TitleAuthor> tas;
     private ListView listView;
     private StoryAuthorMapListAdapter adapter;
     private static boolean downloadMode;
@@ -55,22 +55,22 @@ public class OnlineStorySearchActivity extends Activity implements OnItemClickLi
     }
 
     private void loadTitleAuthors() {
-        titleAuthors = new ArrayList<TitleAuthor>();
-        titleAuthors.add(new TitleAuthor("And who", "Are you"));
-        titleAuthors.add(new TitleAuthor("The proud lord said", "That I must bow so low?"));
-        titleAuthors.add(new TitleAuthor("Only a cat", "of a different coat,"));
-        titleAuthors.add(new TitleAuthor("that's all", "the truth I know."));
-        titleAuthors.add(new TitleAuthor("In a coat of gold", "or a coat of red"));
-        titleAuthors.add(new TitleAuthor("a lion still has claws", ""));
-        titleAuthors.add(new TitleAuthor("And mine are long and sharp", "my lord"));
-        titleAuthors.add(new TitleAuthor("as long and sharp as yours", ""));
-        titleAuthors.add(new TitleAuthor("And so he spoke", "and so he spoke"));
-        titleAuthors.add(new TitleAuthor("that lord of", "Castamere"));
+        tas = new ArrayList<TitleAuthor>();
+        tas.add(new TitleAuthor("And who", "Are you", 4));
+        tas.add(new TitleAuthor("The proud lord said", "That I must bow so low?", 8));
+        tas.add(new TitleAuthor("Only a cat", "of a different coat,", 15));
+        tas.add(new TitleAuthor("that's all", "the truth I know.", 16));
+        tas.add(new TitleAuthor("In a coat of gold", "or a coat of red", 23));
+        tas.add(new TitleAuthor("a lion still has claws", "", 42));
+        tas.add(new TitleAuthor("And mine are long and sharp", "my lord", 108));
+        tas.add(new TitleAuthor("as long and sharp as yours", "", 10));
+        tas.add(new TitleAuthor("And so he spoke", "and so he spoke", 20));
+        tas.add(new TitleAuthor("that lord of", "Castamere", 30));
     }
 
     private void setUpUi() {
         listView = (ListView) findViewById(R.id.online_story_search_listview);
-        adapter = new StoryAuthorMapListAdapter(this, R.layout.listview_story_list, titleAuthors);
+        adapter = new StoryAuthorMapListAdapter(this, R.layout.listview_story_list, tas);
         listView.setAdapter(adapter);
         listView.setOnItemClickListener(this);
     }
@@ -95,25 +95,25 @@ public class OnlineStorySearchActivity extends Activity implements OnItemClickLi
     }
 
     private void performSearch() {
-        if (this.titleAuthors != null && this.query != null) {
+        if (this.tas != null && this.query != null) {
             if (DEBUG)
                 Log.d(TAG, String.format("Searching for query: %s", this.query));
 
             List<TitleAuthor> tas = new ArrayList<TitleAuthor>();
-            tas.addAll(titleAuthors);
-            titleAuthors.clear();
+            tas.addAll(tas);
+            tas.clear();
             if (DEBUG)
                 Log.d(TAG, String.format("%d TitleAuthors to search from", tas.size()));
             for (TitleAuthor t : tas) {
-                if (t.title == null || t.author == null) {
+                if (t.getTitle() == null || t.getAuthor() == null) {
                     // Do nothing as this is a title author with a null title or
                     // author
                 } else {
-                    if (t.title.toLowerCase(Locale.CANADA).contains(this.query)
-                            || t.author.toLowerCase(Locale.CANADA).contains(this.query)) {
+                    if (t.getTitle().toLowerCase(Locale.CANADA).contains(this.query)
+                            || t.getAuthor().toLowerCase(Locale.CANADA).contains(this.query)) {
                         if (DEBUG)
-                            Log.d(TAG, String.format("Adding story %s", t.title));
-                        titleAuthors.add(t);
+                            Log.d(TAG, String.format("Adding story %s", t.getTitle()));
+                        tas.add(t);
                     }
                 }
             }
@@ -180,10 +180,10 @@ public class OnlineStorySearchActivity extends Activity implements OnItemClickLi
     @Override
     public void onItemClick(AdapterView<?> parent, View v, int pos, long id) {
         // Download or stream story
-        TitleAuthor ta = titleAuthors.get(pos);
+        TitleAuthor ta = tas.get(pos);
         if (downloadMode) {
             // Download story lol
-            Toast.makeText(this, String.format("Downloading story %s", ta.title),
+            Toast.makeText(this, String.format("Downloading story %s", ta.getTitle()),
                     Toast.LENGTH_SHORT).show();
 
             /*
@@ -193,7 +193,7 @@ public class OnlineStorySearchActivity extends Activity implements OnItemClickLi
 
         } else {
             // Stream story
-            Toast.makeText(this, String.format("Loading story %s", ta.title), Toast.LENGTH_SHORT)
+            Toast.makeText(this, String.format("Loading story %s", ta.getTitle()), Toast.LENGTH_SHORT)
                     .show();
             // Send some stuff to FragmentViewActivity
         }
