@@ -94,11 +94,11 @@ public class StorySearchActivity extends Activity implements LView<StoryList>, O
             sl.addAll(stories);
             stories.clear();
             for (Story s : sl) {
-                if (s.getStoryTitle() == null || s.getAuthor() == null) {
+                if (s.getTitle() == null || s.getAuthor() == null) {
                     // Do nothing this is a story with a null title or
                     // author
                 } else {
-                    if (s.getStoryTitle().toLowerCase(Locale.CANADA).contains(this.query)
+                    if (s.getTitle().toLowerCase(Locale.CANADA).contains(this.query)
                             || s.getAuthor().toLowerCase(Locale.CANADA).contains(this.query)) {
                         if (DEBUG)
                             Log.d(TAG, "Adding a story");

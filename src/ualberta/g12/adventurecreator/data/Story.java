@@ -30,15 +30,15 @@ public class Story extends SModel implements Serializable{
 
     public Story(String title, String author) {
         this();
-        setStoryTitle(title);
+        setTitle(title);
         setAuthor(author);   
     }
 
-    public String getStoryTitle() {
+    public String getTitle() {
         return storyTitle;
     }
 
-    public void setStoryTitle(String storyTitle) {
+    public void setTitle(String storyTitle) {
         this.storyTitle = storyTitle;
     }
 

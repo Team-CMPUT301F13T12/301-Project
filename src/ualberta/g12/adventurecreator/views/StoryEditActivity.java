@@ -76,7 +76,7 @@ public class StoryEditActivity extends Activity implements SView<Story> {
         //get widget references
         titleText = (EditText) findViewById(R.id.story_editor_title_edit);
         authorText = (EditText) findViewById(R.id.story_editor_author_edit);
-        titleText.setText(story.getStoryTitle());
+        titleText.setText(story.getTitle());
         authorText.setText(story.getAuthor());
         
         lView = (ListView) findViewById(R.id.story_editor_listview);
@@ -168,7 +168,7 @@ public class StoryEditActivity extends Activity implements SView<Story> {
 
         
         //update title and author
-        titleText.setText(model.getStoryTitle());
+        titleText.setText(model.getTitle());
         authorText.setText(model.getAuthor());
 
         //populate the fragment list
@@ -200,7 +200,7 @@ public class StoryEditActivity extends Activity implements SView<Story> {
      */
      private void saveChanges(){
         //save any changes
-         story.setStoryTitle(titleText.getText().toString());
+         story.setTitle(titleText.getText().toString());
          story.setAuthor(authorText.getText().toString());
          
         storyList.getAllStories().set(storyPos, story);

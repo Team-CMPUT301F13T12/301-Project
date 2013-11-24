@@ -24,7 +24,7 @@ public class PublishStoryTask extends AsyncTask<Story, Void, Boolean> {
 
     @Override
     protected Boolean doInBackground(Story... story) {
-        title = story[0].getStoryTitle();
+        title = story[0].getTitle();
         try {
             onlineHelper.insertStory(story[0]);
             /*

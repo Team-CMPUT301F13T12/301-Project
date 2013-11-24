@@ -65,7 +65,7 @@ public class StoryListArrayAdapter extends ArrayAdapter<Story> {
             holder = (ViewHolder) convertView.getTag();
         }
 
-        holder.title.setText(story.getStoryTitle());
+        holder.title.setText(story.getTitle());
         holder.author.setText(story.getAuthor());
 
         return convertView;

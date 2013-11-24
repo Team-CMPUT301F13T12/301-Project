@@ -66,7 +66,7 @@ public class TryPublishStoryTask extends AsyncTask<Story, Void, Boolean> {
             });
 
             builder.setTitle(String.format("%s already exists. Do you want to update it?",
-                    s.getStoryTitle()));
+                    s.getTitle()));
             AlertDialog dialog = builder.create();
             dialog.show();
         } else {
