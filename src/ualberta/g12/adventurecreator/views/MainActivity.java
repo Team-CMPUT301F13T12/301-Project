@@ -4,6 +4,7 @@ package ualberta.g12.adventurecreator.views;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.SearchManager;
+import android.app.AlertDialog.Builder;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -20,13 +21,18 @@ import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.SearchView;
+import android.widget.Toast;
+
+import org.apache.http.client.ClientProtocolException;
 
 import ualberta.g12.adventurecreator.R;
 import ualberta.g12.adventurecreator.data.AdventureCreator;
 import ualberta.g12.adventurecreator.data.OfflineIOHelper;
 import ualberta.g12.adventurecreator.data.Story;
 import ualberta.g12.adventurecreator.data.StoryList;
+import ualberta.g12.adventurecreator.online.OnlineHelper;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Locale;
 
@@ -45,6 +51,7 @@ public class MainActivity extends Activity implements LView<StoryList>, OnItemCl
     private Button onlineButton;
     private StoryListArrayAdapter adapter;
     private OfflineIOHelper offlineHelper;
+    private OnlineHelper onlineHelper;
 
     public static final String IS_AUTHOR_FLAG = "isAuthor";
     private static boolean isAuthor = false;
@@ -60,6 +67,9 @@ public class MainActivity extends Activity implements LView<StoryList>, OnItemCl
         // Load our local stories from the StoryList Model
         stories = storyList.getAllStories();
 
+        // Set up our onlin helper
+        onlineHelper = AdventureCreator.getOnlineHelper();
+        
         // //Erases previous saves - ONLY FOR TESTING - should be commented out
         // storyList = new StoryList();
         // offlineHelper.saveOfflineStories(storyList);
@@ -95,11 +105,11 @@ public class MainActivity extends Activity implements LView<StoryList>, OnItemCl
             public boolean onItemLongClick(AdapterView<?> parent, View view, final int position, long id) {
                 if(DEBUG_LOG) Log.d(TAG, "LONG CLICK");
                 AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
-                builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
 
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        publishStory(position);
+                        tryPublishStory(position);
                     }
                 });
                 builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
@@ -123,8 +133,47 @@ public class MainActivity extends Activity implements LView<StoryList>, OnItemCl
     /**
      * @param position the position of the story
      */
-    private void publishStory(int position) {
-
+    private void tryPublishStory(int position) {
+        final Story s = stories.get(position);
+        
+        try{
+        //if(onlineHelper.checkId(position)){
+            if(true){
+            // Story already exists, ask if they want to update
+            AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+            builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    publishStory(s);
+                    
+                }
+            });
+            builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    // Cancel the dialog, don't do anything
+                    
+                }
+            });
+            
+            builder.setTitle(String.format("%s already exists. Do you want to update it?", s.getStoryTitle()));
+            AlertDialog dialog = builder.create();
+            dialog.show();
+        } else {
+            // Story doesn't exist, just update it.
+            publishStory(s);
+            throw new IOException();
+        }
+        } catch(IOException e){
+            Toast.makeText(getApplicationContext(), "Error publishing story", Toast.LENGTH_SHORT).show();
+            e.printStackTrace();
+        }
+    }
+    
+    private void publishStory(Story s){
+        
     }
 
     @Override
