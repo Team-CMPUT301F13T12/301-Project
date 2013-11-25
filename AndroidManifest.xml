@@ -105,6 +105,10 @@
             android:name="ualberta.g12.adventurecreator.views.HelpRead"
             android:label="@string/title_activity_help_read" >
         </activity>
+        <activity
+            android:name="ualberta.g12.adventurecreator.views.HelpOnline"
+            android:label="@string/title_activity_help_online" >
+        </activity>
     </application>
 
 </manifest>
