@@ -9,6 +9,7 @@ import ualberta.g12.adventurecreator.controllers.StoryListController;
 import ualberta.g12.adventurecreator.data.AdventureCreator;
 import ualberta.g12.adventurecreator.data.OfflineIOHelper;
 import ualberta.g12.adventurecreator.data.Story;
+import ualberta.g12.adventurecreator.online.OnlineHelper;
 
 public class DownloadStoryTask extends AsyncTask<Story, Void, String> {
 
@@ -23,9 +24,10 @@ public class DownloadStoryTask extends AsyncTask<Story, Void, String> {
     protected String doInBackground(Story... story) {
 
         // TODO: Actually download the story
-        s = story[0];
+        OnlineHelper oh = AdventureCreator.getOnlineHelper();
+        s = oh.getStory(story[0].getId());
 
-        if (true) {
+        if (s != null) {
             return String.format("%s Download complete", story[0].getTitle());
         } else {
             s = null;
@@ -44,6 +46,7 @@ public class DownloadStoryTask extends AsyncTask<Story, Void, String> {
          */
         if (s != null) {
             StoryListController slc = AdventureCreator.getStoryListController();
+            // TODO: Check if story is already there and then update it with updateStoryWithId
             slc.addStory(s);
 
             OfflineIOHelper offlineHelper = AdventureCreator.getOfflineIOHelper();
