@@ -97,22 +97,23 @@ public class OnlineStorySearchActivity extends Activity implements OnItemClickLi
     }
 
     private void performSearch() {
+
         if (this.tas != null && this.query != null) {
             if (DEBUG)
-                Log.d(TAG, String.format("Searching for query: %s", this.query));
-
-            List<Story> tas = new ArrayList<Story>();
-            tas.addAll(tas);
+                Log.d(TAG,
+                        String.format("Searching for query: %s", this.query));
+            List<Story> stories = new ArrayList<Story>();
+            stories.addAll(tas);
             tas.clear();
             if (DEBUG)
                 Log.d(TAG, String.format("%d TitleAuthors to search from", tas.size()));
-            for (Story t : tas) {
+            for (Story t : stories) {
                 if (t.getTitle() == null || t.getAuthor() == null) {
                     // Do nothing as this is a title author with a null title or
-                    // author
+                    // // author
                 } else {
-                    if (t.getTitle().toLowerCase(Locale.CANADA).contains(this.query)
-                            || t.getAuthor().toLowerCase(Locale.CANADA).contains(this.query)) {
+                    if (t.getTitle().toLowerCase(Locale.CANADA).contains(this.query) ||
+                            t.getAuthor().toLowerCase(Locale.CANADA).contains(this.query)) {
                         if (DEBUG)
                             Log.d(TAG, String.format("Adding story %s", t.getTitle()));
                         tas.add(t);
