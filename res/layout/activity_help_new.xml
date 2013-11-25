@@ -4,7 +4,7 @@
 
 <RelativeLayout
     android:layout_width="match_parent"
-    android:layout_height="2246dp"
+    android:layout_height="2340dp"
     android:paddingBottom="@dimen/activity_vertical_margin"
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
@@ -25,7 +25,7 @@
         android:layout_alignLeft="@+id/imageView1"
         android:layout_below="@+id/imageView1"
         android:layout_marginTop="25dp"
-        android:text="After pressing the &quot;plus&quot; button on the menubar, there will be prompts to enter in the title and the author of the newly created story. After these fields have been filled in, press the &quot;create&quot; button." />
+        android:text="After pressing the plus icon on the menu bar, there will be prompts to enter in the title and the author of the newly created story. After these fields have been filled in, press the &quot;create!&quot; button." />
 
     <ImageView
         android:id="@+id/imageView2"
@@ -43,7 +43,7 @@
         android:layout_alignParentLeft="true"
         android:layout_below="@+id/imageView2"
         android:layout_marginTop="20dp"
-        android:text="Before editing a story, remeber to check author mode at the start screen. If a new story was created, the start screen will appear and the new story will have been added to the list. To edit a story, simply click the story. The list of fragments (pages) will be listed as well as the name and the author. To edit a certain fragment click on the fragment. New fragments an also be created using the menubar, simliar to in the main screen. The save icon is also located on the menubar after all changes have been made." />
+        android:text="Before editing a story, remeber to check author mode at the start screen. If a new story was created, the start screen will appear and the new story will have been added to the list. To edit a story, simply click the story. The list of fragments (pages) will be listed as well as the name and the author. To edit a certain fragment click on the fragment. New fragments can also be created by pressing the plus icon on the menu bar, simliar to in the main screen. The save icon is also located on the menu bar which saves the progress." />
 
     <ImageView
         android:id="@+id/imageView3"
@@ -61,7 +61,25 @@
         android:layout_alignParentLeft="true"
         android:layout_below="@+id/imageView3"
         android:layout_marginTop="20dp"
-        android:text="When editing a fragment, press and hold the &quot;Add new text/image/choice&quot; which will make a popup menu appear. From this menu the user can choose what attribute to add to the fragment, or to edit or delete the selected attribute. " />
+        android:text="When editing a fragment, press and hold the &quot;Add new text/image/choice&quot; to start, which will make a popup menu appear. From this menu the user can choose what attribute to add to the fragment, or to edit or delete the selected attribute. " />
+
+    <ImageView
+        android:id="@+id/imageView4"
+        android:layout_width="wrap_content"
+        android:layout_height="400dp"
+        android:layout_alignLeft="@+id/textView3"
+        android:layout_below="@+id/textView3"
+        android:layout_marginTop="34dp"
+        android:src="@drawable/choosechoice" />
+
+    <TextView
+        android:id="@+id/textView4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/imageView4"
+        android:layout_marginTop="16dp"
+        android:text="When adding a new choice to the fragment, a new screen will appear prompting the user to enter the text from the choice as well as select another fragment to go to for the choice. When the &quot;Select a Choice Here&quot; button is selected, a popup menu will appear giving the user a list of existing fragments that can be linked to the current fragment. The {RANDOM} option selects a random choice from the list to link to. When all options have been completed, press the floppy disk icon in the menu bar to save." />
 
 </RelativeLayout>
 </ScrollView>

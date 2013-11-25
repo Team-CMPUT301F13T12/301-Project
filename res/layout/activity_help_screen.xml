@@ -10,21 +10,6 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin" >
 
-    <TextView
-        android:id="@+id/textView2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Adventures! Help" />
-
-    <TextView
-        android:id="@+id/textView1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/textView2"
-        android:layout_below="@+id/textView2"
-        android:layout_marginTop="20dp"
-        android:text="Adventures! is an application that allows you to create your own choose your own adventures stories. The following will be a step by step tutorial in how to use the application." />
-
     <ImageView
         android:id="@+id/imageView1"
         android:layout_width="wrap_content"
@@ -94,5 +79,22 @@
         android:layout_marginBottom="49dp"
         android:text="Create New Story" />
 
+    <TextView
+        android:id="@+id/textView7"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Adventures! Help"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+
+    <TextView
+        android:id="@+id/textView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/imageView1"
+        android:layout_below="@+id/textView7"
+        android:layout_marginTop="27dp"
+        android:text="Adventures! is an application that allows you to create your own choose your own adventures stories. The following will be a step by step tutorial in how to use the application." />
+
 </RelativeLayout>
+
 </ScrollView>
