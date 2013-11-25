@@ -33,6 +33,7 @@ public class DownloadTitleAuthorsTask extends AsyncTask<String, String, Void> {
         }
 
         tas = new ArrayList<TitleAuthor>();
+        tas.add(new TitleAuthor("Whaaat", "yo", 1));
         tas.add(new TitleAuthor("And who", "Are you", 4));
         tas.add(new TitleAuthor("The proud lord said", "That I must bow so low?", 8));
         tas.add(new TitleAuthor("Only a cat", "of a different coat,", 15));

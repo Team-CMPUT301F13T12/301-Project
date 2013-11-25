@@ -12,6 +12,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.webkit.DownloadListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Button;
@@ -25,6 +26,7 @@ import ualberta.g12.adventurecreator.data.AdventureCreator;
 import ualberta.g12.adventurecreator.data.OfflineIOHelper;
 import ualberta.g12.adventurecreator.data.Story;
 import ualberta.g12.adventurecreator.data.TitleAuthor;
+import ualberta.g12.adventurecreator.tasks.DownloadStoryTask;
 import ualberta.g12.adventurecreator.tasks.DownloadTitleAuthorsTask;
 
 import java.util.ArrayList;
@@ -179,11 +181,10 @@ public class OnlineStoryViewActivity extends Activity implements OnItemClickList
             // Download story lol
             Toast.makeText(this, String.format("Downloading story %s", ta.getTitle()),
                     Toast.LENGTH_SHORT).show();
-
-            DownloadStory ds = new DownloadStory();
-            ds.execute(new TitleAuthor[] {
-                    ta
-            });
+            
+            DownloadStoryTask dst = new DownloadStoryTask(getApplicationContext());
+            dst.execute(new TitleAuthor[] {ta});
+            
 
         } else {
             // Stream story
@@ -234,56 +235,6 @@ public class OnlineStoryViewActivity extends Activity implements OnItemClickList
             Toast.makeText(getApplicationContext(), result, Toast.LENGTH_SHORT).show();
             super.onPostExecute(result);
         }
-    }
-
-    private class DownloadTitleAuthors extends AsyncTask<Void, String, List<TitleAuthor>> {
-
-        private List<TitleAuthor> tas;
-
-        @Override
-        protected List<TitleAuthor> doInBackground(Void... params) {
-            // TODO: Call The OnlineHelper get Titles and Authors method here
-            // plz
-
-            // Pretend we're getting this from the intenets
-            tas = new ArrayList<TitleAuthor>();
-            tas.add(new TitleAuthor("And who", "Are you", 4));
-            tas.add(new TitleAuthor("The proud lord said", "That I must bow so low?", 8));
-            tas.add(new TitleAuthor("Only a cat", "of a different coat,", 15));
-            tas.add(new TitleAuthor("that's all", "the truth I know.", 16));
-            tas.add(new TitleAuthor("In a coat of gold", "or a coat of red", 23));
-            tas.add(new TitleAuthor("a lion still has claws", "", 42));
-            tas.add(new TitleAuthor("And mine are long and sharp", "my lord", 108));
-            tas.add(new TitleAuthor("as long and sharp as yours", "", 10));
-            tas.add(new TitleAuthor("And so he spoke", "and so he spoke", 20));
-            tas.add(new TitleAuthor("that lord of", "Castamere", 30));
-
-            return null;
-        }
-
-        @Override
-        protected void onPreExecute() {
-            Toast.makeText(getApplicationContext(), "Loading stories", Toast.LENGTH_SHORT).show();
-            super.onPreExecute();
-        }
-
-        @Override
-        protected void onCancelled() {
-            Toast.makeText(getApplicationContext(), "Story Loading Cancelled", Toast.LENGTH_SHORT)
-                    .show();
-            super.onCancelled();
-        }
-
-        @Override
-        protected void onPostExecute(List<TitleAuthor> result) {
-            titleAuthors.clear();
-            titleAuthors.addAll(tas);
-            adapter.notifyDataSetChanged();
-            Toast.makeText(getApplicationContext(), "Stories Loaded " + titleAuthors.size(),
-                    Toast.LENGTH_SHORT).show();
-            super.onPostExecute(result);
-        }
-
     }
 
 }

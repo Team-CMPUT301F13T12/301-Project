@@ -13,6 +13,7 @@ import ualberta.g12.adventurecreator.data.Story;
 public class DownloadStoryTask extends AsyncTask<Story, Void, String> {
 
     private Context context;
+    private Story s;
 
     public DownloadStoryTask(Context c) {
         this.context = c;
@@ -22,15 +23,12 @@ public class DownloadStoryTask extends AsyncTask<Story, Void, String> {
     protected String doInBackground(Story... story) {
 
         // TODO: Actually download the story
-                
+        s = story[0];
+
         if (true) {
-            StoryListController slc = AdventureCreator.getStoryListController();
-            slc.addStory(story[0]);
-            
-            OfflineIOHelper offlineHelper = AdventureCreator.getOfflineIOHelper();
-            offlineHelper.saveOfflineStories(AdventureCreator.getStoryList());
             return String.format("%s Download complete", story[0].getTitle());
         } else {
+            s = null;
             return String.format("%s Download failed", story[0].getTitle());
         }
 
@@ -38,6 +36,19 @@ public class DownloadStoryTask extends AsyncTask<Story, Void, String> {
 
     @Override
     protected void onPostExecute(String result) {
+        /*
+         * This has to be in onPostExecute because it ends up calling Update in
+         * Other activities which means that we're going to be teling a ListView
+         * adapter to change, and UI changes can only be done on the main UI
+         * Thread.
+         */
+        if (s != null) {
+            StoryListController slc = AdventureCreator.getStoryListController();
+            slc.addStory(s);
+
+            OfflineIOHelper offlineHelper = AdventureCreator.getOfflineIOHelper();
+            offlineHelper.saveOfflineStories(AdventureCreator.getStoryList());
+        }
         Toast.makeText(context, result, Toast.LENGTH_SHORT).show();
         super.onPostExecute(result);
     }
