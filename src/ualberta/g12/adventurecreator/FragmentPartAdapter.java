@@ -35,7 +35,7 @@ public class FragmentPartAdapter extends ArrayAdapter {
      * @param frag the Fragment to display
      */
     public FragmentPartAdapter(Context context, int resource, Fragment frag) {
-        super(context, resource, frag.getDisplayOrder());
+        super(context, resource, frag.getParts());
         this.context = context;
         this.resource = resource;
         this.frag = frag;
@@ -67,42 +67,29 @@ public class FragmentPartAdapter extends ArrayAdapter {
 
         if (DEBUG)
             Log.d(TAG, "POSITION " + position);
-        if (frag.getDisplayOrder().get(position).equals("t")) {
+        FragmentPart<?> part = frag.getParts().get(position);
+        
+        if (part instanceof FragmentPartText) {
             if (DEBUG)
                 Log.d(TAG, "TEXT " + position);
             // Display a text segment
-
-            // get the occurrence number of the textSegment
-            int occurrence = 0;
-            for (int i = 0; i < position; i++) {
-                if (frag.getDisplayOrder().get(i).equals("t"))
-                    occurrence++;
-            }
-
-            String textSegment = frag.getTextSegments().get(occurrence);
+            String textSegment = ((FragmentPartText)part).getAttribute();
             if (textSegment != null) {
                 text.setVisibility(View.VISIBLE);
                 if (text != null)
-                    text.setText(textSegment);
+                    if (!textSegment.equals(""))
+                        text.setText(textSegment);
+                    else 
+                        text.setText("NewText");
             }
-        } else if (frag.getDisplayOrder().get(position).equals("i")) {
+        } else if (part instanceof FragmentPartIllustration) {
             if (DEBUG)
                 Log.d(TAG, "IMAGE " + position);
             // Display an illustration
 
-            // get the occurrence number of the illustration
-            int occurrence = 0;
-            for (int i = 0; i < position; i++) {
-                if (frag.getDisplayOrder().get(i).equals("i"))
-                    occurrence++;
-            }
-
-            if (DEBUG)
-                Log.d(TAG, "probably dies here" + occurrence);
-            String picturePath = frag.getIllustrations().get(occurrence);
+            String picturePath = ((FragmentPartIllustration)part).getAttribute();
             Bitmap illustration = BitmapFactory.decodeFile(picturePath);
-            if (DEBUG)
-                Log.d(TAG, "betchs don't see me");
+
             if (illustration != null) {
                 image.setVisibility(View.VISIBLE);
                 if (image != null)
@@ -110,19 +97,12 @@ public class FragmentPartAdapter extends ArrayAdapter {
                         Log.d(TAG, "SET IMAGE");
                 image.setImageBitmap(illustration);
             }
-        } else if (frag.getDisplayOrder().get(position).equals("c")) {
+        } else if (part instanceof FragmentPartChoice) {
             if (DEBUG)
                 Log.d(TAG, "CHOICE " + position);
             // Display a choice
 
-            // get the occurrence number of the illustration
-            int occurrence = 0;
-            for (int i = 0; i < position; i++) {
-                if (frag.getDisplayOrder().get(i).equals("c"))
-                    occurrence++;
-            }
-
-            Choice choice = frag.getChoices().get(occurrence);
+            Choice choice = ((FragmentPartChoice)part).getAttribute();
             if (choice != null) {
                 choiceButton.setVisibility(View.VISIBLE);
                 if (choiceButton != null)
@@ -132,7 +112,7 @@ public class FragmentPartAdapter extends ArrayAdapter {
                 choiceButton.setBackgroundColor(Color.BLACK);
                 choiceButton.setTextColor(Color.WHITE);
             }
-        } else if (frag.getDisplayOrder().get(position).equals("e")) {
+        } else if (part instanceof FragmentPartEmpty) {
             if (DEBUG)
                 Log.d(TAG, "EMPTY " + position);
             // Display a DefaultPart

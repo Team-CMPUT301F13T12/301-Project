@@ -69,8 +69,6 @@ public class Choice implements Serializable {
     
      public void setLinkedToFragment(Fragment linkedToFragment) {
          this.linkedToFragment = linkedToFragment;
-         if (linkedToFragment != null)
-             linkedToFragment.setLinkedTo(true); //page is definitely linked to now
      }
 
     private void writeObject(java.io.ObjectOutputStream out) throws IOException {
