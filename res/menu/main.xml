@@ -6,19 +6,17 @@
         android:orderInCategory="100"
         android:showAsAction="collapseActionView|ifRoom"
         android:title="@string/menu_add_story"/>
-    
-    <item android:id="@+id/story_search"
-        android:title="@string/story_search_title"
+    <item
+        android:id="@+id/story_search"
+        android:actionViewClass="android.widget.SearchView"
         android:icon="@android:drawable/ic_search_category_default"
         android:showAsAction="collapseActionView|ifRoom"
-        android:actionViewClass="android.widget.SearchView"/>
-
-    <group android:checkableBehavior="all" >
-        <item
-            android:id="@+id/menu_check_box_author"
-            android:checked="false"
-            android:orderInCategory="200"
-            android:title="@string/menu_check_box_author"/>
-    </group>
+        android:title="@string/story_search_title"/>
+    <item
+        android:id="@+id/menu_check_box_author"
+        android:checkable="true"
+        android:checked="false"
+        android:orderInCategory="200"
+        android:title="@string/menu_check_box_author"/>
 
 </menu>

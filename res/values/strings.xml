@@ -10,7 +10,7 @@
     <!-- StorySearchActivity Strings -->
     <string name="story_search_title">Search</string>
     <string name="story_search_hint">Search for a story...</string>
-    <string name="title_activity_story_search">StorySearchActivity</string>
+    <string name="start_online_from_main">Online Mode</string>
 
     <!-- MainActivity Menu Strings -->
     <string name="menu_check_box_author">Author Mode</string>
@@ -18,8 +18,16 @@
     <string name="title_activity_story_view">StoryViewActivity</string>
     <string name="hello_world">Hello world!</string>
 
+    <!-- Online Strings -->
+    <string name="start_main_from_online">Offline Mode</string>
+    <string name="online_download_mode">Download Mode</string>
+    <string name="online_story_search_title">Search</string>
+    <string name="online_story_search_hint"></string>
+
     <!-- StoryEditActivity Strings -->
+    <string name="story_edit_title">Title</string>
     <string name="story_edit_title_hint">New Title</string>
+    <string name="story_edit_author">Author</string>
     <string name="story_edit_author_hint">New Author</string>
     <string name="add_choice">Add Choice</string>
     <string name="insert_text">Insert Text</string>
@@ -44,5 +52,8 @@
     <string name="title_activity_help_screen">HelpScreen</string>
     <string name="title_activity_help_new">HelpNew</string>
     <string name="title_activity_help_read">HelpRead</string>
+    <string name="title_activity_story_search">StorySearchActivity</string>
+    <string name="title_activity_online_story_view">OnlineStoryViewActivity</string>
+    <string name="title_activity_online_story_search">OnlineStorySearchActivity</string>
 
 </resources>
