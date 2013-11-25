@@ -269,7 +269,7 @@ public class MainActivity extends Activity implements LView<StoryList>, OnItemCl
      */
     public void update(StoryList model) {
         // Reload our stories from StoryList Model
-        stories = storyList.getAllStories();
+        stories = model.getAllStories();
         // Notify Our ListView that our array has changed
         adapter.notifyDataSetChanged();
     }

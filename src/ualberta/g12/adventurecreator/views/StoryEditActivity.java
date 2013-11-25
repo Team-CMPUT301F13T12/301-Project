@@ -15,6 +15,7 @@ import android.widget.ListView;
 
 import ualberta.g12.adventurecreator.R;
 import ualberta.g12.adventurecreator.controllers.StoryController;
+import ualberta.g12.adventurecreator.controllers.StoryListController;
 import ualberta.g12.adventurecreator.data.AdventureCreator;
 import ualberta.g12.adventurecreator.data.Fragment;
 import ualberta.g12.adventurecreator.data.OfflineIOHelper;
@@ -56,7 +57,7 @@ public class StoryEditActivity extends Activity implements SView<Story> {
     private FragmentListArrayAdapter adapter;
     private int storyId, storyPos;
     private List<Fragment> fragmentList;
-    
+
     // Logging
     private static final String TAG = "StoryEditActivity";
 
@@ -163,7 +164,7 @@ public class StoryEditActivity extends Activity implements SView<Story> {
 
     @Override
     public void update(Story model) {
-        //update title and author
+        // update title and author
         titleText.setText(model.getTitle());
         authorText.setText(model.getAuthor());
 
@@ -194,12 +195,14 @@ public class StoryEditActivity extends Activity implements SView<Story> {
     /**
      * saves any changes that have been modified to a story
      */
-     private void saveChanges(){
-        //save any changes
-         story.setTitle(titleText.getText().toString());
-         story.setAuthor(authorText.getText().toString());
-         
-        storyList.getAllStories().set(storyPos, story);
+    private void saveChanges() {
+        // save any changes
+        storyController.setTitle(story, titleText.getText().toString());
+        storyController.setAuthor(story, authorText.getText().toString());
+
+        StoryListController slc = AdventureCreator.getStoryListController();
+        slc.setStory(story, storyPos);
+
         offlineHelper.saveOfflineStories(storyList);
     }
 }
