@@ -76,7 +76,7 @@ public class CreateStoryActivity extends Activity {
                 EditText author = (EditText) findViewById(R.id.editStoryAuthor);
                 
                 // create a new story (might want to use a controller here instead!)
-                story.setStoryTitle(title.getText().toString());
+                story.setTitle(title.getText().toString());
                 story.setAuthor(author.getText().toString());
                 
                 //save the new story

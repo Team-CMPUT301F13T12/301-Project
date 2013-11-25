@@ -22,7 +22,7 @@ public class StoryController implements SController {
      * @param s the story to change the title of
      */
     public void setTitle(Story s, String newTitle){
-        s.setStoryTitle(newTitle);
+        s.setTitle(newTitle);
     }
     
     /**

@@ -4,7 +4,6 @@ package ualberta.g12.adventurecreator.views;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.SearchManager;
-import android.app.AlertDialog.Builder;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -21,9 +20,6 @@ import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.SearchView;
-import android.widget.Toast;
-
-import org.apache.http.client.ClientProtocolException;
 
 import ualberta.g12.adventurecreator.R;
 import ualberta.g12.adventurecreator.data.AdventureCreator;
@@ -33,7 +29,6 @@ import ualberta.g12.adventurecreator.data.StoryList;
 import ualberta.g12.adventurecreator.online.OnlineHelper;
 import ualberta.g12.adventurecreator.tasks.TryPublishStoryTask;
 
-import java.io.IOException;
 import java.util.List;
 import java.util.Locale;
 
@@ -52,7 +47,6 @@ public class MainActivity extends Activity implements LView<StoryList>, OnItemCl
     private Button onlineButton;
     private StoryListArrayAdapter adapter;
     private OfflineIOHelper offlineHelper;
-    private OnlineHelper onlineHelper;
 
     public static final String IS_AUTHOR_FLAG = "isAuthor";
     private static boolean isAuthor = false;
@@ -69,7 +63,6 @@ public class MainActivity extends Activity implements LView<StoryList>, OnItemCl
         stories = storyList.getAllStories();
 
         // Set up our onlin helper
-        onlineHelper = AdventureCreator.getOnlineHelper();
         
         // //Erases previous saves - ONLY FOR TESTING - should be commented out
         // storyList = new StoryList();
