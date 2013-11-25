@@ -25,16 +25,19 @@ import ualberta.g12.adventurecreator.data.AdventureCreator;
 import ualberta.g12.adventurecreator.data.OfflineIOHelper;
 import ualberta.g12.adventurecreator.data.Story;
 import ualberta.g12.adventurecreator.data.TitleAuthor;
+import ualberta.g12.adventurecreator.tasks.DownloadTitleAuthorsTask;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class OnlineStoryViewActivity extends Activity implements OnItemClickListener {
+public class OnlineStoryViewActivity extends Activity implements OnItemClickListener,
+        OView<List<TitleAuthor>> {
 
     private Button mainButton;
     private ListView listView;
     private StoryAuthorMapListAdapter adapter;
     private List<TitleAuthor> titleAuthors;
+    private DownloadTitleAuthorsTask downloadTitleAuthorsTask;
 
     private static boolean downloadMode = true;
     public static final String DOWNLOAD_MODE = "download_mode";
@@ -43,6 +46,8 @@ public class OnlineStoryViewActivity extends Activity implements OnItemClickList
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_online_story_view);
+
+        downloadTitleAuthorsTask = new DownloadTitleAuthorsTask(getApplicationContext(), this);
 
         loadTitleAuthors();
 
@@ -76,37 +81,10 @@ public class OnlineStoryViewActivity extends Activity implements OnItemClickList
          */
         titleAuthors = new ArrayList<TitleAuthor>();
 
-        DownloadTitleAuthors dta = new DownloadTitleAuthors();
-        dta.execute(new Void[] {});
+        downloadTitleAuthorsTask.execute(new String[] {
+                null
+        });
 
-        // titleAuthors = new ArrayList<TitleAuthor>();
-        // titleAuthors.add(new TitleAuthor("And so I cry sometimes",
-        // "when I'm lying in bed"));
-        // titleAuthors.add(new TitleAuthor("Just to get it all out,",
-        // "what's in my head"));
-        // titleAuthors.add(new TitleAuthor("And I,", "I am feeling peculiar"));
-        // titleAuthors.add(new TitleAuthor("And so I wake up in the morning",
-        // "and I step outside"));
-        // titleAuthors.add(new TitleAuthor("And I take a big breath",
-        // "and I get real high"));
-        // titleAuthors.add(new TitleAuthor("And I scream",
-        // "from the top of my lungs,"));
-        // titleAuthors.add(new TitleAuthor("What's goin' on", "ooh"));
-        // titleAuthors.add(new TitleAuthor("And I say",
-        // "hey-yeah-yeah-yeah-yeah hey-yeah-yeah"));
-        // titleAuthors.add(new TitleAuthor("I said hey", "What's going on"));
-        // titleAuthors.add(new TitleAuthor("And I say",
-        // "hey-yeah-yeah-yeah-yeah hey-yeah-yeah"));
-        // titleAuthors.add(new TitleAuthor("And I said hey",
-        // "What's going on"));
-        // titleAuthors.add(new TitleAuthor("And I try",
-        // "Oh my god, do I try"));
-        // titleAuthors.add(new TitleAuthor("I try all the time",
-        // "in this institution"));
-        // titleAuthors.add(new TitleAuthor("And I pray,",
-        // "Oh my God, do I pray"));
-        // titleAuthors.add(new TitleAuthor("I pray every single day",
-        // "FOR A REVOLUTION!"));
     }
 
     private void setUpUi() {
@@ -148,6 +126,14 @@ public class OnlineStoryViewActivity extends Activity implements OnItemClickList
 
         // Commit them datas
         editor.commit();
+    }
+
+    public void update(List<TitleAuthor> list) {
+        titleAuthors.clear();
+        titleAuthors.addAll(list);
+        adapter.notifyDataSetChanged();
+        Toast.makeText(getApplicationContext(), "Stories Loaded " + list.size(),
+                Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -201,7 +187,8 @@ public class OnlineStoryViewActivity extends Activity implements OnItemClickList
 
         } else {
             // Stream story
-            Toast.makeText(this, String.format("Loading story %s", ta.getTitle()), Toast.LENGTH_SHORT)
+            Toast.makeText(this, String.format("Loading story %s", ta.getTitle()),
+                    Toast.LENGTH_SHORT)
                     .show();
             // Send some stuff to FragmentViewActivity
         }
