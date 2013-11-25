@@ -12,7 +12,7 @@ import java.util.List;
  */
 public class Story extends SModel implements Serializable {
 
-    private static int INVALID_ID = -1;
+    public static final int INVALID_ID = -1;
 
     private String storyTitle;
     private String author;

@@ -27,6 +27,11 @@ public class TryPublishStoryTask extends AsyncTask<Story, Void, Boolean> {
     @Override
     protected Boolean doInBackground(Story... s) {
         this.s = s[0];
+        // Check for invalid id
+        if (this.s.getId() == Story.INVALID_ID) {
+            return null;
+        }
+
         OnlineHelper oh = AdventureCreator.getOnlineHelper();
         try {
             return oh.checkId(this.s.getId());
@@ -41,8 +46,12 @@ public class TryPublishStoryTask extends AsyncTask<Story, Void, Boolean> {
 
     @Override
     protected void onPostExecute(Boolean update) {
-        if(update == null){
-            Toast.makeText(context, "Error publishing story", Toast.LENGTH_SHORT).show();
+        if (update == null) {
+            if (this.s.getId() == Story.INVALID_ID) {
+                Toast.makeText(context, "Story has Invalid Title or Author", Toast.LENGTH_SHORT).show();
+            } else {
+                Toast.makeText(context, "Error publishing story", Toast.LENGTH_SHORT).show();
+            }
             return;
         }
         if (update) {
