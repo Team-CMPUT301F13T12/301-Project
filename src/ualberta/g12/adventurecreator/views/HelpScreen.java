@@ -38,7 +38,18 @@ public class HelpScreen extends Activity {
        public void onClick(View v) 
        {
            Intent myIntent = new Intent(HelpScreen.this, HelpNew.class);
-           HelpScreen.this.startActivity(myIntent);      //listens for read story button to be clicked 
+           HelpScreen.this.startActivity(myIntent);      //listens for create button to be clicked 
+       } 
+       });
+        
+        Button btn3=(Button)findViewById(R.id.goOnline);
+
+        btn3.setOnClickListener(new View.OnClickListener()
+       {
+       public void onClick(View v) 
+       {
+           Intent myIntent = new Intent(HelpScreen.this, HelpOnline.class);
+           HelpScreen.this.startActivity(myIntent);      //listens for go online button to be clicked 
        } 
        });
     }

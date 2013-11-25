@@ -55,5 +55,6 @@
     <string name="title_activity_story_search">StorySearchActivity</string>
     <string name="title_activity_online_story_view">OnlineStoryViewActivity</string>
     <string name="title_activity_online_story_search">OnlineStorySearchActivity</string>
+    <string name="title_activity_help_online">HelpOnline</string>
 
 </resources>
