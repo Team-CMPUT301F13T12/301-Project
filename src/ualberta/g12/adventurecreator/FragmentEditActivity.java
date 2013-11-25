@@ -165,7 +165,6 @@ public class FragmentEditActivity extends Activity implements FView<Fragment> {
         if (itemTitle.equals("Insert Text")) {
             //We can cast here because we know the returned type (we just chose it with "t")
             FragmentPartText part = (FragmentPartText) fragmentController.addNewFragmentPart(fragment, "t", position);
-            fragmentController.setFragmentPartAttr(part, "New Text");
 
         } else if (itemTitle.equals("Insert Illustration")) {
             Log.d(TAG,"insert ill start");
@@ -237,7 +236,7 @@ public class FragmentEditActivity extends Activity implements FView<Fragment> {
                 Intent intent = new Intent(this, ChoiceEditActivity.class);
                 intent.putExtra("StoryPos", storyPos);
                 intent.putExtra("FragmentPos", fragPos);
-                intent.putExtra("Choice", choice);
+                intent.putExtra("ChoicePos", position);
                 startActivity(intent);
             }
 
@@ -245,8 +244,8 @@ public class FragmentEditActivity extends Activity implements FView<Fragment> {
             // create, add and save new choice
 
             // We can cast here because we know the returned type (we just chose it with "c")
-            FragmentPartChoice part = (FragmentPartChoice) fragmentController.addNewFragmentPart(fragment, "c", fragment.getParts().size());
-            Choice choice = part.getAttribute();
+            int choicePos = fragment.getParts().size();
+            FragmentPartChoice part = (FragmentPartChoice) fragmentController.addNewFragmentPart(fragment, "c", choicePos);
             
             saveFragment();
 
@@ -254,7 +253,7 @@ public class FragmentEditActivity extends Activity implements FView<Fragment> {
             Intent intent = new Intent(this, ChoiceEditActivity.class);
             intent.putExtra("StoryPos", storyPos);
             intent.putExtra("FragmentPos", fragPos);
-            intent.putExtra("Choice", choice);
+            intent.putExtra("ChoicePos", choicePos);
             startActivity(intent);
 
         } else if (itemTitle.equals("Delete")) {

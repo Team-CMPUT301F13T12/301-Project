@@ -29,6 +29,7 @@ public class ChoiceEditActivity extends Activity {
     private int storyPos, fragPos, choicePos, linkedPos = -1;
     private StoryList storyList;
     private Fragment fragment;
+    private FragmentPart<?> fragmentPart;
     private static final String TAG = "ChoiceEditActivity";
     private EditText myTitleET;
     private StoryListController storyListController = AdventureCreatorApplication
@@ -56,7 +57,8 @@ public class ChoiceEditActivity extends Activity {
         Intent editChoiceIntent = getIntent();
         storyPos = (Integer) editChoiceIntent.getSerializableExtra("StoryPos");
         fragPos = (Integer) editChoiceIntent.getSerializableExtra("FragmentPos");
-        choice = (Choice) editChoiceIntent.getSerializableExtra("Choice");
+        choicePos = (Integer) editChoiceIntent.getSerializableExtra("ChoicePos");
+        
 
         Log.d(TAG,"got intents");
         
@@ -67,26 +69,21 @@ public class ChoiceEditActivity extends Activity {
         // .getChoices().get(choicePos).getChoiceText();
         // myTitleET.setText(choiceText);
 
-        /*
-         * //load save file storyList = offlineHelper.loadOfflineStories();
-         * story = storyList.getAllStories().get(storyPos); fragment =
-         * story.getFragments().get(fragPos); Choice choice
-         * fragment.getChoices().get(choicePos);
-         */
-        // Bundle extras = i.getExtras();
-        // ourStoryId = extras.getInt("OurStoryId");
-        // ourFragmentId = extras.getInt("OurFragmentId");
         Button choiceButton = (Button) findViewById(R.id.choiceButton);
         // StoryList sl = AdventureCreatorApplication.getStoryList();
-
-        // ourStory = sl.getAllStories().get(storyPos);
-        // Log.d("WHAT IS OUR STORY SIZE?", ourStory.getStoryTitle());
-        // ourFragmentList = ourStory.getFragments();
-        // fragment = ourFragmentList.get(fragPos);
 
         story = storyListController.getStoryAtPos(storyPos);
 
         fragment = storyController.getFragmentAtPos(story, fragPos);
+        fragmentPart = fragment.getParts().get(choicePos);
+        
+        if(fragmentPart instanceof FragmentPartChoice)
+            choice = ((FragmentPartChoice)fragmentPart).getAttribute();
+        else{
+            Log.d(TAG,"Not given a valid choicePos");
+            finish();
+        }
+        
         
         Log.d(TAG,"stroy and fragment");
         
