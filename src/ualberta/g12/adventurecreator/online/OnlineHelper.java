@@ -93,7 +93,7 @@ public class OnlineHelper {
         try {
             // HttpGet getRequest = new
             // HttpGet("http://cmput301.softwareprocess.es:8080/testing/lab02/999?pretty=1");//S4bRPFsuSwKUDSJImbCE2g?pretty=1
-            HttpGet getRequest = new HttpGet(ourServer + storyId + "?pretty=1");// S4bRPFsuSwKUDSJImbCE2g?pretty=1
+            HttpGet getRequest = new HttpGet(ourServer +"stories/" +storyId + "?pretty=1");// S4bRPFsuSwKUDSJImbCE2g?pretty=1
             getRequest.addHeader("Accept", "application/json");
 
             HttpResponse response = httpclient.execute(getRequest);
