@@ -7,22 +7,21 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     android:orientation="vertical"
-    tools:context=".MainActivity" >
+    tools:context=".OnlineStoryViewActivity" >
 
     <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content" >
 
         <Button
-            android:id="@+id/main_activity_start_online_mode"
+            android:id="@+id/online_story_start_main_activity"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/start_online_from_main" />
-
+            android:text="@string/start_main_from_online" />
     </LinearLayout>
 
     <ListView
-        android:id="@+id/main_activity_listview"
+        android:id="@+id/online_story_author_listview"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" >
     </ListView>

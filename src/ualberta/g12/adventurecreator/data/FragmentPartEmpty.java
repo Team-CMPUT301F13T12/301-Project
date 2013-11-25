@@ -1,0 +1,40 @@
+package ualberta.g12.adventurecreator.data;
+
+import java.io.IOException;
+
+public class FragmentPartEmpty extends FragmentPart<String> {
+    String text;
+    
+    public FragmentPartEmpty(){
+        this.text = "";
+    }
+
+    @Override
+    public String getAttribute() {
+        return text;
+    }
+
+    @Override
+    public void setAttribute(String attr) {
+
+    }
+    
+    /**
+     * Writes ourself to an ObjectOutputStream.
+     * 
+     * @param out the ObjectOutputStream to write to
+     */
+    private void writeObject(java.io.ObjectOutputStream out) throws IOException {
+        out.writeObject(this.text);
+    }
+
+    /**
+     * Loads ourself from an ObjectInputStream
+     * 
+     * @param in the ObjectInputStream to read from
+     */
+    private void readObject(java.io.ObjectInputStream in) throws IOException,
+            ClassNotFoundException {
+        this.text = (String) in.readObject();
+    }
+}

@@ -4,15 +4,19 @@
         android:id="@+id/menu_add_story"
         android:icon="@android:drawable/ic_menu_add"
         android:orderInCategory="100"
-        android:showAsAction="always"
+        android:showAsAction="collapseActionView|ifRoom"
         android:title="@string/menu_add_story"/>
-
-    <group android:checkableBehavior="all" >
-        <item
-            android:id="@+id/menu_check_box_author"
-            android:checked="false"
-            android:orderInCategory="200"
-            android:title="@string/menu_check_box_author"/>
-    </group>
+    <item
+        android:id="@+id/story_search"
+        android:actionViewClass="android.widget.SearchView"
+        android:icon="@android:drawable/ic_search_category_default"
+        android:showAsAction="collapseActionView|ifRoom"
+        android:title="@string/story_search_title"/>
+    <item
+        android:id="@+id/menu_check_box_author"
+        android:checkable="true"
+        android:checked="false"
+        android:orderInCategory="200"
+        android:title="@string/menu_check_box_author"/>
 
 </menu>
