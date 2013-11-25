@@ -2,7 +2,9 @@
 package ualberta.g12.adventurecreator.views;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.SearchManager;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -13,12 +15,14 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.ListView;
 
 import ualberta.g12.adventurecreator.R;
 import ualberta.g12.adventurecreator.data.AdventureCreator;
 import ualberta.g12.adventurecreator.data.Story;
 import ualberta.g12.adventurecreator.data.StoryList;
+import ualberta.g12.adventurecreator.tasks.TryPublishStoryTask;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -49,14 +53,54 @@ public class StorySearchActivity extends Activity implements LView<StoryList>, O
         // Load our local stories from the storyListModel
         stories = new ArrayList<Story>(storyList.getAllStories());
 
+        setupListView();
+
+        // see who started us
+        handleIntent(getIntent());
+    }
+
+    private void setupListView() {
         // Set up listView
         listView = (ListView) findViewById(R.id.story_search_activity_listview);
         adapter = new StoryListArrayAdapter(this, R.layout.listview_story_list, stories);
         listView.setAdapter(adapter);
         listView.setOnItemClickListener(this);
 
-        // see who started us
-        handleIntent(getIntent());
+        listView.setOnItemLongClickListener(new OnItemLongClickListener() {
+
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, final int position,
+                    long id) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(StorySearchActivity.this);
+                builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        tryPublishStory(position);
+                    }
+                });
+                builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialgo, int which) {
+                        // Cancel the dialog
+                    }
+                });
+                builder.setTitle("Do you want to publish this story");
+                AlertDialog dialog = builder.create();
+                dialog.show();
+                // We don't want the onItemClickListener to go
+                return true;
+            }
+
+        });
+    }
+
+    private void tryPublishStory(int position) {
+        Story s = stories.get(position);
+        TryPublishStoryTask tryPublishTask = new TryPublishStoryTask(this);
+        tryPublishTask.execute(new Story[] {
+            s
+        });
     }
 
     @Override
