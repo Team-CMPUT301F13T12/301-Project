@@ -37,6 +37,9 @@ public class MainActivity extends Activity implements LView<StoryList>, OnItemCl
 
     public static final String IS_AUTHOR_FLAG = "isAuthor";
     private static boolean isAuthor = false;
+    
+    private static final int help = Menu.FIRST;
+    
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -124,7 +127,24 @@ public class MainActivity extends Activity implements LView<StoryList>, OnItemCl
         SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
         SearchView searchView = (SearchView) menu.findItem(R.id.story_search).getActionView();
         searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
+        
+        super.onCreateOptionsMenu(menu);
+        menu.add(0, help, 0, R.string.help);
         return true;
+    }
+    
+    @Override
+  
+    public boolean onMenuItemSelected(int featureId, MenuItem item) 
+    {
+        switch(item.getItemId()) 
+        {
+            case help:
+                Intent i = new Intent (this, HelpScreen.class);
+                startActivity(i);
+                return true;
+        }   
+        return super.onMenuItemSelected(featureId, item);
     }
 
     @Override
