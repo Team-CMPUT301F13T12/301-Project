@@ -21,8 +21,8 @@ public class Choice implements Serializable {
      */
     public Choice() {
         this.choiceText = "";
-        // this.linkedToFragment = null; //always check before linking from a
-        // choice that likedToPage != null
+        this.linkedToFragmentPos = -1;
+        this.linkedToFragment = null;
     }
 
     /**

@@ -9,32 +9,33 @@
     android:background="@color/lightblue"
     tools:context=".MainActivity" >
 
-        
         <EditText
             android:id="@+id/editTextSeg"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_above="@+id/editTextSave"
             android:layout_alignParentLeft="true"
             android:layout_alignParentRight="true"
             android:layout_alignParentTop="true"
-            android:inputType="text" />
-
-    <Button
-        android:id="@+id/editTextCancel"
-        style="?android:attr/buttonStyleSmall"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignRight="@+id/editTextSeg"
-        android:layout_alignTop="@+id/editTextSave"
-        android:text="@string/cancel" />
+            android:inputType="textMultiLine"
+            android:scrollbars="vertical" />
 
     <Button
         android:id="@+id/editTextSave"
         style="?android:attr/buttonStyleSmall"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/editTextSeg"
+        android:layout_alignParentBottom="true"
         android:layout_toLeftOf="@+id/editTextCancel"
         android:text="@string/save" />
+
+    <Button
+        android:id="@+id/editTextCancel"
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignRight="@+id/editTextSeg"
+        android:text="@string/cancel" />
         
     </RelativeLayout>

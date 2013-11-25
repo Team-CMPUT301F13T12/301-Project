@@ -241,8 +241,7 @@ public class FragmentEditActivity extends Activity implements FView<Fragment> {
                         
                         //We can cast here because we know the returned type (we just chose it with "t")
                         FragmentPartText part = (FragmentPartText) fragmentController.addNewFragmentPart(fragment, "t", this.getPosition());
-                        fragmentController.setFragmentPartAttr(part, newText);
-                        fragmentPartListView.invalidateViews();
+                        fragmentController.setFragmentPartAttr(fragment, part, newText);
                         editTextWindow.dismiss();
                     }
                 });
@@ -263,8 +262,6 @@ public class FragmentEditActivity extends Activity implements FView<Fragment> {
                 picturePosition = position;
                 AddImage();
             } else if (part instanceof FragmentPartChoice) {
-
-                Choice choice = ((FragmentPartChoice)part).getAttribute();
 
                 // go to edit choice activity
                 Intent intent = new Intent(this, ChoiceEditActivity.class);
@@ -297,10 +294,6 @@ public class FragmentEditActivity extends Activity implements FView<Fragment> {
             if (fragment.getParts().size() == 0)
                 fragmentController.addNewFragmentPart(fragment, "e", 0);
         }
-
-        // reset listview to display any changes
-        // adapter.notifyDataSetChanged();
-        fragmentPartListView.invalidateViews();
         return true;
     }
 
@@ -427,14 +420,13 @@ public class FragmentEditActivity extends Activity implements FView<Fragment> {
                     //finish by updating the fragment part      
                     //We can cast here because we know the returned type (we just chose it with "i")
                     FragmentPartIllustration part = (FragmentPartIllustration) fragmentController.addNewFragmentPart(fragment, "i", position);
-                    fragmentController.setFragmentPartAttr(part, picturePath);
+                    fragmentController.setFragmentPartAttr(fragment, part, picturePath);
                     
                     //remove old picture if in edit mode
                     if (pictureMode.equals("Edit")) {
                         fragmentController.deleteFragmentPart(fragment, position+1);
                     }
                     saveFragment();
-                    // fragmentPartListView.invalidateViews();
                 } else {
                     //unable to create folder
                 }

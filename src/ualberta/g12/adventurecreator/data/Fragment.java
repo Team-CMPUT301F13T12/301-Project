@@ -36,6 +36,7 @@ public class Fragment extends FModel implements Serializable {
     /** @param the newTitle of the fragment */
     public void setTitle(String newTitle) {
         this.title = newTitle;
+        notifyViews();
     }
 
     /** @return the id of the fragment */
@@ -54,6 +55,7 @@ public class Fragment extends FModel implements Serializable {
 
     public void setParts(List<FragmentPart<?>> parts) {
         this.parts = parts;
+        notifyViews();
     }
 
     // public Annotation getAnnotations() {

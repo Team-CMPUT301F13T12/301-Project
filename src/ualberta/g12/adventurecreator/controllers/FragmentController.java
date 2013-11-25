@@ -47,8 +47,9 @@ public class FragmentController implements FController {
         return newPart;
     }
     
-    public <E> void setFragmentPartAttr(FragmentPart<E> part, E attr){
+    public <E> void setFragmentPartAttr(Fragment frag, FragmentPart<E> part, E attr){
         part.setAttribute(attr);
+        frag.setParts(frag.getParts());
     }
     
     /**
