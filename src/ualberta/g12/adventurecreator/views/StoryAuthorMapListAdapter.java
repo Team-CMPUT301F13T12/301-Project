@@ -10,7 +10,7 @@ import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
 import ualberta.g12.adventurecreator.R;
-import ualberta.g12.adventurecreator.data.TitleAuthor;
+import ualberta.g12.adventurecreator.data.Story;
 
 import java.util.List;
 
@@ -18,7 +18,7 @@ import java.util.List;
  * Adapter that communicates between the online list of stories and the listview
  * that displays them
  */
-public class StoryAuthorMapListAdapter extends ArrayAdapter<TitleAuthor> {
+public class StoryAuthorMapListAdapter extends ArrayAdapter<Story> {
 
     private final Context context;
 
@@ -26,7 +26,7 @@ public class StoryAuthorMapListAdapter extends ArrayAdapter<TitleAuthor> {
     private static final boolean DEBUG = true;
     private static final String TAG = "StoryAuthorMapListAdapter";
 
-    public StoryAuthorMapListAdapter(Context c, int id, List<TitleAuthor> list) {
+    public StoryAuthorMapListAdapter(Context c, int id, List<Story> list) {
         super(c, id, list);
         this.context = c;
     }
@@ -39,7 +39,7 @@ public class StoryAuthorMapListAdapter extends ArrayAdapter<TitleAuthor> {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         ViewHolder holder = null;
-        TitleAuthor ta = getItem(position);
+        Story ta = getItem(position);
 
         LayoutInflater mInflater = (LayoutInflater) context
                 .getSystemService(Activity.LAYOUT_INFLATER_SERVICE);

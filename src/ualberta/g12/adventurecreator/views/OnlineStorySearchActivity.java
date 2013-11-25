@@ -17,7 +17,7 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import ualberta.g12.adventurecreator.R;
-import ualberta.g12.adventurecreator.data.TitleAuthor;
+import ualberta.g12.adventurecreator.data.Story;
 import ualberta.g12.adventurecreator.tasks.DownloadStoryTask;
 import ualberta.g12.adventurecreator.tasks.DownloadTitleAuthorsTask;
 
@@ -26,9 +26,9 @@ import java.util.List;
 import java.util.Locale;
 
 public class OnlineStorySearchActivity extends Activity implements OnItemClickListener,
-        OView<List<TitleAuthor>> {
+        OView<List<Story>> {
 
-    private List<TitleAuthor> tas;
+    private List<Story> tas;
     private ListView listView;
     private StoryAuthorMapListAdapter adapter;
     private static boolean downloadMode;
@@ -63,7 +63,7 @@ public class OnlineStorySearchActivity extends Activity implements OnItemClickLi
     }
 
     private void loadTitleAuthors() {
-        tas = new ArrayList<TitleAuthor>();
+        tas = new ArrayList<Story>();
 
         downloadTitleAuthorsTask.execute(new String[] {
                 null
@@ -101,12 +101,12 @@ public class OnlineStorySearchActivity extends Activity implements OnItemClickLi
             if (DEBUG)
                 Log.d(TAG, String.format("Searching for query: %s", this.query));
 
-            List<TitleAuthor> tas = new ArrayList<TitleAuthor>();
+            List<Story> tas = new ArrayList<Story>();
             tas.addAll(tas);
             tas.clear();
             if (DEBUG)
                 Log.d(TAG, String.format("%d TitleAuthors to search from", tas.size()));
-            for (TitleAuthor t : tas) {
+            for (Story t : tas) {
                 if (t.getTitle() == null || t.getAuthor() == null) {
                     // Do nothing as this is a title author with a null title or
                     // author
@@ -182,14 +182,14 @@ public class OnlineStorySearchActivity extends Activity implements OnItemClickLi
     @Override
     public void onItemClick(AdapterView<?> parent, View v, int pos, long id) {
         // Download or stream story
-        TitleAuthor ta = tas.get(pos);
+        Story ta = tas.get(pos);
         if (downloadMode) {
             // Download story lol
             Toast.makeText(this, String.format("Downloading story %s", ta.getTitle()),
                     Toast.LENGTH_SHORT).show();
 
             DownloadStoryTask dst = new DownloadStoryTask(getApplicationContext());
-            dst.execute(new TitleAuthor[] {
+            dst.execute(new Story[] {
                     ta
             });
 
@@ -203,7 +203,7 @@ public class OnlineStorySearchActivity extends Activity implements OnItemClickLi
     }
 
     @Override
-    public void update(List<TitleAuthor> list) {
+    public void update(List<Story> list) {
         tas.clear();
         tas.addAll(list);
         adapter.notifyDataSetChanged();

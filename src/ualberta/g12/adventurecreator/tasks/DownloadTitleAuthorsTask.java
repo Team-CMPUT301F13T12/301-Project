@@ -3,49 +3,69 @@ package ualberta.g12.adventurecreator.tasks;
 
 import android.content.Context;
 import android.os.AsyncTask;
+import android.util.Log;
 import android.widget.Toast;
 
-import ualberta.g12.adventurecreator.data.TitleAuthor;
+import org.apache.http.client.ClientProtocolException;
+
+import ualberta.g12.adventurecreator.data.AdventureCreator;
+import ualberta.g12.adventurecreator.data.Story;
+import ualberta.g12.adventurecreator.online.OnlineHelper;
 import ualberta.g12.adventurecreator.views.OView;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class DownloadTitleAuthorsTask extends AsyncTask<String, String, Void> {
+public class DownloadTitleAuthorsTask extends AsyncTask<String, String, Boolean> {
 
-    private List<TitleAuthor> tas;
+    private List<Story> tas;
     private Context context;
-    private OView<List<TitleAuthor>> view;
+    private OView<List<Story>> view;
 
-    public DownloadTitleAuthorsTask(Context c, OView<List<TitleAuthor>> view) {
+    private static final String TAG = "DownloadStoryTask";
+
+    public DownloadTitleAuthorsTask(Context c, OView<List<Story>> view) {
         this.context = c;
         this.view = view;
     }
 
     @Override
-    protected Void doInBackground(String... query) {
+    protected Boolean doInBackground(String... query) {
         // TODO Call the OnlineHelper method to get the real titles
 
+        OnlineHelper onlineHelper = AdventureCreator.getOnlineHelper();
+        tas = new ArrayList<Story>();
         if (query[0] == null) {
             // No search
+            try {
+                tas = onlineHelper.getAllStoryTitlesIdAuthor();
+                return true;
+            } catch (ClientProtocolException e) {
+                Log.e(TAG, "Downloading story failed, threw ClientProtocolException.");
+                e.printStackTrace();
+                return false;
+            } catch (IOException e) {
+                Log.e(TAG, "Downloading story failed, threw IOException");
+                e.printStackTrace();
+                return false;
+            }
         } else {
             // search
+            try {
+                tas = onlineHelper.searchsearchStories(query[0]);
+                return true;
+            } catch (ClientProtocolException e) {
+                Log.e(TAG, "Downloading story failed, threw ClientProtocolException.");
+                e.printStackTrace();
+                return false;
+            } catch (IOException e) {
+                Log.e(TAG, "Downloading story failed, threw IOException");
+                e.printStackTrace();
+                return false;
+            }
         }
 
-        tas = new ArrayList<TitleAuthor>();
-        tas.add(new TitleAuthor("Whaaat", "yo", 1));
-        tas.add(new TitleAuthor("And who", "Are you", 4));
-        tas.add(new TitleAuthor("The proud lord said", "That I must bow so low?", 8));
-        tas.add(new TitleAuthor("Only a cat", "of a different coat,", 15));
-        tas.add(new TitleAuthor("that's all", "the truth I know.", 16));
-        tas.add(new TitleAuthor("In a coat of gold", "or a coat of red", 23));
-        tas.add(new TitleAuthor("a lion still has claws", "", 42));
-        tas.add(new TitleAuthor("And mine are long and sharp", "my lord", 108));
-        tas.add(new TitleAuthor("as long and sharp as yours", "", 10));
-        tas.add(new TitleAuthor("And so he spoke", "and so he spoke", 20));
-        tas.add(new TitleAuthor("that lord of", "Castamere", 30));
-
-        return null;
     }
 
     @Override
@@ -55,7 +75,10 @@ public class DownloadTitleAuthorsTask extends AsyncTask<String, String, Void> {
     }
 
     @Override
-    protected void onPostExecute(Void voids) {
+    protected void onPostExecute(Boolean result) {
+        if (!result) {
+            Toast.makeText(context, "Error downloading stories", Toast.LENGTH_SHORT);
+        }
         view.update(tas);
     }
 

@@ -19,7 +19,7 @@ import android.widget.SearchView;
 import android.widget.Toast;
 
 import ualberta.g12.adventurecreator.R;
-import ualberta.g12.adventurecreator.data.TitleAuthor;
+import ualberta.g12.adventurecreator.data.Story;
 import ualberta.g12.adventurecreator.tasks.DownloadStoryTask;
 import ualberta.g12.adventurecreator.tasks.DownloadTitleAuthorsTask;
 
@@ -27,12 +27,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class OnlineStoryViewActivity extends Activity implements OnItemClickListener,
-        OView<List<TitleAuthor>> {
+        OView<List<Story>> {
 
     private Button mainButton;
     private ListView listView;
     private StoryAuthorMapListAdapter adapter;
-    private List<TitleAuthor> titleAuthors;
+    private List<Story> titleAuthors;
     private DownloadTitleAuthorsTask downloadTitleAuthorsTask;
 
     private static boolean downloadMode = true;
@@ -75,7 +75,7 @@ public class OnlineStoryViewActivity extends Activity implements OnItemClickList
          * Once online works we are going to load our list full of the title
          * authors
          */
-        titleAuthors = new ArrayList<TitleAuthor>();
+        titleAuthors = new ArrayList<Story>();
 
         downloadTitleAuthorsTask.execute(new String[] {
                 null
@@ -124,7 +124,7 @@ public class OnlineStoryViewActivity extends Activity implements OnItemClickList
         editor.commit();
     }
 
-    public void update(List<TitleAuthor> list) {
+    public void update(List<Story> list) {
         titleAuthors.clear();
         titleAuthors.addAll(list);
         adapter.notifyDataSetChanged();
@@ -170,14 +170,14 @@ public class OnlineStoryViewActivity extends Activity implements OnItemClickList
     @Override
     public void onItemClick(AdapterView<?> parent, View v, int pos, long id) {
         // Download or stream story
-        TitleAuthor ta = titleAuthors.get(pos);
+        Story ta = titleAuthors.get(pos);
         if (downloadMode) {
             // Download story lol
             Toast.makeText(this, String.format("Downloading story %s", ta.getTitle()),
                     Toast.LENGTH_SHORT).show();
             
             DownloadStoryTask dst = new DownloadStoryTask(getApplicationContext());
-            dst.execute(new TitleAuthor[] {ta});
+            dst.execute(new Story[] {ta});
             
 
         } else {
