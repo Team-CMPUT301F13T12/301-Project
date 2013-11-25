@@ -436,11 +436,7 @@ public class FragmentEditActivity extends Activity implements FView<Fragment> {
         Log.d(TAG, "removed empty");
 
         setTitleAndPageId();
-        // storyList.getAllStories().get(storyPos).getFragments().set(fragPos,
-        // fragment);
         storyController.setFragmentAtLocation(story, fragPos, fragment);
-        // StoryList storyList = storyListController.;
-        // offlineHelper.saveOfflineStories(storyList);
         storyListController.saveOfflineStories(this, storyList);
     }
 }
