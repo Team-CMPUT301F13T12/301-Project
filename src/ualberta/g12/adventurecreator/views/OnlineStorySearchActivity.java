@@ -18,12 +18,15 @@ import android.widget.Toast;
 
 import ualberta.g12.adventurecreator.R;
 import ualberta.g12.adventurecreator.data.TitleAuthor;
+import ualberta.g12.adventurecreator.tasks.DownloadStoryTask;
+import ualberta.g12.adventurecreator.tasks.DownloadTitleAuthorsTask;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
-public class OnlineStorySearchActivity extends Activity implements OnItemClickListener {
+public class OnlineStorySearchActivity extends Activity implements OnItemClickListener,
+        OView<List<TitleAuthor>> {
 
     private List<TitleAuthor> tas;
     private ListView listView;
@@ -34,12 +37,17 @@ public class OnlineStorySearchActivity extends Activity implements OnItemClickLi
     private static final String TAG = "OnlineStorySearchActivity";
     private static final boolean DEBUG = true;
 
+    private DownloadTitleAuthorsTask downloadTitleAuthorsTask;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_online_story_search);
 
         setupActionBar();
+
+        downloadTitleAuthorsTask = new DownloadTitleAuthorsTask(
+                getApplicationContext(), this);
 
         // Load our title authors from buddy
         loadTitleAuthors();
@@ -56,16 +64,10 @@ public class OnlineStorySearchActivity extends Activity implements OnItemClickLi
 
     private void loadTitleAuthors() {
         tas = new ArrayList<TitleAuthor>();
-        tas.add(new TitleAuthor("And who", "Are you", 4));
-        tas.add(new TitleAuthor("The proud lord said", "That I must bow so low?", 8));
-        tas.add(new TitleAuthor("Only a cat", "of a different coat,", 15));
-        tas.add(new TitleAuthor("that's all", "the truth I know.", 16));
-        tas.add(new TitleAuthor("In a coat of gold", "or a coat of red", 23));
-        tas.add(new TitleAuthor("a lion still has claws", "", 42));
-        tas.add(new TitleAuthor("And mine are long and sharp", "my lord", 108));
-        tas.add(new TitleAuthor("as long and sharp as yours", "", 10));
-        tas.add(new TitleAuthor("And so he spoke", "and so he spoke", 20));
-        tas.add(new TitleAuthor("that lord of", "Castamere", 30));
+
+        downloadTitleAuthorsTask.execute(new String[] {
+                null
+        });
     }
 
     private void setUpUi() {
@@ -186,16 +188,27 @@ public class OnlineStorySearchActivity extends Activity implements OnItemClickLi
             Toast.makeText(this, String.format("Downloading story %s", ta.getTitle()),
                     Toast.LENGTH_SHORT).show();
 
-            /*
-             * DownloadStory ds = new DownloadStory(); ds.execute(new
-             * TitleAuthor[] {ta});
-             */
+            DownloadStoryTask dst = new DownloadStoryTask(getApplicationContext());
+            dst.execute(new TitleAuthor[] {
+                    ta
+            });
 
         } else {
             // Stream story
-            Toast.makeText(this, String.format("Loading story %s", ta.getTitle()), Toast.LENGTH_SHORT)
+            Toast.makeText(this, String.format("Loading story %s", ta.getTitle()),
+                    Toast.LENGTH_SHORT)
                     .show();
             // Send some stuff to FragmentViewActivity
         }
+    }
+
+    @Override
+    public void update(List<TitleAuthor> list) {
+        tas.clear();
+        tas.addAll(list);
+        adapter.notifyDataSetChanged();
+        Toast.makeText(getApplicationContext(), "Stories Loaded " + list.size(),
+                Toast.LENGTH_SHORT).show();
+
     }
 }

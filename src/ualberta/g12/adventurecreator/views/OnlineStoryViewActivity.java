@@ -6,13 +6,11 @@ import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.webkit.DownloadListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Button;
@@ -21,10 +19,6 @@ import android.widget.SearchView;
 import android.widget.Toast;
 
 import ualberta.g12.adventurecreator.R;
-import ualberta.g12.adventurecreator.controllers.StoryListController;
-import ualberta.g12.adventurecreator.data.AdventureCreator;
-import ualberta.g12.adventurecreator.data.OfflineIOHelper;
-import ualberta.g12.adventurecreator.data.Story;
 import ualberta.g12.adventurecreator.data.TitleAuthor;
 import ualberta.g12.adventurecreator.tasks.DownloadStoryTask;
 import ualberta.g12.adventurecreator.tasks.DownloadTitleAuthorsTask;
@@ -192,48 +186,6 @@ public class OnlineStoryViewActivity extends Activity implements OnItemClickList
                     Toast.LENGTH_SHORT)
                     .show();
             // Send some stuff to FragmentViewActivity
-        }
-    }
-
-    public class DownloadStory extends AsyncTask<TitleAuthor, Void, String> {
-
-        private Story s;
-
-        @SuppressWarnings("unused")
-        @Override
-        protected String doInBackground(TitleAuthor... params) {
-            // TODO Actually download the story here - this thread will actually
-            // do something
-            s = new Story(params[0].getTitle(), params[0].getAuthor());
-
-            // Once we're actually downloading the story this will matter
-            if (true) {
-                return String.format("%s Download complete", params[0].getTitle());
-            } else {
-                return String.format("%s Download Failed", params[0].getTitle());
-            }
-
-        }
-
-        @Override
-        protected void onCancelled() {
-            Toast.makeText(getApplicationContext(), "Story Download Cancelled", Toast.LENGTH_SHORT)
-                    .show();
-            super.onCancelled();
-        }
-
-        @Override
-        protected void onPostExecute(String result) {
-            StoryListController slc = AdventureCreator.getStoryListController();
-            // Add the story to the list
-            slc.addStory(s);
-
-            OfflineIOHelper offlineHelper = AdventureCreator.getOfflineIOHelper();
-            // Save our list of stories
-            offlineHelper.saveOfflineStories(AdventureCreator.getStoryList());
-
-            Toast.makeText(getApplicationContext(), result, Toast.LENGTH_SHORT).show();
-            super.onPostExecute(result);
         }
     }
 
