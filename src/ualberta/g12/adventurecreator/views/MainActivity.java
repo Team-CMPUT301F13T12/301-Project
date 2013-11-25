@@ -26,7 +26,6 @@ import ualberta.g12.adventurecreator.data.AdventureCreator;
 import ualberta.g12.adventurecreator.data.OfflineIOHelper;
 import ualberta.g12.adventurecreator.data.Story;
 import ualberta.g12.adventurecreator.data.StoryList;
-import ualberta.g12.adventurecreator.online.OnlineHelper;
 import ualberta.g12.adventurecreator.tasks.TryPublishStoryTask;
 
 import java.util.List;
@@ -41,8 +40,7 @@ public class MainActivity extends Activity implements LView<StoryList>, OnItemCl
 
     private List<Story> stories;
     private static StoryList storyList;
-    private static final boolean DEBUG_LOG = true;
-    private static final String TAG = "MainActivity";
+
     private ListView listView;
     private Button onlineButton;
     private StoryListArrayAdapter adapter;
@@ -50,6 +48,10 @@ public class MainActivity extends Activity implements LView<StoryList>, OnItemCl
 
     public static final String IS_AUTHOR_FLAG = "isAuthor";
     private static boolean isAuthor = false;
+
+    // Logging
+    private static final boolean DEBUG_LOG = true;
+    private static final String TAG = "MainActivity";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,7 +65,7 @@ public class MainActivity extends Activity implements LView<StoryList>, OnItemCl
         stories = storyList.getAllStories();
 
         // Set up our onlin helper
-        
+
         // //Erases previous saves - ONLY FOR TESTING - should be commented out
         // storyList = new StoryList();
         // offlineHelper.saveOfflineStories(storyList);
@@ -96,7 +98,8 @@ public class MainActivity extends Activity implements LView<StoryList>, OnItemCl
         listView.setOnItemLongClickListener(new OnItemLongClickListener() {
 
             @Override
-            public boolean onItemLongClick(AdapterView<?> parent, View view, final int position, long id) {
+            public boolean onItemLongClick(AdapterView<?> parent, View view, final int position,
+                    long id) {
                 AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
                 builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
 
@@ -106,18 +109,18 @@ public class MainActivity extends Activity implements LView<StoryList>, OnItemCl
                     }
                 });
                 builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                    
+
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                         // Cancel the dialog.
-                        
+                        // Cancel the dialog.
+
                     }
                 });
                 builder.setTitle("Do you want to publish this story?");
                 AlertDialog dialog = builder.create();
                 dialog.show();
                 // We don't want onItemClickListener to fire
-                return true; 
+                return true;
             }
 
         });
@@ -129,7 +132,9 @@ public class MainActivity extends Activity implements LView<StoryList>, OnItemCl
     private void tryPublishStory(int position) {
         Story s = stories.get(position);
         TryPublishStoryTask tryPublishTask = new TryPublishStoryTask(this);
-        tryPublishTask.execute(new Story[] {s});
+        tryPublishTask.execute(new Story[] {
+                s
+        });
     }
 
     @Override
@@ -152,7 +157,6 @@ public class MainActivity extends Activity implements LView<StoryList>, OnItemCl
     @Override
     protected void onStart() {
         super.onStart();
-
         // Add ourself to the StoryList Model
         storyList.addView(this);
     }
