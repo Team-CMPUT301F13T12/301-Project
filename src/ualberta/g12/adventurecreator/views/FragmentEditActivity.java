@@ -384,20 +384,17 @@ public class FragmentEditActivity extends Activity implements FView<Fragment> {
                 CharSequence appName = this.getResources().getText(this.getResources().getIdentifier("app_name", "string", this.getPackageName()));          
                 
                 File folder = new File(Environment.getExternalStorageDirectory().toString(), appName.toString());
-                Log.d(TAG, "path of folder " + folder.getAbsolutePath() + "");
                 boolean folderExists = true; //assume true
     
-                Log.d(TAG, "path of exist? " + folder.exists() + "");
                 if (!folder.exists()) {
                     folderExists = folder.mkdirs();
-                    Log.d(TAG, "path of exists " + folderExists + "");
                 }
                 if (folderExists) {
                     //once folder exists finish creating picturePath
                     long picTime = System.currentTimeMillis();
                     String newPicName = new SimpleDateFormat("yyyy-MM-dd HH.mm.ss").format(picTime);
                     //TODO incorporate unique story ID in picture name
-                    picturePath = folder.getAbsolutePath() + "/" + newPicName + ".jpg";
+                    picturePath = folder.getAbsolutePath() + "/" + story.getId() + "/" + newPicName + ".jpg";
                     File file = new File(picturePath);
                     Log.d(TAG, "path of image preend " + picturePath + "");
                     
@@ -406,7 +403,7 @@ public class FragmentEditActivity extends Activity implements FView<Fragment> {
                         OutputStream outFile = new FileOutputStream(file);
                         //TODO decide on quality size and figure out how 
                         //to decrease picture dimensions?
-                        bitmap.compress(Bitmap.CompressFormat.JPEG, 30, outFile);
+                        bitmap.compress(Bitmap.CompressFormat.JPEG, 20, outFile);
                         outFile.flush();
                         outFile.close();
                     } catch (FileNotFoundException e) {

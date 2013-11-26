@@ -41,11 +41,15 @@ public class Story extends SModel implements Serializable {
     }
 
     private void updateId() {
+       
+        int newId;
         if (this.storyTitle != null && this.author != null) {
-            this.id = String.format("%s%s", this.storyTitle, this.author).hashCode();
+            newId = String.format("%s%s", this.storyTitle, this.author).hashCode();
         } else {
-            this.id = INVALID_ID;
+            newId = INVALID_ID;
         }
+        
+        this.id = newId;
     }
 
     public String getTitle() {
@@ -97,43 +101,6 @@ public class Story extends SModel implements Serializable {
     public void addLinkToPageInStory(Fragment currentPage, String choiceText, Fragment linkedToPage) {
 
     }
-
-    // // For merging stories (should happen when a choice is set to a page in
-    // // another story)
-    // public void afterPageLinkedToAnotherStory(Story newStory, Fragment
-    // pageLinkedTo,
-    // Choice choiceToSet) {
-    // // adds all pages of newStory to the current story
-    // for (int i = 0; i < newStory.getFragments().size(); i++) {
-    // this.fragments.add(newStory.getFragments().get(i));
-    // }
-    // choiceToSet.setLinkedToFragment(pageLinkedTo);
-    // }
-
-    // // finds isolated pages and sets their isLinkedTo flag to false
-    // // should be run before each time a list of pages in the story is
-    // displayed
-    // // or only before the pages are displayed and change flag is true.
-    // // would need to create a change flag
-    // public void findAndMarkIsolatedPages() {
-    // LinkedList<Fragment> copyOfPages = new LinkedList<Fragment>();
-    // // copies pages list
-    // for (int i = 0; i < this.fragments.size(); i++) {
-    // copyOfPages.add(fragments.get(i));
-    // }
-    // // removes all pages from copyOfPages that are referenced
-    // for (int i = 0; i < this.fragments.size(); i++) {
-    // for (int j = 0; j < fragments.get(i).getChoices().size(); j++) {
-    // Fragment tempPage =
-    // fragments.get(i).getChoices().get(j).getLinkedToFragment();
-    // copyOfPages.remove(tempPage);
-    // }
-    // }
-    // // only unreferenced pages remain
-    // for (int i = 0; i < copyOfPages.size(); i++) {
-    // copyOfPages.get(i).setLinkedTo(false);
-    // }
-    // }
 
     /**
      * will get id of the story (should be unique)
