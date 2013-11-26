@@ -396,7 +396,6 @@ public class FragmentEditActivity extends Activity implements FView<Fragment> {
                     //TODO incorporate unique story ID in picture name
                     picturePath = folder.getAbsolutePath() + "/" + story.getId() + "/" + newPicName + ".jpg";
                     File file = new File(picturePath);
-                    Log.d(TAG, "path of image preend " + picturePath + "");
                     
                     //then write the picture to picturePath
                     try {

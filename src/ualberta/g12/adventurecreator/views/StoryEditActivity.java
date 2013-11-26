@@ -4,6 +4,7 @@ package ualberta.g12.adventurecreator.views;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Environment;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -22,6 +23,8 @@ import ualberta.g12.adventurecreator.data.OfflineIOHelper;
 import ualberta.g12.adventurecreator.data.Story;
 import ualberta.g12.adventurecreator.data.StoryList;
 
+import java.io.File;
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 /**
@@ -196,12 +199,34 @@ public class StoryEditActivity extends Activity implements SView<Story> {
      * saves any changes that have been modified to a story
      */
     private void saveChanges() {
+        int oldId = story.getId();
+        
         // save any changes
         storyController.setTitle(story, titleText.getText().toString());
         storyController.setAuthor(story, authorText.getText().toString());
 
         StoryListController slc = AdventureCreator.getStoryListController();
         slc.setStory(story, storyPos);
+        
+//        // Setup or update story folder
+//        //following line modified from https://groups.google.com/forum/#!topic/android-developers/YjGcve7s5CQ
+//        //by Derek
+//        CharSequence appName = this.getResources().getText(this.getResources().getIdentifier("app_name", "string", this.getPackageName()));          
+//        
+//        File folder = new File(Environment.getExternalStorageDirectory().toString(), appName.toString());
+//        boolean folderExists = true; //assume true
+//
+//        if (!folder.exists()) {
+//            folderExists = folder.mkdirs();
+//        }
+//        if (folderExists) {
+//            //once folder exists finish creating picturePath
+//            long picTime = System.currentTimeMillis();
+//            String newPicName = new SimpleDateFormat("yyyy-MM-dd HH.mm.ss").format(picTime);
+//            //TODO incorporate unique story ID in picture name
+//            picturePath = folder.getAbsolutePath() + "/" + story.getId() + "/" + newPicName + ".jpg";
+//            File file = new File(picturePath);
+         
 
         offlineHelper.saveOfflineStories(storyList);
     }
