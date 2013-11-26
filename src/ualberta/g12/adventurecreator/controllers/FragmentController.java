@@ -3,13 +3,8 @@ package ualberta.g12.adventurecreator.controllers;
 
 import ualberta.g12.adventurecreator.data.Choice;
 import ualberta.g12.adventurecreator.data.Fragment;
-import ualberta.g12.adventurecreator.data.FragmentPart;
-import ualberta.g12.adventurecreator.data.FragmentPartChoice;
-import ualberta.g12.adventurecreator.data.FragmentPartEmpty;
-import ualberta.g12.adventurecreator.data.FragmentPartFactory;
 
 import android.util.Log;
-
 import java.io.File;
 import java.util.List;
 
@@ -34,43 +29,219 @@ public class FragmentController implements FController {
         frag.setTitle(newTitle);
     }
 
-    public FragmentPart<?> addNewFragmentPart(Fragment frag, String type, int pos){
-        FragmentPartFactory factory = new FragmentPartFactory();
-        FragmentPart<?> newPart = factory.createFragmentPart(type);
-        List<FragmentPart<?>> parts = frag.getParts();
-        try{
-            parts.add(pos, newPart);
-        } catch (IndexOutOfBoundsException e){
-            return null;
-        }
-        frag.setParts(parts);
-        return newPart;
-    }
-    
-    public <E> void setFragmentPartAttr(Fragment frag, FragmentPart<E> part, E attr){
-        part.setAttribute(attr);
-        frag.setParts(frag.getParts());
-    }
-    
+    @Override
     /**
-     * Deletes a fragment part which can be text, illustration, choice , or
-     * empty from our "fragments parts".
+     * Allows the user to add a text segment to the current fragment.
      * 
-     * @param frag is the fragment we wish to remove parts from
-     * @param partNum contains the part number of the part we wish to remove
+     * @param frag  fragment reference corresponding to the current fragment
+     * @param textSegment   reference to the text of the current segment
+     * @param dispNum   refers to the position of the text segment 
      */
-    @Override    
-    public boolean deleteFragmentPart(Fragment frag, int partNum){
-        List<FragmentPart<?>> parts = frag.getParts();
-        try{
-            parts.remove(partNum);
-        } catch (IndexOutOfBoundsException e){
+    public boolean addTextSegment(Fragment frag, String textSegment, int dispNum) {
+        List<String> textSegments = frag.getTextSegments();
+        List<String> displayOrder = frag.getDisplayOrder();
+
+        // check for invalid dispNum
+        if (displayOrder.size() < dispNum)
             return false;
+
+        // Insert the text segment
+        int textSegNum = 0;
+        for (int i = 0; i < dispNum; i++) {
+            if (displayOrder.get(i).equals("t"))
+                textSegNum++;
         }
-        frag.setParts(parts);
+        if (textSegments.size() == textSegNum) {
+            textSegments.add(textSegment);
+        } else {
+            textSegments.add(textSegNum, textSegment);
+        }
+
+        // insert t into corresponding spot in display order
+        displayOrder.add(dispNum, "t");
+
+        frag.setDisplayOrder(displayOrder);
+        frag.setTextSegments(textSegments);
+
         return true;
     }
-    
+
+    /**
+     * Removes the text segment at the given dispNum returns true if successful
+     * 
+     * @param frag fragment reference corresponding to the current fragment
+     * @param dispNum refers to the position of the text segment
+     */
+    private boolean deleteTextSegment(Fragment frag, int dispNum) {
+        List<String> textSegments = frag.getTextSegments();
+        List<String> displayOrder = frag.getDisplayOrder();
+
+        // not a text segment at dispNum
+        if (!displayOrder.get(dispNum).equals("t"))
+            return false;
+
+        int textSegNum = 0;
+        for (int i = 0; i < dispNum; i++) {
+            if (displayOrder.get(i).equals("t"))
+                textSegNum++;
+        }
+
+        textSegments.remove(textSegNum);
+        frag.setTextSegments(textSegments);
+        displayOrder.remove(dispNum);
+        frag.setDisplayOrder(displayOrder);
+        return true;
+    }
+
+    @Override
+    /**
+     * allows the author to add an illustration into a fragment
+     * 
+     * @param frag  fragment reference corresponding to the current fragment
+     * @param illustration  refers to the illustration that has been previously saved 
+     * @param dispNum   refers to the position of the text segment
+     * 
+     */
+    public boolean addIllustration(Fragment frag, String illustration, int dispNum) {
+        List<String> illustrations = frag.getIllustrations();
+        List<String> displayOrder = frag.getDisplayOrder();
+
+        Log.d(TAG,"add ill start2");
+        // check for invalid dispNum
+        if (displayOrder.size() < dispNum)
+            return false;
+        Log.d(TAG,"ill 3");
+        // Insert the text segment
+        int illNum = 0;
+        for (int i = 0; i < dispNum; i++) {
+            if (displayOrder.get(i).equals("i"))
+                illNum++;
+        }
+        Log.d("illNum ", String.format("%d", illNum));
+        if (illustrations.size() == illNum) {
+            illustrations.add(illustration);
+        } else {
+            illustrations.add(illNum, illustration);
+        }
+
+        // insert t into corresponding spot in display order
+        displayOrder.add(dispNum, "i");
+
+        frag.setDisplayOrder(displayOrder);
+        frag.setIllustrations(illustrations);
+
+        return true;
+    }
+
+    /**
+     * Removes the illustration at the given dispNum returns true if successful
+     * 
+     * @param frag fragment reference corresponding to the current fragment
+     * @param dispNum refers to the position of the text segment
+     */
+    private boolean deleteIllustration(Fragment frag, int dispNum) {
+        List<String> illustrations = frag.getIllustrations();
+        List<String> displayOrder = frag.getDisplayOrder();
+
+        // not an illustration at dispNum
+        if (!displayOrder.get(dispNum).equals("i"))
+            return false;
+
+        int illustrationNum = 0;
+        for (int i = 0; i < dispNum; i++) {
+            if (displayOrder.get(i).equals("i"))
+                illustrationNum++;
+        }
+        
+        //delete the associated file from memory
+        File ill = new File(illustrations.get(illustrationNum));
+        ill.delete();
+
+        illustrations.remove(illustrationNum);
+        frag.setIllustrations(illustrations);
+        displayOrder.remove(dispNum);
+        frag.setDisplayOrder(displayOrder);
+        return true;
+    }
+
+    // @Override
+    // public void addSound(Fragment frag, Sound sound){
+    // LinkedList<Sound> sounds = frag.getSounds();
+    // sounds.add(sound);
+    // frag.setSounds(sounds);
+    // LinkedList<String> displayOrder = frag.getDisplayOrder();
+    // displayOrder.add("s");
+    // frag.setDisplayOrder(displayOrder);
+    // }
+    //
+    // @Override
+    // public void addVideo(Fragment frag, Video video){
+    // LinkedList<Video> videos = frag.getVideos();
+    // videos.add(video);
+    // frag.setVideos(videos);
+    // LinkedList<String> displayOrder = frag.getDisplayOrder();
+    // displayOrder.add("v");
+    // frag.setDisplayOrder(displayOrder);
+    // }
+    //
+
+    @Override
+    /**
+     * Allows the user to add a choice to the fragment. This will allow the user to link two 
+     * fragments together.  
+     * 
+     * @param frag  fragment reference corresponding to the current fragment
+     * @param cho   reference to the old choice within that position (null if new)
+     */
+    public void addChoice(Fragment frag, Choice cho) {
+        List<Choice> choices = frag.getChoices();
+        choices.add(cho);
+        frag.setChoices(choices);
+        
+        List<String> displayOrder = frag.getDisplayOrder();
+        displayOrder.add("c");
+        frag.setDisplayOrder(displayOrder);
+    }
+
+    /**
+     * Removes the Choice at the given dispNum returns true if successful
+     * 
+     * @param frag fragment reference corresponding to the current fragment
+     * @param dispNum refers to the position of the text segment
+     */
+    public boolean deleteChoice(Fragment frag, int dispNum) {
+        List<Choice> choices = frag.getChoices();
+        List<String> displayOrder = frag.getDisplayOrder();
+
+        // not a choice at dispNum
+        if (!displayOrder.get(dispNum).equals("c"))
+            return false;
+
+        int choiceNum = 0;
+        for (int i = 0; i < dispNum; i++) {
+            if (displayOrder.get(i).equals("c"))
+                choiceNum++;
+        }
+
+        choices.remove(choiceNum);
+        frag.setChoices(choices);
+        displayOrder.remove(dispNum);
+        frag.setDisplayOrder(displayOrder);
+        return true;
+    }
+
+    @Override
+    /**
+     * adds a new element into the listview so that a segment can be added.  
+     * 
+     * @param frag  fragment reference corresponding to the current fragment
+     */
+    public void addEmptyPart(Fragment frag) {
+        List<String> displayOrder = frag.getDisplayOrder();
+        displayOrder.add("e");
+        frag.setDisplayOrder(displayOrder);
+    }
+
     @Override
     /**
      * deletes the selected segment when the user desires to delete a segment. 
@@ -78,13 +249,9 @@ public class FragmentController implements FController {
      * @param frag  fragment reference corresponding to the current fragment
      */
     public void removeEmptyPart(Fragment frag) {
-        List<FragmentPart<?>> parts = frag.getParts();
-        for (int i = 0; i < parts.size(); i++){
-            if (parts.get(i) instanceof FragmentPartEmpty){
-                deleteFragmentPart(frag, i);
-                break;
-            }
-        }
+        List<String> displayOrder = frag.getDisplayOrder();
+        displayOrder.remove("e");
+        frag.setDisplayOrder(displayOrder);
     }
 
     // @Override
@@ -95,32 +262,94 @@ public class FragmentController implements FController {
     // }
 
     /**
+     * Deletes a fragment part which can be text, illustration, choice , or
+     * empty from our "fragments parts".
+     * 
+     * @param frag is the fragment we wish to remove parts from
+     * @param partNum contains the part number of the part we wish to remove
+     */
+    @Override
+    public void deleteFragmentPart(Fragment frag, int partNum) {
+        List<String> displayOrder = frag.getDisplayOrder();
+        Log.d(TAG, "removing");
+        // check for invalid partNum
+        if (partNum >= displayOrder.size())
+            return;
+        Log.d(TAG, "valid");
+
+        String type = getDisplayTypeAtPos(frag, partNum);
+        
+        Log.d(TAG, "choosing");
+
+        if (type.equals("t"))
+            deleteTextSegment(frag, partNum);
+        else if (type.equals("i"))
+            deleteIllustration(frag, partNum);
+        else if (type.equals("c"))
+            deleteChoice(frag, partNum);
+        else if (type.equals("e"))
+            removeEmptyPart(frag);
+
+    }
+
+    /**
+     * Provides the display order of the fragment parts,which is how they are
+     * listed when we view them
+     * 
+     * @param f is the fragment to be called
+     * @return List<String> which contains the display order
+     */
+    public List<String> getDisplayOrder(Fragment f) {
+        return f.getDisplayOrder();
+    }
+
+    /**
+     * Retrieves the display type of the fragment part at Pos
+     * 
+     * @param f is the fragment we want to get display type of
+     * @param Pos is the position of the fragment part
+     * @return A string that signals the display type i.e "e","c","t" or "i"
+     */
+    public String getDisplayTypeAtPos(Fragment f, int Pos) {
+        return f.getDisplayOrder().get(Pos);
+    }
+
+    /**
      * Helps retrieve the fragment that a particular choice is linked to
      * 
-     * @param frag is the fragment that the choice is contained in
-     * @param partNum is the position of the choice in the fragmentParts
+     * @param f is the fragment that the choice is contained in
+     * @param Pos is the position of the choice in the display order
      * @return Fragment pointed to by choice.  If it is not a choice
      * at the displayOrderPos returns null.  
      */
-    public Fragment getLinkedToFragmentOfChoice(Fragment frag, int partNum) {
-        List<FragmentPart<?>> parts = frag.getParts();
-        FragmentPart<?> part;
-        try{
-            part = parts.get(partNum);
-        } catch (IndexOutOfBoundsException e){
-            return null;
-        }
+    public Fragment getLinkedToFragmentOfChoice(Fragment f, int displayOrderPos) {
         
-        if (!(part instanceof FragmentPartChoice))
+        //check that displayOrderPos is valid
+        if (displayOrderPos >= f.getDisplayOrder().size() || displayOrderPos < 0)
             return null;
-        else {
-            //safe to cast now
-            FragmentPartChoice partChoice = (FragmentPartChoice)part;
-            Choice choice = partChoice.getAttribute();
-            return choice.getLinkedToFragment();
+        
+        //check that a choice is at the display order postion
+        if (!getDisplayTypeAtPos(f, displayOrderPos).equals("c"))
+            return null;
+        
+        int occurrence = 0;
+        for (int i = 0; i < displayOrderPos; i++) {
+            if (getDisplayTypeAtPos(f, i).equals("c"))
+                occurrence++;
         }
+        return f.getChoices().get(occurrence).getLinkedToFragment();
     }
     
+
+    /**
+     * getTextSegments provides all text segments in the fragments parts
+     * 
+     * @param f is the fragment we are looking for
+     * @return List<String> of text fragments
+     */
+    public List<String> getTextSegments(Fragment f) {
+        return f.getTextSegments();
+    }
 
     /**
      * changes the Id of a fragment at position id
@@ -131,4 +360,43 @@ public class FragmentController implements FController {
     public void setId(Fragment f, int id) {
         f.setId(id);
     }
+
+    /**
+     * Updates the choice at position POS in the choice list
+     * 
+     * @param f is the fragment which contains the choice
+     * @param Pos is the position of the choice in the choice list
+     * @param text is the text we wish to updates
+     */
+    public void setChoiceTextAtPos(Fragment f, int Pos, String text) {
+        f.getChoices().get(Pos).setChoiceText(text);
+    }
+
+    /**
+     * Updates the position of the linked fragment in our choices
+     * 
+     * @param f is the fragment the choice is contained int
+     * @param Pos is the position of the choice
+     * @param linkedPos is the poisition of the linked fragment in the fragment
+     *            list
+     */
+    public void setLinkedFragmentPosOfChoice(Fragment f, int Pos, int linkedPos) {
+        f.getChoices().get(Pos).setLinkedToFragmentPos(linkedPos);
+    }
+    
+    /**
+     * Update the linked fragment in the choice at choicePos
+     * 
+     * @param f is the fragment the choice is contained int
+     * @param Pos is the position of the choice
+     * @param linkedPos is the poisition of the linked fragment in the fragment
+     *            list
+     */
+    public void setLinkedFragmentOfChoice(Fragment f, int choicePos, Fragment linkedFragment) {
+        List<Choice> choices = f.getChoices();
+        if (choicePos >= choices.size() || choicePos < 0)
+            return;
+        choices.get(choicePos).setLinkedToFragment(linkedFragment);
+    }
+
 }

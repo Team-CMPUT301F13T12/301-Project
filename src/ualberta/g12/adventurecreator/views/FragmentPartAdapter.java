@@ -15,11 +15,6 @@ import android.widget.TextView;
 import ualberta.g12.adventurecreator.R;
 import ualberta.g12.adventurecreator.data.Choice;
 import ualberta.g12.adventurecreator.data.Fragment;
-import ualberta.g12.adventurecreator.data.FragmentPart;
-import ualberta.g12.adventurecreator.data.FragmentPartChoice;
-import ualberta.g12.adventurecreator.data.FragmentPartEmpty;
-import ualberta.g12.adventurecreator.data.FragmentPartIllustration;
-import ualberta.g12.adventurecreator.data.FragmentPartText;
 
 /**
  * Adapter for communication between the fragment class and the segments within
@@ -43,7 +38,7 @@ public class FragmentPartAdapter extends ArrayAdapter {
      * @param frag the Fragment to display
      */
     public FragmentPartAdapter(Context context, int resource, Fragment frag) {
-        super(context, resource, frag.getParts());
+        super(context, resource, frag.getDisplayOrder());
         this.context = context;
         this.resource = resource;
         this.frag = frag;
@@ -75,29 +70,42 @@ public class FragmentPartAdapter extends ArrayAdapter {
 
         if (DEBUG)
             Log.d(TAG, "POSITION " + position);
-        FragmentPart<?> part = frag.getParts().get(position);
-        
-        if (part instanceof FragmentPartText) {
+        if (frag.getDisplayOrder().get(position).equals("t")) {
             if (DEBUG)
                 Log.d(TAG, "TEXT " + position);
             // Display a text segment
-            String textSegment = ((FragmentPartText)part).getAttribute();
+
+            // get the occurrence number of the textSegment
+            int occurrence = 0;
+            for (int i = 0; i < position; i++) {
+                if (frag.getDisplayOrder().get(i).equals("t"))
+                    occurrence++;
+            }
+
+            String textSegment = frag.getTextSegments().get(occurrence);
             if (textSegment != null) {
                 text.setVisibility(View.VISIBLE);
                 if (text != null)
-                    if (!textSegment.equals(""))
-                        text.setText(textSegment);
-                    else 
-                        text.setText("NewText");
+                    text.setText(textSegment);
             }
-        } else if (part instanceof FragmentPartIllustration) {
+        } else if (frag.getDisplayOrder().get(position).equals("i")) {
             if (DEBUG)
                 Log.d(TAG, "IMAGE " + position);
             // Display an illustration
 
-            String picturePath = ((FragmentPartIllustration)part).getAttribute();
-            Bitmap illustration = BitmapFactory.decodeFile(picturePath);
+            // get the occurrence number of the illustration
+            int occurrence = 0;
+            for (int i = 0; i < position; i++) {
+                if (frag.getDisplayOrder().get(i).equals("i"))
+                    occurrence++;
+            }
 
+            if (DEBUG)
+                Log.d(TAG, "probably dies here" + occurrence);
+            String picturePath = frag.getIllustrations().get(occurrence);
+            Bitmap illustration = BitmapFactory.decodeFile(picturePath);
+            if (DEBUG)
+                Log.d(TAG, "betchs don't see me");
             if (illustration != null) {
                 image.setVisibility(View.VISIBLE);
                 if (image != null)
@@ -105,12 +113,19 @@ public class FragmentPartAdapter extends ArrayAdapter {
                         Log.d(TAG, "SET IMAGE");
                 image.setImageBitmap(illustration);
             }
-        } else if (part instanceof FragmentPartChoice) {
+        } else if (frag.getDisplayOrder().get(position).equals("c")) {
             if (DEBUG)
                 Log.d(TAG, "CHOICE " + position);
             // Display a choice
 
-            Choice choice = ((FragmentPartChoice)part).getAttribute();
+            // get the occurrence number of the illustration
+            int occurrence = 0;
+            for (int i = 0; i < position; i++) {
+                if (frag.getDisplayOrder().get(i).equals("c"))
+                    occurrence++;
+            }
+
+            Choice choice = frag.getChoices().get(occurrence);
             if (choice != null) {
                 choiceButton.setVisibility(View.VISIBLE);
                 if (choiceButton != null)
@@ -120,7 +135,7 @@ public class FragmentPartAdapter extends ArrayAdapter {
                 choiceButton.setBackgroundColor(Color.BLACK);
                 choiceButton.setTextColor(Color.WHITE);
             }
-        } else if (part instanceof FragmentPartEmpty) {
+        } else if (frag.getDisplayOrder().get(position).equals("e")) {
             if (DEBUG)
                 Log.d(TAG, "EMPTY " + position);
             // Display a DefaultPart
