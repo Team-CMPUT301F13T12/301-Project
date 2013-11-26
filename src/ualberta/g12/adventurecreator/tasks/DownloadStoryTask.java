@@ -30,7 +30,6 @@ public class DownloadStoryTask extends AsyncTask<Story, Void, String> {
         if (s != null) {
             return String.format("%s Download complete", story[0].getTitle());
         } else {
-            s = null;
             return String.format("%s Download failed", story[0].getTitle());
         }
 
