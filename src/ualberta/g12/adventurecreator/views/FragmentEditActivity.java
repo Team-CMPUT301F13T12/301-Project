@@ -436,32 +436,17 @@ public class FragmentEditActivity extends Activity implements FView<Fragment> {
         }
     }
 
-    private void setTitleAndPageId() {
-
-        String title = editTitleText.getText().toString();
-        int idPage = -9;
-        // try{
-        // idPage = Integer.parseInt(idPageNum);
-        // }catch(NumberFormatException e){
-        // Log.d("Msg","There was a number format exception!");
-        // }
-
-        // fragment.setTitle(title);
-        // fragment.setId(idPage);
-
-        fragmentController.setTitle(fragment, title);
-        fragmentController.setId(fragment, idPage);
-    }
-
     private void saveFragment() {
         Log.d(TAG, "removing empty");
+        
+        //save title before removing empty (as it resets the title 
+        //when notifyViews() is called due to removing a fragmentPart)
+        String title = editTitleText.getText().toString();
+        fragmentController.setTitle(fragment, title);
         
         // make sure fragment does not have any empty parts
         fragmentController.removeEmptyPart(fragment);
         
-        Log.d(TAG, "removed empty");
-
-        setTitleAndPageId();
         storyController.setFragmentAtLocation(story, fragPos, fragment);
         storyListController.saveOfflineStories(storyList);
     }
