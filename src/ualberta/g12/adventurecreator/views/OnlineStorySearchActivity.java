@@ -49,13 +49,13 @@ public class OnlineStorySearchActivity extends Activity implements OnItemClickLi
         downloadTitleAuthorsTask = new DownloadTitleAuthorsTask(
                 getApplicationContext(), this);
 
+        // See who started us
+        handleIntent(getIntent());
+
         // Load our title authors from buddy
         loadTitleAuthors();
 
         setUpUi();
-
-        // See who started us
-        handleIntent(getIntent());
     }
 
     private void setupActionBar() {
@@ -66,7 +66,7 @@ public class OnlineStorySearchActivity extends Activity implements OnItemClickLi
         tas = new ArrayList<Story>();
 
         downloadTitleAuthorsTask.execute(new String[] {
-                null
+                this.query
         });
     }
 
@@ -92,7 +92,7 @@ public class OnlineStorySearchActivity extends Activity implements OnItemClickLi
             if (DEBUG)
                 Log.d(TAG, String.format("Search query was: %s", query));
             this.query = query;
-            performSearch();
+            //performSearch();
         }
     }
 
