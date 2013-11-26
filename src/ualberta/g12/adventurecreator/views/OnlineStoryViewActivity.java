@@ -20,6 +20,7 @@ import android.widget.Toast;
 
 import ualberta.g12.adventurecreator.R;
 import ualberta.g12.adventurecreator.data.Story;
+import ualberta.g12.adventurecreator.tasks.CacheStoryTask;
 import ualberta.g12.adventurecreator.tasks.DownloadStoryTask;
 import ualberta.g12.adventurecreator.tasks.DownloadTitleAuthorsTask;
 
@@ -186,6 +187,8 @@ public class OnlineStoryViewActivity extends Activity implements OnItemClickList
                     Toast.LENGTH_SHORT)
                     .show();
             // Send some stuff to FragmentViewActivity
+            CacheStoryTask cst = new CacheStoryTask(this);
+            cst.execute(new Story[] {ta});
         }
     }
 
