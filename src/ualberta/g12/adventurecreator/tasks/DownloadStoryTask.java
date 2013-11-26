@@ -23,14 +23,12 @@ public class DownloadStoryTask extends AsyncTask<Story, Void, String> {
     @Override
     protected String doInBackground(Story... story) {
 
-        // TODO: Actually download the story
         OnlineHelper oh = AdventureCreator.getOnlineHelper();
         s = oh.getStory(story[0].getId());
 
         if (s != null) {
             return String.format("%s Download complete", story[0].getTitle());
         } else {
-            s = null;
             return String.format("%s Download failed", story[0].getTitle());
         }
 
