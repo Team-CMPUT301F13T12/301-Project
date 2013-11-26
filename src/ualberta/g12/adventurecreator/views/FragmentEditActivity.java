@@ -278,6 +278,9 @@ public class FragmentEditActivity extends Activity implements FView<Fragment> {
 
         } else if (itemTitle.equals("Add Choice")) {
             // create, add and save new choice
+            
+            // First remove empty part
+            fragmentController.removeEmptyPart(fragment);
 
             // We can cast here because we know the returned type (we just chose it with "c")
             int choicePos = fragment.getParts().size();
@@ -290,6 +293,7 @@ public class FragmentEditActivity extends Activity implements FView<Fragment> {
             intent.putExtra("StoryPos", storyPos);
             intent.putExtra("FragmentPos", fragPos);
             intent.putExtra("ChoicePos", choicePos);
+            Log.d(TAG, "choice pos "+choicePos);
             startActivity(intent);
 
         } else if (itemTitle.equals("Delete")) {

@@ -42,7 +42,7 @@ public class AdventureCreator extends Application {
      */
     public static StoryList getStoryList() {
         if (storyList == null) {
-            //storyList = getOfflineIOHelper().loadOfflineStories();
+            storyList = getOfflineIOHelper().loadOfflineStories();
             if (storyList == null) {
                 storyList = new StoryList();
             }
