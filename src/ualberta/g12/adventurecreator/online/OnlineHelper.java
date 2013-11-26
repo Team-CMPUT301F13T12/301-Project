@@ -189,7 +189,9 @@ public class OnlineHelper {
         ArrayList<Story> resultList = new ArrayList<Story>();
 
         // lets prepare our query to only get our required fields
-        HttpPost searchRequest = new HttpPost(ourServer + "_search?pretty=1");
+        //HttpPost searchRequest = new HttpPost(ourServer + "_search?pretty=1");
+        //TODO quick fix right now only displays 10 (default ES behaviour)
+        HttpPost searchRequest = new HttpPost(ourServer + "_search?pretty=1&size=1000");
         String query = "{\"fields\" : [\"storyTitle\",\"author\", \"id\"], \"query\" :{ \"match_all\" : {}    }}";
         StringEntity stringentity = new StringEntity(query);
 
