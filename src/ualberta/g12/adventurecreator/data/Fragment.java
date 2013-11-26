@@ -86,7 +86,7 @@ public class Fragment extends FModel implements Serializable {
             ClassNotFoundException {
         this.title = (String) in.readObject();
         this.id = (Integer) in.readObject();
-        this.parts = (List<FragmentPart<?>>) in.readObject();
+        this.parts = (List<FragmentPart<?>>)in.readObject();
     }
 
 }
