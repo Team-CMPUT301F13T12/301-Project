@@ -281,16 +281,26 @@ public class OnlineHelper {
         return resultList;
         // searchRequest.releaseConnection();
     }
+    
+    public static void main(String [] args) throws ClientProtocolException, IOException{
+    	OnlineHelper client = new OnlineHelper();
+    	client.searchsearchStories("chris test");
+    }
 
     /**
      * advanced search (logical operators)
      */
-    public ArrayList<Story> searchsearchStories(String str) throws ClientProtocolException,
+    public ArrayList<Story> searchsearchStories(String search) throws ClientProtocolException,
             IOException {
         ArrayList<Story> resultList = new ArrayList<Story>();
         HttpPost searchRequest = new HttpPost(ourServer + "_search?pretty=1");
-        String query = "{\"query\" : {\"query_string\" : {\"default_field\" : \"ingredients\",\"query\" : \""
-                + str + "\"}}}";
+       // String query = "{\"query\" : {\"query_string\" : {\"default_field\" : \"ingredients\",\"query\" : \""
+       //         + str + "\"}}}";
+        //String query = "{\"fields\" : [\"storyTitle\",\"author\"], \"query\" :{ \"term\" : { \"storyTitle\" : \"" + title
+        //        + "\" , \"author\" : \"" + author + "\"}    }  }"; this one is pretty exact i think
+        //String query = "{\"fields\" : [\"storyTitle\",\"author\"], \"query\" :[{ \"term\" : { \"storyTitle\" : \"" + title
+       //         + "\"} , { \"term\" : { \"author\" : \"" + author + "\"}} ]}  }"; 
+        String query = "{\"query\" : {\"query_string\" : {\"fields\" : [\"storyTitle\",\"author\"], \"query\": \"" + search + "\"} } }";
         StringEntity stringentity = new StringEntity(query);
 
         searchRequest.setHeader("Accept", "application/json");
@@ -306,11 +316,11 @@ public class OnlineHelper {
         }.getType();
         ElasticSearchSearchResponse<Story> esResponse = gson.fromJson(json,
                 elasticSearchSearchResponseType);
-        System.err.println(esResponse);
+        //System.err.println(esResponse);
         for (ElasticSearchResponse<Story> s : esResponse.getHits()) {
             Story story = s.getSource();
             resultList.add(story);
-            System.err.println(story);
+            //System.err.println(story.getTitle());
         }
         return resultList;
         // searchRequest.releaseConnection();
