@@ -102,22 +102,22 @@ public class FragmentController implements FController {
      * @return Fragment pointed to by choice.  If it is not a choice
      * at the displayOrderPos returns null.  
      */
-    public Fragment getLinkedToFragmentOfChoice(Fragment frag, int partNum) {
+    public int getLinkedToFragmentPosOfChoice(Fragment frag, int partNum) {
         List<FragmentPart<?>> parts = frag.getParts();
         FragmentPart<?> part;
         try{
             part = parts.get(partNum);
         } catch (IndexOutOfBoundsException e){
-            return null;
+            return -1;
         }
         
         if (!(part instanceof FragmentPartChoice))
-            return null;
+            return -1;
         else {
             //safe to cast now
             FragmentPartChoice partChoice = (FragmentPartChoice)part;
             Choice choice = partChoice.getAttribute();
-            return choice.getLinkedToFragment();
+            return choice.getLinkedToFragmentPos();
         }
     }
     

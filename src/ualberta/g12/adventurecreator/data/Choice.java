@@ -11,9 +11,7 @@ import java.io.Serializable;
 public class Choice implements Serializable {
     private String choiceText;
     private int linkedToFragmentPos;
-    private Fragment linkedToFragment;
 
-    // default settings for a new choice
     /**
      * default setting given to a newly implemented choice. The setting will be
      * null at first but will be checked after the choice is finished being
@@ -22,7 +20,6 @@ public class Choice implements Serializable {
     public Choice() {
         this.choiceText = "";
         this.linkedToFragmentPos = -1;
-        this.linkedToFragment = null;
     }
 
     /**
@@ -62,17 +59,8 @@ public class Choice implements Serializable {
         this.linkedToFragmentPos = linkedToFragmentPos;
     }
 
-     public Fragment getLinkedToFragment() {
-     return linkedToFragment;
-     }
-    
-     public void setLinkedToFragment(Fragment linkedToFragment) {
-         this.linkedToFragment = linkedToFragment;
-     }
-
     private void writeObject(java.io.ObjectOutputStream out) throws IOException {
         out.writeObject(this.choiceText);
-        out.writeObject(this.linkedToFragment);
         out.writeObject(this.linkedToFragmentPos);
 
     }
@@ -80,7 +68,6 @@ public class Choice implements Serializable {
     private void readObject(java.io.ObjectInputStream in) throws IOException,
             ClassNotFoundException {
         this.choiceText = (String) in.readObject();
-        this.linkedToFragment = (Fragment) in.readObject();
         this.linkedToFragmentPos = (Integer) in.readObject();
     }
 }

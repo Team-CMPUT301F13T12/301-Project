@@ -292,13 +292,9 @@ public class MainActivity extends Activity implements LView<StoryList>, OnItemCl
             startActivity(i);
         } else {
             Story story = storyListController.getStoryAtPos(pos);
-            int fragPos = story.getStartFragPos();
-
-            Fragment goToFrag = AdventureCreator.getStoryController().getFragmentAtPos(story,
-                    fragPos);
 
             i = new Intent(this, FragmentViewActivity.class);
-            i.putExtra("Fragment", goToFrag);
+            i.putExtra("Story", story);
             startActivity(i);
         }
     }

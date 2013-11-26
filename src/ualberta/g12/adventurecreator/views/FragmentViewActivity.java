@@ -13,8 +13,10 @@ import android.widget.TextView;
 
 import ualberta.g12.adventurecreator.R;
 import ualberta.g12.adventurecreator.controllers.FragmentController;
+import ualberta.g12.adventurecreator.controllers.StoryController;
 import ualberta.g12.adventurecreator.data.AdventureCreator;
 import ualberta.g12.adventurecreator.data.Fragment;
+import ualberta.g12.adventurecreator.data.Story;
 
 /**
  * Activity for viewing a fragment.  User can follow choices and will
@@ -26,7 +28,9 @@ public class FragmentViewActivity extends Activity implements FView<Fragment> {
     private ListView fragmentPartListView;
     private FragmentPartAdapter adapter;
     private FragmentController fragmentController;
+    private StoryController storyController;
     //private static final String TAG = "FragmentViewActivity";
+    private Story story;
     private Fragment fragment;
 
     @Override
@@ -35,16 +39,22 @@ public class FragmentViewActivity extends Activity implements FView<Fragment> {
         setContentView(R.layout.activity_fragment_viewer);
 
         fragmentController = AdventureCreator.getFragmentController();
+        storyController = AdventureCreator.getStoryController();
         
         // obtain the intent
         Intent viewFragIntent = getIntent();
-        fragment = (Fragment) viewFragIntent.getSerializableExtra("Fragment");
+        story = (Story) viewFragIntent.getSerializableExtra("Story");
         
         // get widget references
         fragmentPartListView = (ListView) findViewById(R.id.fragmentViewPartList);
         fragmentTitleTextView = (TextView) findViewById(R.id.fragmentTitleText);
 
         setListClickListener();
+        
+        // set fragment to first fragment in story
+        int fragPos = story.getStartFragPos();
+        fragment = AdventureCreator.getStoryController().getFragmentAtPos(story,
+                fragPos);
     }
 
     @Override
@@ -77,7 +87,10 @@ public class FragmentViewActivity extends Activity implements FView<Fragment> {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-                Fragment goToFrag = fragmentController.getLinkedToFragmentOfChoice(fragment, position);
+                int goToFragPos = fragmentController.getLinkedToFragmentPosOfChoice(fragment, position);
+                Fragment goToFrag = null;
+                if(goToFragPos != -1)
+                    goToFrag = storyController.getFragmentAtPos(story, goToFragPos);
                 
                 if (goToFrag != null){
                     fragment = goToFrag;

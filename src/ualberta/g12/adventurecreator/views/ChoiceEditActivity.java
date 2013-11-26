@@ -192,16 +192,7 @@ public class ChoiceEditActivity extends Activity {
                 if(DEBUG)
                     Log.d(TAG, "choice text "+choice.getChoiceText());
                 
-                Fragment linkedFragment;
-                if (linkedPos == -1){
-                    linkedFragment = null;
-                } else {
-                    linkedFragment= storyController.getFragmentAtPos(story, linkedPos);
-                }
-                if(DEBUG)
-                    Log.d(TAG, "linkedfrag, "+linkedFragment);
-                
-                choice.setLinkedToFragment(linkedFragment);
+                choice.setLinkedToFragmentPos(linkedPos);
                 fragmentController.setFragmentPartAttr(fragment, fragmentPartChoice, choice);
                 storyListController.saveOfflineStories(storyList);
 
@@ -220,7 +211,6 @@ public class ChoiceEditActivity extends Activity {
         // ));
         // Log.d("WHAT?!", frag.getChoices().get(0).getChoiceText());
         // TODO CHANGE THIS AND REFACTOR ALL CODE IN CLASS
-
     }
 
 }
