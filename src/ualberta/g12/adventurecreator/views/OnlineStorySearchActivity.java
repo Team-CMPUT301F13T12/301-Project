@@ -18,6 +18,7 @@ import android.widget.Toast;
 
 import ualberta.g12.adventurecreator.R;
 import ualberta.g12.adventurecreator.data.Story;
+import ualberta.g12.adventurecreator.tasks.CacheStoryTask;
 import ualberta.g12.adventurecreator.tasks.DownloadStoryTask;
 import ualberta.g12.adventurecreator.tasks.DownloadTitleAuthorsTask;
 
@@ -92,7 +93,7 @@ public class OnlineStorySearchActivity extends Activity implements OnItemClickLi
             if (DEBUG)
                 Log.d(TAG, String.format("Search query was: %s", query));
             this.query = query;
-            //performSearch();
+            // performSearch();
         }
     }
 
@@ -196,10 +197,15 @@ public class OnlineStorySearchActivity extends Activity implements OnItemClickLi
 
         } else {
             // Stream story
+            // Stream story
             Toast.makeText(this, String.format("Loading story %s", ta.getTitle()),
                     Toast.LENGTH_SHORT)
                     .show();
             // Send some stuff to FragmentViewActivity
+            CacheStoryTask cst = new CacheStoryTask(this);
+            cst.execute(new Story[] {
+                ta
+            });
         }
     }
 
