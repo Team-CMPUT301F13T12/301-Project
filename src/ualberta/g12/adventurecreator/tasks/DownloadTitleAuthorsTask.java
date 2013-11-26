@@ -23,7 +23,9 @@ public class DownloadTitleAuthorsTask extends AsyncTask<String, String, Boolean>
     private Context context;
     private OView<List<Story>> view;
 
-    private static final String TAG = "DownloadStoryTask";
+    // Log this
+    private static final boolean DEBUG = true;
+    private static final String TAG = "DownloadTitleAuthorsTask";
 
     public DownloadTitleAuthorsTask(Context c, OView<List<Story>> view) {
         this.context = c;
@@ -36,7 +38,7 @@ public class DownloadTitleAuthorsTask extends AsyncTask<String, String, Boolean>
 
         OnlineHelper onlineHelper = AdventureCreator.getOnlineHelper();
         tas = new ArrayList<Story>();
-        if (query[0] == null) {
+        if (query[0] == null || query[0].equals("")) {
             // No search
             try {
                 tas = onlineHelper.getAllStoryTitlesIdAuthor();
@@ -54,6 +56,7 @@ public class DownloadTitleAuthorsTask extends AsyncTask<String, String, Boolean>
             // search
             try {
                 tas = onlineHelper.searchsearchStories(query[0]);
+                
                 return true;
             } catch (ClientProtocolException e) {
                 Log.e(TAG, "Downloading story failed, threw ClientProtocolException.");
@@ -77,7 +80,7 @@ public class DownloadTitleAuthorsTask extends AsyncTask<String, String, Boolean>
     @Override
     protected void onPostExecute(Boolean result) {
         if (!result) {
-            Toast.makeText(context, "Error downloading stories", Toast.LENGTH_SHORT);
+            Toast.makeText(context, "Error downloading stories", Toast.LENGTH_SHORT).show();
         }
         view.update(tas);
     }
