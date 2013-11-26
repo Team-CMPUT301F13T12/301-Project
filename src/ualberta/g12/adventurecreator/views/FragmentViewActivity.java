@@ -49,25 +49,26 @@ public class FragmentViewActivity extends Activity implements FView<Fragment> {
 
     @Override
     protected void onStart() {
-        super.onStart();
-
-        // TODO: This should be in its own method
-
-        // First load fragment parts as that is the same for both modes
-        // Loads fragment parts (text, images, videos, sounds, etc)
-        adapter = new FragmentPartAdapter(this, R.layout.activity_fragment_editor, fragment);
-        fragmentPartListView.setAdapter(adapter);
-
-
-        // Loads title
-        if (fragmentTitleTextView != null) 
-            fragmentTitleTextView.setText(fragment.getTitle());
+        super.onStart();    
+        update();
    }
 
     @Override
     public void update(Fragment model) {
         // TODO reload all fields based on new info from model
-
+        update();
+    }
+    
+    private void update() {
+        // TODO reload all fields based on new info from model
+        
+        // Loads title
+        if (fragmentTitleTextView != null) 
+            fragmentTitleTextView.setText(fragment.getTitle());
+        
+        // Loads fragment parts (text, images, videos, sounds, etc)
+        adapter = new FragmentPartAdapter(this, R.layout.activity_fragment_editor, fragment);
+        fragmentPartListView.setAdapter(adapter);
     }
 
     private void setListClickListener() {
@@ -79,10 +80,8 @@ public class FragmentViewActivity extends Activity implements FView<Fragment> {
                 Fragment goToFrag = fragmentController.getLinkedToFragmentOfChoice(fragment, position);
                 
                 if (goToFrag != null){
-                    Intent intent = new Intent(FragmentViewActivity.this, FragmentViewActivity.class);
-                    intent.putExtra("Fragment", goToFrag);
-                    startActivity(intent);
-                    //finish();
+                    fragment = goToFrag;
+                    update();
                 }
             }
         });

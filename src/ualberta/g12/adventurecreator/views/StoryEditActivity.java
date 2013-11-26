@@ -4,6 +4,7 @@ package ualberta.g12.adventurecreator.views;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Environment;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -22,6 +23,8 @@ import ualberta.g12.adventurecreator.data.OfflineIOHelper;
 import ualberta.g12.adventurecreator.data.Story;
 import ualberta.g12.adventurecreator.data.StoryList;
 
+import java.io.File;
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 /**
@@ -196,12 +199,33 @@ public class StoryEditActivity extends Activity implements SView<Story> {
      * saves any changes that have been modified to a story
      */
     private void saveChanges() {
+        int oldId = story.getId();
+
         // save any changes
         storyController.setTitle(story, titleText.getText().toString());
         storyController.setAuthor(story, authorText.getText().toString());
 
         StoryListController slc = AdventureCreator.getStoryListController();
         slc.setStory(story, storyPos);
+
+        if (oldId != story.getId()){
+            // Setup or update story folder
+            
+            //following line modified from https://groups.google.com/forum/#!topic/android-developers/YjGcve7s5CQ
+            //by Derek
+            CharSequence appName = this.getResources().getText(this.getResources().getIdentifier("app_name", "string", this.getPackageName()));
+            File appFolder = new File(Environment.getExternalStorageDirectory().toString(), appName.toString());
+            File oldStoryFolder = new File(appFolder.getAbsolutePath(), Integer.toString(oldId));
+            File newStoryFolder = new File(appFolder.getAbsolutePath(), Integer.toString(story.getId()));
+            
+            if (oldStoryFolder.exists()) {
+                // change old story folder to follow new story id
+                oldStoryFolder.renameTo(newStoryFolder);                
+            } else {
+                // or Just create new story id folder
+                newStoryFolder.mkdirs();
+            }
+        }
 
         offlineHelper.saveOfflineStories(storyList);
     }

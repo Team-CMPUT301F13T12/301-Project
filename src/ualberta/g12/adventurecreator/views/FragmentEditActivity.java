@@ -196,6 +196,11 @@ public class FragmentEditActivity extends Activity implements FView<Fragment> {
                 .getMenuInfo();
         position = (int) info.id;
         CharSequence itemTitle = item.getTitle();
+        
+        //before taking any action save changes to title
+        saveTitle();
+        
+        //Do corresponding action
         if (itemTitle.equals("Insert Text")) {
             //We can cast here because we know the returned type (we just chose it with "t")
             FragmentPartText part = (FragmentPartText) fragmentController.addNewFragmentPart(fragment, "t", position);
@@ -384,19 +389,19 @@ public class FragmentEditActivity extends Activity implements FView<Fragment> {
                 CharSequence appName = this.getResources().getText(this.getResources().getIdentifier("app_name", "string", this.getPackageName()));          
                 
                 File folder = new File(Environment.getExternalStorageDirectory().toString(), appName.toString());
+                File storyFolder = new File (folder.getAbsolutePath(), Integer.toString(story.getId()));
                 boolean folderExists = true; //assume true
     
-                if (!folder.exists()) {
-                    folderExists = folder.mkdirs();
+                if (!storyFolder.exists()) {
+                    folderExists = storyFolder.mkdirs();
                 }
                 if (folderExists) {
                     //once folder exists finish creating picturePath
                     long picTime = System.currentTimeMillis();
-                    String newPicName = new SimpleDateFormat("yyyy-MM-dd HH.mm.ss").format(picTime);
-                    //TODO incorporate unique story ID in picture name
-                    picturePath = folder.getAbsolutePath() + "/" + story.getId() + "/" + newPicName + ".jpg";
-                    File file = new File(picturePath);
-                    Log.d(TAG, "path of image preend " + picturePath + "");
+                    String newPicName = new SimpleDateFormat("yyyy-MM-dd HH.mm.ss").format(picTime) + ".jpg";
+                    File file = new File(storyFolder.getAbsolutePath(), newPicName);
+                    
+                    Log.d(TAG, "path of image END" + file.getAbsolutePath() + "");
                     
                     //then write the picture to picturePath
                     try {
@@ -428,18 +433,20 @@ public class FragmentEditActivity extends Activity implements FView<Fragment> {
                     //unable to create folder
                 }
             }
-            
-            Log.d(TAG, "path of image END" + picturePath + "");
         }
+    }
+    
+    //Should be called before any other view notifying action
+    // Otherwise changes to title will be reset
+    private void saveTitle(){
+        String title = editTitleText.getText().toString();
+        fragmentController.setTitle(fragment, title);
     }
 
     private void saveFragment() {
         Log.d(TAG, "removing empty");
         
-        //save title before removing empty (as it resets the title 
-        //when notifyViews() is called due to removing a fragmentPart)
-        String title = editTitleText.getText().toString();
-        fragmentController.setTitle(fragment, title);
+        saveTitle();
         
         // make sure fragment does not have any empty parts
         fragmentController.removeEmptyPart(fragment);
