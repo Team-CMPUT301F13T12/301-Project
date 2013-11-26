@@ -16,7 +16,7 @@ public class Story extends SModel implements Serializable {
 
     private String storyTitle;
     private String author;
-    private int id; // TODO: should be unique
+    private int id; // should be unique
     private List<Fragment> fragments; // list of all fragments in story (no
                                       // particular order)
     private int startFragPos; // start page

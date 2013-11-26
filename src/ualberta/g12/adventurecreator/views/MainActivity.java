@@ -229,16 +229,15 @@ public class MainActivity extends Activity implements LView<StoryList>, OnItemCl
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.menu_add_story:
-                // TODO: Launch the EditStoryActivity with the id of NEW_STORY
+                // Launch the StoryEditActivity with the id of NEW_STORY
                 int storyPos = storyList.getAllStories().size();
-                // Story story = new Story();
-                // storyList.addStory(story);
                 storyListController.createBlankStory();
 
                 // save the newly added story
                 offlineHelper.saveOfflineStories(storyList);
 
-                Intent i = new Intent(this, CreateStoryActivity.class);
+                
+                Intent i = new Intent(this, StoryEditActivity.class);
                 i.putExtra("StoryPos", storyPos);
                 startActivity(i);
                 return true;
