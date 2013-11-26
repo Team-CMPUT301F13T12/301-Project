@@ -200,33 +200,32 @@ public class StoryEditActivity extends Activity implements SView<Story> {
      */
     private void saveChanges() {
         int oldId = story.getId();
-        
+
         // save any changes
         storyController.setTitle(story, titleText.getText().toString());
         storyController.setAuthor(story, authorText.getText().toString());
 
         StoryListController slc = AdventureCreator.getStoryListController();
         slc.setStory(story, storyPos);
-        
-//        // Setup or update story folder
-//        //following line modified from https://groups.google.com/forum/#!topic/android-developers/YjGcve7s5CQ
-//        //by Derek
-//        CharSequence appName = this.getResources().getText(this.getResources().getIdentifier("app_name", "string", this.getPackageName()));          
-//        
-//        File folder = new File(Environment.getExternalStorageDirectory().toString(), appName.toString());
-//        boolean folderExists = true; //assume true
-//
-//        if (!folder.exists()) {
-//            folderExists = folder.mkdirs();
-//        }
-//        if (folderExists) {
-//            //once folder exists finish creating picturePath
-//            long picTime = System.currentTimeMillis();
-//            String newPicName = new SimpleDateFormat("yyyy-MM-dd HH.mm.ss").format(picTime);
-//            //TODO incorporate unique story ID in picture name
-//            picturePath = folder.getAbsolutePath() + "/" + story.getId() + "/" + newPicName + ".jpg";
-//            File file = new File(picturePath);
-         
+
+        if (oldId != story.getId()){
+            // Setup or update story folder
+            
+            //following line modified from https://groups.google.com/forum/#!topic/android-developers/YjGcve7s5CQ
+            //by Derek
+            CharSequence appName = this.getResources().getText(this.getResources().getIdentifier("app_name", "string", this.getPackageName()));
+            File appFolder = new File(Environment.getExternalStorageDirectory().toString(), appName.toString());
+            File oldStoryFolder = new File(appFolder.getAbsolutePath(), Integer.toString(oldId));
+            File newStoryFolder = new File(appFolder.getAbsolutePath(), Integer.toString(story.getId()));
+            
+            if (oldStoryFolder.exists()) {
+                // change old story folder to follow new story id
+                oldStoryFolder.renameTo(newStoryFolder);                
+            } else {
+                // or Just create new story id folder
+                newStoryFolder.mkdirs();
+            }
+        }
 
         offlineHelper.saveOfflineStories(storyList);
     }
