@@ -135,11 +135,14 @@ public class OnlineHelper {
         ArrayList<Story> allStories = new ArrayList<Story>();
         try {
             // HttpGet getRequest = new
-            // HttpGet("http://cmput301.softwareprocess.es:8080/testing/lab02/999?pretty=1");//S4bRPFsuSwKUDSJImbCE2g?pretty=1
-            HttpGet getRequest = new HttpGet(ourServer + "_search?pretty=1");// S4bRPFsuSwKUDSJImbCE2g?pretty=1
-            getRequest.addHeader("Accept", "application/json");
+        	// HttpGet("http://cmput301.softwareprocess.es:8080/testing/lab02/999?pretty=1");//S4bRPFsuSwKUDSJImbCE2g?pretty=1
+        	//HttpGet getRequest = new HttpGet(ourServer + "_search?pretty=1");// S4bRPFsuSwKUDSJImbCE2g?pretty=1
+        	//HttpPost searchRequest = new HttpPost(ourServer + "_search?pretty=1");
+        	//TODO quick fix right now only displays 10 (default ES behaviour)
+        	HttpPost searchRequest = new HttpPost(ourServer + "_search?pretty=1&size=1000");
+        	searchRequest.addHeader("Accept", "application/json");
 
-            HttpResponse response = httpclient.execute(getRequest);
+            HttpResponse response = httpclient.execute(searchRequest);
 
             String status = response.getStatusLine().toString();
             System.out.println(status);
@@ -189,7 +192,7 @@ public class OnlineHelper {
         ArrayList<Story> resultList = new ArrayList<Story>();
 
         // lets prepare our query to only get our required fields
-        HttpPost searchRequest = new HttpPost(ourServer + "_search?pretty=1");
+        HttpPost searchRequest = new HttpPost(ourServer + "_search?pretty=1&size=1000");
         String query = "{\"fields\" : [\"storyTitle\",\"author\", \"id\"], \"query\" :{ \"match_all\" : {}    }}";
         StringEntity stringentity = new StringEntity(query);
 
@@ -284,6 +287,7 @@ public class OnlineHelper {
     
     public static void main(String [] args) throws ClientProtocolException, IOException{
     	OnlineHelper client = new OnlineHelper();
+    	client.getAllStoryTitlesIdAuthor();
     	client.searchsearchStories("chris test");
     }
 
@@ -293,7 +297,7 @@ public class OnlineHelper {
     public ArrayList<Story> searchsearchStories(String search) throws ClientProtocolException,
             IOException {
         ArrayList<Story> resultList = new ArrayList<Story>();
-        HttpPost searchRequest = new HttpPost(ourServer + "_search?pretty=1");
+        HttpPost searchRequest = new HttpPost(ourServer + "_search?pretty=1&size=1000");
        // String query = "{\"query\" : {\"query_string\" : {\"default_field\" : \"ingredients\",\"query\" : \""
        //         + str + "\"}}}";
         //String query = "{\"fields\" : [\"storyTitle\",\"author\"], \"query\" :{ \"term\" : { \"storyTitle\" : \"" + title
@@ -329,10 +333,10 @@ public class OnlineHelper {
     /**
      * delete an entry specified by the id
      */
-    public void deleteStories() throws IOException {
+    public void deleteStories(int storyId) throws IOException {
         // HttpDelete httpDelete = new
         // HttpDelete("http://cmput301.softwareprocess.es:8080/testing/lab02/1");
-        HttpDelete httpDelete = new HttpDelete(ourServer + "/1");
+        HttpDelete httpDelete = new HttpDelete(ourServer + "/stories/"+storyId);
         httpDelete.addHeader("Accept", "application/json");
 
         HttpResponse response = httpclient.execute(httpDelete);
