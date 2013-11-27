@@ -9,15 +9,21 @@
     android:orientation="vertical"
     tools:context=".MainActivity" >
 
+    <Button
+        android:id="@+id/main_activity_start_online_mode"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/start_online_from_main" />
+
+    <Button
+        android:id="@+id/main_activity_random_story"
+        android:layout_width="274dp"
+        android:layout_height="wrap_content"
+        android:text="Random Offline Story" />
+
     <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content" >
-
-        <Button
-            android:id="@+id/main_activity_start_online_mode"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/start_online_from_main" />
 
     </LinearLayout>
 

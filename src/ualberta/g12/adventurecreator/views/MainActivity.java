@@ -20,6 +20,7 @@ import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.SearchView;
+import android.widget.TextView;
 
 import ualberta.g12.adventurecreator.R;
 import ualberta.g12.adventurecreator.controllers.StoryListController;
@@ -32,6 +33,7 @@ import ualberta.g12.adventurecreator.tasks.TryPublishStoryTask;
 
 import java.util.List;
 import java.util.Locale;
+import java.util.Random;
 
 /**
  * Activity displayed for the start of the application. Allows the user to
@@ -46,8 +48,10 @@ public class MainActivity extends Activity implements LView<StoryList>, OnItemCl
 
     private ListView listView;
     private Button onlineButton;
+    private Button randOfflineButton;
     private StoryListArrayAdapter adapter;
     private OfflineIOHelper offlineHelper;
+    private Story currentRandStory;
 
     public static final String IS_AUTHOR_FLAG = "isAuthor";
     private static boolean isAuthor = false;
@@ -80,6 +84,36 @@ public class MainActivity extends Activity implements LView<StoryList>, OnItemCl
             public void onClick(View v) {
                 // TODO Auto-generated method stub
                 startActivity(new Intent(getApplicationContext(), OnlineStoryViewActivity.class));
+            }
+        });
+        
+        randOfflineButton = (Button) findViewById(R.id.main_activity_random_story);
+        randOfflineButton.setOnClickListener(new OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                // TODO Auto-generated method stub
+            	if (!isAuthor && storyListController.getAllStories().size() > 0){
+            		//http://stackoverflow.com/questions/363681/generating-random-numbers-in-a-range-with-java
+            		Random random = new Random();
+            		int max = storyListController.getAllStories().size() -1;
+            	    int randPos = random.nextInt((max - 0) + 1) + 0;
+            	    
+            	     currentRandStory = storyListController.getStoryAtPos(randPos);
+                    int fragPos = currentRandStory.getStartFragPos();
+                    
+
+                    Fragment goToFrag = AdventureCreator.getStoryController().getFragmentAtPos(currentRandStory,
+                            fragPos);
+                    Intent i = new Intent( getApplicationContext(), FragmentViewActivity.class);
+                    //http://www.androidsnippets.com/prompt-user-input-with-an-alertdialog
+                    AlertDialog.Builder popup = new AlertDialog.Builder(getApplicationContext());
+
+                    popup.setTitle("Title");
+                    popup.setMessage("Message");
+                    i.putExtra("Fragment", goToFrag);
+                    startActivity(i);
+            	}
             }
         });
 
