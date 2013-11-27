@@ -148,6 +148,8 @@ public class ChoiceEditActivity extends Activity {
             Log.d("the number of result is ", String.format("%d", result));
         if (result != (possibleChoices.size() - 1)) {
             linkedPos = result;
+        }else{
+        	fragment.getChoices().get(choicePos).setisRandom(true);
         }
     }
 
@@ -158,7 +160,8 @@ public class ChoiceEditActivity extends Activity {
         for (int i = 0; i < fragList.size(); i++) {
             temp.add(fragList.get(i).getTitle());
         }
-        temp.add("{NONE}");
+        //temp.add("{NONE}");
+        temp.add("{RANDOM}");
         return temp;
     }
 

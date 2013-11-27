@@ -12,7 +12,7 @@ public class Choice implements Serializable {
     private String choiceText;
     private int linkedToFragmentPos;
     private Fragment linkedToFragment;
-
+    private boolean isRandom;
     // default settings for a new choice
     /**
      * default setting given to a newly implemented choice. The setting will be
@@ -32,6 +32,23 @@ public class Choice implements Serializable {
      */
     public String getChoiceText() {
         return choiceText;
+    }
+    
+    /**
+     * obtains the isRandom boolean variable that tells if a choice is a RANDOM type choice which means it will
+     * go to some other choice
+     * @return 
+     */
+    public boolean getisRandom() {
+        return this.isRandom;
+    }
+    
+    /**
+     * sets isRandom boolean variable that tells if a choice is a RANDOM type choice which means it will
+     * go to some other choice
+     */
+    public void setisRandom(boolean bool) {
+    	this.isRandom = bool;
     }
 
     /**
@@ -76,6 +93,7 @@ public class Choice implements Serializable {
         out.writeObject(this.choiceText);
         out.writeObject(this.linkedToFragment);
         out.writeObject(this.linkedToFragmentPos);
+        out.writeObject(this.isRandom);
 
     }
 
@@ -84,5 +102,6 @@ public class Choice implements Serializable {
         this.choiceText = (String) in.readObject();
         this.linkedToFragment = (Fragment) in.readObject();
         this.linkedToFragmentPos = (Integer) in.readObject();
+        this.isRandom = (Boolean)in.readObject();
     }
 }
