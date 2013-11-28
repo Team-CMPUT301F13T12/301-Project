@@ -12,6 +12,16 @@ import ualberta.g12.adventurecreator.data.Story;
 import ualberta.g12.adventurecreator.online.OnlineHelper;
 import ualberta.g12.adventurecreator.views.FragmentViewActivity;
 
+/**
+ * A task used to Cache a story. This task will be used whenever a user wants to
+ * view a story from the online list of stories but doesn't want to download it
+ * to their offline list. This task can be used to allow the user to navigate
+ * through the story.
+ * <p>
+ * This task performs the cache by downloading the story in a temporary
+ * location. Once the story has been successfully downloaded, we start the
+ * FragmentViewActivity with this story.
+ */
 public class CacheStoryTask extends AsyncTask<Story, Void, String> {
 
     private Context context;
@@ -21,6 +31,11 @@ public class CacheStoryTask extends AsyncTask<Story, Void, String> {
         this.context = c;
     }
 
+    /**
+     * Downloads the story using the OnlineHelper. If the story doesn't
+     * download, we prepare to notify the user on the UI Thread in
+     * onPostExecute.
+     */
     @Override
     protected String doInBackground(Story... story) {
         OnlineHelper oh = AdventureCreator.getOnlineHelper();
@@ -33,6 +48,13 @@ public class CacheStoryTask extends AsyncTask<Story, Void, String> {
         }
     }
 
+    /**
+     * Notifies the user of the action that we are taking, either about to view
+     * the story, or if the story failed and we are doing nothing.
+     * <p>
+     * If the story was downloaded successfully we send it to the
+     * FragmentViewActivity which will allow the user to walk through the story.
+     */
     @Override
     protected void onPostExecute(String result) {
         Toast.makeText(this.context, result, Toast.LENGTH_SHORT).show();

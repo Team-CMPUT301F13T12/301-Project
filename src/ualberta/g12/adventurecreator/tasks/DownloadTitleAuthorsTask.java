@@ -17,6 +17,15 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * This task is used to download a list of the online stories that are available
+ * for download. It uses the OnlineHelper singleton to download all of the
+ * stories, but not in their complete form, these story objects just contain the
+ * Title, Author, and ID of the story.
+ * <p>
+ * This task is used by the OnlineStoryView activity in order to get the list of
+ * stories that the user can then either download or cache.
+ */
 public class DownloadTitleAuthorsTask extends AsyncTask<String, String, Boolean> {
 
     private List<Story> tas;
@@ -32,6 +41,10 @@ public class DownloadTitleAuthorsTask extends AsyncTask<String, String, Boolean>
         this.view = view;
     }
 
+    /**
+     * Downloads the list of stories from the OnlineHelper. If a search query is
+     * provided it is used to return a list of stories that match the query.
+     */
     @Override
     protected Boolean doInBackground(String... query) {
         // TODO Call the OnlineHelper method to get the real titles
@@ -56,7 +69,7 @@ public class DownloadTitleAuthorsTask extends AsyncTask<String, String, Boolean>
             // search
             try {
                 tas = onlineHelper.searchsearchStories(query[0]);
-                
+
                 return true;
             } catch (ClientProtocolException e) {
                 Log.e(TAG, "Downloading story failed, threw ClientProtocolException.");
@@ -71,12 +84,20 @@ public class DownloadTitleAuthorsTask extends AsyncTask<String, String, Boolean>
 
     }
 
+    /**
+     * Notifies the user that we are about to load all of the online stories.
+     */
     @Override
     protected void onPreExecute() {
         Toast.makeText(context, "Loading stories", Toast.LENGTH_SHORT).show();
         super.onPreExecute();
     }
 
+    /**
+     * Updates the calling Activities list of stories with the stories we have
+     * just downloaded here.
+     *  
+     */
     @Override
     protected void onPostExecute(Boolean result) {
         if (!result) {
