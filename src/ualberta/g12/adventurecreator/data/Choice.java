@@ -23,6 +23,7 @@ public class Choice implements Serializable {
         this.choiceText = "";
         this.linkedToFragmentPos = -1;
         this.linkedToFragment = null;
+        this.isRandom = false;
     }
 
     /**

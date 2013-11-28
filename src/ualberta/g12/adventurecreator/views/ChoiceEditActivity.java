@@ -219,16 +219,6 @@ public class ChoiceEditActivity extends Activity {
         }
         return super.onOptionsItemSelected(item);
 
-        // Fragment frag = null;
-        // TODO SEARCH FOR FRAGMENT BY FRAGMENT ID?
-        // for (int i = 0; i < ourFragmentList.size(); i++){
-        // if (ourFragmentList.get(i).getId() == ourFragmentId)
-        // frag = ourFragmentList.get(i);
-        // }
-        // Log.d("WHAT AM BEFORE", String.format("%d",frag.getChoices().size()
-        // ));
-        // Log.d("WHAT?!", frag.getChoices().get(0).getChoiceText());
-        // TODO CHANGE THIS AND REFACTOR ALL CODE IN CLASS
 
     }
 

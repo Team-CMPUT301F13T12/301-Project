@@ -5,6 +5,7 @@ import java.util.Random;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
 import android.view.MenuInflater;
@@ -79,8 +80,7 @@ public class FragmentViewActivity extends Activity implements FView<Fragment> {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
                 Fragment goToFrag = fragmentController.getLinkedToFragmentOfChoice(fragment, position);
-                
-                if(fragment.getChoices().get(position).getisRandom()){
+                if(goToFrag == null || fragment.getChoices().get(position).getisRandom() == true ){
             		boolean notSamePos = false;
             		while(notSamePos == false){
             			Random random = new Random();
