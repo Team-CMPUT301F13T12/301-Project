@@ -25,6 +25,10 @@ public class PublishStoryTask extends AsyncTask<Story, Void, Boolean> {
     private String title;
     private OnlineHelper onlineHelper;
 
+    /**
+     * Create a PublishStoryTask with the given context. This context will be
+     * used to create toast messages to notify the user of its status.
+     */
     public PublishStoryTask(Context c) {
         this.context = c;
         onlineHelper = AdventureCreator.getOnlineHelper();

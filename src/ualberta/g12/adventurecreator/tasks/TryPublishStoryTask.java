@@ -29,6 +29,12 @@ public class TryPublishStoryTask extends AsyncTask<Story, Void, Boolean> {
     private Story s;
     private Context context;
 
+    /**
+     * Creates a TryPublishStoryTask with the given context. The context will be
+     * used to create toast messages to notify the user of the progress and a
+     * dialog window if the story being published will overwrite an existsing
+     * story.
+     */
     public TryPublishStoryTask(Context c) {
         this.context = c;
     }

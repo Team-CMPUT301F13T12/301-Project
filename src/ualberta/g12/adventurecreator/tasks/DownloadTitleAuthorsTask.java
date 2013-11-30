@@ -36,6 +36,10 @@ public class DownloadTitleAuthorsTask extends AsyncTask<String, String, Boolean>
     private static final boolean DEBUG = true;
     private static final String TAG = "DownloadTitleAuthorsTask";
 
+    /**
+     * Create a DownloadTitleAuthorsTask with the Context and an OView to update
+     * once the download has completed.
+     */
     public DownloadTitleAuthorsTask(Context c, OView<List<Story>> view) {
         this.context = c;
         this.view = view;
@@ -96,7 +100,6 @@ public class DownloadTitleAuthorsTask extends AsyncTask<String, String, Boolean>
     /**
      * Updates the calling Activities list of stories with the stories we have
      * just downloaded here.
-     *  
      */
     @Override
     protected void onPostExecute(Boolean result) {
