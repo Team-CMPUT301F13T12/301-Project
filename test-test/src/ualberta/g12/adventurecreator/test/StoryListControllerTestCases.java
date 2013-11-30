@@ -3,9 +3,10 @@ package ualberta.g12.adventurecreator.test;
 
 import junit.framework.TestCase;
 
-import ualberta.g12.adventurecreator.Story;
-import ualberta.g12.adventurecreator.StoryList;
-import ualberta.g12.adventurecreator.StoryListController;
+import ualberta.g12.adventurecreator.controllers.StoryListController;
+import ualberta.g12.adventurecreator.data.OfflineIOHelper;
+import ualberta.g12.adventurecreator.data.Story;
+import ualberta.g12.adventurecreator.data.StoryList;
 
 import java.util.List;
 
@@ -19,7 +20,7 @@ public class StoryListControllerTestCases extends TestCase {
     protected void setUp() throws Exception {
         super.setUp();
         sl = new StoryList();
-        slc = new StoryListController(sl);
+        slc = new StoryListController(sl, null);
     }
 
     public void testSetUp() {
@@ -31,7 +32,7 @@ public class StoryListControllerTestCases extends TestCase {
 
         // add a story to our storyList
         sl = new StoryList();
-        slc = new StoryListController(sl);
+        slc = new StoryListController(sl, null);
         int oldSize = sl.getAllStories().size();
         Story s = new Story("Book", "Dan Dude");
         slc.addStory(s);
@@ -44,7 +45,7 @@ public class StoryListControllerTestCases extends TestCase {
 
         // add a story to our storyList
         sl = new StoryList();
-        slc = new StoryListController(sl);
+        slc = new StoryListController(sl, null);
         Story s = new Story("Book", "Dan Dude");
         slc.addStory(s);
         int oldSize = sl.getAllStories().size();
@@ -57,11 +58,11 @@ public class StoryListControllerTestCases extends TestCase {
 
         // add a story to our storyList
         sl = new StoryList();
-        slc = new StoryListController(sl);
+        slc = new StoryListController(sl, null);
         Story s = new Story("Book", "Dan Dude");
         slc.addStory(s);
         Story s2 = slc.getStory(s);
-        assertTrue("Stories don't have same titles", s.getStoryTitle().equals(s2.getStoryTitle()));
+        assertTrue("Stories don't have same titles", s.getTitle().equals(s2.getTitle()));
         assertTrue("Stories don't have same authors", s.getAuthor().equals(s2.getAuthor()));
     }
 
@@ -69,11 +70,11 @@ public class StoryListControllerTestCases extends TestCase {
 
         // add a story to our storyList
         sl = new StoryList();
-        slc = new StoryListController(sl);
+        slc = new StoryListController(sl, null);
         Story s = new Story("Book", "Dan Dude");
         slc.addStory(s);
         Story s2 = slc.getStory("Book");
-        assertTrue("Stories don't have same titles", s.getStoryTitle().equals(s2.getStoryTitle()));
+        assertTrue("Stories don't have same titles", s.getTitle().equals(s2.getTitle()));
         assertTrue("Stories don't have same authors", s.getAuthor().equals(s2.getAuthor()));
     }
     
@@ -82,7 +83,7 @@ public class StoryListControllerTestCases extends TestCase {
 
         // add a story to our storyList
         sl = new StoryList();
-        slc = new StoryListController(sl);
+        slc = new StoryListController(sl, null);
         Story s = new Story("Book", "Dan Dude");
         slc.addStory(s);
         assertTrue(sl.getAllStories().get(1).getAuthor().equals("Dan Dude"));
@@ -94,12 +95,14 @@ public class StoryListControllerTestCases extends TestCase {
     
     // update Story with Id
     public void testUpdatingAStoryWithId() {
-
+        /*
+         * Kinda useless now, story id is only considered when uploading a story online
+         */
+        
         // add a story to our storyList
         sl = new StoryList();
-        slc = new StoryListController(sl);
+        slc = new StoryListController(sl, null);
         Story s = new Story("Book", "Dan Dude");
-        s.setId(1);
         slc.addStory(s);
         assertTrue(sl.getAllStories().get(0).getAuthor().equals("Dan Dude"));
         Story s2 = new Story("Bok", "Dude Dan");
@@ -113,9 +116,8 @@ public class StoryListControllerTestCases extends TestCase {
 
         // add a story to our storyList
         sl = new StoryList();
-        slc = new StoryListController(sl);
+        slc = new StoryListController(sl, null);
         Story s = new Story("Book", "Dan Dude");
-        s.setId(1);
         slc.addStory(s);
         assertTrue(sl.getAllStories().get(0).getAuthor().equals("Dan Dude"));
         Story s2 = slc.getStoryAtPos(0);
@@ -128,7 +130,7 @@ public class StoryListControllerTestCases extends TestCase {
 
         // add a story to our storyList
         sl = new StoryList();
-        slc = new StoryListController(sl);
+        slc = new StoryListController(sl, null);
         assertTrue(slc.getAllStories().size() == 0);
         slc.createBlankStory();
         assertTrue(slc.getAllStories().size() == 1);
@@ -139,7 +141,7 @@ public class StoryListControllerTestCases extends TestCase {
 
     public void testGetInitialListOfStories() {
         sl = new StoryList();
-        slc = new StoryListController(sl);
+        slc = new StoryListController(sl, null);
         assertNotNull("Inital story list is null", sl);
         assertNotNull("Initial story list controller is null", slc);
         assertNotNull(slc.getAllStories());
@@ -179,7 +181,7 @@ public class StoryListControllerTestCases extends TestCase {
         slc.setStory(s3, index);
 
         assertTrue("The name of the book didn't change", slc.getAllStories().get(index)
-                .getStoryTitle().equals(s3.getStoryTitle()));
+                .getTitle().equals(s3.getTitle()));
         assertTrue("The author of the book didn't change", slc.getAllStories().get(index)
                 .getAuthor().equals(s3.getAuthor()));
     }

@@ -18,30 +18,29 @@ import android.app.Instrumentation;
 import android.app.Instrumentation.ActivityMonitor;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.hardware.Camera;
 import android.test.ActivityInstrumentationTestCase2;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import ualberta.g12.adventurecreator.AdventureCreatorApplication;
-import ualberta.g12.adventurecreator.Choice;
-import ualberta.g12.adventurecreator.EditFragmentActivity;
-import ualberta.g12.adventurecreator.Fragment;
-import ualberta.g12.adventurecreator.FragmentController;
-import ualberta.g12.adventurecreator.FragmentPartAdapter;
-import ualberta.g12.adventurecreator.OfflineIOHelper;
 import ualberta.g12.adventurecreator.R;
-import ualberta.g12.adventurecreator.Story;
-import ualberta.g12.adventurecreator.StoryList;
-import ualberta.g12.adventurecreator.StoryListController;
+import ualberta.g12.adventurecreator.controllers.FragmentController;
+import ualberta.g12.adventurecreator.controllers.StoryListController;
+import ualberta.g12.adventurecreator.data.AdventureCreator;
+import ualberta.g12.adventurecreator.data.Choice;
+import ualberta.g12.adventurecreator.data.Fragment;
+import ualberta.g12.adventurecreator.data.OfflineIOHelper;
+import ualberta.g12.adventurecreator.data.Story;
+import ualberta.g12.adventurecreator.data.StoryList;
+import ualberta.g12.adventurecreator.online.OnlineHelper;
+import ualberta.g12.adventurecreator.views.FragmentEditActivity;
 
 public class EditFragmentActivityTestCases extends
-        ActivityInstrumentationTestCase2<EditFragmentActivity> {
-    
-  //declare activity and widgets
-    private EditFragmentActivity myEditFragmentActivity;
+        ActivityInstrumentationTestCase2<FragmentEditActivity> {
+
+    // declare activity and widgets
+    private FragmentEditActivity myEditFragmentActivity;
     private TextView fragmentTitleTextView;
     private ListView fragmentPartListView;
     private EditText editTitleText;
@@ -50,12 +49,11 @@ public class EditFragmentActivityTestCases extends
     OfflineIOHelper offlineHelper;
     FragmentController fragmentController;
     StoryListController storyListController;
-	
+
     public EditFragmentActivityTestCases() {
-        super(EditFragmentActivity.class);
+        super(FragmentEditActivity.class);
         // TODO Auto-generated constructor stub
     }
-    
 
     // initializes things you want to be set for all tests (not necessary)
     @Override
@@ -63,28 +61,29 @@ public class EditFragmentActivityTestCases extends
         super.setUp();
         storyList = new StoryList();
         offlineHelper.saveOfflineStories(storyList);
-        
+
         Fragment frag = new Fragment();
         fragmentController = new FragmentController();
-        storyListController = new StoryListController(storyList);
-        
+        storyListController = new StoryListController(storyList, new OfflineIOHelper(getActivity()));
         fragmentController.addTextSegment(frag, "Look! Text!", 0);
         storyList.getAllStories().get(0).addFragment(frag);
-        
+
         Intent FragmentIntent = new Intent();
         FragmentIntent.putExtra("Mode", "Edit");
         FragmentIntent.putExtra("StoryPos", 0);
         FragmentIntent.putExtra("FragmentPos", 0); // pass intent
         setActivityIntent(FragmentIntent);
-        
+
         myEditFragmentActivity = getActivity();
-        
-        storyListController.saveOfflineStories(myEditFragmentActivity, storyList);
-        
-        fragmentPartListView = (ListView) myEditFragmentActivity.findViewById(R.id.FragmentPartList);
-        fragmentTitleTextView = (TextView) myEditFragmentActivity.findViewById(R.id.fragmentTitleText);
+
+        storyListController.saveOfflineStories(storyList);
+
+        fragmentPartListView = (ListView) myEditFragmentActivity
+                .findViewById(R.id.FragmentPartList);
+        fragmentTitleTextView = (TextView) myEditFragmentActivity
+                .findViewById(R.id.fragmentTitleText);
         editTitleText = (EditText) myEditFragmentActivity.findViewById(R.id.fragmentTitle);
-        
+
         myEditFragmentActivity.recreate();
     }
 
@@ -155,7 +154,7 @@ public class EditFragmentActivityTestCases extends
     // user should be have ability to add a picture
     public void testAddPicture() {
         Button addPicture = (Button) myEditFragmentActivity
-                .findViewById(ualberta.g12.adventurecreator.R.id.add_option);
+                .findViewById(ualberta.g12.adventurecreator.R.id.add_fragment);
         assert (addPicture.performClick());
         assertTrue("testAddPicture is not yet implemented", false);
     }
@@ -164,7 +163,7 @@ public class EditFragmentActivityTestCases extends
     // User enables adding illustrations by adding the first one to a fragment
     public void testEnableIllustration() {
         Button addIllustration = (Button) myEditFragmentActivity
-                .findViewById(ualberta.g12.adventurecreator.R.id.add_option);
+                .findViewById(ualberta.g12.adventurecreator.R.id.add_fragment);
         // ImageView ill1 = (ImageView)
         // findViewById(ualberta.g12.adventurecreatorR.id.ill1ID);
         addIllustration.performClick();
@@ -184,29 +183,28 @@ public class EditFragmentActivityTestCases extends
         // assertNull(ill.getDrawable());
         assertTrue("testDisableIllustration is not yet implemented", false);
     }
-    
 
     /* Test Cases - all start with "test" */
 
     // Use Case 1, test 1/2
     public void testReadStoryFragments() {
         Story UserStory = new Story();
-        StoryList sl = AdventureCreatorApplication.getStoryList();
+        StoryList sl = AdventureCreator.getStoryList();
         sl.addStory(UserStory);
-        
+
         final Instrumentation inst = getInstrumentation();
         final IntentFilter intentFilter = new IntentFilter();
-        
-        
+
         ActivityMonitor monitor = inst.addMonitor(intentFilter, null, false);
-        assertEquals(1, monitor.getHits());    }
+        assertEquals(1, monitor.getHits());
+    }
 
     // Use Case 1, test 2/2
     public void testReadNoFragments() {
-        
+
         final Instrumentation inst = getInstrumentation();
         final IntentFilter intentFilter = new IntentFilter();
-        
+
         ActivityMonitor monitor = inst.addMonitor(intentFilter, null, false);
         assertEquals(1, monitor.getHits());
     }
@@ -330,7 +328,7 @@ public class EditFragmentActivityTestCases extends
     public void testStoreFragment() {
         Fragment someFragment = new Fragment();
         // start activity
-        myEditFragmentActivity     = this.getActivity();
+        myEditFragmentActivity = this.getActivity();
 
         // choice a store choose from fragment choices
         /*
