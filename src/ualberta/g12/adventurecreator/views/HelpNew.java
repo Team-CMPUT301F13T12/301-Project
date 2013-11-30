@@ -1,4 +1,6 @@
-
+/**
+ * Activity for the help screen tutorial describing how to create a new story
+ */
 package ualberta.g12.adventurecreator.views;
 
 import android.os.Bundle;

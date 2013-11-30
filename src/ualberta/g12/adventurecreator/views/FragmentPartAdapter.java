@@ -37,6 +37,7 @@ public class FragmentPartAdapter extends ArrayAdapter {
      * @param resource the resource to load
      * @param frag the Fragment to display
      */
+    @SuppressWarnings("unchecked")
     public FragmentPartAdapter(Context context, int resource, Fragment frag) {
         super(context, resource, frag.getDisplayOrder());
         this.context = context;
@@ -59,11 +60,13 @@ public class FragmentPartAdapter extends ArrayAdapter {
                     .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             rowView = inflater.inflate(R.layout.listview_fragment_part_list, parent, false);
         }
-        ImageView image = (ImageView) rowView.findViewById(R.id.fragmentPartIllustration);
+        ImageView image2 = (ImageView) rowView.findViewById(R.id.fragmentPartIllustrationSmall);
+        ImageView image = (ImageView) rowView.findViewById(R.id.fragmentPartIllustration); 
         TextView text = (TextView) rowView.findViewById(R.id.fragmentPartTextPart);
         TextView choiceButton = (TextView) rowView.findViewById(R.id.fragmentPartChoice);
 
         // make all invisible
+        image2.setVisibility(View.GONE);
         image.setVisibility(View.GONE);
         text.setVisibility(View.GONE);
         choiceButton.setVisibility(View.GONE);
@@ -106,6 +109,17 @@ public class FragmentPartAdapter extends ArrayAdapter {
             Bitmap illustration = BitmapFactory.decodeFile(picturePath);
             if (DEBUG)
                 Log.d(TAG, "betchs don't see me");
+            
+            
+            if (illustration != null) {
+                image2.setVisibility(View.VISIBLE);
+                if (image2 != null)
+                    if (DEBUG)
+                        Log.d(TAG, "SET IMAGE");
+                image2.setImageBitmap(illustration);
+            }
+            
+            
             if (illustration != null) {
                 image.setVisibility(View.VISIBLE);
                 if (image != null)

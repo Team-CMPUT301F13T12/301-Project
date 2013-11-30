@@ -1,4 +1,6 @@
-
+/**
+ * Activity help screen for the online functions. Describes the usage for downloading, online stories 
+ */
 package ualberta.g12.adventurecreator.views;
 
 import ualberta.g12.adventurecreator.R;

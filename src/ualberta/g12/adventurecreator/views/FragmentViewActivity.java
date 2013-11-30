@@ -155,6 +155,9 @@ public class FragmentViewActivity extends Activity implements FView<Fragment> {
         inflater.inflate(R.menu.fragment_part_menu, menu);
     }
 
+    /**
+     * Function that allows the user to add an illustration as an annotation 
+     */
 public void AddImage() {
     final CharSequence[] options = { "Take Photo", "Choose from Gallery","Cancel" };
     

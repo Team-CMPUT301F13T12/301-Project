@@ -1,4 +1,6 @@
-
+/**
+ * Activity for the help screen. Describes how to use the application when reading through stories. 
+ */
 package ualberta.g12.adventurecreator.views;
 
 import android.os.Bundle;

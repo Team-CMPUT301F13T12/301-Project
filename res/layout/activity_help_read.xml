@@ -4,7 +4,7 @@
     
 <RelativeLayout
     android:layout_width="match_parent"
-    android:layout_height="1296dp"
+    android:layout_height="1190dp"
     android:paddingBottom="@dimen/activity_vertical_margin"
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
@@ -28,22 +28,13 @@
         android:text="Before reading a story, remeber to uncheck author mode at the start screen. After author mode is disabled and a story is selected, the user can read through the story. The text with a black background indicate a choice the user can make to continue on with the story." />
 
     <TextView
-        android:id="@+id/textView2"
+        android:id="@+id/textView3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/textView1"
         android:layout_below="@+id/textView1"
-        android:layout_marginTop="32dp"
-        android:text="[Insert Another picture here]" />
-
-    <TextView
-        android:id="@+id/textView3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/textView2"
-        android:layout_below="@+id/textView2"
         android:layout_marginTop="20dp"
-        android:text="The user has the option to anontate the page using multimedia via the pulldown menu. Once selected the current page can be annotated with photos, audio or videos." />
+        android:text="The user has the option to anontate the page using illustrations via the image buttons at the bottom of the screen. Once selected the current images can be added to annotated current page." />
 
     <ImageView
         android:id="@+id/imageView2"

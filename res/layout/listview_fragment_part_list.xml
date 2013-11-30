@@ -23,6 +23,13 @@
         android:layout_height="200dip"
         android:layout_alignParentLeft="true"
         android:layout_alignParentRight="true" />
+    
+    <ImageView
+        android:id="@+id/fragmentPartIllustrationSmall"
+        android:layout_width="240dip"
+        android:layout_height="100dip"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true" />
 
     <TextView
         android:id="@+id/fragmentPartChoice"

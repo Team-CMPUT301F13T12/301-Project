@@ -199,7 +199,17 @@ public class FragmentEditActivity extends Activity implements FView<Fragment> {
             pictureMode = "Add";
             picturePosition = position;
             AddImage();
+           
+            
+        /*} else if (itemTitle.equals("Insert Illustration (Small)")) {
+            Log.d(TAG,"insert ill start");
+            saveFragment();
+            pictureMode = "Add";
+            picturePosition = position;
+            //AddImage2();???
+             */
 
+            
         } else if (itemTitle.equals("Edit")) {
             String type = fragmentController.getDisplayTypeAtPos(fragment, position);
             if (type.equals("t") || type.equals("e")) {

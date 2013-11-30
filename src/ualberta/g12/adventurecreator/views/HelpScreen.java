@@ -1,4 +1,7 @@
-
+/**
+ * Main help screen activity. Describes the basic uses of the application as well as any functions that can be accessed 
+ * through the main screen. Provides options for more help screens depending on the actions the user wants to do. 
+ */
 package ualberta.g12.adventurecreator.views;
 
 import android.os.Bundle;
