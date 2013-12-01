@@ -54,9 +54,8 @@ public class MainActivity extends Activity implements LView<StoryList>, OnItemCl
 
     public static final String IS_AUTHOR_FLAG = "isAuthor";
     private static boolean isAuthor = false;
-    
+
     private static final int help = Menu.FIRST;
-    
 
     // Logging
     private static final boolean DEBUG_LOG = true;
@@ -85,34 +84,34 @@ public class MainActivity extends Activity implements LView<StoryList>, OnItemCl
                 startActivity(new Intent(getApplicationContext(), OnlineStoryViewActivity.class));
             }
         });
-        
+
         randOfflineButton = (Button) findViewById(R.id.main_activity_random_story);
         randOfflineButton.setOnClickListener(new OnClickListener() {
 
             @Override
             public void onClick(View v) {
                 // TODO Auto-generated method stub
-            	if (!isAuthor && storyListController.getAllStories().size() > 0){
-            		//http://stackoverflow.com/questions/363681/generating-random-numbers-in-a-range-with-java
-            		Random random = new Random();
-            		int max = storyListController.getAllStories().size() -1;
-            	    int randPos = random.nextInt((max - 0) + 1) + 0;
-            	    
-            	     currentRandStory = storyListController.getStoryAtPos(randPos);
-                    int fragPos = currentRandStory.getStartFragPos();
-                    
+                if (!isAuthor && storyList.getAllStories().size() > 0) {
+                    // http://stackoverflow.com/questions/363681/generating-random-numbers-in-a-range-with-java
+                    Random random = new Random();
+                    int max = storyList.getAllStories().size() - 1;
+                    int randPos = random.nextInt((max - 0) + 1) + 0;
 
-                    Fragment goToFrag = AdventureCreator.getStoryController().getFragmentAtPos(currentRandStory,
+                    currentRandStory = storyListController.getStoryAtPos(randPos);
+                    int fragPos = currentRandStory.getStartFragPos();
+
+                    Fragment goToFrag = AdventureCreator.getStoryController().getFragmentAtPos(
+                            currentRandStory,
                             fragPos);
-                    Intent i = new Intent( getApplicationContext(), FragmentViewActivity.class);
-                    //http://www.androidsnippets.com/prompt-user-input-with-an-alertdialog
+                    Intent i = new Intent(getApplicationContext(), FragmentViewActivity.class);
+                    // http://www.androidsnippets.com/prompt-user-input-with-an-alertdialog
                     AlertDialog.Builder popup = new AlertDialog.Builder(getApplicationContext());
 
                     popup.setTitle("Title");
                     popup.setMessage("Message");
                     i.putExtra("Fragment", goToFrag);
                     startActivity(i);
-            	}
+                }
             }
         });
 
@@ -233,23 +232,22 @@ public class MainActivity extends Activity implements LView<StoryList>, OnItemCl
         SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
         SearchView searchView = (SearchView) menu.findItem(R.id.story_search).getActionView();
         searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
-        
+
         super.onCreateOptionsMenu(menu);
         menu.add(0, help, 0, R.string.help);
         return true;
     }
-    
+
     @Override
-  
-    public boolean onMenuItemSelected(int featureId, MenuItem item) 
+    public boolean onMenuItemSelected(int featureId, MenuItem item)
     {
-        switch(item.getItemId()) 
+        switch (item.getItemId())
         {
             case help:
-                Intent i = new Intent (this, HelpScreen.class);
+                Intent i = new Intent(this, HelpScreen.class);
                 startActivity(i);
                 return true;
-        }   
+        }
         return super.onMenuItemSelected(featureId, item);
     }
 
