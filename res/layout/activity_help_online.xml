@@ -16,6 +16,7 @@
         android:layout_height="400dp"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
+        android:contentDescription="online_help_image_1"
         android:src="@drawable/onlinemode" />
 
     <TextView
@@ -34,6 +35,7 @@
         android:layout_alignLeft="@+id/textView1"
         android:layout_below="@+id/textView1"
         android:layout_marginTop="29dp"
+        android:contentDescription="online_help_image_2"
         android:src="@drawable/downloadmode" />
 
     <TextView

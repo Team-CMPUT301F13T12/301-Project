@@ -33,6 +33,7 @@
         android:layout_alignLeft="@+id/textView7"
         android:layout_below="@+id/textView1"
         android:layout_marginTop="24dp"
+        android:contentDescription="main_help_image_1"
         android:src="@drawable/main2" />
 
     <TextView
@@ -51,6 +52,7 @@
         android:layout_alignLeft="@+id/textView3"
         android:layout_below="@+id/textView3"
         android:layout_marginTop="23dp"
+        android:contentDescription="main_help_image_2"
         android:src="@drawable/author_mode" />
 
     <TextView

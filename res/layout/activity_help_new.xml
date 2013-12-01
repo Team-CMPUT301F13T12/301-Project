@@ -16,6 +16,7 @@
         android:layout_height="400dp"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
+        android:contentDescription="help_image_1"
         android:src="@drawable/createnew" />
 
     <TextView
@@ -34,6 +35,7 @@
         android:layout_below="@+id/textView1"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="20dp"
+        android:contentDescription="help_image_2"
         android:src="@drawable/editfragment" />
 
     <TextView
@@ -52,6 +54,7 @@
         android:layout_alignLeft="@+id/textView2"
         android:layout_below="@+id/textView2"
         android:layout_marginTop="34dp"
+        android:contentDescription="help_image_3"
         android:src="@drawable/addpart" />
 
     <TextView
@@ -70,6 +73,7 @@
         android:layout_alignLeft="@+id/textView3"
         android:layout_below="@+id/textView3"
         android:layout_marginTop="34dp"
+        android:contentDescription="help_image_4"
         android:src="@drawable/choosechoice" />
 
     <TextView
