@@ -13,6 +13,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import ualberta.g12.adventurecreator.R;
+import ualberta.g12.adventurecreator.data.AdventureCreator;
 import ualberta.g12.adventurecreator.data.Choice;
 import ualberta.g12.adventurecreator.data.Fragment;
 
@@ -28,6 +29,7 @@ public class FragmentPartAdapter extends ArrayAdapter {
 
     private static final String TAG = "FragmentPartAdapter";
     private static final boolean DEBUG = true;
+    public static int PicSize;  
 
     /**
      * Sold constructor for the FragmentPartAdapter. Sets up the context,
@@ -44,6 +46,11 @@ public class FragmentPartAdapter extends ArrayAdapter {
         this.resource = resource;
         this.frag = frag;
     }
+    
+    private AdventureCreator getApplication() {
+        // TODO Auto-generated method stub
+        return null;
+    }
 
     @Override
     /**
@@ -54,6 +61,7 @@ public class FragmentPartAdapter extends ArrayAdapter {
      * @param parent    fragment that the segment belongs to
      */
     public View getView(int position, View convertView, ViewGroup parent) {
+       //int PicSize = FragmentEditActivity.getState();
         View rowView = convertView;
         if (rowView == null) {
             LayoutInflater inflater = (LayoutInflater) context
@@ -110,7 +118,7 @@ public class FragmentPartAdapter extends ArrayAdapter {
             if (DEBUG)
                 Log.d(TAG, "betchs don't see me");
             
-            
+            if (PicSize == 2) {
             if (illustration != null) {
                 image2.setVisibility(View.VISIBLE);
                 if (image2 != null)
@@ -118,14 +126,16 @@ public class FragmentPartAdapter extends ArrayAdapter {
                         Log.d(TAG, "SET IMAGE");
                 image2.setImageBitmap(illustration);
             }
+            }
             
-            
+            if (PicSize == 1){
             if (illustration != null) {
                 image.setVisibility(View.VISIBLE);
                 if (image != null)
                     if (DEBUG)
                         Log.d(TAG, "SET IMAGE");
                 image.setImageBitmap(illustration);
+            }
             }
         } else if (frag.getDisplayOrder().get(position).equals("c")) {
             if (DEBUG)
@@ -164,4 +174,5 @@ public class FragmentPartAdapter extends ArrayAdapter {
 
         return rowView;
     }
+    
 }

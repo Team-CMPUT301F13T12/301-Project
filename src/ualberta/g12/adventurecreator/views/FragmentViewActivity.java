@@ -37,7 +37,7 @@ import ualberta.g12.adventurecreator.data.Fragment;
 /**
  * Activity for viewing a fragment. User can follow choices and will be taken to
  * the next fragment.
- */
+ **/
 public class FragmentViewActivity extends Activity implements FView<Fragment> {
 
     private TextView fragmentTitleTextView;
@@ -47,7 +47,7 @@ public class FragmentViewActivity extends Activity implements FView<Fragment> {
     // private static final String TAG = "FragmentViewActivity";
     private Fragment fragment;
     ImageView viewImage, viewImage2, viewImage3;
-    public int x = 0;
+    private int x = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
