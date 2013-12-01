@@ -3,13 +3,10 @@
  */
 package ualberta.g12.adventurecreator.views;
 
-import android.os.Bundle;
 import android.app.Activity;
-import android.view.Menu;
+import android.os.Bundle;
 
 import ualberta.g12.adventurecreator.R;
-import ualberta.g12.adventurecreator.R.layout;
-import ualberta.g12.adventurecreator.R.menu;
 
 public class HelpNew extends Activity {
 
