@@ -19,3 +19,7 @@ local.properties
 .classpath
 .project
 *.mp4
+
+#other
+.settings/org.eclipse.core.resources.prefs
+lint.xml
