@@ -18,12 +18,12 @@ public class AdventureCreator extends Application {
     private static boolean DEBUG = true;
 
     // So many singletons!
-    private transient static StoryController storyController = null;
-    private transient static FragmentController fragmentController = null;
-    private transient static StoryList storyList;
-    private transient static StoryListController storyListController = null;
-    private transient static OfflineIOHelper offlineIOHelper = null;
-    private transient static OnlineHelper onlineHelper = null;
+    private static StoryController storyController = null;
+    private static FragmentController fragmentController = null;
+    private static StoryList storyList;
+    private static StoryListController storyListController = null;
+    private static OfflineIOHelper offlineIOHelper = null;
+    private static OnlineHelper onlineHelper = null;
 
     private static Context context;
 
