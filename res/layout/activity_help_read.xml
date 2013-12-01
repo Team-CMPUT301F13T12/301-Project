@@ -16,7 +16,7 @@
             android:layout_height="400dp"
             android:layout_alignParentLeft="true"
             android:layout_alignParentTop="true"
-            android:contentDescription="read_help_image_1"
+            android:contentDescription="@string/desc_help_read_1"
             android:src="@drawable/readstart" />
 
         <TextView
@@ -26,7 +26,7 @@
             android:layout_alignLeft="@+id/imageView1"
             android:layout_below="@+id/imageView1"
             android:layout_marginTop="19dp"
-            android:text="Before reading a story, remember to uncheck author mode at the start screen. After author mode is disabled and a story is selected, the user can read through the story. The text with a black background indicate a choice the user can make to continue on with the story." />
+            android:text="@string/help_author_mode" />
 
         <TextView
             android:id="@+id/textView3"
@@ -35,7 +35,7 @@
             android:layout_alignLeft="@+id/textView1"
             android:layout_below="@+id/textView1"
             android:layout_marginTop="20dp"
-            android:text="The user has the option to anontate the page using illustrations via the image buttons at the bottom of the screen. Once selected the current images can be added to annotated current page." />
+            android:text="@string/help_annotate" />
 
         <ImageView
             android:id="@+id/imageView2"
@@ -44,7 +44,7 @@
             android:layout_alignLeft="@+id/textView3"
             android:layout_below="@+id/textView3"
             android:layout_marginTop="29dp"
-            android:contentDescription="read_help_image_2"
+            android:contentDescription="@string/desc_help_read_2"
             android:src="@drawable/nextchoose" />
 
         <TextView
@@ -54,7 +54,7 @@
             android:layout_alignLeft="@+id/imageView2"
             android:layout_below="@+id/imageView2"
             android:layout_marginTop="18dp"
-            android:text="After a choice has been selected, the new page will appear. This process is repeated to read the story and continue. Enjoy!" />
+            android:text="@string/help_viewing_story" />
     </RelativeLayout>
 
 </ScrollView>

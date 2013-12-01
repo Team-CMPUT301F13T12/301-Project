@@ -16,8 +16,8 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentTop="true"
+        android:hint="@string/fragment_edit_text_popup"
         android:inputType="textMultiLine"
-        android:hint="Fragment Text"
         android:scrollbars="vertical" />
 
     <Button

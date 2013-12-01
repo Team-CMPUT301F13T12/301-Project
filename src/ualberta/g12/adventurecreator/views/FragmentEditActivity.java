@@ -205,7 +205,7 @@ public class FragmentEditActivity extends Activity implements FView<Fragment> {
             fragmentController.addNewFragmentPart(fragment, "t", position);
 
         } else if (itemTitle.equals("Insert Illustration")) {
-            Log.d(TAG,"insert ill start");
+            if(DEBUG) Log.d(TAG,"insert ill start");
             saveFragment();
             pictureMode = "Add";
             picturePosition = position;
@@ -363,7 +363,7 @@ public class FragmentEditActivity extends Activity implements FView<Fragment> {
 
                     bitmap = BitmapFactory.decodeFile(f.getAbsolutePath(),
                             bitmapOptions);
-                    Log.d(TAG, "path of image from camera" + f.getAbsolutePath() + "");
+                    if(DEBUG) Log.d(TAG, "path of image from camera" + f.getAbsolutePath() + "");
                     f.delete();
                     
                     
@@ -382,7 +382,7 @@ public class FragmentEditActivity extends Activity implements FView<Fragment> {
                 picturePath = c.getString(columnIndex);
                 c.close();
                 bitmap = (BitmapFactory.decodeFile(picturePath));
-                Log.d(TAG, "path of image from gallery" + picturePath + "");
+                if(DEBUG) Log.d(TAG, "path of image from gallery" + picturePath + "");
             }
             
             if (bitmap != null){
@@ -435,6 +435,7 @@ public class FragmentEditActivity extends Activity implements FView<Fragment> {
                     //unable to create folder
                 }
             }
+            if(DEBUG) Log.d(TAG, "path of image END" + picturePath + "");
         }
     }
     
@@ -446,13 +447,15 @@ public class FragmentEditActivity extends Activity implements FView<Fragment> {
     }
 
     private void saveFragment() {
-        Log.d(TAG, "removing empty");
+        if(DEBUG) Log.d(TAG, "removing empty");
         
         saveTitle();
         
         // make sure fragment does not have any empty parts
         fragmentController.removeEmptyPart(fragment);
         
+        if(DEBUG) Log.d(TAG, "removed empty");
+
         storyController.setFragmentAtLocation(story, fragPos, fragment);
         storyListController.saveOfflineStories(storyList);
     }

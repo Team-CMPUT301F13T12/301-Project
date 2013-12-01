@@ -17,22 +17,19 @@ import android.test.ActivityInstrumentationTestCase2;
 import android.view.MenuItem;
 import android.widget.ListView;
 import android.widget.PopupMenu;
-import android.widget.TextView;
 
 import ualberta.g12.adventurecreator.data.Story;
 import ualberta.g12.adventurecreator.data.StoryList;
 import ualberta.g12.adventurecreator.views.MainActivity;
 
-import java.util.List;
-
 public class MainActivityTestCases extends
         ActivityInstrumentationTestCase2<MainActivity> {
     private MainActivity activity;
-    private TextView list_story_title;
+    /*private TextView list_story_title;
     private TextView list_story_author;
-    private ListView main_activity_listview;
+    private ListView main_activity_listview;*/
     private PopupMenu storyListPopupMenu;
-    private List<Story> stories;
+    //private List<Story> stories;
     private StoryList sl;
     private ListView availableStoryList;
 
@@ -107,8 +104,8 @@ public class MainActivityTestCases extends
         // no notes added
 
         // starts the activity
-        ListView view = (ListView) activity
-                .findViewById(ualberta.g12.adventurecreator.R.id.main_activity_listview);
+        /*ListView view = (ListView) activity
+                .findViewById(ualberta.g12.adventurecreator.R.id.main_activity_listview);*/
 
         assertNull(sl);
         // assertTrue("testBrowseEmptyStoryList is not yet implemented", false);
@@ -190,7 +187,7 @@ public class MainActivityTestCases extends
         availableStoryList.performLongClick();
 
         // gets download option if available ( not available)
-        MenuItem downloadOption = storyListPopupMenu.getMenu().getItem(2);
+        //MenuItem downloadOption = storyListPopupMenu.getMenu().getItem(2);
 
         // assertTrue(downloadOption.equals(null));
         assertTrue("testDownloadStoryNoInternet is not yet implemented", false);
@@ -223,7 +220,7 @@ public class MainActivityTestCases extends
         availableStoryList.performLongClick();
 
         // gets download option if available
-        MenuItem downloadOption = storyListPopupMenu.getMenu().getItem(2);
+        //MenuItem downloadOption = storyListPopupMenu.getMenu().getItem(2);
 
         // turn off the internet
         // turnOffInternet();

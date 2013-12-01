@@ -5,8 +5,8 @@
         android:id="@+id/save_story"
         android:icon="@android:drawable/ic_menu_save"
         android:orderInCategory="100"
-        android:showAsAction="always"
-        android:title="story_save_menu"/>
+        android:showAsAction="ifRoom"
+        android:title="@string/menu_story_save"/>
     <item
         android:id="@+id/add_fragment"
         android:icon="@android:drawable/ic_menu_add"

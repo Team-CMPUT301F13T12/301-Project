@@ -1,3 +1,4 @@
+
 package ualberta.g12.adventurecreator.data;
 
 import java.io.IOException;
@@ -9,9 +10,14 @@ import java.io.Serializable;
  * the reader's mode.
  */
 public class Choice implements Serializable {
+    /**
+     * Serial Id for the Lint
+     */
+    private static final long serialVersionUID = -9049654917867777945L;
     private String choiceText;
     private int linkedToFragmentPos;
     private boolean isRandom;
+
     // default settings for a new choice
 
     /**
@@ -33,22 +39,23 @@ public class Choice implements Serializable {
     public String getChoiceText() {
         return choiceText;
     }
-    
+
     /**
-     * obtains the isRandom boolean variable that tells if a choice is a RANDOM type choice which means it will
-     * go to some other choice
-     * @return 
+     * obtains the isRandom boolean variable that tells if a choice is a RANDOM
+     * type choice which means it will go to some other choice
+     * 
+     * @return
      */
     public boolean getisRandom() {
         return this.isRandom;
     }
-    
+
     /**
-     * sets isRandom boolean variable that tells if a choice is a RANDOM type choice which means it will
-     * go to some other choice
+     * sets isRandom boolean variable that tells if a choice is a RANDOM type
+     * choice which means it will go to some other choice
      */
     public void setisRandom(boolean bool) {
-    	this.isRandom = bool;
+        this.isRandom = bool;
     }
 
     /**
@@ -90,6 +97,6 @@ public class Choice implements Serializable {
             ClassNotFoundException {
         this.choiceText = (String) in.readObject();
         this.linkedToFragmentPos = (Integer) in.readObject();
-        this.isRandom = (Boolean)in.readObject();
+        this.isRandom = (Boolean) in.readObject();
     }
 }

@@ -1,6 +1,8 @@
 
 package ualberta.g12.adventurecreator.data;
 
+import ualberta.g12.adventurecreator.views.FView;
+
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.LinkedList;
@@ -12,8 +14,14 @@ import java.util.List;
  * saving or fragment recall. Will Store the parameters within the fragment and
  * will be unique to that fragment.
  */
-public class Fragment extends FModel implements Serializable {
+public class Fragment extends FModel<FView<?>> implements Serializable {
 
+    /**
+     * Serial UID for Lint
+     */
+    private static final long serialVersionUID = 6155560311789807407L;
+
+    private static int NEW_FRAGMENT_ID = -1;
     private String title;
     private int id;
     private List<FragmentPart> parts;
@@ -72,6 +80,7 @@ public class Fragment extends FModel implements Serializable {
      * @param out the ObjectOutputStream to write to
      */
     private void writeObject(java.io.ObjectOutputStream out) throws IOException {
+        out.writeObject(NEW_FRAGMENT_ID);
         out.writeObject(this.title);
         out.writeObject(this.id);
         out.writeObject(this.parts);
@@ -82,8 +91,12 @@ public class Fragment extends FModel implements Serializable {
      * 
      * @param in the ObjectInputStream to read from
      */
+    @SuppressWarnings(value = {
+            "unchecked"
+    })
     private void readObject(java.io.ObjectInputStream in) throws IOException,
             ClassNotFoundException {
+        NEW_FRAGMENT_ID = (Integer) in.readObject();
         this.title = (String) in.readObject();
         this.id = (Integer) in.readObject();
         this.parts = (List<FragmentPart>)in.readObject();

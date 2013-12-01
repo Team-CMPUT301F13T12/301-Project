@@ -32,7 +32,7 @@ public class OfflineIOHelper {
      */
     public OfflineIOHelper(Context context) {
         if(context == null){
-            Log.d(TAG, "Context was null");
+            if(DEBUG) Log.d(TAG, "Context was null");
         }
         this.storyContext = context;
     }
@@ -49,7 +49,7 @@ public class OfflineIOHelper {
             ObjectInputStream ois = new ObjectInputStream(fis);
             stories = (StoryList) ois.readObject();
             if (stories == null)
-                Log.d(TAG, "StoryList read in is null");
+                if(DEBUG) Log.d(TAG, "StoryList read in is null");
             fis.close();
 
         } catch (FileNotFoundException e) {
@@ -74,7 +74,7 @@ public class OfflineIOHelper {
     // TODO make sure to make each model object serializable
     public void saveOfflineStories(StoryList myStories) {
         if (myStories == null)
-            Log.d(TAG, "Saving a null StoryList");
+            if(DEBUG) Log.d(TAG, "Saving a null StoryList");
         try {
             FileOutputStream fos = storyContext
                     .openFileOutput(this.fileName, 0);

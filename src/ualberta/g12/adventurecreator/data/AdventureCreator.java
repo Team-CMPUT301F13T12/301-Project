@@ -14,9 +14,6 @@ import ualberta.g12.adventurecreator.online.OnlineHelper;
  */
 public class AdventureCreator extends Application {
 
-    private static final String TAG = "AdventureCreatorApplication";
-    private static boolean DEBUG = true;
-
     // So many singletons!
     private static StoryController storyController = null;
     private static FragmentController fragmentController = null;

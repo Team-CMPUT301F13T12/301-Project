@@ -2,50 +2,50 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent" >
 
-<RelativeLayout
-    android:layout_width="match_parent"
-    android:layout_height="1208dp"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin" >
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="1208dp"
+        android:paddingBottom="@dimen/activity_vertical_margin"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:paddingRight="@dimen/activity_horizontal_margin"
+        android:paddingTop="@dimen/activity_vertical_margin" >
 
-    <ImageView
-        android:id="@+id/imageView1"
-        android:layout_width="wrap_content"
-        android:layout_height="400dp"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:contentDescription="online_help_image_1"
-        android:src="@drawable/onlinemode" />
+        <ImageView
+            android:id="@+id/imageView1"
+            android:layout_width="wrap_content"
+            android:layout_height="400dp"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:contentDescription="@string/desc_help_online_1"
+            android:src="@drawable/onlinemode" />
 
-    <TextView
-        android:id="@+id/textView1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/imageView1"
-        android:layout_below="@+id/imageView1"
-        android:layout_marginTop="20dp"
-        android:text="After pressing the online mode button on the main screen, a list of online stories will be listed which allows the user to download these stories and store them locally by clicking on the story. The menu bar has two options: to search online stories (left icon) and to bring up a pulldown menu where download mode can be found. When finished with downloads, clicking the &quot;offline mode&quot; button will bring the user back to the main screen." />
+        <TextView
+            android:id="@+id/textView1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/imageView1"
+            android:layout_below="@+id/imageView1"
+            android:layout_marginTop="20dp"
+            android:text="@string/help_online" />
 
-    <ImageView
-        android:id="@+id/imageView2"
-        android:layout_width="wrap_content"
-        android:layout_height="400dp"
-        android:layout_alignLeft="@+id/textView1"
-        android:layout_below="@+id/textView1"
-        android:layout_marginTop="29dp"
-        android:contentDescription="online_help_image_2"
-        android:src="@drawable/downloadmode" />
+        <ImageView
+            android:id="@+id/imageView2"
+            android:layout_width="wrap_content"
+            android:layout_height="400dp"
+            android:layout_alignLeft="@+id/textView1"
+            android:layout_below="@+id/textView1"
+            android:layout_marginTop="29dp"
+            android:contentDescription="@string/desc_online_help_2"
+            android:src="@drawable/downloadmode" />
 
-    <TextView
-        android:id="@+id/textView2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_below="@+id/imageView2"
-        android:layout_marginTop="20dp"
-        android:text="To download a story, the download mode must be enabled via the menu bar, simliar to that of author mode in the main screen. Once enabled, any story on the list will be available for download." />
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_below="@+id/imageView2"
+            android:layout_marginTop="20dp"
+            android:text="@string/help_download" />
+    </RelativeLayout>
 
-</RelativeLayout>
 </ScrollView>

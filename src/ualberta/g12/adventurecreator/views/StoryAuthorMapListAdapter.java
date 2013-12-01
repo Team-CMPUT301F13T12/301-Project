@@ -22,10 +22,6 @@ public class StoryAuthorMapListAdapter extends ArrayAdapter<Story> {
 
     private final Context context;
 
-    // Logging
-    private static final boolean DEBUG = true;
-    private static final String TAG = "StoryAuthorMapListAdapter";
-
     public StoryAuthorMapListAdapter(Context c, int id, List<Story> list) {
         super(c, id, list);
         this.context = c;
@@ -43,8 +39,8 @@ public class StoryAuthorMapListAdapter extends ArrayAdapter<Story> {
 
         LayoutInflater mInflater = (LayoutInflater) context
                 .getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
-        
-        if(convertView == null){
+
+        if (convertView == null) {
             convertView = mInflater.inflate(R.layout.listview_story_list, null);
             holder = new ViewHolder();
             holder.title = (TextView) convertView.findViewById(R.id.list_story_title);
@@ -53,10 +49,10 @@ public class StoryAuthorMapListAdapter extends ArrayAdapter<Story> {
         } else {
             holder = (ViewHolder) convertView.getTag();
         }
-        
+
         holder.title.setText(ta.getTitle());
         holder.author.setText(ta.getAuthor());
-        
+
         return convertView;
     }
 }

@@ -7,7 +7,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 /** Models the list of stories */
+@SuppressWarnings("rawtypes")
 public class StoryList extends LModel implements Serializable {
+    /**
+     * For Lint
+     */
+    private static final long serialVersionUID = 1L;
     private List<Story> stories;
 
     public StoryList() {
@@ -111,6 +116,7 @@ public class StoryList extends LModel implements Serializable {
         out.writeObject(this.stories);
     }
 
+    @SuppressWarnings("unchecked")
     private void readObject(java.io.ObjectInputStream in) throws IOException,
             ClassNotFoundException {
         this.stories = (List<Story>) in.readObject();

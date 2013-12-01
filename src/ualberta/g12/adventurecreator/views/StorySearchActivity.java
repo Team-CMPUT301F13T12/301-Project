@@ -160,6 +160,7 @@ public class StorySearchActivity extends Activity implements LView<StoryList>, O
         }
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     protected void onStart() {
         super.onStart();
@@ -168,6 +169,7 @@ public class StorySearchActivity extends Activity implements LView<StoryList>, O
         storyList.addView(this);
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     public void onDestroy() {
         super.onDestroy();

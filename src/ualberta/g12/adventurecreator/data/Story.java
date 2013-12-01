@@ -20,7 +20,9 @@ import java.util.List;
  * {@literal Story.INVALID_ID} and it will be impossible to upload this story
  * through normal means.
  */
-@SuppressWarnings("serial")
+@SuppressWarnings({
+        "serial", "rawtypes"
+})
 public class Story extends SModel implements Serializable {
 
     /**
@@ -143,6 +145,7 @@ public class Story extends SModel implements Serializable {
         out.writeObject(this.startFragPos);
     }
 
+    @SuppressWarnings("unchecked")
     private void readObject(java.io.ObjectInputStream in) throws IOException,
             ClassNotFoundException {
         this.storyTitle = (String) in.readObject();

@@ -9,6 +9,7 @@ import java.util.ArrayList;
  * A Model class that all Story Model Classes should extend. Contains the
  * Necessary methods to be an actual Story Model
  */
+@SuppressWarnings("rawtypes")
 public class SModel<V extends SView<SModel>> {
     private ArrayList<V> views;
 

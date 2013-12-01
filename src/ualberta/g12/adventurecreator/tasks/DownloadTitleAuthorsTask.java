@@ -33,7 +33,6 @@ public class DownloadTitleAuthorsTask extends AsyncTask<String, String, Boolean>
     private OView<List<Story>> view;
 
     // Log this
-    private static final boolean DEBUG = true;
     private static final String TAG = "DownloadTitleAuthorsTask";
 
     /**
