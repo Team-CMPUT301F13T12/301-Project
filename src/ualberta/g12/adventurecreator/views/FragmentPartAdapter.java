@@ -22,7 +22,7 @@ import ualberta.g12.adventurecreator.data.FragmentPart;
  * the fragment. Makes views depending on what is selected and orders the
  * segments depending on what type they are.
  */
-public class FragmentPartAdapter extends ArrayAdapter {
+public class FragmentPartAdapter extends ArrayAdapter<FragmentPart> {
     private final Context context;
     public final int resource;
     private final Fragment frag;
