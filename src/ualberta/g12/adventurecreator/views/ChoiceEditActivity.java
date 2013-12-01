@@ -61,9 +61,10 @@ public class ChoiceEditActivity extends Activity {
         storyListController = AdventureCreator.getStoryListController();
         storyController = AdventureCreator.getStoryController();
         fragmentController = AdventureCreator.getFragmentController();
-
+        offlineHelper = AdventureCreator.getOfflineIOHelper();
         storyList = AdventureCreator.getStoryList();
 
+        //get intent
         Intent editChoiceIntent = getIntent();
         storyPos = (Integer) editChoiceIntent.getSerializableExtra("StoryPos");
         fragPos = (Integer) editChoiceIntent.getSerializableExtra("FragmentPos");
@@ -71,35 +72,15 @@ public class ChoiceEditActivity extends Activity {
 
         Log.d(TAG, "got intents");
 
-        // get widget reference
+        //get widget references
         myTitleET = (EditText) findViewById(R.id.choiceBody);
-        // String choiceText =
-        // sl.getAllStories().get(storyPos).getFragments().get(fragPos)
-        // .getChoices().get(choicePos).getChoiceText();
-        // myTitleET.setText(choiceText);
-
-        offlineHelper = AdventureCreator.getOfflineIOHelper();
-        /*
-         * //load save file storyList = offlineHelper.loadOfflineStories();
-         * story = storyList.getAllStories().get(storyPos); fragment =
-         * story.getFragments().get(fragPos); Choice choice
-         * fragment.getChoices().get(choicePos);
-         */
-        // Bundle extras = i.getExtras();
-        // ourStoryId = extras.getInt("OurStoryId");
-        // ourFragmentId = extras.getInt("OurFragmentId");
         Button choiceButton = (Button) findViewById(R.id.choiceButton);
-        // StoryList sl = AdventureCreatorApplication.getStoryList();
 
-        // ourStory = sl.getAllStories().get(storyPos);
-        // Log.d("WHAT IS OUR STORY SIZE?", ourStory.getStoryTitle());
-        // ourFragmentList = ourStory.getFragments();
-        // fragment = ourFragmentList.get(fragPos);
-
+        //get story and fragment
         story = storyListController.getStoryAtPos(storyPos);
-
         fragment = storyController.getFragmentAtPos(story, fragPos);
         
+        //get fragment part
         if(choicePos < fragment.getParts().size())
             fragmentPart = fragment.getParts().get(choicePos);
         else{
@@ -108,6 +89,7 @@ public class ChoiceEditActivity extends Activity {
             finish();
         }
         
+        //get choice
         if(fragmentPart.getType().equals("c")){
             choice = fragmentPart.getChoice();
         } else{
@@ -122,10 +104,8 @@ public class ChoiceEditActivity extends Activity {
             @Override
             public void onClick(View v) {
                 createADialog();
-
             }
         }
-
                 );
 
     }

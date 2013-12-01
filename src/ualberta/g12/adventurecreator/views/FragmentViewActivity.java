@@ -48,9 +48,8 @@ public class FragmentViewActivity extends Activity implements FView<Fragment> {
     private FragmentPartAdapter adapter;
     private FragmentController fragmentController;
     private StoryController storyController;
-    //private static final String TAG = "FragmentViewActivity";
+    private static final String TAG = "FragmentViewActivity";
     private Story story;
-
     private Fragment fragment;
     ImageView viewImage, viewImage2, viewImage3;
     public int fragPos, x = 0;
@@ -70,17 +69,24 @@ public class FragmentViewActivity extends Activity implements FView<Fragment> {
         // get widget references
         fragmentPartListView = (ListView) findViewById(R.id.fragmentViewPartList);
         fragmentTitleTextView = (TextView) findViewById(R.id.fragmentTitleText);
+        viewImage = (ImageView) findViewById(R.id.viewImage);
+        viewImage2 = (ImageView) findViewById(R.id.viewImage2);
+        viewImage3 = (ImageView) findViewById(R.id.viewImage3);
 
-        setListClickListener();
+        
+        
+        Log.d(TAG, "start pos "+fragPos);
         
         // set fragment to first fragment in story
         fragPos = story.getStartFragPos();
         fragment = AdventureCreator.getStoryController().getFragmentAtPos(story,
                 fragPos);
 
-        viewImage = (ImageView) findViewById(R.id.viewImage);
-        viewImage2 = (ImageView) findViewById(R.id.viewImage2);
-        viewImage3 = (ImageView) findViewById(R.id.viewImage3);
+        // show everything
+        update();
+        
+        // set click listeners
+        setListClickListener();
 
         viewImage.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -116,6 +122,7 @@ public class FragmentViewActivity extends Activity implements FView<Fragment> {
     private void update() {
         // TODO reload all fields based on new info from model
         
+        Log.d(TAG, "frag title "+fragment.getTitle());
         // Loads title
         if (fragmentTitleTextView != null) 
             fragmentTitleTextView.setText(fragment.getTitle());
