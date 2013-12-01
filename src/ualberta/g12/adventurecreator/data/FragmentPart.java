@@ -12,7 +12,7 @@ public class FragmentPart implements Serializable{
     public FragmentPart(String type){
         this.type=type;
         this.data = "";
-        this.choice = null;
+        this.choice = new Choice();
     }
     /**
      * @return the type

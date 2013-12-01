@@ -139,6 +139,12 @@ public class FragmentEditActivity extends Activity implements FView<Fragment> {
     }
     
     @Override
+    protected void onResume() {
+        super.onResume();
+        update(fragment);
+    }
+    
+    @Override
     protected void onDestroy(){
         super.onDestroy();
         fragment.deleteView(this);
@@ -172,9 +178,7 @@ public class FragmentEditActivity extends Activity implements FView<Fragment> {
 
     @Override
     public void update(Fragment model) {
-        editTitleText.setText(model.getTitle());
-        
-        fragment = model;
+        editTitleText.setText(fragment.getTitle());
         adapter.notifyDataSetChanged();
     }
 
