@@ -189,6 +189,7 @@ public class MainActivity extends Activity implements LView<StoryList>, OnItemCl
         }
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     protected void onStart() {
         super.onStart();
@@ -196,6 +197,7 @@ public class MainActivity extends Activity implements LView<StoryList>, OnItemCl
         storyList.addView(this);
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     public void onDestroy() {
         super.onDestroy();

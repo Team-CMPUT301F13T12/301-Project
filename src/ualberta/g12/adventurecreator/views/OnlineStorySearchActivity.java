@@ -97,6 +97,8 @@ public class OnlineStorySearchActivity extends Activity implements OnItemClickLi
         }
     }
 
+    @SuppressWarnings("unused")
+    @Deprecated
     private void performSearch() {
 
         if (this.tas != null && this.query != null) {
@@ -204,7 +206,7 @@ public class OnlineStorySearchActivity extends Activity implements OnItemClickLi
             // Send some stuff to FragmentViewActivity
             CacheStoryTask cst = new CacheStoryTask(this);
             cst.execute(new Story[] {
-                ta
+                    ta
             });
         }
     }

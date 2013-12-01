@@ -194,7 +194,7 @@ public class FragmentEditActivity extends Activity implements FView<Fragment> {
             fragmentController.addTextSegment(fragment, "New text", position);
 
         } else if (itemTitle.equals("Insert Illustration")) {
-            Log.d(TAG,"insert ill start");
+            if(DEBUG) Log.d(TAG,"insert ill start");
             saveFragment();
             pictureMode = "Add";
             picturePosition = position;
@@ -368,7 +368,7 @@ public class FragmentEditActivity extends Activity implements FView<Fragment> {
 
                     bitmap = BitmapFactory.decodeFile(f.getAbsolutePath(),
                             bitmapOptions);
-                    Log.d(TAG, "path of image from camera" + f.getAbsolutePath() + "");
+                    if(DEBUG) Log.d(TAG, "path of image from camera" + f.getAbsolutePath() + "");
                     f.delete();
                     
                     
@@ -387,7 +387,7 @@ public class FragmentEditActivity extends Activity implements FView<Fragment> {
                 picturePath = c.getString(columnIndex);
                 c.close();
                 bitmap = (BitmapFactory.decodeFile(picturePath));
-                Log.d(TAG, "path of image from gallery" + picturePath + "");
+                if(DEBUG) Log.d(TAG, "path of image from gallery" + picturePath + "");
             }
             
             //following line modified from https://groups.google.com/forum/#!topic/android-developers/YjGcve7s5CQ
@@ -395,13 +395,13 @@ public class FragmentEditActivity extends Activity implements FView<Fragment> {
             CharSequence appName = this.getResources().getText(this.getResources().getIdentifier("app_name", "string", this.getPackageName()));          
             
             File folder = new File(Environment.getExternalStorageDirectory().toString(), appName.toString());
-            Log.d(TAG, "path of folder " + folder.getAbsolutePath() + "");
+            if(DEBUG) Log.d(TAG, "path of folder " + folder.getAbsolutePath() + "");
             boolean folderExists = true; //assume true
 
-            Log.d(TAG, "path of exist? " + folder.exists() + "");
+            if(DEBUG) Log.d(TAG, "path of exist? " + folder.exists() + "");
             if (!folder.exists()) {
                 folderExists = folder.mkdirs();
-                Log.d(TAG, "path of exists " + folderExists + "");
+                if(DEBUG) Log.d(TAG, "path of exists " + folderExists + "");
             }
             if (folderExists) {
                 //once folder exists finish creating picturePath
@@ -410,7 +410,7 @@ public class FragmentEditActivity extends Activity implements FView<Fragment> {
                 //TODO incorporate unique story ID in picture name
                 picturePath = folder.getAbsolutePath() + "/" + newPicName + ".jpg";
                 File file = new File(picturePath);
-                Log.d(TAG, "path of image preend " + picturePath + "");
+                if(DEBUG) Log.d(TAG, "path of image preend " + picturePath + "");
                 
                 //then write the picture to picturePath
                 try {
@@ -442,7 +442,7 @@ public class FragmentEditActivity extends Activity implements FView<Fragment> {
                 //unable to create folder
             }
             
-            Log.d(TAG, "path of image END" + picturePath + "");
+            if(DEBUG) Log.d(TAG, "path of image END" + picturePath + "");
         }
     }
 
@@ -464,12 +464,12 @@ public class FragmentEditActivity extends Activity implements FView<Fragment> {
     }
 
     private void saveFragment() {
-        Log.d(TAG, "removing empty");
+        if(DEBUG) Log.d(TAG, "removing empty");
         
         // make sure fragment does not have any empty parts
         fragmentController.removeEmptyPart(fragment);
         
-        Log.d(TAG, "removed empty");
+        if(DEBUG) Log.d(TAG, "removed empty");
 
         setTitleAndPageId();
         storyController.setFragmentAtLocation(story, fragPos, fragment);

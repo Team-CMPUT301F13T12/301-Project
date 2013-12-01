@@ -9,6 +9,7 @@ import java.util.ArrayList;
  * The Model that all Fragment Models must extend. Contains methods to update
  * all of the FViews that are listening to us
  */
+@SuppressWarnings("rawtypes")
 public class FModel<V extends FView> {
     private ArrayList<V> views;
 
@@ -43,6 +44,7 @@ public class FModel<V extends FView> {
      * Notifies all of our attached FViews that we have changed and that they
      * should update.
      */
+    @SuppressWarnings("unchecked")
     public void notifyViews() {
         for (V view : views) {
             view.update(this);

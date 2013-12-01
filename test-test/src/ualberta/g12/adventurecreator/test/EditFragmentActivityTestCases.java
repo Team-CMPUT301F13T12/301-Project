@@ -20,20 +20,14 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.test.ActivityInstrumentationTestCase2;
 import android.widget.Button;
-import android.widget.EditText;
-import android.widget.ListView;
-import android.widget.TextView;
 
-import ualberta.g12.adventurecreator.R;
 import ualberta.g12.adventurecreator.controllers.FragmentController;
 import ualberta.g12.adventurecreator.controllers.StoryListController;
 import ualberta.g12.adventurecreator.data.AdventureCreator;
-import ualberta.g12.adventurecreator.data.Choice;
 import ualberta.g12.adventurecreator.data.Fragment;
 import ualberta.g12.adventurecreator.data.OfflineIOHelper;
 import ualberta.g12.adventurecreator.data.Story;
 import ualberta.g12.adventurecreator.data.StoryList;
-import ualberta.g12.adventurecreator.online.OnlineHelper;
 import ualberta.g12.adventurecreator.views.FragmentEditActivity;
 
 public class EditFragmentActivityTestCases extends
@@ -41,10 +35,6 @@ public class EditFragmentActivityTestCases extends
 
     // declare activity and widgets
     private FragmentEditActivity myEditFragmentActivity;
-    private TextView fragmentTitleTextView;
-    private ListView fragmentPartListView;
-    private EditText editTitleText;
-    private EditText fragmentId;
     StoryList storyList;
     OfflineIOHelper offlineHelper;
     FragmentController fragmentController;
@@ -78,12 +68,6 @@ public class EditFragmentActivityTestCases extends
 
         storyListController.saveOfflineStories(storyList);
 
-        fragmentPartListView = (ListView) myEditFragmentActivity
-                .findViewById(R.id.FragmentPartList);
-        fragmentTitleTextView = (TextView) myEditFragmentActivity
-                .findViewById(R.id.fragmentTitleText);
-        editTitleText = (EditText) myEditFragmentActivity.findViewById(R.id.fragmentTitle);
-
         myEditFragmentActivity.recreate();
     }
 
@@ -107,7 +91,7 @@ public class EditFragmentActivityTestCases extends
 
     // Use Case 7, test 2/2 and Use Case 5
     public void testMyselfAsChoiceFragment() {
-        String title = "Test_Choice";
+        //String title = "Test_Choice";
         // String myFragmentId = myEditFragmentActivity.getFragId();
         // Choice myChoice = new Choice(title,myFragmentId);
         // addChoice(choice));
@@ -119,9 +103,9 @@ public class EditFragmentActivityTestCases extends
     // Use Case 8, test 1/3 and Use Case 5
     public void testAddChoiceToEmptyFragment() {
 
-        Fragment EmptySF = new Fragment();
+        // Fragment EmptySF = new Fragment();
         // myEditFragmentActivity.changeStoryFragment(EmptySF);
-        Choice myChoice = new Choice();
+        // Choice myChoice = new Choice();
         // addChoice(myChoice);
         // AssertTrue(myEditFragmentActivity.storyFragments.Choices.get(myFragmentId).equals(myChoice));
         assertTrue("testAddChoiceToEmptyFragment is not yet implemented", false);
@@ -131,7 +115,7 @@ public class EditFragmentActivityTestCases extends
     // Use Case 8 2/3 and Use Case 5
     public void testAddChoiceToFragment() {
 
-        String title = "Test_Choice";
+        //String title = "Test_Choice";
         // String myFragmentId = myEditFragmentActivity.getFragId(0);
         // Choice myChoice = new Choice(title,myFragmentId);
         // addChoice(choice));
@@ -143,7 +127,6 @@ public class EditFragmentActivityTestCases extends
     // Use Case 8, test 3/3
     public void testAddEmptyChoice() {
 
-        Choice emptyChoice = new Choice();
         // addChoice(new Choice());
         // AssertTrue(myEditFragmentActivity.storyFragments.Choice.contains(emptyChoice);
         assertTrue("testAddEmptyChoice is not yet implemented", false);
@@ -306,7 +289,6 @@ public class EditFragmentActivityTestCases extends
 
     // test case 10
     public void testPostPhotoToAnnotateFragment() {
-        Fragment someFragment = new Fragment();
         // start activity
         myEditFragmentActivity = this.getActivity();
         /*
@@ -326,7 +308,7 @@ public class EditFragmentActivityTestCases extends
 
     // test case 12
     public void testStoreFragment() {
-        Fragment someFragment = new Fragment();
+        //Fragment someFragment = new Fragment();
         // start activity
         myEditFragmentActivity = this.getActivity();
 

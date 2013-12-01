@@ -125,7 +125,7 @@ public class FragmentViewActivity extends Activity implements FView<Fragment> {
 
                 Fragment goToFrag = fragmentController.getLinkedToFragmentOfChoice(fragment,
                         position);
-                if (goToFrag == null || fragment.getChoices().get(position).getisRandom()) {
+                if (goToFrag == null || fragment.getChoices().get(position).getisRandom() == true) {
                     boolean notSamePos = false;
                     while (!notSamePos) {
                         Random random = new Random();

@@ -2,21 +2,26 @@
 <resources>
 
     <string name="app_name">AdventureCreator</string>
-    <string name="action_settings">Settings</string>
     <string name="title_activity_new_story">NewStory</string>
     <string name="title_activity_fragment_editor">FragmentEditor</string>
-    <string name="title_activity_activity_read_story">Activity_read_story</string>
 
+    <!-- Fragment Strings -->
+    <string name="annotations_title">Annotations:</string>
+    
     <!-- StorySearchActivity Strings -->
     <string name="story_search_title">Search</string>
     <string name="story_search_hint">Search for a story&#8230;</string>
     <string name="start_online_from_main">Online Mode</string>
 
-    <!-- MainActivity Menu Strings -->
+    <!-- MainActivity Strings -->
     <string name="menu_check_box_author">Author Mode</string>
     <string name="menu_add_story">Add</string>
-    <string name="title_activity_story_view">StoryViewActivity</string>
-    <string name="hello_world">Hello world!</string>
+    <string name="button_random_story">Random Offline Story</string>
+
+    <!-- Story Menu Strings -->
+    <string name="menu_story_save">story_save_menu</string>
+    <!-- Fragment Editor Menu String -->
+    <string name="menu_fragment_edit_save">menu_fragment_edit_save</string>
 
     <!-- Online Strings -->
     <string name="start_main_from_online">Offline Mode</string>
@@ -25,9 +30,7 @@
     <string name="online_story_search_hint"></string>
 
     <!-- StoryEditActivity Strings -->
-    <string name="story_edit_title">Title</string>
     <string name="story_edit_title_hint">New Title</string>
-    <string name="story_edit_author">Author</string>
     <string name="story_edit_author_hint">New Author</string>
     <string name="add_choice">Add Choice</string>
     <string name="insert_text">Insert Text</string>
@@ -56,5 +59,43 @@
     <string name="title_activity_online_story_view">OnlineStoryViewActivity</string>
     <string name="title_activity_online_story_search">OnlineStorySearchActivity</string>
     <string name="title_activity_help_online">HelpOnline</string>
+    <string name="fragment_edit_text_popup">Fragment Text</string>
+
+    <!-- Help Screen Strings -->
+    <string name="help_text">Adventures! Help</string>
+    <string name="help_description">Adventures! is an application that allows you to create your own choose your own adventures stories. The following will be a step by step tutorial in how to use the application."></string>
+    <string name="help_viewing_story">After a choice has been selected, the new page will appear. This process is repeated to read the story and continue. Enjoy!</string>
+    <string name="help_online">After pressing the online mode button on the main screen, a list of online stories will be listed which allows the user to download these stories and store them locally by clicking on the story. The menu bar has two options: to search online stories (left icon) and to bring up a pulldown menu where download mode can be found. When finished with downloads, clicking the &quot;offline mode&quot; button will bring the user back to the main screen.</string>
+    <string name="button_help_create_new_story">Create New Story</string>
+    <string name="button_help_download_stories">Download Stories</string>
+    <string name="button_read_existing_story">Read Existing Story</string>
+    <string name="help_how_to">How to:</string>
+    <string name="help_screen_edit_story">Note: To edit an existing story, follow the instructions to create a new story but skip step 1</string>
+    <string name="help_main_activity">The menu bar at the stop of the screen allows the user to (from order of left to right), search for an existing story, create a new story, and access help or access author mode from the dropdown menu. The Main Screen allows the user to either read through or edit any existing story by clicking them in the list. To read or edit a story, author mode must be unchecked or checked respectively. To publish a local story online, simply press and hold the story and click &quot;publish story&quot;. The online mode button allows the user to go online to browse through other author\&apos;s stories and save them locally. The &quot;Random Offline Story&quot; button chooses a random story in the local list for the user to read. Note that this option only works when author mode is disabled.</string>
+    <string name="help_action_bar">The pulldown menu can be accessed as shown. Author mode is enabled or disabled by unchecking or checking the option.</string>
+    <string name="help_author_mode">Before reading a story, remember to uncheck author mode at the start screen. After author mode is disabled and a story is selected, the user can read through the story. The text with a black background indicate a choice the user can make to continue on with the story.</string>
+    <string name="help_annotate">The user has the option to anontate the page using illustrations via the image buttons at the bottom of the screen. Once selected the current images can be added to annotated current page.</string>
+    <string name="help_download">To download a story, the download mode must be enabled via the menu bar, simliar to that of author mode in the main screen. Once enabled, any story on the list will be available for download.</string>
+    <string name="help_create_story">After pressing the plus icon on the menu bar, there will be prompts to enter in the title and the author of the newly created story. After these fields have been filled in, press the &quot;create!&quot; button.</string>
+    <string name="help_edit_story">Before editing a story, remember to check author mode at the start screen. If a new story was created, the start screen will appear and the new story will have been added to the list. To edit a story, simply click the story. The list of fragments (pages) will be listed as well as the name and the author. To edit a certain fragment click on the fragment. New fragments can also be created by pressing the plus icon on the menu bar, simliar to in the main screen. The save icon is also located on the menu bar which saves the progress.</string>
+    <string name="help_add_choice">When adding a new choice to the fragment, a new screen will appear prompting the user to enter the text from the choice as well as select another fragment to go to for the choice. When the &quot;Select a Choice Here&quot; button is selected, a popup menu will appear giving the user a list of existing fragments that can be linked to the current fragment. The {RANDOM} option selects a random choice from the list to link to. When all options have been completed, press the floppy disk icon in the menu bar to save.</string>
+    <string name="help_edit_fragment">When editing a fragment, press and hold the &quot;Add new text/image/choice&quot; to start, which will make a popup menu appear. From this menu the user can choose what attribute to add to the fragment, or to edit or delete the selected attribute. </string>
+
+    <!-- Content Descriptions -->
+    <string name="desc_online_help_2">Online Help Image 2</string>
+    <string name="desc_fragment_part_image_small">Fragment Part Image Small</string>
+    <string name="desc_fragment_part_image">Fragment Part Image</string>
+    <string name="desc_help_screen_1">Help Image 1</string>
+    <string name="desc_help_screen_2">Help Image 2</string>
+    <string name="desc_help_read_1">Help Image 1</string>
+    <string name="desc_help_read_2">Help Image 2</string>
+    <string name="desc_help_online_1">Help Image 1</string>
+    <string name="desc_help_new_1">Help Image 1</string>
+    <string name="desc_help_new_2">Help Image 2</string>
+    <string name="desc_help_new_3">Help Image 3</string>
+    <string name="desc_help_new_4">Help Image 4</string>
+    <string name="annotation_1">Annotation 1</string>
+    <string name="annotation_2">Annotation 2</string>
+    <string name="annotation_3">Annotation 3</string>
 
 </resources>

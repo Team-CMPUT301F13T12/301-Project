@@ -40,7 +40,8 @@ public class OnlineHelper {
     private Gson gson = new Gson();
 
     // Addresses for team 12s web server and also a public test server
-    private static String testServer = "http://cmput301.softwareprocess.es:8080/testing/";
+    // private static String testServer =
+    // "http://cmput301.softwareprocess.es:8080/testing/";
     private static String ourServer = "http://cmput301.softwareprocess.es:8080/cmput301f13t12/";
 
     /**
@@ -80,8 +81,10 @@ public class OnlineHelper {
         String status = response.getStatusLine().toString();
         System.out.println(status);
         HttpEntity entity = response.getEntity();
-        BufferedReader br = new BufferedReader(new InputStreamReader(entity.getContent()));
-        String output;
+        /*
+         * BufferedReader br = new BufferedReader(new
+         * InputStreamReader(entity.getContent())); String output;
+         */
         System.err.println("Output from Server -> ");
         /*
          * while ((output = br.readLine()) != null) { //
@@ -260,7 +263,7 @@ public class OnlineHelper {
         }.getType();
         ElasticSearchSearchResponse<Story> esResponse = gson.fromJson(json,
                 elasticSearchSearchResponseType);
-        
+
         return (esResponse.getHits().size() > 0);
     }
 
@@ -323,8 +326,8 @@ public class OnlineHelper {
         System.out.println(status);
 
         HttpEntity entity = response.getEntity();
-        BufferedReader br = new BufferedReader(new InputStreamReader(entity.getContent()));
-        String output;
+        /*BufferedReader br = new BufferedReader(new InputStreamReader(entity.getContent()));
+        String output;*/
         System.err.println("Output from Server -> ");
         /*
          * while ((output = br.readLine()) != null) { //
