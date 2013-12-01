@@ -21,12 +21,6 @@
         android:layout_height="wrap_content"
         android:text="Random Offline Story" />
 
-    <LinearLayout
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content" >
-
-    </LinearLayout>
-
     <ListView
         android:id="@+id/main_activity_listview"
         android:layout_width="wrap_content"
