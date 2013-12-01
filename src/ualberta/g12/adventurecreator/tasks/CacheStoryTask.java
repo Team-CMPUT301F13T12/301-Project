@@ -27,6 +27,10 @@ public class CacheStoryTask extends AsyncTask<Story, Void, String> {
     private Context context;
     private Story s;
 
+    /**
+     * Create a CacheStoryTask with the given context. This context will be used
+     * to display the toast messages.
+     */
     public CacheStoryTask(Context c) {
         this.context = c;
     }

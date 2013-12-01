@@ -19,9 +19,9 @@ import android.widget.ListView;
 import android.widget.PopupMenu;
 import android.widget.TextView;
 
-import ualberta.g12.adventurecreator.MainActivity;
-import ualberta.g12.adventurecreator.Story;
-import ualberta.g12.adventurecreator.StoryList;
+import ualberta.g12.adventurecreator.data.Story;
+import ualberta.g12.adventurecreator.data.StoryList;
+import ualberta.g12.adventurecreator.views.MainActivity;
 
 import java.util.List;
 

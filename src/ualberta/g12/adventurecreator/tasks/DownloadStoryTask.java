@@ -21,6 +21,11 @@ public class DownloadStoryTask extends AsyncTask<Story, Void, String> {
     private Context context;
     private Story s;
 
+    /**
+     * Creates a new DownloadStoryTask with the given Context. The context is
+     * used to create toast messages to update the user of the status of the
+     * download.
+     */
     public DownloadStoryTask(Context c) {
         this.context = c;
     }
