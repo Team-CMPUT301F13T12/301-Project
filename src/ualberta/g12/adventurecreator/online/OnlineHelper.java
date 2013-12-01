@@ -62,15 +62,12 @@ public class OnlineHelper {
      * @throws IOException
      */
     public void insertStory(Story story) throws IllegalStateException, IOException {
-        Log.d(TAG,"insertstory title "+story.getTitle());
         HttpPost httpPost = new HttpPost(ourServer + "stories/" + story.getId());
         StringEntity stringentity = null;
         try {
             stringentity = new StringEntity(gson.toJson(story));
-            Log.d(TAG,stringentity.toString());
         } catch (UnsupportedEncodingException e) {
             // TODO Auto-generated catch block
-            Log.d(TAG,"catch");
             e.printStackTrace();
         }
         httpPost.setHeader("Accept", "application/json");

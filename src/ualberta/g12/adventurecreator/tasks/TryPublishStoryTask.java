@@ -77,9 +77,6 @@ public class TryPublishStoryTask extends AsyncTask<Story, Void, Boolean> {
      */
     @Override
     protected void onPostExecute(Boolean update) {
-        Log.d(TAG,"trypublish "+s.getTitle());
-        Log.d(TAG,"trypublish "+s.getAuthor());
-        Log.d(TAG,"trypublish "+s.getId());
         if (update == null) {
             if (this.s.getId() == Story.INVALID_ID) {
                 Toast.makeText(context, "Story has Invalid Title or Author", Toast.LENGTH_SHORT)
