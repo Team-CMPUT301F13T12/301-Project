@@ -43,7 +43,6 @@ public class ChoiceEditActivity extends Activity {
     private FragmentPart fragmentPart;
     private Choice choice;
     private static final String TAG = "ChoiceEditActivity";
-    private OfflineIOHelper offlineHelper;
     private EditText myTitleET;
     private StoryListController storyListController;
     private StoryController storyController;
@@ -61,7 +60,6 @@ public class ChoiceEditActivity extends Activity {
         storyListController = AdventureCreator.getStoryListController();
         storyController = AdventureCreator.getStoryController();
         fragmentController = AdventureCreator.getFragmentController();
-        offlineHelper = AdventureCreator.getOfflineIOHelper();
         storyList = AdventureCreator.getStoryList();
 
         //get intent
@@ -97,6 +95,12 @@ public class ChoiceEditActivity extends Activity {
                 Log.d(TAG,"Not a choice at given choicePos");
             finish();
         }
+        
+        //get original linkedPos
+        linkedPos = choice.getLinkedToFragmentPos();
+        
+        //set choice text
+        myTitleET.setText(choice.getChoiceText());
 
         Log.d(TAG, "stroy and fragment");
 
@@ -114,8 +118,8 @@ public class ChoiceEditActivity extends Activity {
     // TODO: What does this method do? The name is bad
     private void createADialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("Pick a Fragment to link {NONE} means end");
-        // StoryController sc = new StoryController();
+        builder.setTitle("Pick a Fragment to link\n{RANDOM} sets a choice to pick a random fragment each time it is selected");
+
         possibleChoices = getFragmentTitleList(storyController.getFragments(story));
         CharSequence[] chars = possibleChoices.toArray(new CharSequence[possibleChoices.size()]);
 
@@ -128,16 +132,13 @@ public class ChoiceEditActivity extends Activity {
         alert.show();
         if (DEBUG)
             Log.d("Morning", "HI");
-
     }
 
     /**
      * Set up the {@link android.app.ActionBar}.
      */
     private void setupActionBar() {
-
         // getActionBar().setDisplayHomeAsUpEnabled(true);
-
     }
 
     private void doneSelecting(int result) {
@@ -145,10 +146,14 @@ public class ChoiceEditActivity extends Activity {
             Log.d("the size of possible choices is ", String.format("%d", possibleChoices.size()));
         if (DEBUG)
             Log.d("the number of result is ", String.format("%d", result));
-        if (result != (possibleChoices.size() - 1)) {
-            linkedPos = result;
+        
+        if (result == (possibleChoices.size()-1)) {
+            //selected random
+            fragment.getParts().get(choicePos).getChoice().setisRandom(true);
+            linkedPos = -1;
         }else{
-        	fragment.getParts().get(choicePos).getChoice().setisRandom(true);
+            //selected a fragment
+        	linkedPos = result;
         }
     }
 
@@ -159,7 +164,6 @@ public class ChoiceEditActivity extends Activity {
         for (int i = 0; i < fragList.size(); i++) {
             temp.add(fragList.get(i).getTitle());
         }
-        //temp.add("{NONE}");
         temp.add("{RANDOM}");
         return temp;
     }
@@ -189,14 +193,15 @@ public class ChoiceEditActivity extends Activity {
                 if(DEBUG)
                     Log.d(TAG, "choice text "+choice.getChoiceText());
                 
+                String title = myTitleET.getText().toString();
+                
+                choice.setChoiceText(title);
                 choice.setLinkedToFragmentPos(linkedPos);
+                
                 fragmentController.setFragmentPartChoice(fragment, fragmentPart, choice);
                 storyListController.saveOfflineStories(storyList);
 
-                String Title = myTitleET.getText().toString();
                 Log.d(TAG, "linkedpos, " + linkedPos);
-
-                offlineHelper.saveOfflineStories(storyList);
 
                 finish();
                 return true;
