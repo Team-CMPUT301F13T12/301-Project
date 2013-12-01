@@ -9,7 +9,7 @@
 
     <!-- StorySearchActivity Strings -->
     <string name="story_search_title">Search</string>
-    <string name="story_search_hint">Search for a story...</string>
+    <string name="story_search_hint">Search for a story&#8230;</string>
     <string name="start_online_from_main">Online Mode</string>
 
     <!-- MainActivity Menu Strings -->

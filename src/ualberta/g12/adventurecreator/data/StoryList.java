@@ -83,7 +83,7 @@ public class StoryList extends LModel implements Serializable {
         // Chris
         Story temp = null;
         for (int i = 0; i < stories.size(); i++) {
-            if (stories.get(i).getTitle() == title) {
+            if (stories.get(i).getTitle().equals(title)) {
                 temp = stories.get(i);
             }
         }

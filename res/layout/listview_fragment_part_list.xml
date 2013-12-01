@@ -13,16 +13,25 @@
         android:id="@+id/fragmentPartTextPart"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentRight="true" />
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true" />
 
     <ImageView
         android:id="@+id/fragmentPartIllustration"
         android:layout_width="340dip"
         android:layout_height="200dip"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentRight="true" />
+        android:layout_alignParentRight="true"
+        android:contentDescription="fragment_part_image" />
+
+    <ImageView
+        android:id="@+id/fragmentPartIllustrationSmall"
+        android:layout_width="240dip"
+        android:layout_height="100dip"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:contentDescription="fragment_part_image_small" />
 
     <TextView
         android:id="@+id/fragmentPartChoice"
@@ -30,7 +39,6 @@
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_alignParentRight="true"
-        android:layout_below="@+id/fragmentPartIllustration"/>
+        android:layout_below="@+id/fragmentPartIllustration" />
 
 </RelativeLayout>
-

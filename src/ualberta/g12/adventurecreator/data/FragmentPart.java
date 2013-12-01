@@ -1,8 +1,6 @@
 package ualberta.g12.adventurecreator.data;
 
-import java.io.IOException;
 import java.io.Serializable;
-import java.util.List;
 
 public class FragmentPart implements Serializable{
     private String type;

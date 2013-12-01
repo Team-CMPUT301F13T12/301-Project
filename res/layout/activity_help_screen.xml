@@ -33,6 +33,7 @@
         android:layout_alignLeft="@+id/textView7"
         android:layout_below="@+id/textView1"
         android:layout_marginTop="24dp"
+        android:contentDescription="main_help_image_1"
         android:src="@drawable/main2" />
 
     <TextView
@@ -42,7 +43,7 @@
         android:layout_alignLeft="@+id/imageView1"
         android:layout_below="@+id/imageView1"
         android:layout_marginTop="30dp"
-        android:text="The menu bar at the stop of the screen allows the user to (from order of left to right), search for an existing story, create a new story, choose a random story, and access help or access author mode from the dropdown menu. The Main Screen allows the user to either read through or edit any existing story by clicking them in the list. To read or edit a story, author mode must be unchecked or checked respectively. To publish a local story online, simply press and hold the story and click &quot;publish story&quot;. The online mode button allows the user to go online to browse through other author&apos;s stories and save them locally." />
+        android:text="The menu bar at the stop of the screen allows the user to (from order of left to right), search for an existing story, create a new story, and access help or access author mode from the dropdown menu. The Main Screen allows the user to either read through or edit any existing story by clicking them in the list. To read or edit a story, author mode must be unchecked or checked respectively. To publish a local story online, simply press and hold the story and click &quot;publish story&quot;. The online mode button allows the user to go online to browse through other author&apos;s stories and save them locally. The &quot;Random Offline Story&quot; button chooses a random story in the local list for the user to read. Note that this option only works when author mode is disabled." />
 
     <ImageView
         android:id="@+id/imageView2"
@@ -51,6 +52,7 @@
         android:layout_alignLeft="@+id/textView3"
         android:layout_below="@+id/textView3"
         android:layout_marginTop="23dp"
+        android:contentDescription="main_help_image_2"
         android:src="@drawable/author_mode" />
 
     <TextView

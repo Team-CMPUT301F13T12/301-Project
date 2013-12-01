@@ -3,59 +3,52 @@ package ualberta.g12.adventurecreator.test;
 
 import android.test.AndroidTestCase;
 
-import org.junit.Test;
-
-import ualberta.g12.adventurecreator.AdventureCreatorApplication;
-import ualberta.g12.adventurecreator.FragmentController;
-import ualberta.g12.adventurecreator.StoryController;
-import ualberta.g12.adventurecreator.StoryList;
-import ualberta.g12.adventurecreator.StoryListController;
+import ualberta.g12.adventurecreator.controllers.FragmentController;
+import ualberta.g12.adventurecreator.controllers.StoryController;
+import ualberta.g12.adventurecreator.controllers.StoryListController;
+import ualberta.g12.adventurecreator.data.AdventureCreator;
+import ualberta.g12.adventurecreator.data.StoryList;
 
 public class AdventureApplicationTest extends AndroidTestCase
 {
-    private AdventureCreatorApplication application;
+    private AdventureCreator application;
 
     @Override
     protected void setUp() throws Exception {
         super.setUp();
 
         // Create it even though we don't use this
-        this.application = new AdventureCreatorApplication();
+        this.application = new AdventureCreator();
     }
 
-    @Test
     public void testSingletonsNotNull() {
-        assertNotNull(AdventureCreatorApplication.getStoryList());
-        assertNotNull(AdventureCreatorApplication.getStoryController());
-        assertNotNull(AdventureCreatorApplication.getStoryController());
-        assertNotNull(AdventureCreatorApplication.getFragmentController());
+        assertNotNull(AdventureCreator.getStoryList());
+        assertNotNull(AdventureCreator.getStoryController());
+        assertNotNull(AdventureCreator.getStoryController());
+        assertNotNull(AdventureCreator.getFragmentController());
     }
 
-    @Test
     public void testStoryList() {
-        StoryList sl = AdventureCreatorApplication.getStoryList();
+        StoryList sl = AdventureCreator.getStoryList();
         assertNotNull(sl);
-        assertSame(sl, AdventureCreatorApplication.getStoryList());
+        assertSame(sl, AdventureCreator.getStoryList());
     }
 
-    @Test
     public void testStoryListController() {
-        StoryListController slc = AdventureCreatorApplication.getStoryListController();
+        StoryListController slc = AdventureCreator.getStoryListController();
         assertNotNull(slc);
-        assertSame(slc, AdventureCreatorApplication.getStoryListController());
+        assertSame(slc, AdventureCreator.getStoryListController());
     }
 
-    @Test
     public void testStoryController(){
-        StoryController sc = AdventureCreatorApplication.getStoryController();
+        StoryController sc = AdventureCreator.getStoryController();
         assertNotNull(sc);
-        assertSame(sc, AdventureCreatorApplication.getStoryController());
+        assertSame(sc, AdventureCreator.getStoryController());
     }
     
-    @Test
     public void testFragmentController(){
-        FragmentController fc = AdventureCreatorApplication.getFragmentController();
+        FragmentController fc = AdventureCreator.getFragmentController();
         assertNotNull(fc);
-        assertSame(fc, AdventureCreatorApplication.getFragmentController());
+        assertSame(fc, AdventureCreator.getFragmentController());
     }
 }

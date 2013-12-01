@@ -9,35 +9,55 @@ import java.util.List;
 /**
  * Models a story that would be created by an Author. Contains a list of
  * Fragments as well as an author and a title.
+ * <p>
+ * A stories id must be unique when publishing it online. When publishing a
+ * story, if there already a story with an identical ID that story will be
+ * overwritten by the newly published story.<br>
+ * A story's id is made up of the hashcode of the storyTitle appended with its
+ * author. Whenever a story's title or author is changed, its id is updated
+ * appropriately.<br>
+ * If a story has a null author or title, it will be assigned the ID of
+ * {@literal Story.INVALID_ID} and it will be impossible to upload this story
+ * through normal means.
  */
+@SuppressWarnings("serial")
 public class Story extends SModel implements Serializable {
 
+    /**
+     * Signifies that a story with this id is invalid, usually meaning that
+     * either its Title or Author is null.<br>
+     * If a story has this id then it will not be publishable.
+     */
     public static final int INVALID_ID = -1;
 
     private String storyTitle;
     private String author;
     private int id; // should be unique
-    private List<Fragment> fragments; // list of all fragments in story (no
-                                      // particular order)
+    /** List of all fragments in the story in particular order */
+    private List<Fragment> fragments;
     private int startFragPos; // start page
 
+    /**
+     * Create an Empty Story. This story will have the default start Fragment:
+     * "Story Start Fragment" and a title and author of a blank string.
+     */
     public Story() {
+        this("", "");
+    }
+
+    /**
+     * Create an Empty Story. This story will have the default start Fragment
+     * "Story Start Fragment" and the title and author defined.
+     */
+    public Story(String title, String author) {
         this.startFragPos = 0;
         this.fragments = new LinkedList<Fragment>();
         Fragment frag = new Fragment();
         frag.setTitle("Story Start Fragment");
-
         this.storyTitle = "";
         this.author = "";
         updateId();
         this.addFragment(frag);
-    }
-
-    public Story(String title, String author) {
-        this();
-        setTitle(title);
-        setAuthor(author);
-        updateId();
     }
 
     private void updateId() {

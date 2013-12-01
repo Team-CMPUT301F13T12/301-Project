@@ -2,8 +2,8 @@ package ualberta.g12.adventurecreator.test;
 
 import junit.framework.TestCase;
 
-import ualberta.g12.adventurecreator.Story;
-import ualberta.g12.adventurecreator.StoryList;
+import ualberta.g12.adventurecreator.data.Story;
+import ualberta.g12.adventurecreator.data.StoryList;
 
 import java.util.List;
 

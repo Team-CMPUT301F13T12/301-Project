@@ -6,19 +6,19 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    android:background="@color/lightblue"
     tools:context=".MainActivity" >
 
-        <EditText
-            android:id="@+id/editTextSeg"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_above="@+id/editTextSave"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentTop="true"
-            android:inputType="textMultiLine"
-            android:scrollbars="vertical" />
+    <EditText
+        android:id="@+id/editTextSeg"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/editTextSave"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:inputType="textMultiLine"
+        android:hint="Fragment Text"
+        android:scrollbars="vertical" />
 
     <Button
         android:id="@+id/editTextSave"
@@ -37,5 +37,5 @@
         android:layout_alignParentBottom="true"
         android:layout_alignRight="@+id/editTextSeg"
         android:text="@string/cancel" />
-        
-    </RelativeLayout>
+
+</RelativeLayout>

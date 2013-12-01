@@ -11,7 +11,7 @@ import android.test.ActivityInstrumentationTestCase2;
 import android.widget.Button;
 import android.widget.TextView;
 
-import ualberta.g12.adventurecreator.StoryEditActivity;
+import ualberta.g12.adventurecreator.views.StoryEditActivity;
 
 public class EditStoryActivityTestCases extends ActivityInstrumentationTestCase2<StoryEditActivity> {
         //declare activity and widgets

@@ -11,15 +11,29 @@ import ualberta.g12.adventurecreator.data.OfflineIOHelper;
 import ualberta.g12.adventurecreator.data.Story;
 import ualberta.g12.adventurecreator.online.OnlineHelper;
 
+/**
+ * This task is used to download a story from the list of online stories to a
+ * users offline list. If the story doesn't properly download then we will
+ * notify the user of this.
+ */
 public class DownloadStoryTask extends AsyncTask<Story, Void, String> {
 
     private Context context;
     private Story s;
 
+    /**
+     * Creates a new DownloadStoryTask with the given Context. The context is
+     * used to create toast messages to update the user of the status of the
+     * download.
+     */
     public DownloadStoryTask(Context c) {
         this.context = c;
     }
 
+    /**
+     * Downloads the Story using the OnlineHelper Singleton. The status of the
+     * story download is then passed onto the onPostExecute.
+     */
     @Override
     protected String doInBackground(Story... story) {
 
@@ -34,6 +48,13 @@ public class DownloadStoryTask extends AsyncTask<Story, Void, String> {
 
     }
 
+    /**
+     * Adds the downloaded story to the users list of offline stories, and saves
+     * the story if the story download was successful.
+     * <p>
+     * Displays the message passed to us from doInBackground in a toast message
+     * to the user to notify them of the result of the download.
+     */
     @Override
     protected void onPostExecute(String result) {
         /*
@@ -44,7 +65,8 @@ public class DownloadStoryTask extends AsyncTask<Story, Void, String> {
          */
         if (s != null) {
             StoryListController slc = AdventureCreator.getStoryListController();
-            // TODO: Check if story is already there and then update it with updateStoryWithId
+            // TODO: Check if story is already there and then update it with
+            // updateStoryWithId
             slc.addStory(s);
 
             OfflineIOHelper offlineHelper = AdventureCreator.getOfflineIOHelper();

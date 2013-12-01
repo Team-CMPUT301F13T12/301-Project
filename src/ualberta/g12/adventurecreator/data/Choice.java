@@ -11,6 +11,8 @@ import java.io.Serializable;
 public class Choice implements Serializable {
     private String choiceText;
     private int linkedToFragmentPos;
+    private boolean isRandom;
+    // default settings for a new choice
 
     /**
      * default setting given to a newly implemented choice. The setting will be
@@ -20,6 +22,7 @@ public class Choice implements Serializable {
     public Choice() {
         this.choiceText = "";
         this.linkedToFragmentPos = -1;
+        this.isRandom = false;
     }
 
     /**
@@ -29,6 +32,23 @@ public class Choice implements Serializable {
      */
     public String getChoiceText() {
         return choiceText;
+    }
+    
+    /**
+     * obtains the isRandom boolean variable that tells if a choice is a RANDOM type choice which means it will
+     * go to some other choice
+     * @return 
+     */
+    public boolean getisRandom() {
+        return this.isRandom;
+    }
+    
+    /**
+     * sets isRandom boolean variable that tells if a choice is a RANDOM type choice which means it will
+     * go to some other choice
+     */
+    public void setisRandom(boolean bool) {
+    	this.isRandom = bool;
     }
 
     /**
@@ -62,6 +82,7 @@ public class Choice implements Serializable {
     private void writeObject(java.io.ObjectOutputStream out) throws IOException {
         out.writeObject(this.choiceText);
         out.writeObject(this.linkedToFragmentPos);
+        out.writeObject(this.isRandom);
 
     }
 
@@ -69,5 +90,6 @@ public class Choice implements Serializable {
             ClassNotFoundException {
         this.choiceText = (String) in.readObject();
         this.linkedToFragmentPos = (Integer) in.readObject();
+        this.isRandom = (Boolean)in.readObject();
     }
 }

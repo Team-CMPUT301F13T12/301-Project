@@ -9,21 +9,44 @@ import android.widget.Toast;
 
 import org.apache.http.client.ClientProtocolException;
 
-import java.io.IOException;
-
 import ualberta.g12.adventurecreator.data.AdventureCreator;
 import ualberta.g12.adventurecreator.data.Story;
 import ualberta.g12.adventurecreator.online.OnlineHelper;
 
+import java.io.IOException;
+
+/**
+ * Task used to check if the story passed in already exists on the online repo
+ * of stories. This is done by comparing the ids of the two stories. If two
+ * stories have the same id then we ask the user if they want to update the
+ * online story, as publishing a story that already exists will overwrite the
+ * existing online story
+ * <p>
+ * This class will be used whenever a user tries to publish a story.
+ */
 public class TryPublishStoryTask extends AsyncTask<Story, Void, Boolean> {
 
     private Story s;
     private Context context;
 
+    /**
+     * Creates a TryPublishStoryTask with the given context. The context will be
+     * used to create toast messages to notify the user of the progress and a
+     * dialog window if the story being published will overwrite an existsing
+     * story.
+     */
     public TryPublishStoryTask(Context c) {
         this.context = c;
     }
 
+    /**
+     * Compares the id of the story to upload with all of the ids of the online
+     * story and Story.INVALID id. We will notify onPostExecute of the
+     * comparison result which will notify the user on the UI thread.
+     * 
+     * @return true if a story with this id already exists, false if none does,
+     *         and null if the story has an invalid id
+     */
     @Override
     protected Boolean doInBackground(Story... s) {
         this.s = s[0];
@@ -44,11 +67,19 @@ public class TryPublishStoryTask extends AsyncTask<Story, Void, Boolean> {
         }
     }
 
+    /**
+     * If the story already exists online, asks the user via a dialog if they
+     * want to overwrite the story. If they agree to this or if the story has
+     * not already been uploaded the story is published using the
+     * PublishStoryTask. However if the user does not want to update the story
+     * or if the story had an INVALID_ID, the story is not updated.
+     */
     @Override
     protected void onPostExecute(Boolean update) {
         if (update == null) {
             if (this.s.getId() == Story.INVALID_ID) {
-                Toast.makeText(context, "Story has Invalid Title or Author", Toast.LENGTH_SHORT).show();
+                Toast.makeText(context, "Story has Invalid Title or Author", Toast.LENGTH_SHORT)
+                        .show();
             } else {
                 Toast.makeText(context, "Error publishing story", Toast.LENGTH_SHORT).show();
             }

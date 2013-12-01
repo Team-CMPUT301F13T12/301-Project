@@ -1,7 +1,6 @@
 
 package ualberta.g12.adventurecreator.controllers;
 
-import ualberta.g12.adventurecreator.data.Choice;
 import ualberta.g12.adventurecreator.data.Fragment;
 
 /**
