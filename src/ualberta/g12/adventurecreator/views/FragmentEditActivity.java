@@ -145,7 +145,6 @@ public class FragmentEditActivity extends Activity implements FView<Fragment> {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-
         getMenuInflater().inflate(R.menu.fragment_editor, menu);
         return true;
     }
