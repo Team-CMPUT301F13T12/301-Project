@@ -25,7 +25,7 @@
         android:layout_alignLeft="@+id/imageView1"
         android:layout_below="@+id/imageView1"
         android:layout_marginTop="19dp"
-        android:text="Before reading a story, remeber to uncheck author mode at the start screen. After author mode is disabled and a story is selected, the user can read through the story. The text with a black background indicate a choice the user can make to continue on with the story." />
+        android:text="Before reading a story, remember to uncheck author mode at the start screen. After author mode is disabled and a story is selected, the user can read through the story. The text with a black background indicate a choice the user can make to continue on with the story." />
 
     <TextView
         android:id="@+id/textView3"
