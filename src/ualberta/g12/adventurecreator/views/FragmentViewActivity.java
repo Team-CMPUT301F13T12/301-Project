@@ -157,11 +157,10 @@ public class FragmentViewActivity extends Activity implements FView<Fragment> {
         inflater.inflate(R.menu.fragment_part_menu, menu);
     }
 
-<<<<<<< HEAD
     /**
      * Function that allows the user to add an illustration as an annotation 
      */
-public void AddImage() {
+/*public void AddImage() {
     final CharSequence[] options = { "Take Photo", "Choose from Gallery","Cancel" };
     
     AlertDialog.Builder builder = new AlertDialog.Builder(FragmentViewActivity.this);
@@ -179,13 +178,12 @@ public void AddImage() {
             else if (options[item].equals("Choose from Gallery"))
             {
                 Intent intent = new   Intent(Intent.ACTION_PICK,android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                startActivityForResult(intent, 2);
-=======
+                startActivityForResult(intent, 2);*/
+				
     public void addImage() {
         final CharSequence[] options = {
                 "Take Photo", "Choose from Gallery", "Cancel"
         };
->>>>>>> 7e0abdd4e12a2666558561fd63aabef9a8d29de8
 
         AlertDialog.Builder builder = new AlertDialog.Builder(FragmentViewActivity.this);
         builder.setTitle("Add Photo!");
