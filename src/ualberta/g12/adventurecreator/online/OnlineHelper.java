@@ -24,15 +24,12 @@ import java.lang.reflect.Type;
 import java.util.ArrayList;
 
 /**
- * This is the class in which all our backend web based service functions are
+ * This is the class in which all our back end web based service functions are
  * located. OnlineHelper provides interfaces with the web server to obtain, edit
  * and retrieve information from. This class is based off of code found
  * here:https://github.com/rayzhangcl/ESDemo
- * 
- * @author Vincent
  */
 public class OnlineHelper {
-
     // Http Connector
     private HttpClient httpclient = new DefaultHttpClient();
 
@@ -49,9 +46,10 @@ public class OnlineHelper {
      * also used to update a story because of how the webserver works. The story
      * inserted should have a unique id before being inserted. As our webserver
      * only allows one instance of an object with certain type and id inserting
-     * an object with an already existing id will overwrite it.
+     * an object with an already existing id will overwrite it. To check if
+     * there is an Id that has been taken you can use the checkId method.
      * 
-     * @param story
+     * @param story is the story that is to be inserted or overwritten
      * @throws IllegalStateException
      * @throws IOException
      */
@@ -192,10 +190,11 @@ public class OnlineHelper {
 
     /**
      * Obtains all stories from the server but is only a partial representation
-     * of the object Will search only the storyTitle, author and Id of a story
-     * This method is used to quickly find all the different stories in our
-     * server without having to also downloading all the potentially large media
-     * associated with it
+     * of the object. Will search only the storyTitle, author and Id of a story
+     * and return only those fields. This is why getFields method is used for
+     * each ElasticSearchReponse This method is used to quickly find all the
+     * different stories in our server without having to also downloading all
+     * the potentially large media associated with it
      * 
      * @return an ArraList of partial stories with only the author, title and id
      *         fields filled in
@@ -236,7 +235,10 @@ public class OnlineHelper {
     /**
      * checks if there is already a story with the same id in our database This
      * function can be used to check for a storyId already on the system to
-     * prevent the case of accidental overwriting
+     * prevent the case of accidental overwriting. Story Ids are obtained by
+     * hashing a string that is the title and author combined. Method is mainly
+     * used when the user wants to publish a story to ensure that they know if a
+     * story will be overwritten.
      * 
      * @param id int value which is our story id ( should be unique)
      * @return true if a story with id exists, else false
@@ -271,8 +273,11 @@ public class OnlineHelper {
      * This method searches our web server for the input string on fields author
      * and story. We used the input string "search" to in an elastic search
      * query for fields storyTitle and also author to find hits that match the
-     * "search" string. Method should be used for some search functionality in
-     * our main program
+     * "search" string. Right now this method is used for our searching function
+     * in the online story mode browser. Users will type in keywords which will
+     * become the input parameter to this method. For Example
+     * searchsearchStories("David Fight") will search the stories that contain
+     * "David" and "Fight" within the title and author fields.
      * 
      * @param search input string
      * @return return a list of stories with input string in the author or story
@@ -311,7 +316,9 @@ public class OnlineHelper {
      * deleteStories deletes ALL stories with the same story ID. If there were a
      * case where there was more than one story with the same ID (which should
      * not happen) ALL stories with the same ID will be deleted from our web
-     * server.
+     * server. As of right now this method is not used in the main program yet,
+     * but should be implemented to let users delete published stories from the
+     * web server.
      * 
      * @param storyId the id of the story that is to be deleted
      * @throws IOException
@@ -326,8 +333,10 @@ public class OnlineHelper {
         System.out.println(status);
 
         HttpEntity entity = response.getEntity();
-        /*BufferedReader br = new BufferedReader(new InputStreamReader(entity.getContent()));
-        String output;*/
+        /*
+         * BufferedReader br = new BufferedReader(new
+         * InputStreamReader(entity.getContent())); String output;
+         */
         System.err.println("Output from Server -> ");
         /*
          * while ((output = br.readLine()) != null) { //
@@ -338,7 +347,24 @@ public class OnlineHelper {
     }
 
     /**
-     * get the http response and return json string
+     * This method is used to get the http response from our server and convert
+     * it to a string.
+     * <p>
+     * For example the response from a server may look something like this:<br>
+     * {
+     * <ol>
+     * "_index" : "cmput301f13t12",<br>
+     * "_type" : "stories",<br>
+     * "_id" : "-1519474429",<br>
+     * "_version" : 1,<br>
+     * "	exists" : true, "_source" :
+     * {"author":"op","fragments":[{"title":"Story Start Fragment" * ,"parts":[],"id" * :0,"views":[]}],"storyTitle":"testing 321","startFragPos":* 0,"id":-1519474429,"views":[]}<br>
+     * </ol>
+     * 
+     * @param response is the http response that is obtained from the server
+     *            from some query
+     * @return a String which is the json string of the object
+     * @throws IOException
      */
     String getEntityContent(HttpResponse response) throws IOException {
         BufferedReader br = new BufferedReader(
