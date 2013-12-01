@@ -1,8 +1,12 @@
 package ualberta.g12.adventurecreator.online;
 
 
+import android.util.Log;
+
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+
+
 
 
 import org.apache.http.HttpEntity;
@@ -16,7 +20,11 @@ import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
 
 
+
+
 import ualberta.g12.adventurecreator.data.Story;
+
+
 
 
 import java.io.BufferedReader;
@@ -36,7 +44,7 @@ import java.util.ArrayList;
  * @author Vincent
  */
 public class OnlineHelper {
-
+    private static final String TAG = "OnlineHelper";
 
     // Http Connector
     private HttpClient httpclient = new DefaultHttpClient();
@@ -63,12 +71,15 @@ public class OnlineHelper {
      * @throws IOException
      */
     public void insertStory(Story story) throws IllegalStateException, IOException {
+        Log.d(TAG,"insertstory title "+story.getTitle());
         HttpPost httpPost = new HttpPost(ourServer + "stories/" + story.getId());
         StringEntity stringentity = null;
         try {
             stringentity = new StringEntity(gson.toJson(story));
+            Log.d(TAG,stringentity.toString());
         } catch (UnsupportedEncodingException e) {
             // TODO Auto-generated catch block
+            Log.d(TAG,"catch");
             e.printStackTrace();
         }
         httpPost.setHeader("Accept", "application/json");
