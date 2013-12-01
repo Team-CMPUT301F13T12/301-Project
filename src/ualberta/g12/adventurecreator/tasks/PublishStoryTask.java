@@ -48,8 +48,10 @@ public class PublishStoryTask extends AsyncTask<Story, Void, Boolean> {
              */
             return true;
         } catch (IOException e) {
+            e.printStackTrace();
             return false;
         } catch (IllegalStateException e) {
+            e.printStackTrace();
             return false;
         }
 

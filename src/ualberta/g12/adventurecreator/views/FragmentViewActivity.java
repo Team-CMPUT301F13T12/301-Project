@@ -127,7 +127,7 @@ public class FragmentViewActivity extends Activity implements FView<Fragment> {
                         position);
                 if (goToFrag == null || fragment.getChoices().get(position).getisRandom() == true) {
                     boolean notSamePos = false;
-                    while (notSamePos == false) {
+                    while (!notSamePos) {
                         Random random = new Random();
                         int max = fragment.getChoices().size() - 1;
                         int randPos = random.nextInt((max - 0) + 1) + 0;
@@ -158,28 +158,32 @@ public class FragmentViewActivity extends Activity implements FView<Fragment> {
     }
 
     /**
-     * Function that allows the user to add an illustration as an annotation 
+     * Function that allows the user to add an illustration as an annotation
      */
-/*public void AddImage() {
-    final CharSequence[] options = { "Take Photo", "Choose from Gallery","Cancel" };
-    
-    AlertDialog.Builder builder = new AlertDialog.Builder(FragmentViewActivity.this);
-    builder.setTitle("Add Photo!");
-    builder.setItems(options, new DialogInterface.OnClickListener() {
-        @Override
-        public void onClick(DialogInterface dialog, int item) {
-            if (options[item].equals("Take Photo"))
-            {
-                Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                File f = new File(android.os.Environment.getExternalStorageDirectory(), "temp.jpg");
-                intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(f));
-                startActivityForResult(intent, 1);
-            }
-            else if (options[item].equals("Choose from Gallery"))
-            {
-                Intent intent = new   Intent(Intent.ACTION_PICK,android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                startActivityForResult(intent, 2);*/
-				
+    // public void AddImage() {
+    // final CharSequence[] options = { "Take Photo",
+    // "Choose from Gallery","Cancel" };
+    //
+    // AlertDialog.Builder builder = new
+    // AlertDialog.Builder(FragmentViewActivity.this);
+    // builder.setTitle("Add Photo!");
+    // builder.setItems(options, new DialogInterface.OnClickListener() {
+    // @Override
+    // public void onClick(DialogInterface dialog, int item) {
+    // if (options[item].equals("Take Photo"))
+    // {
+    // Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+    // File f = new File(android.os.Environment.getExternalStorageDirectory(),
+    // "temp.jpg");
+    // intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(f));
+    // startActivityForResult(intent, 1);
+    // }
+    // else if (options[item].equals("Choose from Gallery"))
+    // {
+    // Intent intent = new
+    // Intent(Intent.ACTION_PICK,android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+    // startActivityForResult(intent, 2);
+
     public void addImage() {
         final CharSequence[] options = {
                 "Take Photo", "Choose from Gallery", "Cancel"
@@ -267,7 +271,7 @@ public class FragmentViewActivity extends Activity implements FView<Fragment> {
 
                 Uri selectedImage = data.getData();
                 String[] filePath = {
-                    MediaStore.Images.Media.DATA
+                        MediaStore.Images.Media.DATA
                 };
                 Cursor c = getContentResolver().query(selectedImage, filePath, null, null, null);
                 c.moveToFirst();

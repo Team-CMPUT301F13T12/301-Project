@@ -7,7 +7,9 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.INTERNET" />
 
-    <uses-sdk android:minSdkVersion="15" />
+    <uses-sdk
+        android:minSdkVersion="15"
+        android:targetSdkVersion="19" />
 
     <application
         android:name="ualberta.g12.adventurecreator.data.AdventureCreator"
@@ -43,24 +45,12 @@
             android:label="Story Editor" >
         </activity>
         <activity
-            android:name="ualberta.g12.adventurecreator.views.StoryViewActivity"
-            android:label="@string/title_activity_story_view" >
-        </activity>
-        <activity
             android:name="ualberta.g12.adventurecreator.views.FragmentEditActivity"
             android:label="@string/title_activity_fragment_editor" >
         </activity>
         <activity
             android:name="ualberta.g12.adventurecreator.views.FragmentViewActivity"
             android:label="@string/title_activity_fragment_view" >
-        </activity>
-        <activity
-            android:name="ualberta.g12.adventurecreator.views.EditChoiceActivity"
-            android:label="@string/title_activity_story_view"
-            android:parentActivityName="ualberta.g12.adventurecreator.views.EditChoiceActivity" >
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="ualberta.g12.adventurecreator.views.FragmentEditActivity" />
         </activity>
         <activity
             android:name="ualberta.g12.adventurecreator.views.StorySearchActivity"

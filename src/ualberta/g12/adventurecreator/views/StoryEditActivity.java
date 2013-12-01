@@ -93,12 +93,14 @@ public class StoryEditActivity extends Activity implements SView<Story> {
     }
 
     /** Updates all of the Ui Elements for this Activity */
+    @SuppressWarnings("unchecked")
     @Override
     protected void onStart() {
         super.onStart();
         story.addView(this);
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     public void onDestroy() {
         super.onDestroy();

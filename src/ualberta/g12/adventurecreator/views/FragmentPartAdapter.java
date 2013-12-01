@@ -22,7 +22,7 @@ import ualberta.g12.adventurecreator.data.Fragment;
  * the fragment. Makes views depending on what is selected and orders the
  * segments depending on what type they are.
  */
-public class FragmentPartAdapter extends ArrayAdapter {
+public class FragmentPartAdapter extends ArrayAdapter<String> {
     private final Context context;
     public final int resource;
     private final Fragment frag;
@@ -39,7 +39,6 @@ public class FragmentPartAdapter extends ArrayAdapter {
      * @param resource the resource to load
      * @param frag the Fragment to display
      */
-    @SuppressWarnings("unchecked")
     public FragmentPartAdapter(Context context, int resource, Fragment frag) {
         super(context, resource, frag.getDisplayOrder());
         this.context = context;

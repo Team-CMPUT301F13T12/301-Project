@@ -5,10 +5,8 @@ import junit.framework.TestCase;
 import ualberta.g12.adventurecreator.data.Story;
 import ualberta.g12.adventurecreator.data.StoryList;
 
-import java.util.List;
-
 public class StoryListTest extends TestCase {
-    private List<Story> stories;
+    //private List<Story> stories;
     private StoryList sl;
 
     @Override

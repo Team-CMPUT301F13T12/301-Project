@@ -8,16 +8,14 @@ package ualberta.g12.adventurecreator.test;
  */
 
 import android.test.ActivityInstrumentationTestCase2;
-import android.widget.Button;
-import android.widget.TextView;
 
 import ualberta.g12.adventurecreator.views.StoryEditActivity;
 
 public class EditStoryActivityTestCases extends ActivityInstrumentationTestCase2<StoryEditActivity> {
         //declare activity and widgets
-        private StoryEditActivity myEditStoryActivity;
-        private TextView myView;
-        private Button mbutton;
+        //private StoryEditActivity myEditStoryActivity;
+        //private TextView myView;
+        //private Button mbutton;
         
         //Constructor
         public EditStoryActivityTestCases(){

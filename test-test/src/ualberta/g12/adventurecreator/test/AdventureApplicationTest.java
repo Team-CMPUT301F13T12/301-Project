@@ -11,14 +11,10 @@ import ualberta.g12.adventurecreator.data.StoryList;
 
 public class AdventureApplicationTest extends AndroidTestCase
 {
-    private AdventureCreator application;
-
     @Override
     protected void setUp() throws Exception {
         super.setUp();
 
-        // Create it even though we don't use this
-        this.application = new AdventureCreator();
     }
 
     public void testSingletonsNotNull() {
@@ -40,13 +36,13 @@ public class AdventureApplicationTest extends AndroidTestCase
         assertSame(slc, AdventureCreator.getStoryListController());
     }
 
-    public void testStoryController(){
+    public void testStoryController() {
         StoryController sc = AdventureCreator.getStoryController();
         assertNotNull(sc);
         assertSame(sc, AdventureCreator.getStoryController());
     }
-    
-    public void testFragmentController(){
+
+    public void testFragmentController() {
         FragmentController fc = AdventureCreator.getFragmentController();
         assertNotNull(fc);
         assertSame(fc, AdventureCreator.getFragmentController());

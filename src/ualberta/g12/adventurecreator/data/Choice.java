@@ -1,3 +1,4 @@
+
 package ualberta.g12.adventurecreator.data;
 
 import java.io.IOException;
@@ -9,10 +10,15 @@ import java.io.Serializable;
  * the reader's mode.
  */
 public class Choice implements Serializable {
+    /**
+     * Serial Id for the Lint
+     */
+    private static final long serialVersionUID = -9049654917867777945L;
     private String choiceText;
     private int linkedToFragmentPos;
     private Fragment linkedToFragment;
     private boolean isRandom;
+
     // default settings for a new choice
     /**
      * default setting given to a newly implemented choice. The setting will be
@@ -34,22 +40,23 @@ public class Choice implements Serializable {
     public String getChoiceText() {
         return choiceText;
     }
-    
+
     /**
-     * obtains the isRandom boolean variable that tells if a choice is a RANDOM type choice which means it will
-     * go to some other choice
-     * @return 
+     * obtains the isRandom boolean variable that tells if a choice is a RANDOM
+     * type choice which means it will go to some other choice
+     * 
+     * @return
      */
     public boolean getisRandom() {
         return this.isRandom;
     }
-    
+
     /**
-     * sets isRandom boolean variable that tells if a choice is a RANDOM type choice which means it will
-     * go to some other choice
+     * sets isRandom boolean variable that tells if a choice is a RANDOM type
+     * choice which means it will go to some other choice
      */
     public void setisRandom(boolean bool) {
-    	this.isRandom = bool;
+        this.isRandom = bool;
     }
 
     /**
@@ -80,15 +87,16 @@ public class Choice implements Serializable {
         this.linkedToFragmentPos = linkedToFragmentPos;
     }
 
-     public Fragment getLinkedToFragment() {
-     return linkedToFragment;
-     }
-    
-     public void setLinkedToFragment(Fragment linkedToFragment) {
-         this.linkedToFragment = linkedToFragment;
-         if (linkedToFragment != null)
-             linkedToFragment.setLinkedTo(true); //page is definitely linked to now
-     }
+    public Fragment getLinkedToFragment() {
+        return linkedToFragment;
+    }
+
+    public void setLinkedToFragment(Fragment linkedToFragment) {
+        this.linkedToFragment = linkedToFragment;
+        if (linkedToFragment != null)
+            linkedToFragment.setLinkedTo(true); // page is definitely linked to
+                                                // now
+    }
 
     private void writeObject(java.io.ObjectOutputStream out) throws IOException {
         out.writeObject(this.choiceText);
@@ -103,6 +111,6 @@ public class Choice implements Serializable {
         this.choiceText = (String) in.readObject();
         this.linkedToFragment = (Fragment) in.readObject();
         this.linkedToFragmentPos = (Integer) in.readObject();
-        this.isRandom = (Boolean)in.readObject();
+        this.isRandom = (Boolean) in.readObject();
     }
 }

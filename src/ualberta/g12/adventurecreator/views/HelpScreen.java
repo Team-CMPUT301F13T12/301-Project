@@ -4,17 +4,13 @@
  */
 package ualberta.g12.adventurecreator.views;
 
-import android.os.Bundle;
 import android.app.Activity;
 import android.content.Intent;
-import android.view.Menu;
+import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
 import ualberta.g12.adventurecreator.R;
-import ualberta.g12.adventurecreator.R.id;
-import ualberta.g12.adventurecreator.R.layout;
-import ualberta.g12.adventurecreator.R.menu;
 
 public class HelpScreen extends Activity {
 

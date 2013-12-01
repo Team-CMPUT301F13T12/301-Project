@@ -9,6 +9,7 @@ import java.util.ArrayList;
  * All StoryList models adhere to this class. Adds the required methods to
  * update all of the views that our displaying our data.
  */
+@SuppressWarnings("rawtypes")
 public class LModel<V extends LView> {
     private ArrayList<V> views;
 
@@ -46,6 +47,7 @@ public class LModel<V extends LView> {
      * Loops through all of our views and calls their update(LModel) method
      * which should be implemented in each of them.
      */
+    @SuppressWarnings("unchecked")
     public void notifyViews() {
         for (V view : views) {
             view.update(this);
