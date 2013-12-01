@@ -72,19 +72,18 @@ public class FragmentViewActivity extends Activity implements FView<Fragment> {
         viewImage = (ImageView) findViewById(R.id.viewImage);
         viewImage2 = (ImageView) findViewById(R.id.viewImage2);
         viewImage3 = (ImageView) findViewById(R.id.viewImage3);
-
-        
-        
-        Log.d(TAG, "start pos "+fragPos);
         
         // set fragment to first fragment in story
         fragPos = story.getStartFragPos();
         fragment = AdventureCreator.getStoryController().getFragmentAtPos(story,
                 fragPos);
+        
+        Log.d(TAG, "start pos "+fragPos);
 
         // show everything
         update();
         
+        Log.d(TAG, "update ");
         // set click listeners
         setListClickListener();
 

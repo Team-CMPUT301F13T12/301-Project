@@ -4,7 +4,9 @@ package ualberta.g12.adventurecreator.tasks;
 import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
+import android.util.Log;
 import android.widget.Toast;
+
 
 
 import ualberta.g12.adventurecreator.data.AdventureCreator;
@@ -75,9 +77,11 @@ public class CacheStoryTask extends AsyncTask<Story, Void, String> {
             // Get first fragment and give it to FragmentViewActivity
             int fragPos = this.s.getStartFragPos();
 
+            Log.d("CAHCE", s.getFragments().get(0).getTitle());
 
             Fragment goToFrag = AdventureCreator.getStoryController().getFragmentAtPos(s, fragPos);
             Intent i = new Intent(this.context, FragmentViewActivity.class);
+            i.putExtra("Story", s);
             i.putExtra("Fragment", goToFrag);
             this.context.startActivity(i);
         }
