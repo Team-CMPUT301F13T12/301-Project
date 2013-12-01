@@ -14,7 +14,6 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
 
-import ualberta.g12.adventurecreator.data.FragmentPartChoice;
 import ualberta.g12.adventurecreator.R;
 import ualberta.g12.adventurecreator.controllers.FragmentController;
 import ualberta.g12.adventurecreator.controllers.StoryController;
@@ -41,8 +40,7 @@ public class ChoiceEditActivity extends Activity {
     private int storyPos, fragPos, choicePos, linkedPos = -1;
     private StoryList storyList;
     private Fragment fragment;
-    private FragmentPart<?> fragmentPart;
-    private FragmentPartChoice fragmentPartChoice;
+    private FragmentPart fragmentPart;
     private Choice choice;
     private static final String TAG = "ChoiceEditActivity";
     private EditText myTitleET;
@@ -91,9 +89,8 @@ public class ChoiceEditActivity extends Activity {
             finish();
         }
         
-        if(fragmentPart instanceof FragmentPartChoice){
-            fragmentPartChoice = (FragmentPartChoice)fragmentPart;
-            choice = fragmentPartChoice.getAttribute();
+        if(fragmentPart.getType().equals("c")){
+            choice = fragmentPart.getChoice();
         } else{
             if (DEBUG)
                 Log.d(TAG,"Not a choice at given choicePos");
@@ -193,7 +190,7 @@ public class ChoiceEditActivity extends Activity {
                     Log.d(TAG, "choice text "+choice.getChoiceText());
                 
                 choice.setLinkedToFragmentPos(linkedPos);
-                fragmentController.setFragmentPartAttr(fragment, fragmentPartChoice, choice);
+                fragmentController.setFragmentPartChoice(fragment, fragmentPart, choice);
                 storyListController.saveOfflineStories(storyList);
 
                 finish();

@@ -38,10 +38,6 @@ import ualberta.g12.adventurecreator.data.AdventureCreator;
 import ualberta.g12.adventurecreator.data.Choice;
 import ualberta.g12.adventurecreator.data.Fragment;
 import ualberta.g12.adventurecreator.data.FragmentPart;
-import ualberta.g12.adventurecreator.data.FragmentPartChoice;
-import ualberta.g12.adventurecreator.data.FragmentPartEmpty;
-import ualberta.g12.adventurecreator.data.FragmentPartIllustration;
-import ualberta.g12.adventurecreator.data.FragmentPartText;
 import ualberta.g12.adventurecreator.data.Story;
 import ualberta.g12.adventurecreator.data.StoryList;
 
@@ -202,8 +198,7 @@ public class FragmentEditActivity extends Activity implements FView<Fragment> {
         
         //Do corresponding action
         if (itemTitle.equals("Insert Text")) {
-            //We can cast here because we know the returned type (we just chose it with "t")
-            FragmentPartText part = (FragmentPartText) fragmentController.addNewFragmentPart(fragment, "t", position);
+            fragmentController.addNewFragmentPart(fragment, "t", position);
 
         } else if (itemTitle.equals("Insert Illustration")) {
             Log.d(TAG,"insert ill start");
@@ -213,9 +208,10 @@ public class FragmentEditActivity extends Activity implements FView<Fragment> {
             AddImage();
 
         } else if (itemTitle.equals("Edit")) {
-            FragmentPart<?> part = fragment.getParts().get(position);
+            FragmentPart part = fragment.getParts().get(position);
+            String type = part.getType();
             
-            if (part instanceof FragmentPartText || part instanceof FragmentPartEmpty) {
+            if ( type.equals("t") || type.equals("e")) {
                 RelativeLayout curLayout = new RelativeLayout(this);
 
                 LayoutInflater inflater = (LayoutInflater) this
@@ -227,8 +223,8 @@ public class FragmentEditActivity extends Activity implements FView<Fragment> {
                 final EditText editTextSegView = (EditText) editTextWindow.getContentView()
                         .findViewById(R.id.editTextSeg);
                 
-                if (part instanceof FragmentPartText) {
-                    editTextSegView.setText(((FragmentPartText)part).getAttribute());
+                if ( type.equals("t") ) {
+                    editTextSegView.setText(part.getData());
                 } else {
                     editTextSegView.setText("");
                 }
@@ -244,9 +240,8 @@ public class FragmentEditActivity extends Activity implements FView<Fragment> {
                         String newText = editTextSegView.getText().toString();
                         fragmentController.deleteFragmentPart(fragment, this.getPosition());
                         
-                        //We can cast here because we know the returned type (we just chose it with "t")
-                        FragmentPartText part = (FragmentPartText) fragmentController.addNewFragmentPart(fragment, "t", this.getPosition());
-                        fragmentController.setFragmentPartAttr(fragment, part, newText);
+                        FragmentPart part = fragmentController.addNewFragmentPart(fragment, "t", this.getPosition());
+                        fragmentController.setFragmentPartData(fragment, part, newText);
                         editTextWindow.dismiss();
                     }
                 });
@@ -261,12 +256,12 @@ public class FragmentEditActivity extends Activity implements FView<Fragment> {
                 editTextWindow.showAtLocation(curLayout, Gravity.CENTER, 0, 0);
                 editTextWindow.update(0, 0, fragmentPartListView.getWidth(), 400);
 
-            } else if (part instanceof FragmentPartIllustration) {
+            } else if ( type.equals("i") ) {
                 saveFragment();
                 pictureMode = "Edit";
                 picturePosition = position;
                 AddImage();
-            } else if (part instanceof FragmentPartChoice) {
+            } else if ( type.equals("c") ) {
 
                 // go to edit choice activity
                 Intent intent = new Intent(this, ChoiceEditActivity.class);
@@ -282,9 +277,8 @@ public class FragmentEditActivity extends Activity implements FView<Fragment> {
             // First remove empty part
             fragmentController.removeEmptyPart(fragment);
 
-            // We can cast here because we know the returned type (we just chose it with "c")
             int choicePos = fragment.getParts().size();
-            FragmentPartChoice part = (FragmentPartChoice) fragmentController.addNewFragmentPart(fragment, "c", choicePos);
+            fragmentController.addNewFragmentPart(fragment, "c", choicePos);
             
             saveFragment();
 
@@ -425,8 +419,8 @@ public class FragmentEditActivity extends Activity implements FView<Fragment> {
                     
                     //finish by updating the fragment part      
                     //We can cast here because we know the returned type (we just chose it with "i")
-                    FragmentPartIllustration part = (FragmentPartIllustration) fragmentController.addNewFragmentPart(fragment, "i", position);
-                    fragmentController.setFragmentPartAttr(fragment, part, picturePath);
+                    FragmentPart part = fragmentController.addNewFragmentPart(fragment, "i", position);
+                    fragmentController.setFragmentPartData(fragment, part, picturePath);
                     
                     //remove old picture if in edit mode
                     if (pictureMode.equals("Edit")) {

@@ -4,9 +4,6 @@ package ualberta.g12.adventurecreator.controllers;
 import ualberta.g12.adventurecreator.data.Choice;
 import ualberta.g12.adventurecreator.data.Fragment;
 import ualberta.g12.adventurecreator.data.FragmentPart;
-import ualberta.g12.adventurecreator.data.FragmentPartChoice;
-import ualberta.g12.adventurecreator.data.FragmentPartEmpty;
-import ualberta.g12.adventurecreator.data.FragmentPartFactory;
 
 import android.util.Log;
 
@@ -34,10 +31,9 @@ public class FragmentController implements FController {
         frag.setTitle(newTitle);
     }
 
-    public FragmentPart<?> addNewFragmentPart(Fragment frag, String type, int pos){
-        FragmentPartFactory factory = new FragmentPartFactory();
-        FragmentPart<?> newPart = factory.createFragmentPart(type);
-        List<FragmentPart<?>> parts = frag.getParts();
+    public FragmentPart addNewFragmentPart(Fragment frag, String type, int pos){
+        FragmentPart newPart = new FragmentPart(type);
+        List<FragmentPart> parts = frag.getParts();
         try{
             parts.add(pos, newPart);
         } catch (IndexOutOfBoundsException e){
@@ -47,9 +43,14 @@ public class FragmentController implements FController {
         return newPart;
     }
     
-    public <E> void setFragmentPartAttr(Fragment frag, FragmentPart<E> part, E attr){
-        part.setAttribute(attr);
-        frag.setParts(frag.getParts());
+    public void setFragmentPartData(Fragment frag, FragmentPart part, String data){
+        part.setData(data);
+        //frag.setParts(frag.getParts());
+    }
+    
+    public void setFragmentPartChoice(Fragment frag, FragmentPart part, Choice choice){
+        part.setChoice(choice);
+        //frag.setParts(frag.getParts());
     }
     
     /**
@@ -61,7 +62,7 @@ public class FragmentController implements FController {
      */
     @Override    
     public boolean deleteFragmentPart(Fragment frag, int partNum){
-        List<FragmentPart<?>> parts = frag.getParts();
+        List<FragmentPart> parts = frag.getParts();
         try{
             parts.remove(partNum);
         } catch (IndexOutOfBoundsException e){
@@ -78,9 +79,9 @@ public class FragmentController implements FController {
      * @param frag  fragment reference corresponding to the current fragment
      */
     public void removeEmptyPart(Fragment frag) {
-        List<FragmentPart<?>> parts = frag.getParts();
+        List<FragmentPart> parts = frag.getParts();
         for (int i = 0; i < parts.size(); i++){
-            if (parts.get(i) instanceof FragmentPartEmpty){
+            if (parts.get(i).getType().equals("e")){
                 deleteFragmentPart(frag, i);
                 break;
             }
@@ -103,20 +104,19 @@ public class FragmentController implements FController {
      * at the displayOrderPos returns null.  
      */
     public int getLinkedToFragmentPosOfChoice(Fragment frag, int partNum) {
-        List<FragmentPart<?>> parts = frag.getParts();
-        FragmentPart<?> part;
+        List<FragmentPart> parts = frag.getParts();
+        FragmentPart part;
         try{
             part = parts.get(partNum);
         } catch (IndexOutOfBoundsException e){
             return -1;
         }
         
-        if (!(part instanceof FragmentPartChoice))
+        if (!(part.getType().equals("c")))
             return -1;
         else {
             //safe to cast now
-            FragmentPartChoice partChoice = (FragmentPartChoice)part;
-            Choice choice = partChoice.getAttribute();
+            Choice choice = part.getChoice();
             return choice.getLinkedToFragmentPos();
         }
     }

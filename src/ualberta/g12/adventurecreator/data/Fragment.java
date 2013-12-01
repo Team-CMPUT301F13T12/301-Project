@@ -16,7 +16,7 @@ public class Fragment extends FModel implements Serializable {
 
     private String title;
     private int id;
-    private List<FragmentPart<?>> parts;
+    private List<FragmentPart> parts;
     // private Annotation annotations;
 
     /**
@@ -25,7 +25,7 @@ public class Fragment extends FModel implements Serializable {
      */
     public Fragment() {
         title = "";
-        parts = new LinkedList<FragmentPart<?>>();
+        parts = new LinkedList<FragmentPart>();
     }
 
     /** @return the title of the fragment */
@@ -49,11 +49,11 @@ public class Fragment extends FModel implements Serializable {
         this.id = id;
     }
     
-    public List<FragmentPart<?>> getParts() {
+    public List<FragmentPart> getParts() {
         return parts;
     }
 
-    public void setParts(List<FragmentPart<?>> parts) {
+    public void setParts(List<FragmentPart> parts) {
         this.parts = parts;
         notifyViews();
     }
@@ -86,7 +86,7 @@ public class Fragment extends FModel implements Serializable {
             ClassNotFoundException {
         this.title = (String) in.readObject();
         this.id = (Integer) in.readObject();
-        this.parts = (List<FragmentPart<?>>)in.readObject();
+        this.parts = (List<FragmentPart>)in.readObject();
     }
 
 }

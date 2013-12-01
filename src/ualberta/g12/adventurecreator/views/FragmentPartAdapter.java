@@ -16,10 +16,6 @@ import ualberta.g12.adventurecreator.R;
 import ualberta.g12.adventurecreator.data.Choice;
 import ualberta.g12.adventurecreator.data.Fragment;
 import ualberta.g12.adventurecreator.data.FragmentPart;
-import ualberta.g12.adventurecreator.data.FragmentPartChoice;
-import ualberta.g12.adventurecreator.data.FragmentPartEmpty;
-import ualberta.g12.adventurecreator.data.FragmentPartIllustration;
-import ualberta.g12.adventurecreator.data.FragmentPartText;
 
 /**
  * Adapter for communication between the fragment class and the segments within
@@ -75,13 +71,14 @@ public class FragmentPartAdapter extends ArrayAdapter {
 
         if (DEBUG)
             Log.d(TAG, "POSITION " + position);
-        FragmentPart<?> part = frag.getParts().get(position);
+        FragmentPart part = frag.getParts().get(position);
+        String type = part.getType();
         
-        if (part instanceof FragmentPartText) {
+        if ( type.equals("t") ) {
             if (DEBUG)
                 Log.d(TAG, "TEXT " + position);
             // Display a text segment
-            String textSegment = ((FragmentPartText)part).getAttribute();
+            String textSegment = part.getData();
             if (textSegment != null) {
                 text.setVisibility(View.VISIBLE);
                 if (text != null)
@@ -90,12 +87,12 @@ public class FragmentPartAdapter extends ArrayAdapter {
                     else 
                         text.setText("NewText");
             }
-        } else if (part instanceof FragmentPartIllustration) {
+        } else if ( type.equals("i") ) {
             if (DEBUG)
                 Log.d(TAG, "IMAGE " + position);
             // Display an illustration
 
-            String picturePath = ((FragmentPartIllustration)part).getAttribute();
+            String picturePath = part.getData();
             Bitmap illustration = BitmapFactory.decodeFile(picturePath);
 
             if (illustration != null) {
@@ -105,12 +102,12 @@ public class FragmentPartAdapter extends ArrayAdapter {
                         Log.d(TAG, "SET IMAGE");
                 image.setImageBitmap(illustration);
             }
-        } else if (part instanceof FragmentPartChoice) {
+        } else if ( type.equals("c") ) {
             if (DEBUG)
                 Log.d(TAG, "CHOICE " + position);
             // Display a choice
 
-            Choice choice = ((FragmentPartChoice)part).getAttribute();
+            Choice choice = part.getChoice();
             if (choice != null) {
                 choiceButton.setVisibility(View.VISIBLE);
                 if (choiceButton != null)
@@ -120,7 +117,7 @@ public class FragmentPartAdapter extends ArrayAdapter {
                 choiceButton.setBackgroundColor(Color.BLACK);
                 choiceButton.setTextColor(Color.WHITE);
             }
-        } else if (part instanceof FragmentPartEmpty) {
+        } else if ( type.equals("e") ) {
             if (DEBUG)
                 Log.d(TAG, "EMPTY " + position);
             // Display a DefaultPart
