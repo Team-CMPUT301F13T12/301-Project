@@ -46,6 +46,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.text.SimpleDateFormat;
+import java.util.Locale;
 
 // Right now we are making Fragments here and also choice
 // What i was thinking was maybe just make the general fragment here
@@ -405,7 +406,7 @@ public class FragmentEditActivity extends Activity implements FView<Fragment> {
             if (folderExists) {
                 //once folder exists finish creating picturePath
                 long picTime = System.currentTimeMillis();
-                String newPicName = new SimpleDateFormat("yyyy-MM-dd HH.mm.ss").format(picTime);
+                String newPicName = new SimpleDateFormat("yyyy-MM-dd HH.mm.ss", Locale.CANADA).format(picTime);
                 //TODO incorporate unique story ID in picture name
                 picturePath = folder.getAbsolutePath() + "/" + newPicName + ".jpg";
                 File file = new File(picturePath);
