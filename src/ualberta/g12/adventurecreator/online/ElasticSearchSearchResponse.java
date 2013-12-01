@@ -18,7 +18,7 @@ import java.util.Collection;
 public class ElasticSearchSearchResponse<T> {
     int took;
     boolean timed_out;
-    transient Object _shards;
+    Object _shards;
     Hits<T> hits;
     boolean exists;
 
