@@ -17,7 +17,6 @@ public class Hits<T> {
     
     /**
      * Obtains the hits of an object of a response
-     * @return
      */
     public Collection<ElasticSearchResponse<T>> getHits() {
         return hits;

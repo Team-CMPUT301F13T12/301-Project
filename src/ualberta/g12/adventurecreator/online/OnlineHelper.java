@@ -103,7 +103,7 @@ public class OnlineHelper {
      * a story. If an id is not in the server then the resulting Story object
      * should be NULL.
      * 
-     * @param storyID is the id in which we are searching for ( should be unique
+     * @param storyId is the id in which we are searching for ( should be unique
      *            also)
      * @return the story object with the associated id
      */

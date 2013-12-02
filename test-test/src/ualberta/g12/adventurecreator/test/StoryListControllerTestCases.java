@@ -3,11 +3,15 @@ package ualberta.g12.adventurecreator.test;
 
 import android.test.ActivityInstrumentationTestCase2;
 
+import junit.framework.TestCase;
+
 import ualberta.g12.adventurecreator.controllers.FragmentController;
 import ualberta.g12.adventurecreator.controllers.StoryListController;
 import ualberta.g12.adventurecreator.data.Fragment;
+import ualberta.g12.adventurecreator.data.OfflineIOHelper;
 import ualberta.g12.adventurecreator.data.Story;
 import ualberta.g12.adventurecreator.data.StoryList;
+import ualberta.g12.adventurecreator.views.FragmentEditActivity;
 import ualberta.g12.adventurecreator.views.MainActivity;
 
 import java.util.List;
