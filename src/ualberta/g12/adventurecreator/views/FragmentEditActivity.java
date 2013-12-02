@@ -411,8 +411,7 @@ public class FragmentEditActivity extends Activity implements FView<Fragment> {
                             .format(picTime)
                             + ".jpg";
                     File file = new File(storyFolder.getAbsolutePath(), newPicName);
-
-                    Log.d(TAG, "path of image END" + file.getAbsolutePath() + "");
+                    picturePath = file.getAbsolutePath();
 
                     // then write the picture to picturePath
                     try {
@@ -430,6 +429,9 @@ public class FragmentEditActivity extends Activity implements FView<Fragment> {
                         e.printStackTrace();
                     }
 
+                    if (DEBUG)
+                        Log.d(TAG, "path of image END" + picturePath + "");
+                    
                     // finish by updating the fragment part
                     FragmentPart part = fragmentController.addNewFragmentPart(fragment, "i",
                             position);
@@ -445,8 +447,6 @@ public class FragmentEditActivity extends Activity implements FView<Fragment> {
                     // unable to create folder
                 }
             }
-            if (DEBUG)
-                Log.d(TAG, "path of image END" + picturePath + "");
         }
     }
 
