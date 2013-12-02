@@ -21,6 +21,7 @@ public class FragmentPart implements Serializable{
         this.type=type;
         this.data = "";
         this.choice = new Choice();
+        this.picSize = 1;
     }
     /**
      * @return the type

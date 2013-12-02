@@ -125,15 +125,4 @@ public class FragmentController implements FController {
             return choice.getLinkedToFragmentPos();
         }
     }
-    
-
-    /**
-     * changes the Id of a fragment at position id
-     * 
-     * @param f is the fragment we wish to change the id to
-     * @param id is the id we wish to associciate with the fragment
-     */
-    public void setId(Fragment f, int id) {
-        f.setId(id);
-    }
 }
