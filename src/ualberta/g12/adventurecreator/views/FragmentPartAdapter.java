@@ -120,6 +120,7 @@ public class FragmentPartAdapter extends ArrayAdapter<FragmentPart> {
                             Log.d(TAG, "SET IMAGE");
                     image.setImageBitmap(illustration);
                 }
+            }
         } else if ( type.equals("c") ) {
             
             if (DEBUG)
