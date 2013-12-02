@@ -1,11 +1,12 @@
 
 package ualberta.g12.adventurecreator.test;
 
-import junit.framework.TestCase;
+import android.test.ActivityInstrumentationTestCase2;
 
 import ualberta.g12.adventurecreator.controllers.StoryController;
 import ualberta.g12.adventurecreator.data.Fragment;
 import ualberta.g12.adventurecreator.data.Story;
+import ualberta.g12.adventurecreator.views.StoryEditActivity;
 
 /**
  * These test cases test that all getters and setters in the Story Controller class work
@@ -17,20 +18,20 @@ import ualberta.g12.adventurecreator.data.Story;
  *
  */
 
-public class StoryControllerTest extends TestCase {
+public class StoryControllerTest extends ActivityInstrumentationTestCase2<StoryEditActivity> {
 
-    private StoryController sc;
+    public StoryControllerTest() {
+		super(StoryEditActivity.class);
+		// TODO Auto-generated constructor stub
+	}
 
-    protected void setUp() throws Exception {
-        super.setUp();
-        sc = new StoryController();
-    }
 
     /**
      * Tests setting a title of a story with a story controller
      * We will create a new story, set the title using the controller and make sure that the title is changed
      */
     public void testSetTitle() {
+    	StoryController sc = new StoryController();
         Story s = new Story();
         sc.setTitle(s, "TEST");
 
@@ -42,6 +43,7 @@ public class StoryControllerTest extends TestCase {
      * We will create a new story, set the author  using the controller and make sure that the author is changed
      */
     public void testSetAuthor() {
+    	StoryController sc = new StoryController();
         Story s = new Story();
         sc.setAuthor(s, "ME");
 
@@ -52,6 +54,7 @@ public class StoryControllerTest extends TestCase {
      * Tests adding a fragment to a story with a story controller
      */
     public void testAddFragment() {
+    	StoryController sc = new StoryController();
         Story s = new Story();
         Fragment f = new Fragment();
         sc.addFragment(s, f);
@@ -66,6 +69,7 @@ public class StoryControllerTest extends TestCase {
      * At the end we verify that the title has been changed
      */
     public void testSetFragAtPosition() {
+    	StoryController sc = new StoryController();
         Story s = new Story();
         Fragment f = new Fragment();
         f.setTitle("HIHI");
