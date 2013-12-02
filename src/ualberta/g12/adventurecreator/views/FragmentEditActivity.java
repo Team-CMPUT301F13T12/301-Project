@@ -73,11 +73,12 @@ public class FragmentEditActivity extends Activity implements FView<Fragment> {
     private Fragment fragment;
     private int position;
     public int picturePosition;
-    //TODO: get rid of test variable
-   // public static int PicSize;   
         
+    // For getting pictures
     private String pictureMode;
+    private int picSize;
 
+    // Objects
     private StoryList storyList;
     private Story story;
     private int storyPos, fragPos;
@@ -127,7 +128,7 @@ public class FragmentEditActivity extends Activity implements FView<Fragment> {
         }
 
         // Load fragment parts as that is the same for both modes
-        // Loads fragment parts (text, images, videos, sounds, etc)
+        // Loads fragment parts (text, images, choices, etc)
         adapter = new FragmentPartAdapter(this, R.layout.activity_fragment_editor, fragment);
         fragmentPartListView.setAdapter(adapter);
 
@@ -139,12 +140,6 @@ public class FragmentEditActivity extends Activity implements FView<Fragment> {
     protected void onStart() {
         super.onStart();
         fragment.addView(this);
-    }
-    
-    @Override
-    protected void onResume() {
-        super.onResume();
-        update(fragment);
     }
     
     @Override
@@ -207,21 +202,19 @@ public class FragmentEditActivity extends Activity implements FView<Fragment> {
         if (itemTitle.equals("Insert Text")) {
             fragmentController.addNewFragmentPart(fragment, "t", position);
 
-
         } else if (itemTitle.equals("Insert Illustration (Large)")) {
            Log.d(TAG,"insert ill start");
-
             saveFragment();
             pictureMode = "Add";
             picturePosition = position;
-            setState(1);
+            picSize = 2;
             AddImage();
         } else if (itemTitle.equals("Insert Illustration (Small)")) {
             Log.d(TAG,"insert ill start");
             saveFragment();
             pictureMode = "Add";
             picturePosition = position;
-            setState(2);
+            picSize = 1;
             AddImage();
 
         } else if (itemTitle.equals("Edit")) {
@@ -277,6 +270,7 @@ public class FragmentEditActivity extends Activity implements FView<Fragment> {
                 saveFragment();
                 pictureMode = "Edit";
                 picturePosition = position;
+                picSize = part.getPicSize();
                 AddImage();
             } else if ( type.equals("c") ) {
 
@@ -436,6 +430,7 @@ public class FragmentEditActivity extends Activity implements FView<Fragment> {
                     //We can cast here because we know the returned type (we just chose it with "i")
                     FragmentPart part = fragmentController.addNewFragmentPart(fragment, "i", position);
                     fragmentController.setFragmentPartData(fragment, part, picturePath);
+                    fragmentController.setFragmentPartPicSize(fragment, part, picSize);
                     
                     //remove old picture if in edit mode
                     if (pictureMode.equals("Edit")) {
@@ -469,14 +464,5 @@ public class FragmentEditActivity extends Activity implements FView<Fragment> {
 
         storyController.setFragmentAtLocation(story, fragPos, fragment);
         storyListController.saveOfflineStories(storyList);
-    }
-   
-  //  public static int getState(){
-   //     return FragmentEditActivity.PicSize;
-   // }
-    
-    public void setState(int PicSize) {
-        FragmentPartAdapter.PicSize = PicSize;
-    }
-   
+    }   
 }

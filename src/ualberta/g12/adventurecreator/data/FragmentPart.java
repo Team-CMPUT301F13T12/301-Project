@@ -6,6 +6,7 @@ public class FragmentPart implements Serializable{
     private String type;
     private String data;
     private Choice choice;
+    private int picSize;
     
     /**
      * @param type
@@ -82,5 +83,18 @@ public class FragmentPart implements Serializable{
      */
     public void setChoice(Choice choice) {
         this.choice = choice;
+    }
+    
+    /**
+     * @return the picSize
+     */
+    public int getPicSize() {
+        return picSize;
+    }
+    /**
+     * @param picSize the picSize to set
+     */
+    public void setPicSize(int picSize) {
+        this.picSize = picSize;
     }
 }

@@ -45,12 +45,17 @@ public class FragmentController implements FController {
     
     public void setFragmentPartData(Fragment frag, FragmentPart part, String data){
         part.setData(data);
-        //frag.setParts(frag.getParts());
+        frag.setParts(frag.getParts());
     }
     
     public void setFragmentPartChoice(Fragment frag, FragmentPart part, Choice choice){
         part.setChoice(choice);
-        //frag.setParts(frag.getParts());
+        frag.setParts(frag.getParts());
+    }
+    
+    public void setFragmentPartPicSize(Fragment frag, FragmentPart part, int picSize){
+        part.setPicSize(picSize);
+        frag.setParts(frag.getParts());
     }
     
     /**
