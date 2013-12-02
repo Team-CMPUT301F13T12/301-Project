@@ -12,7 +12,6 @@ import android.test.ActivityInstrumentationTestCase2;
  * thats all we test
  * 
  * We test if all fields choiceText, linkedToFragmentPos, and isRandom behave correctly
- * @author Vincent
  *
  */
 public class ChoiceTest extends ActivityInstrumentationTestCase2<ChoiceEditActivity> {
