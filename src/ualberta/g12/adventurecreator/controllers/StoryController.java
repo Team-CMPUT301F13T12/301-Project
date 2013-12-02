@@ -14,17 +14,21 @@ import java.util.List;
 public class StoryController implements SController {
 
     /**
-     * sets the title of the selected story
+     * Sets the title of the given story. This will automatically update the id
+     * of the story as the id is created from the title and author of the story.<br>
+     * If a null value is given, the story's id will be set to an invalid id.
      * 
      * @param newTitle the new title of story s
      * @param s the story to change the title of
      */
-    public void setTitle(Story s, String newTitle){
+    public void setTitle(Story s, String newTitle) {
         s.setTitle(newTitle);
     }
 
     /**
-     * sets the author string of the selected story
+     * Sets the author of the given story. This will automatically update the id
+     * of the story as the id is created from the title and author of the story.<br>
+     * If a null value is given, the story's id will be set to an invalid id.
      * 
      * @param newAuthor the new author of story s
      * @param s the story to change the author of
@@ -33,54 +37,37 @@ public class StoryController implements SController {
         s.setAuthor(newAuthor);
     }
 
-    @Override
     /**
-     * adds a fragment to the selected story
+     * Adds a fragment to the story's list of fragments. Behavior is unspecified
+     * if either the story of fragment are null.
      * 
      * @param s the story to add a fragment to
      * @param f the list of fragments so a new one can be added
      */
+    @Override
     public void addFragment(Story s, Fragment f) {
         List<Fragment> fragments = s.getFragments();
         fragments.add(f);
         s.setFragments(fragments);
     }
 
-    @Override
     /**
-     * deletes a fragment from the fragment list 
+     * Removes the first occurrence of the given fragment in the story if there
+     * is one and the value true is returned. If the given fragment does not
+     * exist in the story, nothing is deleted and false is returned.
      * 
      * @param s the story to delete a fragment from
-     * @param f fragment to be deleted 
+     * @param f fragment to be deleted
+     * @return true if the fragment was deleted, otherwise false
      */
+    @Override
     public boolean deleteFragment(Story s, Fragment f) {
         return s.removeFragment(f);
     }
 
     /**
-     * gets all fragments in a List from story s
-     * 
-     * @param s is the story to get fragments from
-     * @return a List<Fragment> containing all fragments of the story
-     */
-    public List<Fragment> getFragments(Story s) {
-        return s.getFragments();
-    }
-
-    /**
-     * gets the fragment at a certain position of a story
-     * 
-     * @param s is the story to get the fragment from
-     * @param fragPos is the position of the fragment in the story's fragment
-     *            list
-     * @return the Fragment as fragPos
-     */
-    public Fragment getFragmentAtPos(Story s, int fragPos) {
-        return s.getFragments().get(fragPos);
-    }
-
-    /**
-     * sets(replaces) a fragment at position Pos within the story
+     * Sets the given fragment at the given position in the given story.
+     * Behavior is unknown if no fragment exists at this position.
      * 
      * @param s is the story where the fragment is contained
      * @param Pos is the Position of the fragment inside the story

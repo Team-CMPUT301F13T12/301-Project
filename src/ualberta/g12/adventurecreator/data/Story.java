@@ -116,6 +116,16 @@ public class Story extends SModel implements Serializable {
         this.fragments = f;
     }
 
+    /**
+     * Returns the fragment at the given position
+     * 
+     * @param fragPos the position of the fragment to return
+     * @return the fragment at the positions if there is one or null
+     */
+    public Fragment getFragmentAtPos(int fragPos) {
+        return fragments.get(fragPos);
+    }
+
     public void addLinkToNewPage() {
 
     }

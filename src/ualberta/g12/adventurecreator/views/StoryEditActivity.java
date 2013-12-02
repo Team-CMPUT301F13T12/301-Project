@@ -24,7 +24,6 @@ import ualberta.g12.adventurecreator.data.Story;
 import ualberta.g12.adventurecreator.data.StoryList;
 
 import java.io.File;
-import java.text.SimpleDateFormat;
 import java.util.List;
 
 /**

@@ -2,9 +2,15 @@
 package ualberta.g12.adventurecreator.controllers;
 
 import ualberta.g12.adventurecreator.data.Fragment;
+import ualberta.g12.adventurecreator.data.SModel;
 import ualberta.g12.adventurecreator.data.Story;
 
-/** Controls data from the Story Model */
+/**
+ * Controller class for modifying a {@link SModel} Object. Any class that
+ * modifies an modifies an extension of {@link SModel} should implement this
+ * class.<br>
+ * Provides method stubs for modifying a {@link SModel} object.
+ */
 public interface SController {
 
     /**
@@ -15,7 +21,7 @@ public interface SController {
     public void addFragment(Story s, Fragment f);
 
     /**
-     * Deletes a fragment from a story
+     * Deletes the given fragment from the given story if it exists.
      * 
      * @return true if fragment is deleted successfully else false
      * @param f the id of the fragment to delete

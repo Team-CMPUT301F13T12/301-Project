@@ -55,7 +55,6 @@ public class EditFragmentActivityTestCases extends
         Fragment frag = new Fragment();
         fragmentController = new FragmentController();
         storyListController = new StoryListController(storyList, new OfflineIOHelper(getActivity()));
-        fragmentController.addTextSegment(frag, "Look! Text!", 0);
         storyList.getAllStories().get(0).addFragment(frag);
 
         Intent FragmentIntent = new Intent();
@@ -91,7 +90,7 @@ public class EditFragmentActivityTestCases extends
 
     // Use Case 7, test 2/2 and Use Case 5
     public void testMyselfAsChoiceFragment() {
-        //String title = "Test_Choice";
+        // String title = "Test_Choice";
         // String myFragmentId = myEditFragmentActivity.getFragId();
         // Choice myChoice = new Choice(title,myFragmentId);
         // addChoice(choice));
@@ -115,7 +114,7 @@ public class EditFragmentActivityTestCases extends
     // Use Case 8 2/3 and Use Case 5
     public void testAddChoiceToFragment() {
 
-        //String title = "Test_Choice";
+        // String title = "Test_Choice";
         // String myFragmentId = myEditFragmentActivity.getFragId(0);
         // Choice myChoice = new Choice(title,myFragmentId);
         // addChoice(choice));
@@ -308,7 +307,7 @@ public class EditFragmentActivityTestCases extends
 
     // test case 12
     public void testStoreFragment() {
-        //Fragment someFragment = new Fragment();
+        // Fragment someFragment = new Fragment();
         // start activity
         myEditFragmentActivity = this.getActivity();
 

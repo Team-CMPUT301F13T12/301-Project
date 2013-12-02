@@ -251,13 +251,13 @@ public class StorySearchActivity extends Activity implements LView<StoryList>, O
         } else {
             /*
              * Needs get the story from our list of stories as this will be
-             * different than the list of stories that our StoryList singleton has.
+             * different than the list of stories that our StoryList singleton
+             * has.
              */
             Story story = stories.get(pos);
             int fragPos = story.getStartFragPos();
 
-            Fragment goToFrag = AdventureCreator.getStoryController().getFragmentAtPos(story,
-                    fragPos);
+            Fragment goToFrag = story.getFragmentAtPos(fragPos);
 
             i = new Intent(this, FragmentViewActivity.class);
             i.putExtra("Fragment", goToFrag);
