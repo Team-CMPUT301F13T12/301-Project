@@ -65,7 +65,7 @@ ActivityInstrumentationTestCase2<MainActivity> {
 		story.setAuthor("Tester");
 		Fragment frag = new Fragment();
 		frag.setTitle("test Frag");
-		story.addFragment(frag);
+		story.getFragments().add(frag);
 		OnlineHelper oh = new OnlineHelper();
 		oh.insertStory(story);
 		ArrayList<Story> myStories = oh.getAllStoryTitlesIdAuthor();

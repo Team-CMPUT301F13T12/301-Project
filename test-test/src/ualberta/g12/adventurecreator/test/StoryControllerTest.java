@@ -46,17 +46,7 @@ public class StoryControllerTest extends TestCase {
         assert (s.getFragments().size() == 1);
     }
 
-    /**
-     * Tests deleting a fragment to a story with a story controller
-     */
-    public void testDeleteFragment() {
-        Story s = new Story();
-        Fragment f = new Fragment();
-        sc.addFragment(s, f);
-        assert (s.getFragments().size() == 1);
-        sc.deleteFragment(s, f);
-        assert (s.getFragments().size() == 0);
-    }
+
 
     /**
      * Tests getting fragments from a fragment

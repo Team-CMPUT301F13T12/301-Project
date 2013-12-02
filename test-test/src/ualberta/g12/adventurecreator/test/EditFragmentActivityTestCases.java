@@ -55,7 +55,7 @@ public class EditFragmentActivityTestCases extends
         Fragment frag = new Fragment();
         fragmentController = new FragmentController();
         storyListController = new StoryListController(storyList, new OfflineIOHelper(getActivity()));
-        storyList.getAllStories().get(0).addFragment(frag);
+        storyList.getAllStories().get(0).getFragments().add(frag);
 
         Intent FragmentIntent = new Intent();
         FragmentIntent.putExtra("Mode", "Edit");
@@ -244,7 +244,7 @@ public class EditFragmentActivityTestCases extends
         Story someStory = new Story();
         Fragment someFragment = new Fragment();
         someStory.setAuthor("someoneElse");
-        someStory.addFragment(someFragment);
+        someStory.getFragments().add(someFragment);
 
         // downloads story
         // downloadStory(someStory);
