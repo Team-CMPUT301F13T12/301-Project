@@ -28,6 +28,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
+/**
+ * Activity that allows the user to search through the story list of the offline cache
+ * to find a desired title or author. The activity will take the requested search string 
+ * to compare it with current stories that are being stored offline in the device.
+ */
 public class StorySearchActivity extends Activity implements LView<StoryList>, OnItemClickListener {
 
     private List<Story> stories;

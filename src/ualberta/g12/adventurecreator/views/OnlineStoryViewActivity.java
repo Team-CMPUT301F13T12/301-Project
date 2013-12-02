@@ -27,6 +27,13 @@ import ualberta.g12.adventurecreator.tasks.DownloadTitleAuthorsTask;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Activity used for viewing any stories that have been published online and are viewed
+ * through the listview. The activity allows the user to browser through online stories
+ * as well as download them to a local cache.
+ * 
+ */
+
 public class OnlineStoryViewActivity extends Activity implements OnItemClickListener,
         OView<List<Story>> {
 
@@ -125,6 +132,11 @@ public class OnlineStoryViewActivity extends Activity implements OnItemClickList
         editor.commit();
     }
 
+    /**
+     * updates the stories in the online list
+     * 
+     * @param current list of stories being stored online
+     */
     public void update(List<Story> list) {
         titleAuthors.clear();
         titleAuthors.addAll(list);
