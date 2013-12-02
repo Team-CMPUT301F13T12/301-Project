@@ -1,4 +1,4 @@
-
+/*
 package ualberta.g12.adventurecreator.uitests;
 
 import android.util.Log;
@@ -21,10 +21,10 @@ public class BasicUiTests extends UiAutomatorTestCase {
     /**
      * Silly Little logging class
      */
-    private static class L {
+/*    private static class L {
         public L(String msg) {
             Log.d("BasicUiTests", "msg");
             System.out.println(msg);
         }
     }
-}
+}*/
