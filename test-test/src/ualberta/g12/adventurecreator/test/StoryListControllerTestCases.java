@@ -1,15 +1,31 @@
 
 package ualberta.g12.adventurecreator.test;
 
+import android.test.ActivityInstrumentationTestCase2;
+
 import junit.framework.TestCase;
 
+import ualberta.g12.adventurecreator.controllers.FragmentController;
 import ualberta.g12.adventurecreator.controllers.StoryListController;
+import ualberta.g12.adventurecreator.data.Fragment;
 import ualberta.g12.adventurecreator.data.Story;
 import ualberta.g12.adventurecreator.data.StoryList;
+import ualberta.g12.adventurecreator.views.FragmentEditActivity;
+import ualberta.g12.adventurecreator.views.MainActivity;
 
 import java.util.List;
 
-public class StoryListControllerTestCases extends TestCase {
+public class StoryListControllerTestCases extends ActivityInstrumentationTestCase2<MainActivity> {
+    private FragmentController fc;
+    private Fragment sf;
+
+    public StoryListControllerTestCases(){
+        super(MainActivity.class);
+    }
+    
+    public StoryListControllerTestCases(Class<MainActivity> activityClass) {
+        super(MainActivity.class);
+    }
 
     private StoryListController slc;
     private StoryList sl;
