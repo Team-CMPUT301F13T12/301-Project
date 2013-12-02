@@ -55,7 +55,6 @@ public class FragmentPartAdapter extends ArrayAdapter<FragmentPart> {
      * @param parent    fragment that the segment belongs to
      */
     public View getView(int position, View convertView, ViewGroup parent) {
-       //int PicSize = FragmentEditActivity.getState();
         View rowView = convertView;
         if (rowView == null) {
             LayoutInflater inflater = (LayoutInflater) context

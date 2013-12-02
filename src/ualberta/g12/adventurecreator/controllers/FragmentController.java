@@ -20,13 +20,13 @@ public class FragmentController implements FController {
 
     private static final String TAG = "FragmentController";
 
-    @Override
     /**
-     * Edit the current title in place of the fragment
+     * Edit the current title in of the fragment
      * 
-     * @param frag  fragment reference corresponding to the current fragment
-     * @param newTitle  title that has been previously stated
+     * @param frag  fragment to have title changed
+     * @param newTitle  
      */
+    @Override
     public void setTitle(Fragment frag, String newTitle) {
         frag.setTitle(newTitle);
     }
@@ -93,15 +93,8 @@ public class FragmentController implements FController {
         }
     }
 
-    // @Override
-    // public void addAnnotation(Fragment frag, Annotation annotation){
-    // Annotation annotations = frag.getAnnotations();
-    // annotations.addAnnotation(annotation);
-    // frag.setAnnotations(annotations);
-    // }
-
     /**
-     * Helps retrieve the fragment that a particular choice is linked to
+     * Retrieve the fragment that a particular choice is linked to
      * 
      * @param frag is the fragment that the choice is contained in
      * @param partNum is the position of the choice in the fragmentParts
@@ -125,4 +118,12 @@ public class FragmentController implements FController {
             return choice.getLinkedToFragmentPos();
         }
     }
+    
+//    public void setId(Fragment f, int id) {
+//        
+//     f.setId(id);
+//         
+// }
+         
+
 }

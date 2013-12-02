@@ -3,6 +3,11 @@ package ualberta.g12.adventurecreator.data;
 import java.io.Serializable;
 
 public class FragmentPart implements Serializable{
+    /**
+     * Serial UID for Lint
+     */
+    private static final long serialVersionUID = -2587828619669927800L;
+    
     private String type;
     private String data;
     private Choice choice;

@@ -21,10 +21,14 @@ public class Fragment extends FModel<FView<?>> implements Serializable {
      * Serial UID for Lint
      */
     private static final long serialVersionUID = 6155560311789807407L;
-
+    //private static int NEW_FRAGMENT_ID = -1;
+    //private int id;
     private String title;
     private List<FragmentPart> parts;
 
+//    public void setId(int id) {
+//        this.id = id;
+//    }
     /**
      * Creates an empty fragment.
      */
