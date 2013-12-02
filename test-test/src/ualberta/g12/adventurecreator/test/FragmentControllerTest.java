@@ -10,7 +10,7 @@ import ualberta.g12.adventurecreator.views.MainActivity;
 import android.test.ActivityInstrumentationTestCase2;
 
 /**
- * Tests the functions of the Fragment class
+ * Tests the functions of the FragmentController class
  */
 public class FragmentControllerTest extends ActivityInstrumentationTestCase2<MainActivity> {
     FragmentController fragmentController;
