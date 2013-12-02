@@ -1,19 +1,28 @@
 
 package ualberta.g12.adventurecreator.test;
 
-import junit.framework.TestCase;
+import android.test.ActivityInstrumentationTestCase2;
 
 import ualberta.g12.adventurecreator.controllers.FragmentController;
 import ualberta.g12.adventurecreator.data.Choice;
 import ualberta.g12.adventurecreator.data.Fragment;
 import ualberta.g12.adventurecreator.data.FragmentPart;
+import ualberta.g12.adventurecreator.views.FragmentEditActivity;
+import ualberta.g12.adventurecreator.views.MainActivity;
 
 import java.util.List;
 
-public class StoryFragmentControllerTestCases extends TestCase {
+public class StoryFragmentControllerTestCases extends ActivityInstrumentationTestCase2<FragmentEditActivity> {
     private FragmentController fc;
     private Fragment sf;
 
+    public StoryFragmentControllerTestCases(){
+        super(FragmentEditActivity.class);
+    }
+    
+    public StoryFragmentControllerTestCases(Class<MainActivity> activityClass) {
+        super(FragmentEditActivity.class);
+    }
     @Override
     protected void setUp() throws Exception {
         super.setUp();
