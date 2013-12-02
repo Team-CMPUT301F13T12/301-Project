@@ -1,15 +1,31 @@
 
 package ualberta.g12.adventurecreator.test;
 
+import android.test.ActivityInstrumentationTestCase2;
+
 import junit.framework.TestCase;
 
+import ualberta.g12.adventurecreator.controllers.FragmentController;
 import ualberta.g12.adventurecreator.controllers.StoryListController;
+import ualberta.g12.adventurecreator.data.Fragment;
 import ualberta.g12.adventurecreator.data.Story;
 import ualberta.g12.adventurecreator.data.StoryList;
+import ualberta.g12.adventurecreator.views.FragmentEditActivity;
+import ualberta.g12.adventurecreator.views.MainActivity;
 
 import java.util.List;
 
-public class StoryListControllerTestCases extends TestCase {
+public class StoryListControllerTestCases extends ActivityInstrumentationTestCase2<MainActivity> {
+    private FragmentController fc;
+    private Fragment sf;
+
+    public StoryListControllerTestCases(){
+        super(MainActivity.class);
+    }
+    
+    public StoryListControllerTestCases(Class<MainActivity> activityClass) {
+        super(MainActivity.class);
+    }
 
     private StoryListController slc;
     private StoryList sl;
@@ -41,9 +57,6 @@ public class StoryListControllerTestCases extends TestCase {
     }
 
 
-    /**
-     * TODO dont work no more
-     */
     public void testGetStoryWithObject() {
 
         // add a story to our storyList
@@ -51,14 +64,11 @@ public class StoryListControllerTestCases extends TestCase {
         slc = new StoryListController(sl, null);
         Story s = new Story("Book", "Dan Dude");
         slc.addStory(s);
-        //Story s2 = sl.getStory(s);
-        //assertTrue("Stories don't have same titles", s.getTitle().equals(s2.getTitle()));
-       // assertTrue("Stories don't have same authors", s.getAuthor().equals(s2.getAuthor()));
+        Story s2 = sl.getStoryAtPos(0);
+        assertTrue("Stories don't have same titles", s.getTitle().equals(s2.getTitle()));
+        assertTrue("Stories don't have same authors", s.getAuthor().equals(s2.getAuthor()));
     }
 
-    /**
-     * TODO dont work no more
-     */
     public void testGetStoryWithTitle() {
 
         // add a story to our storyList
@@ -66,9 +76,10 @@ public class StoryListControllerTestCases extends TestCase {
         slc = new StoryListController(sl, null);
         Story s = new Story("Book", "Dan Dude");
         slc.addStory(s);
-        //Story s2 = sl.getStory("Book");
-        //assertTrue("Stories don't have same titles", s.getTitle().equals(s2.getTitle()));
-        //assertTrue("Stories don't have same authors", s.getAuthor().equals(s2.getAuthor()));
+        String s2 = sl.getStoryAtPos(0).getTitle();
+        String s3 = sl.getStoryAtPos(0).getAuthor();
+        assertTrue("Stories don't have same titles", s.getTitle().equals(s2));
+        assertTrue("Stories don't have same authors", s.getAuthor().equals(s3));
     }
 
     // tests setting a story
@@ -79,22 +90,23 @@ public class StoryListControllerTestCases extends TestCase {
         slc = new StoryListController(sl, null);
         Story s = new Story("Book", "Dan Dude");
         slc.addStory(s);
-        assertTrue(sl.getAllStories().get(1).getAuthor().equals("Dan Dude"));
+        String author = sl.getStoryAtPos(0).getAuthor();
+        assertTrue(sl.getStoryAtPos(0).getAuthor().equals(author));
         Story s2 = new Story("Bok", "Dude Dan");
         slc.setStory(s2, 0);
-        assertTrue(sl.getAllStories().get(0).getAuthor().equals("Dude Dan"));
+        assertTrue(sl.getStoryAtPos(0).getAuthor().equals(author));
 
     }
 
     // testing getting a story at Position
     public void testGetStoryAtPos() {
-
         // add a story to our storyList
         sl = new StoryList();
         slc = new StoryListController(sl, null);
         Story s = new Story("Book", "Dan Dude");
-        slc.addStory(s);
-        assertTrue(sl.getAllStories().get(0).getAuthor().equals("Dan Dude"));
+        slc.addStory(s);;
+        String author = sl.getStoryAtPos(0).getAuthor();
+        assertTrue(sl.getStoryAtPos(0).getAuthor().equals(author));
         Story s2 = sl.getStoryAtPos(0);
         assertTrue(s2.equals(s));
 
@@ -111,8 +123,6 @@ public class StoryListControllerTestCases extends TestCase {
         assertTrue(sl.getAllStories().size() == 1);
 
     }
-
-    // TODO load/save offline story tests
 
     public void testGetInitialListOfStories() {
         sl = new StoryList();
