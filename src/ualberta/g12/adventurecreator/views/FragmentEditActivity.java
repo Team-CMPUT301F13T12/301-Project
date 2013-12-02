@@ -101,6 +101,7 @@ public class FragmentEditActivity extends Activity implements FView<Fragment> {
         Intent editActIntent = getIntent();
         storyPos = (Integer) editActIntent.getSerializableExtra("StoryPos");
         fragPos = (Integer) editActIntent.getSerializableExtra("FragmentPos");
+        
         // get widget references
         fragmentPartListView = (ListView) findViewById(R.id.FragmentPartList);
         editTitleText = (EditText) findViewById(R.id.fragmentTitle);
