@@ -14,7 +14,9 @@ import ualberta.g12.adventurecreator.data.Fragment;
 
 import java.util.List;
 
-/** An extension of ArrayAdapter that is used to display Fragments in a ListView */
+/**
+ * An extension of ArrayAdapter that is used to display Fragments in a ListView
+ */
 public class FragmentListArrayAdapter extends ArrayAdapter<Fragment> {
     private final Context context;
     public final int resource;

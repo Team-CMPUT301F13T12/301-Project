@@ -36,7 +36,7 @@ import java.util.Random;
 
 /**
  * Activity for viewing a fragment. User can follow choices and will be taken to
- * the next fragment.
+ * the next fragment. Users can also add annotations.
  **/
 public class FragmentViewActivity extends Activity implements FView<Fragment> {
 
@@ -47,7 +47,6 @@ public class FragmentViewActivity extends Activity implements FView<Fragment> {
     private Fragment fragment;
     ImageView viewImage, viewImage2, viewImage3;
     public int fragPos, x = 0;
-    // Logging
     private static final boolean DEBUG = true;
     private static final String TAG = "FragmentViewActivity";
 
@@ -71,12 +70,14 @@ public class FragmentViewActivity extends Activity implements FView<Fragment> {
         fragPos = story.getStartFragPos();
         fragment = story.getFragmentAtPos(fragPos);
 
-        if(DEBUG) Log.d(TAG, "start pos " + fragPos);
+        if (DEBUG)
+            Log.d(TAG, "start pos " + fragPos);
 
         // show everything
         update();
 
-        if(DEBUG) Log.d(TAG, "update ");
+        if (DEBUG)
+            Log.d(TAG, "update ");
         // set click listeners
         setListClickListener();
 
@@ -114,7 +115,8 @@ public class FragmentViewActivity extends Activity implements FView<Fragment> {
     private void update() {
         // TODO reload all fields based on new info from model
 
-        if(DEBUG) Log.d(TAG, "frag title " + fragment.getTitle());
+        if (DEBUG)
+            Log.d(TAG, "frag title " + fragment.getTitle());
         // Loads title
         if (fragmentTitleTextView != null)
             fragmentTitleTextView.setText(fragment.getTitle());
@@ -171,32 +173,9 @@ public class FragmentViewActivity extends Activity implements FView<Fragment> {
     }
 
     /**
-     * Function that allows the user to add an illustration as an annotation
+     * Allows the user to add a picture from the gallery or take a new picture
+     * and add it as an annotation.
      */
-    // public void AddImage() {
-    // final CharSequence[] options = { "Take Photo",
-    // "Choose from Gallery","Cancel" };
-    //
-    // AlertDialog.Builder builder = new
-    // AlertDialog.Builder(FragmentViewActivity.this);
-    // builder.setTitle("Add Photo!");
-    // builder.setItems(options, new DialogInterface.OnClickListener() {
-    // @Override
-    // public void onClick(DialogInterface dialog, int item) {
-    // if (options[item].equals("Take Photo"))
-    // {
-    // Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-    // File f = new File(android.os.Environment.getExternalStorageDirectory(),
-    // "temp.jpg");
-    // intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(f));
-    // startActivityForResult(intent, 1);
-    // }
-    // else if (options[item].equals("Choose from Gallery"))
-    // {
-    // Intent intent = new
-    // Intent(Intent.ACTION_PICK,android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-    // startActivityForResult(intent, 2);
-
     public void addImage() {
         final CharSequence[] options = {
                 "Take Photo", "Choose from Gallery", "Cancel"

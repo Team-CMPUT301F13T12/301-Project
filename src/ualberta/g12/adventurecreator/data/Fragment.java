@@ -14,6 +14,7 @@ import java.util.List;
  * Fragment to display. Each FragmentPart represents a different content type,
  * (such text, illustrations, etc). The list is displayed in order whenever a
  * Fragment is viewed.
+ * @see FragmentPart
  */
 public class Fragment extends FModel<FView<?>> implements Serializable {
 

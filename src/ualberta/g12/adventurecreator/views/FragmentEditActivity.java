@@ -48,16 +48,9 @@ import java.io.OutputStream;
 import java.text.SimpleDateFormat;
 import java.util.Locale;
 
-// Right now we are making Fragments here and also choice
-// What i was thinking was maybe just make the general fragment here
-// and have another screen to add choices then we could have list a listview type thing so can have a lot of choices
-// and long clicking each one would let you edit/delete them 
-// TODO discuss with the team
-//
-
 /**
  * Activity for editing a fragment. Will allow the author to add text,
- * illustration s, or choices for the current fragment. Upon button clicks, the
+ * illustrations, or choices for the current fragment. Upon button clicks, the
  * activity will save the current fragment information and take the user back to
  * the fragment list of the current story.
  */
@@ -313,9 +306,11 @@ public class FragmentEditActivity extends Activity implements FView<Fragment> {
 
     /**
      * Allows the user to import an image from either the camera or gallery
-     * through selection prompts. The image is put into a listview that is
-     * displayed for the current fragment. The function branches to
-     * "onActivityResult" which handles the image processing.
+     * through selection prompts. The image is then saved to a specific loaction
+     * for the app and a reference to the picture is passed to a new
+     * FragmentPart which is appended to the FragmentPart list of the current
+     * Fragment. The function branches to "onActivityResult" which handles the
+     * image processing.
      */
     public void AddImage() {
         final CharSequence[] options = {
@@ -412,7 +407,7 @@ public class FragmentEditActivity extends Activity implements FView<Fragment> {
                 if (folderExists) {
                     // once folder exists finish creating picturePath
                     long picTime = System.currentTimeMillis();
-                    String newPicName = new SimpleDateFormat("yyyy-MM-dd HH.mm.ss", Locale.CANADA)
+                    String newPicName = new SimpleDateFormat("yyyy-MM-dd HH.mm.ss", Locale.US)
                             .format(picTime)
                             + ".jpg";
                     File file = new File(storyFolder.getAbsolutePath(), newPicName);
@@ -436,8 +431,6 @@ public class FragmentEditActivity extends Activity implements FView<Fragment> {
                     }
 
                     // finish by updating the fragment part
-                    // We can cast here because we know the returned type (we
-                    // just chose it with "i")
                     FragmentPart part = fragmentController.addNewFragmentPart(fragment, "i",
                             position);
                     fragmentController.setFragmentPartData(fragment, part, picturePath);
@@ -457,8 +450,9 @@ public class FragmentEditActivity extends Activity implements FView<Fragment> {
         }
     }
 
-    // Should be called before any other view notifying action
-    // Otherwise changes to title will be reset
+    /* Should be called before any other view notifying action
+     * Otherwise changes to title will be reset
+     */
     private void saveTitle() {
         String title = editTitleText.getText().toString();
         fragmentController.setTitle(fragment, title);

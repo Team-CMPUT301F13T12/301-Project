@@ -18,9 +18,10 @@ import ualberta.g12.adventurecreator.data.Fragment;
 import ualberta.g12.adventurecreator.data.FragmentPart;
 
 /**
- * Adapter for communication between the fragment class and the segments within
- * the fragment. Makes views depending on what is selected and orders the
- * segments depending on what type they are.
+ * An extension of ArrayAdapter that is used to display FragmentParts in a
+ * ListView when viewing a Fragment.
+ * 
+ * @see FragmentPart
  */
 public class FragmentPartAdapter extends ArrayAdapter<FragmentPart> {
     private final Context context;
@@ -31,7 +32,7 @@ public class FragmentPartAdapter extends ArrayAdapter<FragmentPart> {
     private static final boolean DEBUG = true;
 
     /**
-     * Sold constructor for the FragmentPartAdapter. Sets up the context,
+     * Sole constructor for the FragmentPartAdapter. Sets up the context,
      * resource and fragment.
      * 
      * @param context the context of the calling activity
