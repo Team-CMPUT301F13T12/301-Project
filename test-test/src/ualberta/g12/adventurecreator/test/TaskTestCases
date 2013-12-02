@@ -1,0 +1,18 @@
+package ualberta.g12.adventurecreator.test;
+
+import ualberta.g12.adventurecreator.tasks.CacheStoryTask;
+import ualberta.g12.adventurecreator.tasks.DownloadStoryTask;
+import ualberta.g12.adventurecreator.tasks.DownloadTitleAuthorsTask;
+import ualberta.g12.adventurecreator.tasks.PublishStoryTask;
+import ualberta.g12.adventurecreator.tasks.TryPublishStoryTask;
+
+public class TaskTestCases{
+
+    private CacheStoryTask cacheTask;
+    private DownloadStoryTask downloadTask;
+    private DownloadTitleAuthorsTask downloadTitleAuthors;
+    private PublishStoryTask publishTask;
+    private TryPublishStoryTask tryPublishTask;
+    
+    
+}
