@@ -30,7 +30,7 @@ import ualberta.g12.adventurecreator.data.Story;
 import ualberta.g12.adventurecreator.data.StoryList;
 import ualberta.g12.adventurecreator.views.FragmentEditActivity;
 
-public class EditFragmentActivityTestCases extends
+public class FragmentEditActivityTestCases extends
         ActivityInstrumentationTestCase2<FragmentEditActivity> {
 
     // declare activity and widgets
@@ -40,7 +40,7 @@ public class EditFragmentActivityTestCases extends
     FragmentController fragmentController;
     StoryListController storyListController;
 
-    public EditFragmentActivityTestCases() {
+    public FragmentEditActivityTestCases() {
         super(FragmentEditActivity.class);
         // TODO Auto-generated constructor stub
     }
