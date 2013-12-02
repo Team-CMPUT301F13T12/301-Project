@@ -96,18 +96,9 @@ public class MainActivity extends Activity implements LView<StoryList>, OnItemCl
                     Random random = new Random();
                     int max = storyList.getAllStories().size() - 1;
                     int randPos = random.nextInt((max - 0) + 1) + 0;
-
-                    currentRandStory = storyList.getStoryAtPos(randPos);
-                    int fragPos = currentRandStory.getStartFragPos();
-
-                    Fragment goToFrag = currentRandStory.getFragmentAtPos(fragPos);
+                    Story story = storyList.getStoryAtPos(randPos);
                     Intent i = new Intent(getApplicationContext(), FragmentViewActivity.class);
-                    // http://www.androidsnippets.com/prompt-user-input-with-an-alertdialog
-                    AlertDialog.Builder popup = new AlertDialog.Builder(getApplicationContext());
-
-                    popup.setTitle("Title");
-                    popup.setMessage("Message");
-                    i.putExtra("Fragment", goToFrag);
+                    i.putExtra("Story", story);
                     startActivity(i);
                 }
             }
