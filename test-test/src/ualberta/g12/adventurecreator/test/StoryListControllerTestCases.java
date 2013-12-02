@@ -108,16 +108,6 @@ public class StoryListControllerTestCases extends TestCase {
 
     }
 
-    // TODO load/save offline story tests
-//    public void testSaveOfflineStory() {
-//        sl = new StoryList();
-//        slc = new StoryListController(sl, null);
-//        Story s = new Story("Book", "Dan Dude");
-//        sl.addStory(s);
-//        slc.saveOfflineStories(sl);
-//        assertNotNull(sl.getAllStories());
-//    }
-
     public void testGetInitialListOfStories() {
         sl = new StoryList();
         slc = new StoryListController(sl, null);
