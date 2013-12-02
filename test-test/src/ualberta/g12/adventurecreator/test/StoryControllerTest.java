@@ -7,6 +7,16 @@ import ualberta.g12.adventurecreator.controllers.StoryController;
 import ualberta.g12.adventurecreator.data.Fragment;
 import ualberta.g12.adventurecreator.data.Story;
 
+/**
+ * These test cases test that all getters and setters in the Story Controller class work
+ * properly. There are no methods other than getters and setters associated with 
+ * this controller class, so they are tested extensively.
+ * 
+ * We test to see if adding and deleting stories respond correctly as well as the fields 
+ * associated with stories, those being the title, author, and fragments of a story
+ *
+ */
+
 public class StoryControllerTest extends TestCase {
 
     private StoryController sc;

@@ -12,6 +12,13 @@ import ualberta.g12.adventurecreator.views.MainActivity;
 
 import java.util.List;
 
+/**
+ * Tests the Story Fragment Controller functionality to see if all fragment related processes
+ * will function properly. The controller mostly contains getters and setters that contain all
+ * the data needed to make the story fragments function. 
+ *
+ */
+
 public class StoryFragmentControllerTestCases extends ActivityInstrumentationTestCase2<FragmentEditActivity> {
     private FragmentController fc;
     private Fragment sf;
