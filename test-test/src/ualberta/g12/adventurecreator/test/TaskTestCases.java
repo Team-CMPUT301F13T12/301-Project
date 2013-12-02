@@ -11,6 +11,15 @@ import ualberta.g12.adventurecreator.views.OnlineStoryViewActivity;
 import android.content.Context;
 import android.test.ActivityInstrumentationTestCase2;
 
+/**
+* These test cases test the tasks of the online to offline and vice versa implements. There are 
+* to ensure that tasks that publish or download stories work correctly as well as viewing the 
+* stories after they have been downloaded/published.
+* 
+* We test if the fields CacheStoryTask, DownloadTitleAuthorsTask, DownloadStoryTask,
+* PublishStoryTask and TryPublishStoryTask behave correctly
+* 
+**/
 public class TaskTestCases extends
 		ActivityInstrumentationTestCase2<MainActivity> {
 
