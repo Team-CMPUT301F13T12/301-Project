@@ -20,25 +20,25 @@ public interface FController {
      * @param newTitle the new title of the fragment, must not be null
      */
     public void setTitle(Fragment fragment, String newTitle);
-    
+
     /**
-     * Adds a new Fragment part of the given type to the FragmentPart
-     * list of the fragment.  
+     * Adds a new Fragment part of the given type to the FragmentPart list of
+     * the fragment.
      * 
      * @param fragment to add the FragmentPart to
-     * @param type is the type of FragmentPart to add, should be "t" 
-     * (text), "i" (illustration), "c" (choice), or "e" (empty)
-     * @param pos is the position to insert the FragmentPart in the 
-     * FragmentPart list of fragment
-     * @return the newly created FragmentPart 
+     * @param type is the type of FragmentPart to add, should be "t" (text), "i"
+     *            (illustration), "c" (choice), or "e" (empty)
+     * @param pos is the position to insert the FragmentPart in the FragmentPart
+     *            list of fragment
+     * @return the newly created FragmentPart
      * @see FragmentPart
      */
     public FragmentPart addNewFragmentPart(Fragment fragment, String type, int pos);
 
     /**
-     * Sets the data field of a FragmentPart in the FragmentPart 
-     * list of fragment.  Should only be used on "t" (text) or "i" 
-     * (illustration) type FragmentParts.
+     * Sets the data field of a FragmentPart in the FragmentPart list of
+     * fragment. Should only be used on "t" (text) or "i" (illustration) type
+     * FragmentParts.
      * 
      * @param fragment Fragment that owns the given FragmentPart, part
      * @param part the FragmentPart to modify
@@ -48,9 +48,8 @@ public interface FController {
     public void setFragmentPartData(Fragment fragment, FragmentPart part, String data);
 
     /**
-     * Sets the choice field of a FragmentPart in the FragmentPart 
-     * list of fragment.  Should only be used on "c" (choice) type 
-     * FragmentParts.
+     * Sets the choice field of a FragmentPart in the FragmentPart list of
+     * fragment. Should only be used on "c" (choice) type FragmentParts.
      * 
      * @param fragment Fragment that owns the given FragmentPart, part
      * @param part the FragmentPart to modify
@@ -60,9 +59,8 @@ public interface FController {
     public void setFragmentPartChoice(Fragment fragment, FragmentPart part, Choice choice);
 
     /**
-     * Sets the picSize field of a FragmentPart in the FragmentPart 
-     * list of fragment.  Should only be used on "i" (illustration) 
-     * type FragmentParts.
+     * Sets the picSize field of a FragmentPart in the FragmentPart list of
+     * fragment. Should only be used on "i" (illustration) type FragmentParts.
      * 
      * @param fragment Fragment that owns the given FragmentPart, part
      * @param part the FragmentPart to modify
@@ -70,7 +68,7 @@ public interface FController {
      * @see FragmentPart
      */
     public void setFragmentPartPicSize(Fragment fragment, FragmentPart part, int picSize);
-    
+
     /**
      * Tries to remove a fragment part at the given partNum. If there is no part
      * at this partNum, we will return false and perform no deletions. If there
@@ -83,9 +81,9 @@ public interface FController {
     public boolean deleteFragmentPart(Fragment fragment, int partNum);
 
     /**
-     * Removes the first occurrence of an empty FragmentPart, type = "e", 
-     * in the FragmentPart list of fragment. If there are no empty parts 
-     * nothing is deleted.
+     * Removes the first occurrence of an empty FragmentPart, type = "e", in the
+     * FragmentPart list of fragment. If there are no empty parts nothing is
+     * deleted.
      * 
      * @param fragment the fragment to remove the empty part from.
      * @see FragmentPart

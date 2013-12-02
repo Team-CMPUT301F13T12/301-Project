@@ -3,12 +3,20 @@ package ualberta.g12.adventurecreator.data;
 
 import java.io.Serializable;
 
-public class FragmentPart implements Serializable{
+/**
+ * A FragmentPart can represent different forms of content for a Fragment. The
+ * forms that FragmentPart can currently represent include; text segments,
+ * illustrations, and choices. There is also a special type called empty. empty
+ * is used for ensuring there is at least one entry in a Fragment's FragmentPart
+ * list. Without at least one entry the used would be unable to create anymore
+ * FragmentParts for the Fragment.
+ */
+public class FragmentPart implements Serializable {
     /**
      * Serial UID for Lint
      */
     private static final long serialVersionUID = -2587828619669927800L;
-    
+
     private String type;
     private String data;
     private Choice choice;

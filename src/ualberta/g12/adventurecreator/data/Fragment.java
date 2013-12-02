@@ -21,14 +21,10 @@ public class Fragment extends FModel<FView<?>> implements Serializable {
      * Serial UID for Lint
      */
     private static final long serialVersionUID = 6155560311789807407L;
-    //private static int NEW_FRAGMENT_ID = -1;
-    //private int id;
+    
     private String title;
     private List<FragmentPart> parts;
 
-//    public void setId(int id) {
-//        this.id = id;
-//    }
     /**
      * Creates an empty fragment.
      */
@@ -46,9 +42,9 @@ public class Fragment extends FModel<FView<?>> implements Serializable {
     }
 
     /**
-     * @param the newTitle of the Fragment Sets the title of the Fragment to
-     *            newTitle. The title of a Fragment is used for a user to
-     *            identify the Fragment.
+     * @param the newTitle of the Fragment Sets the title of the Fragment
+     *        to newTitle. The title of a Fragment is used for a user to
+     *        identify the Fragment.
      */
     public void setTitle(String newTitle) {
         this.title = newTitle;
@@ -56,10 +52,11 @@ public class Fragment extends FModel<FView<?>> implements Serializable {
     }
 
     /**
-     * @return the list of FragmentParts for the Fragment The list of
+     * @return The list of FragmentParts for the Fragment. The list of
      *         FragmentParts contains all the content data for the fragment.
      *         Refer to FragmentPart.java to learn more. The list of
      *         FragmentParts is displayed when a fragment is viewed.
+     * @see FragmentPart
      */
     public List<FragmentPart> getParts() {
         return parts;
@@ -72,6 +69,7 @@ public class Fragment extends FModel<FView<?>> implements Serializable {
      * is displayed when a fragment is viewed.
      * 
      * @param the new list of FragmentParts for the Fragment
+     * @see FragmentPart
      */
     public void setParts(List<FragmentPart> parts) {
         this.parts = parts;

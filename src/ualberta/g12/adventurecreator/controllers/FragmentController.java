@@ -13,7 +13,7 @@ import java.util.List;
  * {@link FController}.
  */
 public class FragmentController implements FController {
-    
+
     /**
      * Changes the title of the given fragment to the given title. There are no
      * limits on the length of this title.
@@ -27,15 +27,15 @@ public class FragmentController implements FController {
     }
 
     /**
-     * Adds a new Fragment part of the given type to the FragmentPart
-     * list of the fragment.  
+     * Adds a new Fragment part of the given type to the FragmentPart list of
+     * the fragment.
      * 
      * @param fragment to add the FragmentPart to
-     * @param type is the type of FragmentPart to add, should be "t" 
-     * (text), "i" (illustration), "c" (choice), or "e" (empty)
-     * @param pos is the position to insert the FragmentPart in the 
-     * FragmentPart list of fragment
-     * @return the newly created FragmentPart 
+     * @param type is the type of FragmentPart to add, should be "t" (text), "i"
+     *            (illustration), "c" (choice), or "e" (empty)
+     * @param pos is the position to insert the FragmentPart in the FragmentPart
+     *            list of fragment
+     * @return the newly created FragmentPart
      * @see FragmentPart
      */
     @Override
@@ -52,9 +52,9 @@ public class FragmentController implements FController {
     }
 
     /**
-     * Sets the data field of a FragmentPart in the FragmentPart 
-     * list of fragment.  Should only be used on "t" (text) or "i" 
-     * (illustration) type FragmentParts.
+     * Sets the data field of a FragmentPart in the FragmentPart list of
+     * fragment. Should only be used on "t" (text) or "i" (illustration) type
+     * FragmentParts.
      * 
      * @param fragment Fragment that owns the given FragmentPart, part
      * @param part the FragmentPart to modify
@@ -68,9 +68,8 @@ public class FragmentController implements FController {
     }
 
     /**
-     * Sets the choice field of a FragmentPart in the FragmentPart 
-     * list of fragment.  Should only be used on "c" (choice) type 
-     * FragmentParts.
+     * Sets the choice field of a FragmentPart in the FragmentPart list of
+     * fragment. Should only be used on "c" (choice) type FragmentParts.
      * 
      * @param fragment Fragment that owns the given FragmentPart, part
      * @param part the FragmentPart to modify
@@ -84,9 +83,8 @@ public class FragmentController implements FController {
     }
 
     /**
-     * Sets the picSize field of a FragmentPart in the FragmentPart 
-     * list of fragment.  Should only be used on "i" (illustration) 
-     * type FragmentParts.
+     * Sets the picSize field of a FragmentPart in the FragmentPart list of
+     * fragment. Should only be used on "i" (illustration) type FragmentParts.
      * 
      * @param fragment Fragment that owns the given FragmentPart, part
      * @param part the FragmentPart to modify
@@ -121,9 +119,9 @@ public class FragmentController implements FController {
     }
 
     /**
-     * Removes the first occurrence of an empty FragmentPart, type = "e", 
-     * in the FragmentPart list of fragment. If there are no empty parts 
-     * nothing is deleted.
+     * Removes the first occurrence of an empty FragmentPart, type = "e", in the
+     * FragmentPart list of fragment. If there are no empty parts nothing is
+     * deleted.
      * 
      * @param fragment the fragment to remove the empty part from.
      * @see FragmentPart
