@@ -29,7 +29,7 @@ public class FragmentPartAdapter extends ArrayAdapter<String> {
 
     private static final String TAG = "FragmentPartAdapter";
     private static final boolean DEBUG = true;
-    public static int PicSize;  
+    public static int PicSize = 1;  
 
     /**
      * Sold constructor for the FragmentPartAdapter. Sets up the context,

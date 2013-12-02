@@ -64,7 +64,7 @@
 
     <!-- Help Screen Strings -->
     <string name="help_text">Adventures! Help</string>
-    <string name="help_description">Adventures! is an application that allows you to create your own choose your own adventures stories. The following will be a step by step tutorial in how to use the application."></string>
+    <string name="help_description">Adventures! is an application that allows you to create your own choose your own adventures stories. The following will be a step by step tutorial in how to use the application."</string>
     <string name="help_viewing_story">After a choice has been selected, the new page will appear. This process is repeated to read the story and continue. Enjoy!</string>
     <string name="help_online">After pressing the online mode button on the main screen, a list of online stories will be listed which allows the user to download these stories and store them locally by clicking on the story. The menu bar has two options: to search online stories (left icon) and to bring up a pulldown menu where download mode can be found. When finished with downloads, clicking the &quot;offline mode&quot; button will bring the user back to the main screen.</string>
     <string name="button_help_create_new_story">Create New Story</string>
