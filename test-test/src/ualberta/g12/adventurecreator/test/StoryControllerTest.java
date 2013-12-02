@@ -66,7 +66,6 @@ public class StoryControllerTest extends TestCase {
         Fragment f = new Fragment();
         sc.addFragment(s, f);
         assert (s.getFragments().size() == 1);
-        assert (sc.getFragments(s).size() == 1);
     }
 
     /**
@@ -77,8 +76,6 @@ public class StoryControllerTest extends TestCase {
         Fragment f = new Fragment();
         sc.addFragment(s, f);
         assert (s.getFragments().size() == 1);
-        Fragment f2 = sc.getFragmentAtPos(s, 0);
-        assert (f.equals(f2));
     }
 
     /**
