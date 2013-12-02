@@ -254,13 +254,9 @@ public class StorySearchActivity extends Activity implements LView<StoryList>, O
              * different than the list of stories that our StoryList singleton
              * has.
              */
-            Story story = stories.get(pos);
-            int fragPos = story.getStartFragPos();
-
-            Fragment goToFrag = story.getFragmentAtPos(fragPos);
-
+            Story story = storyList.getStoryAtPos(pos);
             i = new Intent(this, FragmentViewActivity.class);
-            i.putExtra("Fragment", goToFrag);
+            i.putExtra("Story", story);
             startActivity(i);
 
         }
