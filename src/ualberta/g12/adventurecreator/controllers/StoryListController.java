@@ -43,16 +43,6 @@ public class StoryListController {
     }
 
     /**
-     * Removes the story given from the list. If the story doesn't exist then
-     * nothing happens.
-     * 
-     * @param s story to be deleted
-     */
-    public void deleteStory(Story s) {
-        sl.deleteStory(s);
-    }
-
-    /**
      * Replaces the story currently at position pos with the given story. If the
      * position given is out of the story list bounds, the given story isn't
      * added to the StoryList
