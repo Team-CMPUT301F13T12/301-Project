@@ -28,6 +28,7 @@ public class StoryControllerTest extends TestCase {
 
     /**
      * Tests setting a title of a story with a story controller
+     * We will create a new story, set the title using the controller and make sure that the title is changed
      */
     public void testSetTitle() {
         Story s = new Story();
@@ -38,6 +39,7 @@ public class StoryControllerTest extends TestCase {
 
     /**
      * Tests setting the Author of a story with a story controller
+     * We will create a new story, set the author  using the controller and make sure that the author is changed
      */
     public void testSetAuthor() {
         Story s = new Story();
@@ -57,29 +59,11 @@ public class StoryControllerTest extends TestCase {
     }
 
 
-
-    /**
-     * Tests getting fragments from a fragment
-     */
-    public void testGetAllFragments() {
-        Story s = new Story();
-        Fragment f = new Fragment();
-        sc.addFragment(s, f);
-        assert (s.getFragments().size() == 1);
-    }
-
-    /**
-     * Tests getting a fragment at a certain position
-     */
-    public void testGetFragAtPosition() {
-        Story s = new Story();
-        Fragment f = new Fragment();
-        sc.addFragment(s, f);
-        assert (s.getFragments().size() == 1);
-    }
-
     /**
      * Tests setting a fragment at a certain position
+     * We know that the first fragment to be added will be at position zero
+     * We then test setting the fragment at position zero to a new fragment we create
+     * At the end we verify that the title has been changed
      */
     public void testSetFragAtPosition() {
         Story s = new Story();
