@@ -87,13 +87,12 @@ public class OnlineHelper {
 
 
         String status = response.getStatusLine().toString();
-        System.out.println(status);
         HttpEntity entity = response.getEntity();
         /*
          * BufferedReader br = new BufferedReader(new
          * InputStreamReader(entity.getContent())); String output;
          */
-        System.err.println("Output from Server -> ");
+        
         /*
          * while ((output = br.readLine()) != null) { //
          * System.err.println(output); }
@@ -131,7 +130,7 @@ public class OnlineHelper {
 
 
             String status = response.getStatusLine().toString();
-            System.out.println(status);
+            
 
 
             String json = getEntityContent(response);
@@ -183,7 +182,7 @@ public class OnlineHelper {
 
 
             String status = response.getStatusLine().toString();
-            System.out.println(status);
+           
 
 
             String json = getEntityContent(response);
@@ -201,7 +200,6 @@ public class OnlineHelper {
             for (ElasticSearchResponse<Story> s : esResponse.getHits()) {
                 Story story = s.getSource();
                 allStories.add(story);
-                System.out.println(story.toString());
             }
 
 
@@ -303,7 +301,6 @@ public class OnlineHelper {
 
         // get our json string back ..
         HttpResponse response = httpclient.execute(searchRequest);
-        System.out.println(response.getStatusLine());
         String json = getEntityContent(response);
         Type elasticSearchSearchResponseType = new TypeToken<ElasticSearchSearchResponse<Story>>() {
         }.getType();
@@ -344,7 +341,6 @@ public class OnlineHelper {
 
         HttpResponse response = httpclient.execute(searchRequest);
         String status = response.getStatusLine().toString();
-        System.out.println(status);
 
 
         String json = getEntityContent(response);
@@ -382,7 +378,6 @@ public class OnlineHelper {
 
 
         String status = response.getStatusLine().toString();
-        System.out.println(status);
 
 
         HttpEntity entity = response.getEntity();
@@ -390,7 +385,7 @@ public class OnlineHelper {
          * BufferedReader br = new BufferedReader(new
          * InputStreamReader(entity.getContent())); String output;
          */
-        System.err.println("Output from Server -> ");
+        
         /*
          * while ((output = br.readLine()) != null) { //
          * System.err.println(output); }
@@ -428,7 +423,6 @@ public class OnlineHelper {
         // System.err.println("Output from Server -> ");
         String json = "";
         while ((output = br.readLine()) != null) {
-            System.err.println(output);
             json += output;
         }
         return json;

@@ -8,7 +8,7 @@ import java.util.Collection;
  * This class represents advanced search objects obtained from an elastic search. This is 
  * the expected type we get from a gson to json translation. 
  * 
- * The class provides mothods such as getHits which provides things we found in a search.
+ * The class provides mothods such as getHits which provides results we found in a search.
  * And also get sources which gets whole objects as well as get fields which gets the fields of
  * an object.
  * Based off of code provided by: https://github.com/rayzhangcl/ESDemo
@@ -26,7 +26,10 @@ public class ElasticSearchSearchResponse<T> {
      * getHits method is used to get the "hits" or results we get from a search. Each hit 
      * is a result that elastic search matched with our query. This method gets all the results
      * from a query.
-     * @return
+     * 
+     * It calls the hits collection method getHits 
+     *
+     * @return Collection of Elastic Search Responses ( Results from a Query)
      */
     public Collection<ElasticSearchResponse<T>> getHits() {
         return hits.getHits();
@@ -36,7 +39,9 @@ public class ElasticSearchSearchResponse<T> {
      * getSources obtains all the  object from a elastic search query.
      * This method should be used when we want to get all fields of an object (whole object)
      * from the elastic search
-     * @return
+     * 
+     * For example a whole story object with ALL the fields
+     * @return a collection of result objects 
      */
     public Collection<T> getSources() {
         Collection<T> out = new ArrayList<T>();
@@ -48,8 +53,11 @@ public class ElasticSearchSearchResponse<T> {
 
     /**
      * getFields is used to obtain  results when searching for only the fields in a query.
-     * A field represnts a field in a object, and we want to get only these certain ones.
-     * @return
+     * Field represents a field in a object, and we want to get only these certain ones.
+     * 
+     * For Example this method is commonly used in our application to only obtain the id, author and title of a story
+     * all other fields like fragments will not be returned.
+     * @return a collection of partial result objects
      */
     public Collection<T> getFields() {
         Collection<T> out = new ArrayList<T>();
@@ -59,7 +67,10 @@ public class ElasticSearchSearchResponse<T> {
         return out;
     }
 
-    
+    /**
+     * Over rides the default implementation of the toString method to better understand what the Elastic Search Search response
+     * actually entails when printing to an output stream.
+     */
     public String toString() {
         return (super.toString() + ":" + took + "," + _shards + "," + exists + "," + hits);
     }
