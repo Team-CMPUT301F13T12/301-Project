@@ -70,6 +70,7 @@
     <string name="button_help_create_new_story">Create New Story</string>
     <string name="button_help_download_stories">Download Stories</string>
     <string name="button_read_existing_story">Read Existing Story</string>
+    <string name="button_help_youtube">Youtube Video</string>
     <string name="help_how_to">How to:</string>
     <string name="help_screen_edit_story">Note: To edit an existing story, follow the instructions to create a new story but skip step 1</string>
     <string name="help_main_activity">The menu bar at the stop of the screen allows the user to (from order of left to right), search for an existing story, create a new story, and access help or access author mode from the dropdown menu. The Main Screen allows the user to either read through or edit any existing story by clicking them in the list. To read or edit a story, author mode must be unchecked or checked respectively. To publish a local story online, simply press and hold the story and click &quot;publish story&quot;. The online mode button allows the user to go online to browse through other author\&apos;s stories and save them locally. The &quot;Random Offline Story&quot; button chooses a random story in the local list for the user to read. Note that this option only works when author mode is disabled.</string>

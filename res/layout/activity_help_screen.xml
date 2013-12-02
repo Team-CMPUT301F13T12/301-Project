@@ -92,6 +92,14 @@
             android:text="@string/button_help_create_new_story" />
 
         <Button
+            android:id="@+id/youtube_video"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/goOnline"
+            android:layout_marginTop="16dp"
+            android:text="@string/button_help_youtube" />
+
+        <Button
             android:id="@+id/goOnline"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -104,8 +112,7 @@
             android:id="@+id/textView6"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignLeft="@+id/goOnline"
-            android:layout_below="@+id/goOnline"
+            android:layout_below="@+id/youtube_video"
             android:layout_marginTop="18dp"
             android:text="@string/help_screen_edit_story" />
     </RelativeLayout>
