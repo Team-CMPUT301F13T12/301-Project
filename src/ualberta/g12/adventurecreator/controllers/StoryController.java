@@ -18,8 +18,9 @@ public class StoryController implements SController {
      * of the story as the id is created from the title and author of the story.<br>
      * If a null value is given, the story's id will be set to an invalid id.
      * 
+     * @param s the Story to change the title of
      * @param newTitle the new title of story s
-     * @param s the story to change the title of
+     * 
      */
     public void setTitle(Story s, String newTitle) {
         s.setTitle(newTitle);
@@ -30,7 +31,8 @@ public class StoryController implements SController {
      * of the story as the id is created from the title and author of the story.<br>
      * If a null value is given, the story's id will be set to an invalid id.
      * 
-     * @param newAuthor the new author of story s
+     * @param s the Story to change the author of
+     * @param newAuthor the new author of Story s
      * @param s the story to change the author of
      */
     public void setAuthor(Story s, String newAuthor) {
@@ -58,7 +60,7 @@ public class StoryController implements SController {
      * 
      * @param s the story to delete a fragment from
      * @param f fragment to be deleted
-     * @return true if the fragment was deleted, otherwise false
+     * @return boolean true if the fragment was deleted, otherwise false
      */
     @Override
     public boolean deleteFragment(Story s, Fragment f) {

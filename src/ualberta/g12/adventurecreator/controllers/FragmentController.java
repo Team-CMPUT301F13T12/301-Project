@@ -35,7 +35,7 @@ public class FragmentController implements FController {
      *            (illustration), "c" (choice), or "e" (empty)
      * @param pos is the position to insert the FragmentPart in the FragmentPart
      *            list of fragment
-     * @return the newly created FragmentPart
+     * @return FragmentPart the newly created FragmentPart
      * @see FragmentPart
      */
     @Override

@@ -1,3 +1,4 @@
+
 package ualberta.g12.adventurecreator.data;
 
 import android.app.Application;
@@ -35,11 +36,11 @@ public class AdventureCreator extends Application {
      * and load it from the OfflineIOHelper. If that doesn't work, we create a
      * new StoryList and return that.
      * 
-     * @return the StoryList singleton
+     * @return StoryList singleton
      */
     public static StoryList getStoryList() {
         if (storyList == null) {
-            //storyList = getOfflineIOHelper().loadOfflineStories();
+            // storyList = getOfflineIOHelper().loadOfflineStories();
             if (storyList == null) {
                 storyList = new StoryList();
             }
@@ -51,7 +52,7 @@ public class AdventureCreator extends Application {
      * Returns the StoryListController Singleton. If one doesn't exist, we
      * create one off of our StoryList singleton
      * 
-     * @return the StoryListController singleton
+     * @return StoryListController singleton
      */
     public static StoryListController getStoryListController() {
         if (storyListController == null) {
@@ -64,7 +65,7 @@ public class AdventureCreator extends Application {
      * Returns the StoryController Singleton. If one doesn't exist, we
      * initialize it and then return
      * 
-     * @return the StoryController Singleton
+     * @return StoryController Singleton
      */
     public static StoryController getStoryController() {
         if (storyController == null) {
@@ -77,7 +78,7 @@ public class AdventureCreator extends Application {
      * Returns the FragmentController Singleton. If one doesn't exist, we
      * initialize it and then return it.
      * 
-     * @return the FragmentController Singleton
+     * @return FragmentController Singleton
      */
     public static FragmentController getFragmentController() {
         if (fragmentController == null) {
@@ -90,7 +91,7 @@ public class AdventureCreator extends Application {
      * Returns the OfflineIOHelper Singleton. If one doesn't exist, we
      * initialize it and then return it
      * 
-     * @return the OfflineIOHelper Singleton
+     * @return OfflineIOHelper Singleton
      */
     public static OfflineIOHelper getOfflineIOHelper() {
         if (offlineIOHelper == null) {
@@ -99,11 +100,13 @@ public class AdventureCreator extends Application {
         return offlineIOHelper;
     }
 
-    // TODO: Implement getters for all of the singletons
-
-    /** Returns the OnlineHelper Singleton. If one doesn't exist, we make it */
+    /**
+     * Returns the OnlineHelper Singleton. If one doesn't exist, we make it.
+     * 
+     * @return OnlineHelper
+     */
     public static OnlineHelper getOnlineHelper() {
-        if(onlineHelper == null){
+        if (onlineHelper == null) {
             onlineHelper = new OnlineHelper();
         }
         return onlineHelper;
