@@ -18,6 +18,7 @@ import java.util.List;
  * initialized to non-null values.
  * 
  * @see FragmentPart
+ * @see Choice
  */
 public class Fragment extends FModel<FView<?>> implements Serializable {
 

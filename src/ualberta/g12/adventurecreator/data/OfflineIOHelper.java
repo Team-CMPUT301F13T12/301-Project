@@ -13,7 +13,7 @@ import java.io.ObjectOutputStream;
 
 /**
  * Will Handle loading and saving of our offline(cached) stories from local
- * storage
+ * storage.
  */
 public class OfflineIOHelper {
 
@@ -41,7 +41,7 @@ public class OfflineIOHelper {
     /**
      * loads our offline stories located at fileName location
      * 
-     * @return Arraylist<Story>
+     * @return Arraylist<Story> the list of all saved offline stories
      */
     public StoryList loadOfflineStories() {
         StoryList stories = new StoryList();
@@ -68,12 +68,10 @@ public class OfflineIOHelper {
     }
 
     /**
-     * Saves ourOfflineStories
+     * Saves our offline stories
      * 
-     * @param myStories which is the stories to be saved
+     * @param myStories the list of stories to be saved
      */
-
-    // TODO make sure to make each model object serializable
     public void saveOfflineStories(StoryList myStories) {
         if (myStories == null) {
             if (DEBUG)

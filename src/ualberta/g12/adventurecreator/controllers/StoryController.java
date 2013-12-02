@@ -4,6 +4,7 @@ package ualberta.g12.adventurecreator.controllers;
 import ualberta.g12.adventurecreator.data.Fragment;
 import ualberta.g12.adventurecreator.data.Story;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -22,6 +23,7 @@ public class StoryController implements SController {
      * @param newTitle the new title of story s
      * 
      */
+    @Override
     public void setTitle(Story s, String newTitle) {
         s.setTitle(newTitle);
     }
@@ -35,6 +37,7 @@ public class StoryController implements SController {
      * @param newAuthor the new author of Story s
      * @param s the story to change the author of
      */
+    @Override
     public void setAuthor(Story s, String newAuthor) {
         s.setAuthor(newAuthor);
     }
@@ -54,20 +57,6 @@ public class StoryController implements SController {
     }
 
     /**
-     * Removes the first occurrence of the given fragment in the story if there
-     * is one and the value true is returned. If the given fragment does not
-     * exist in the story, nothing is deleted and false is returned.
-     * 
-     * @param s the story to delete a fragment from
-     * @param f fragment to be deleted
-     * @return boolean true if the fragment was deleted, otherwise false
-     */
-    @Override
-    public boolean deleteFragment(Story s, Fragment f) {
-        return s.removeFragment(f);
-    }
-
-    /**
      * Sets the given fragment at the given position in the given story.
      * Behavior is unknown if no fragment exists at this position.
      * 
@@ -75,8 +64,8 @@ public class StoryController implements SController {
      * @param Pos is the Position of the fragment inside the story
      * @param f is the new fragment we wish to set at Pos
      */
+    @Override
     public void setFragmentAtLocation(Story s, int Pos, Fragment f) {
         s.getFragments().set(Pos, f);
     }
-
 }

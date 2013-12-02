@@ -13,7 +13,9 @@ import java.util.ArrayList;
 public class SModel<V extends SView<SModel>> {
     private ArrayList<V> views;
 
-    /** Sole Constructor for a SModel, initializes our list of views. */
+    /**
+     * Sole Constructor for a SModel, initializes our list of views.
+     */
     public SModel() {
         views = new ArrayList<V>();
     }

@@ -12,6 +12,8 @@ import java.io.Serializable;
  * FragmentParts for the Fragment. The design pattern Null Object was used in
  * this class. As can be seen when an object of this class is instantiated all
  * fields are initialized to non-null values.
+ * 
+ * @see Choice
  */
 public class FragmentPart implements Serializable {
     /**
@@ -45,6 +47,7 @@ public class FragmentPart implements Serializable {
      * "i" for illustration "e" for an empty part.
      * 
      * @return type the type of the FragmentPart
+     * @see Choice
      */
     public String getType() {
         return type;

@@ -36,6 +36,7 @@ public class LModel<V extends LView> {
      * Deletes a view from our list of views
      * 
      * @param view the view to delete
+     * @return boolean whether the deletion was successful or not
      */
     public boolean deleteView(V view) {
         return views.remove(view);

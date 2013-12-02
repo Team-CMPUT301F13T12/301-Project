@@ -52,8 +52,8 @@ public class Choice implements Serializable {
 
     /**
      * sets isRandom boolean variable that tells if a choice is a RANDOM type
-     * choice which means it will randomly go to a different fragment each
-     * time the choice is selected.
+     * choice which means it will randomly go to a different fragment each time
+     * the choice is selected.
      * 
      * @param bool the value to the Choice's isRandom field
      */
