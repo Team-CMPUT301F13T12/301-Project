@@ -26,6 +26,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
+/**
+ * Activity that allows the user to search through the online story list to find a desired
+ * title or author. The activity will take the requested search string and compare it with
+ * current stories that are online.
+ */
 public class OnlineStorySearchActivity extends Activity implements OnItemClickListener,
         OView<List<Story>> {
 
