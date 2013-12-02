@@ -75,6 +75,7 @@ public class FragmentPartAdapter extends ArrayAdapter<FragmentPart> {
 
         // make all invisible
         image.setVisibility(View.GONE);
+        image2.setVisibility(View.GONE);
         text.setVisibility(View.GONE);
         choiceButton.setVisibility(View.GONE);
 
