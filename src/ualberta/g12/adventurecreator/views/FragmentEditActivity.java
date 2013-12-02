@@ -209,7 +209,6 @@ public class FragmentEditActivity extends Activity implements FView<Fragment> {
             picturePosition = position;
             picSize = 2;
             AddImage();
-            
         } else if (itemTitle.equals("Insert Illustration (Small)")) {
             Log.d(TAG,"insert ill start");
             saveFragment();

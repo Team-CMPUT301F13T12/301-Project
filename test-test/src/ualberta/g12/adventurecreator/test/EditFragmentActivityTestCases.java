@@ -55,8 +55,7 @@ public class EditFragmentActivityTestCases extends
         Fragment frag = new Fragment();
         fragmentController = new FragmentController();
         storyListController = new StoryListController(storyList, new OfflineIOHelper(getActivity()));
-        //fragmentController.addTextSegment(frag, "Look! Text!", 0);
-        fragmentController.addNewFragmentPart(frag, "Look! Text!", 0);
+        fragmentController.addTextSegment(frag, "Look! Text!", 0);
         storyList.getAllStories().get(0).addFragment(frag);
 
         Intent FragmentIntent = new Intent();
