@@ -7,7 +7,9 @@ import java.io.Serializable;
 /**
  * Used to implement, set, and link desired choices to each other. Allows the
  * user to link two fragments together so that they can be viewed and linked in
- * the reader's mode.
+ * the reader's mode. The design pattern Null Object was used in this class. As
+ * can be seen when an object of this class is instantiated all fields are
+ * initialized to non-null values.
  */
 public class Choice implements Serializable {
     /**
@@ -17,8 +19,6 @@ public class Choice implements Serializable {
     private String choiceText;
     private int linkedToFragmentPos;
     private boolean isRandom;
-
-    // default settings for a new choice
 
     /**
      * default setting given to a newly implemented choice. The setting will be
@@ -44,7 +44,7 @@ public class Choice implements Serializable {
      * obtains the isRandom boolean variable that tells if a choice is a RANDOM
      * type choice which means it will go to some other choice
      * 
-     * @return
+     * @return isRandom the value of the Choice's isRandom field
      */
     public boolean getisRandom() {
         return this.isRandom;
@@ -52,7 +52,10 @@ public class Choice implements Serializable {
 
     /**
      * sets isRandom boolean variable that tells if a choice is a RANDOM type
-     * choice which means it will go to some other choice
+     * choice which means it will randomly go to a different fragment each
+     * time the choice is selected.
+     * 
+     * @param bool the value to the Choice's isRandom field
      */
     public void setisRandom(boolean bool) {
         this.isRandom = bool;
@@ -86,6 +89,11 @@ public class Choice implements Serializable {
         this.linkedToFragmentPos = linkedToFragmentPos;
     }
 
+    /**
+     * Writes the Choice to an ObjectOutputStream.
+     * 
+     * @param out the ObjectOutputStream to write to
+     */
     private void writeObject(java.io.ObjectOutputStream out) throws IOException {
         out.writeObject(this.choiceText);
         out.writeObject(this.linkedToFragmentPos);
@@ -93,6 +101,11 @@ public class Choice implements Serializable {
 
     }
 
+    /**
+     * Loads the Choice from an ObjectInputStream
+     * 
+     * @param in the ObjectInputStream to read from
+     */
     private void readObject(java.io.ObjectInputStream in) throws IOException,
             ClassNotFoundException {
         this.choiceText = (String) in.readObject();

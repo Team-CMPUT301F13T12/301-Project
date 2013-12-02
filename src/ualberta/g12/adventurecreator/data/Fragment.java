@@ -13,7 +13,10 @@ import java.util.List;
  * of FragmentParts. This list contains all content that the author wishes the
  * Fragment to display. Each FragmentPart represents a different content type,
  * (such text, illustrations, etc). The list is displayed in order whenever a
- * Fragment is viewed.
+ * Fragment is viewed. The design pattern Null Object was used in this class. As
+ * can be seen when an object of this class is instantiated all fields are
+ * initialized to non-null values.
+ * 
  * @see FragmentPart
  */
 public class Fragment extends FModel<FView<?>> implements Serializable {
@@ -22,7 +25,7 @@ public class Fragment extends FModel<FView<?>> implements Serializable {
      * Serial UID for Lint
      */
     private static final long serialVersionUID = 6155560311789807407L;
-    
+
     private String title;
     private List<FragmentPart> parts;
 
@@ -35,17 +38,18 @@ public class Fragment extends FModel<FView<?>> implements Serializable {
     }
 
     /**
-     * @return the title of the Fragment The title of a Fragment is used for a
-     *         user to identify the Fragment.
+     * The title of a Fragment is used for a user to identify the Fragment.
+     * 
+     * @return title the title of the Fragment.
      */
     public String getTitle() {
         return this.title;
     }
 
     /**
-     * @param the newTitle of the Fragment Sets the title of the Fragment
-     *        to newTitle. The title of a Fragment is used for a user to
-     *        identify the Fragment.
+     * The title of a Fragment is used for a user to identify the Fragment.
+     * 
+     * @param newTitle the string to change the title of the Fragment to.
      */
     public void setTitle(String newTitle) {
         this.title = newTitle;
@@ -53,10 +57,10 @@ public class Fragment extends FModel<FView<?>> implements Serializable {
     }
 
     /**
-     * @return The list of FragmentParts for the Fragment. The list of
-     *         FragmentParts contains all the content data for the fragment.
-     *         Refer to FragmentPart.java to learn more. The list of
-     *         FragmentParts is displayed when a fragment is viewed.
+     * The list of FragmentParts contains all the content data for the fragment.
+     * The list of FragmentParts is displayed when a fragment is viewed.
+     * 
+     * @return parts The list of FragmentParts for the Fragment.
      * @see FragmentPart
      */
     public List<FragmentPart> getParts() {
@@ -65,11 +69,10 @@ public class Fragment extends FModel<FView<?>> implements Serializable {
 
     /**
      * Sets the list of FragmentParts in the Fragment to parts. The list of
-     * FragmentParts contains all the content information for the fragment.
-     * Refer to the FragmentPart class to learn more. The list of FragmentParts
-     * is displayed when a fragment is viewed.
+     * FragmentParts contains all the content information for the fragment. The
+     * list of FragmentParts is displayed when a fragment is viewed.
      * 
-     * @param the new list of FragmentParts for the Fragment
+     * @param parts the new list of FragmentParts for the Fragment
      * @see FragmentPart
      */
     public void setParts(List<FragmentPart> parts) {
