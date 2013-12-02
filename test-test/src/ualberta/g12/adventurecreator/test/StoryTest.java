@@ -8,7 +8,6 @@ import ualberta.g12.adventurecreator.data.Fragment;
 import ualberta.g12.adventurecreator.data.Story;
 import ualberta.g12.adventurecreator.views.StoryEditActivity;
 import android.test.ActivityInstrumentationTestCase2;
-import android.util.Log;
 
 public class StoryTest extends ActivityInstrumentationTestCase2<StoryEditActivity> {
 

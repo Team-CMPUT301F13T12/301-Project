@@ -1,8 +1,6 @@
 
 package ualberta.g12.adventurecreator.controllers;
 
-import java.util.List;
-
 import ualberta.g12.adventurecreator.data.Fragment;
 import ualberta.g12.adventurecreator.data.SModel;
 import ualberta.g12.adventurecreator.data.Story;

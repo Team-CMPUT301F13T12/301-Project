@@ -20,7 +20,6 @@ import android.widget.ListView;
 
 import ualberta.g12.adventurecreator.R;
 import ualberta.g12.adventurecreator.data.AdventureCreator;
-import ualberta.g12.adventurecreator.data.Fragment;
 import ualberta.g12.adventurecreator.data.Story;
 import ualberta.g12.adventurecreator.data.StoryList;
 import ualberta.g12.adventurecreator.tasks.TryPublishStoryTask;

@@ -24,7 +24,6 @@ import android.widget.SearchView;
 import ualberta.g12.adventurecreator.R;
 import ualberta.g12.adventurecreator.controllers.StoryListController;
 import ualberta.g12.adventurecreator.data.AdventureCreator;
-import ualberta.g12.adventurecreator.data.Fragment;
 import ualberta.g12.adventurecreator.data.OfflineIOHelper;
 import ualberta.g12.adventurecreator.data.Story;
 import ualberta.g12.adventurecreator.data.StoryList;
