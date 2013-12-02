@@ -7,115 +7,73 @@ import ualberta.g12.adventurecreator.data.StoryList;
 
 import java.util.List;
 
-// TODO implement interfaces
-
 /**
- * controller that interacts with the listview of stories
+ * A controller class that is used to modify the StoryList data singleton. All
+ * changes to the StoryList singleton should be done through this class. This
+ * class will automatically save changes to the StoryList singleton using the
+ * OfflineHelper Singleton.
  */
 public class StoryListController {
-    private StoryList sc = null;
-    
+    private StoryList sl = null;
+
     private OfflineIOHelper offlineIOHelper;
 
     /**
-     * Sole Constructor for the StoryListController. Initializes a
-     * StoryListController Object with a StoryList.
+     * Constructs a new StoryListController object set to the given StoryList
+     * and OfflineIoHelper Singletons.
      * 
-     * @param sc The StoryList to set up the StoryListController with
+     * @param sc The {@link StoryList} that this StoryListController will be
+     *            modifying
+     * @param oih The {@link OfflineIOHelper} that we'll be using to save the
+     *            changes to the StoryList
      */
     public StoryListController(StoryList sc, OfflineIOHelper oih) {
-        this.sc = sc;
+        this.sl = sc;
         this.offlineIOHelper = oih;
     }
 
     /**
-     * Add a story to the story list
+     * Adds the given story to the StoryList. If an identical story already
+     * exists, (same title and author), the original story will not be modified.
      * 
      * @param s story to be added to the list
      */
     public void addStory(Story s) {
-        sc.addStory(s);
+        sl.addStory(s);
     }
 
     /**
-     * Delete a story from the list
+     * Removes the story given from the list. If the story doesn't exist then
+     * nothing happens.
      * 
      * @param s story to be deleted
      */
     public void deleteStory(Story s) {
-        sc.deleteStory(s);
+        sl.deleteStory(s);
     }
 
     /**
-     * gets story from story list with object
-     * 
-     * @param s story to be retrieved
-     * @return null if blank other wise desired story
-     */
-    public Story getStory(Story s) {
-        return sc.getStory(s);
-    }
-
-    /**
-     * gets story from story list from title
-     * 
-     * @param t title of the selected story
-     * @return null if blank other wise story
-     */
-    public Story getStory(String t) {
-        return sc.getStory(t);
-    }
-
-    /**
-     * Returns all of the stories in the StoryList.
-     * 
-     * @return a list of all of the stories in the StoryList
-     */
-    public List<Story> getAllStories() {
-        return sc.getAllStories();
-
-    }
-
-    /**
-     * Replaces the story currently at position {@link pos} with {@link s}
+     * Replaces the story currently at position pos with the given story. If the
+     * position given is out of the story list bounds, the given story isn't
+     * added to the StoryList
      * 
      * @param s the story to replace with
      * @param pos the position to replace the story at
      */
     public void setStory(Story s, int pos) {
-        List<Story> stories = sc.getAllStories();
+        List<Story> stories = sl.getAllStories();
+        if (pos < 0 || pos >= stories.size()) {
+            // Position was out of bounds
+            return;
+        }
         stories.set(pos, s);
-        sc.setAllStories(stories);
+        sl.setAllStories(stories);
     }
 
     /**
-     * Updates the story with id id. Essentially replaces the existing story
-     * with id id with story s.
-     * 
-     * @param id the id of the story to update
-     * @param s the new story to replace it with
-     */
-    public void updateStoryWithId(int id, Story s) {
-        // TODO WARNING the way I see it it updates story but changes position
-        // -V
-        Story oldStory = sc.getStoryById(id);
-        sc.deleteStory(oldStory);
-        sc.addStory(s);
-    }
-
-    /**
-     * This method will load our localled cached stories from the phones memory.
-     * 
-     * @return
-     */
-
-    public StoryList loadStoryOffline() {
-        sc = offlineIOHelper.loadOfflineStories();
-        return sc;
-    }
-
-    /**
-     * This method saves all our local stories to the phones memory
+     * Called whenever we want to save all of the stories in the StoryList to
+     * disk using the OfflineIOHelper. If the storylist is null, the offline
+     * Helper does not try to save any stories.
      * 
      * @param storyList is the storyList that we want to save
      */
@@ -125,22 +83,12 @@ public class StoryListController {
     }
 
     /**
-     * This method helps get the Story in our storyList at a certain position
-     * 
-     * @param Pos is the position of the story to retrieve
-     * @return
-     */
-    public Story getStoryAtPos(int Pos) {
-        return sc.getAllStories().get(Pos);
-    }
-
-    /**
-     * This methods creates a blank story and adds it to the storyList The story
-     * is added to the end of the story List
+     * Creates a blank story by calling the no argument constructor of
+     * {@link Story} and adds it to the StoryList.
      */
     public void createBlankStory() {
         Story story = new Story();
-        sc.addStory(story);
+        sl.addStory(story);
     }
 
 }

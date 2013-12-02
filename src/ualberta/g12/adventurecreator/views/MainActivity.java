@@ -97,12 +97,10 @@ public class MainActivity extends Activity implements LView<StoryList>, OnItemCl
                     int max = storyList.getAllStories().size() - 1;
                     int randPos = random.nextInt((max - 0) + 1) + 0;
 
-                    currentRandStory = storyListController.getStoryAtPos(randPos);
+                    currentRandStory = storyList.getStoryAtPos(randPos);
                     int fragPos = currentRandStory.getStartFragPos();
 
-                    Fragment goToFrag = AdventureCreator.getStoryController().getFragmentAtPos(
-                            currentRandStory,
-                            fragPos);
+                    Fragment goToFrag = currentRandStory.getFragmentAtPos(fragPos);
                     Intent i = new Intent(getApplicationContext(), FragmentViewActivity.class);
                     // http://www.androidsnippets.com/prompt-user-input-with-an-alertdialog
                     AlertDialog.Builder popup = new AlertDialog.Builder(getApplicationContext());
@@ -269,7 +267,6 @@ public class MainActivity extends Activity implements LView<StoryList>, OnItemCl
                 // save the newly added story
                 offlineHelper.saveOfflineStories(storyList);
 
-                
                 Intent i = new Intent(this, StoryEditActivity.class);
                 i.putExtra("StoryPos", storyPos);
                 startActivity(i);
@@ -324,12 +321,10 @@ public class MainActivity extends Activity implements LView<StoryList>, OnItemCl
             i.putExtra("StoryPos", pos);
             startActivity(i);
         } else {
-            Story story = storyListController.getStoryAtPos(pos);
-
+            Story story = storyList.getStoryAtPos(pos);
             i = new Intent(this, FragmentViewActivity.class);
             i.putExtra("Story", story);
             startActivity(i);
         }
     }
-
 }

@@ -1,3 +1,4 @@
+
 package ualberta.g12.adventurecreator.data;
 
 import android.content.Context;
@@ -27,12 +28,12 @@ public class OfflineIOHelper {
      * calling application that is used for the FileInputStream and
      * FileOuputStreams.
      * 
-     * @param context
-     *            the context to load.
+     * @param context the context to load.
      */
     public OfflineIOHelper(Context context) {
-        if(context == null){
-            if(DEBUG) Log.d(TAG, "Context was null");
+        if (context == null) {
+            if (DEBUG)
+                Log.d(TAG, "Context was null");
         }
         this.storyContext = context;
     }
@@ -49,7 +50,8 @@ public class OfflineIOHelper {
             ObjectInputStream ois = new ObjectInputStream(fis);
             stories = (StoryList) ois.readObject();
             if (stories == null)
-                if(DEBUG) Log.d(TAG, "StoryList read in is null");
+                if (DEBUG)
+                    Log.d(TAG, "StoryList read in is null");
             fis.close();
 
         } catch (FileNotFoundException e) {
@@ -73,8 +75,11 @@ public class OfflineIOHelper {
 
     // TODO make sure to make each model object serializable
     public void saveOfflineStories(StoryList myStories) {
-        if (myStories == null)
-            if(DEBUG) Log.d(TAG, "Saving a null StoryList");
+        if (myStories == null) {
+            if (DEBUG)
+                Log.d(TAG, "Saving a null StoryList");
+            return;
+        }
         try {
             FileOutputStream fos = storyContext
                     .openFileOutput(this.fileName, 0);

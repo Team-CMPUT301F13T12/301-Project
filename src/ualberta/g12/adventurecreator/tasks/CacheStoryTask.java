@@ -1,20 +1,16 @@
-package ualberta.g12.adventurecreator.tasks;
 
+package ualberta.g12.adventurecreator.tasks;
 
 import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
-import android.util.Log;
 import android.widget.Toast;
-
-
 
 import ualberta.g12.adventurecreator.data.AdventureCreator;
 import ualberta.g12.adventurecreator.data.Fragment;
 import ualberta.g12.adventurecreator.data.Story;
 import ualberta.g12.adventurecreator.online.OnlineHelper;
 import ualberta.g12.adventurecreator.views.FragmentViewActivity;
-
 
 /**
  * A task used to Cache a story. This task will be used whenever a user wants to
@@ -28,10 +24,8 @@ import ualberta.g12.adventurecreator.views.FragmentViewActivity;
  */
 public class CacheStoryTask extends AsyncTask<Story, Void, String> {
 
-
     private Context context;
     private Story s;
-
 
     /**
      * Create a CacheStoryTask with the given context. This context will be used
@@ -40,7 +34,6 @@ public class CacheStoryTask extends AsyncTask<Story, Void, String> {
     public CacheStoryTask(Context c) {
         this.context = c;
     }
-
 
     /**
      * Downloads the story using the OnlineHelper. If the story doesn't
@@ -52,14 +45,12 @@ public class CacheStoryTask extends AsyncTask<Story, Void, String> {
         OnlineHelper oh = AdventureCreator.getOnlineHelper();
         s = oh.getStory(story[0].getId());
 
-
         if (s != null) {
             return String.format("%s Ready to view", story[0].getTitle());
         } else {
             return String.format("Error viewing %s", story[0].getTitle());
         }
     }
-
 
     /**
      * Notifies the user of the action that we are taking, either about to view
@@ -72,14 +63,11 @@ public class CacheStoryTask extends AsyncTask<Story, Void, String> {
     protected void onPostExecute(String result) {
         Toast.makeText(this.context, result, Toast.LENGTH_SHORT).show();
 
-
         if (this.s != null) {
             // Get first fragment and give it to FragmentViewActivity
             int fragPos = this.s.getStartFragPos();
 
-            Log.d("CAHCE", s.getFragments().get(0).getTitle());
-
-            Fragment goToFrag = AdventureCreator.getStoryController().getFragmentAtPos(s, fragPos);
+            Fragment goToFrag = s.getFragmentAtPos(fragPos);
             Intent i = new Intent(this.context, FragmentViewActivity.class);
             i.putExtra("Story", s);
             i.putExtra("Fragment", goToFrag);
@@ -87,6 +75,5 @@ public class CacheStoryTask extends AsyncTask<Story, Void, String> {
         }
         super.onPostExecute(result);
     }
-
 
 }

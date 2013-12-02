@@ -1,13 +1,6 @@
 
 package ualberta.g12.adventurecreator.views;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.OutputStream;
-import java.util.Random;
-
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -30,12 +23,16 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import ualberta.g12.adventurecreator.R;
-import ualberta.g12.adventurecreator.controllers.FragmentController;
-import ualberta.g12.adventurecreator.controllers.StoryController;
-import ualberta.g12.adventurecreator.data.AdventureCreator;
 import ualberta.g12.adventurecreator.data.Fragment;
 import ualberta.g12.adventurecreator.data.FragmentPart;
 import ualberta.g12.adventurecreator.data.Story;
+
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.util.Random;
 
 /**
  * Activity for viewing a fragment. User can follow choices and will be taken to
@@ -46,22 +43,19 @@ public class FragmentViewActivity extends Activity implements FView<Fragment> {
     private TextView fragmentTitleTextView;
     private ListView fragmentPartListView;
     private FragmentPartAdapter adapter;
-    private FragmentController fragmentController;
-    private StoryController storyController;
-    private static final String TAG = "FragmentViewActivity";
     private Story story;
     private Fragment fragment;
     ImageView viewImage, viewImage2, viewImage3;
     public int fragPos, x = 0;
+    // Logging
+    private static final boolean DEBUG = true;
+    private static final String TAG = "FragmentViewActivity";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_fragment_viewer);
 
-        fragmentController = AdventureCreator.getFragmentController();
-        storyController = AdventureCreator.getStoryController();
-        
         // obtain the intent
         Intent viewFragIntent = getIntent();
         story = (Story) viewFragIntent.getSerializableExtra("Story");
@@ -72,18 +66,17 @@ public class FragmentViewActivity extends Activity implements FView<Fragment> {
         viewImage = (ImageView) findViewById(R.id.viewImage);
         viewImage2 = (ImageView) findViewById(R.id.viewImage2);
         viewImage3 = (ImageView) findViewById(R.id.viewImage3);
-        
+
         // set fragment to first fragment in story
         fragPos = story.getStartFragPos();
-        fragment = AdventureCreator.getStoryController().getFragmentAtPos(story,
-                fragPos);
-        
-        Log.d(TAG, "start pos "+fragPos);
+        fragment = story.getFragmentAtPos(fragPos);
+
+        if(DEBUG) Log.d(TAG, "start pos " + fragPos);
 
         // show everything
         update();
-        
-        Log.d(TAG, "update ");
+
+        if(DEBUG) Log.d(TAG, "update ");
         // set click listeners
         setListClickListener();
 
@@ -117,15 +110,15 @@ public class FragmentViewActivity extends Activity implements FView<Fragment> {
         // TODO reload all fields based on new info from model
         update();
     }
-    
+
     private void update() {
         // TODO reload all fields based on new info from model
-        
-        Log.d(TAG, "frag title "+fragment.getTitle());
+
+        if(DEBUG) Log.d(TAG, "frag title " + fragment.getTitle());
         // Loads title
-        if (fragmentTitleTextView != null) 
+        if (fragmentTitleTextView != null)
             fragmentTitleTextView.setText(fragment.getTitle());
-        
+
         // Loads fragment parts (text, images, videos, sounds, etc)
         adapter = new FragmentPartAdapter(this, R.layout.activity_fragment_editor, fragment);
         fragmentPartListView.setAdapter(adapter);
@@ -139,28 +132,28 @@ public class FragmentViewActivity extends Activity implements FView<Fragment> {
 
                 FragmentPart part = fragment.getParts().get(position);
                 int goToFragPos = part.getChoice().getLinkedToFragmentPos();
-                
+
                 /* get the directed to fragment */
                 Fragment goToFrag;
-                if(goToFragPos != -1)
-                    goToFrag = storyController.getFragmentAtPos(story, goToFragPos);
+                if (goToFragPos != -1)
+                    goToFrag = story.getFragmentAtPos(goToFragPos);
                 else
                     goToFrag = null;
-                
+
                 /* if choice is random, do random */
                 if (part.getChoice().getisRandom()) {
                     goToFragPos = fragPos;
                     int options = story.getFragments().size();
-                    if (options > 1){
-                        while(goToFragPos==fragPos){
+                    if (options > 1) {
+                        while (goToFragPos == fragPos) {
                             Random random = new Random();
                             goToFragPos = random.nextInt(options);
                         }
-                        goToFrag = storyController.getFragmentAtPos(story, goToFragPos);
+                        goToFrag = story.getFragmentAtPos(goToFragPos);
                     }
                 }
-                
-                if (goToFrag != null){
+
+                if (goToFrag != null) {
                     fragment = goToFrag;
                     fragPos = goToFragPos;
                     update();

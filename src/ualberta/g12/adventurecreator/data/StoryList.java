@@ -112,6 +112,13 @@ public class StoryList extends LModel implements Serializable {
         return null;
     }
 
+    /**
+     * Returns the story at the specified position in the list of stories.
+     */
+    public Story getStoryAtPos(int pos) {
+        return stories.get(pos);
+    }
+
     private void writeObject(java.io.ObjectOutputStream out) throws IOException {
         out.writeObject(this.stories);
     }

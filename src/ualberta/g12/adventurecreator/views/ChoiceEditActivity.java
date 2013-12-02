@@ -16,13 +16,11 @@ import android.widget.EditText;
 
 import ualberta.g12.adventurecreator.R;
 import ualberta.g12.adventurecreator.controllers.FragmentController;
-import ualberta.g12.adventurecreator.controllers.StoryController;
 import ualberta.g12.adventurecreator.controllers.StoryListController;
 import ualberta.g12.adventurecreator.data.AdventureCreator;
 import ualberta.g12.adventurecreator.data.Choice;
 import ualberta.g12.adventurecreator.data.Fragment;
 import ualberta.g12.adventurecreator.data.FragmentPart;
-import ualberta.g12.adventurecreator.data.OfflineIOHelper;
 import ualberta.g12.adventurecreator.data.Story;
 import ualberta.g12.adventurecreator.data.StoryList;
 
@@ -45,7 +43,6 @@ public class ChoiceEditActivity extends Activity {
     private static final String TAG = "ChoiceEditActivity";
     private EditText myTitleET;
     private StoryListController storyListController;
-    private StoryController storyController;
     private FragmentController fragmentController;
 
     private static final boolean DEBUG = false;
@@ -58,11 +55,10 @@ public class ChoiceEditActivity extends Activity {
         setupActionBar();
 
         storyListController = AdventureCreator.getStoryListController();
-        storyController = AdventureCreator.getStoryController();
         fragmentController = AdventureCreator.getFragmentController();
         storyList = AdventureCreator.getStoryList();
 
-        //get intent
+        // get intent
         Intent editChoiceIntent = getIntent();
         storyPos = (Integer) editChoiceIntent.getSerializableExtra("StoryPos");
         fragPos = (Integer) editChoiceIntent.getSerializableExtra("FragmentPos");
@@ -70,36 +66,36 @@ public class ChoiceEditActivity extends Activity {
 
         Log.d(TAG, "got intents");
 
-        //get widget references
+        // get widget references
         myTitleET = (EditText) findViewById(R.id.choiceBody);
         Button choiceButton = (Button) findViewById(R.id.choiceButton);
 
-        //get story and fragment
-        story = storyListController.getStoryAtPos(storyPos);
-        fragment = storyController.getFragmentAtPos(story, fragPos);
-        
-        //get fragment part
-        if(choicePos < fragment.getParts().size())
+        // get story and fragment
+        story = storyList.getStoryAtPos(storyPos);
+        fragment = story.getFragmentAtPos(fragPos);
+
+        // get fragment part
+        if (choicePos < fragment.getParts().size())
             fragmentPart = fragment.getParts().get(choicePos);
-        else{
+        else {
             if (DEBUG)
-                Log.d(TAG,"Not given a valid choicePos");
+                Log.d(TAG, "Not given a valid choicePos");
             finish();
         }
-        
-        //get choice
-        if(fragmentPart.getType().equals("c")){
+
+        // get choice
+        if (fragmentPart.getType().equals("c")) {
             choice = fragmentPart.getChoice();
-        } else{
+        } else {
             if (DEBUG)
-                Log.d(TAG,"Not a choice at given choicePos");
+                Log.d(TAG, "Not a choice at given choicePos");
             finish();
         }
-        
-        //get original linkedPos
+
+        // get original linkedPos
         linkedPos = choice.getLinkedToFragmentPos();
-        
-        //set choice text
+
+        // set choice text
         myTitleET.setText(choice.getChoiceText());
 
         Log.d(TAG, "stroy and fragment");
@@ -120,7 +116,7 @@ public class ChoiceEditActivity extends Activity {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Pick a Fragment to link\n{RANDOM} sets a choice to pick a random fragment each time it is selected");
 
-        possibleChoices = getFragmentTitleList(storyController.getFragments(story));
+        possibleChoices = getFragmentTitleList(story.getFragments());
         CharSequence[] chars = possibleChoices.toArray(new CharSequence[possibleChoices.size()]);
 
         builder.setItems(chars, new DialogInterface.OnClickListener() {
@@ -146,14 +142,14 @@ public class ChoiceEditActivity extends Activity {
             Log.d("the size of possible choices is ", String.format("%d", possibleChoices.size()));
         if (DEBUG)
             Log.d("the number of result is ", String.format("%d", result));
-        
-        if (result == (possibleChoices.size()-1)) {
-            //selected random
+
+        if (result == (possibleChoices.size() - 1)) {
+            // selected random
             fragment.getParts().get(choicePos).getChoice().setisRandom(true);
             linkedPos = -1;
-        }else{
-            //selected a fragment
-        	linkedPos = result;
+        } else {
+            // selected a fragment
+            linkedPos = result;
         }
     }
 
@@ -190,23 +186,21 @@ public class ChoiceEditActivity extends Activity {
                 return true;
             case R.id.save_story:
 
-                if(DEBUG)
-                    Log.d(TAG, "choice text "+choice.getChoiceText());
-                
+                if (DEBUG)
+                    Log.d(TAG, "choice text " + choice.getChoiceText());
+
                 String title = myTitleET.getText().toString();
-                
+
                 choice.setChoiceText(title);
                 choice.setLinkedToFragmentPos(linkedPos);
-                
+
                 fragmentController.setFragmentPartChoice(fragment, fragmentPart, choice);
                 storyListController.saveOfflineStories(storyList);
 
                 Log.d(TAG, "linkedpos, " + linkedPos);
-
                 finish();
                 return true;
         }
         return super.onOptionsItemSelected(item);
     }
-
 }

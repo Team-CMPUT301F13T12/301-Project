@@ -5,7 +5,6 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.os.AsyncTask;
-import android.util.Log;
 import android.widget.Toast;
 
 import org.apache.http.client.ClientProtocolException;
@@ -26,7 +25,6 @@ import java.io.IOException;
  * This class will be used whenever a user tries to publish a story.
  */
 public class TryPublishStoryTask extends AsyncTask<Story, Void, Boolean> {
-    private static final String TAG = "TryPublishStoryTask";
     private Story s;
     private Context context;
 

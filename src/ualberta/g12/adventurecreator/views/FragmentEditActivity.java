@@ -26,7 +26,6 @@ import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
@@ -36,7 +35,6 @@ import ualberta.g12.adventurecreator.controllers.FragmentController;
 import ualberta.g12.adventurecreator.controllers.StoryController;
 import ualberta.g12.adventurecreator.controllers.StoryListController;
 import ualberta.g12.adventurecreator.data.AdventureCreator;
-import ualberta.g12.adventurecreator.data.Choice;
 import ualberta.g12.adventurecreator.data.Fragment;
 import ualberta.g12.adventurecreator.data.FragmentPart;
 import ualberta.g12.adventurecreator.data.Story;
@@ -48,6 +46,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.text.SimpleDateFormat;
+import java.util.Locale;
 
 // Right now we are making Fragments here and also choice
 // What i was thinking was maybe just make the general fragment here
@@ -68,12 +67,12 @@ public class FragmentEditActivity extends Activity implements FView<Fragment> {
     private EditText editTitleText;
     private ListView fragmentPartListView;
     private FragmentPartAdapter adapter;
-    
+
     // Fragment stuff
     private Fragment fragment;
     private int position;
     public int picturePosition;
-        
+
     // For getting pictures
     private String pictureMode;
     private int picSize;
@@ -82,12 +81,12 @@ public class FragmentEditActivity extends Activity implements FView<Fragment> {
     private StoryList storyList;
     private Story story;
     private int storyPos, fragPos;
-    
+
     // Controllers
     private StoryListController storyListController;
     private StoryController storyController;
     private FragmentController fragmentController;
-    
+
     // Constants
     public static final int EDIT = 0;
     public static final int ADD = 1;
@@ -95,7 +94,7 @@ public class FragmentEditActivity extends Activity implements FView<Fragment> {
     // Logging info
     private static final String TAG = "FragmentEditActivity";
     private static final boolean DEBUG = true;
-    
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -104,7 +103,7 @@ public class FragmentEditActivity extends Activity implements FView<Fragment> {
         storyListController = AdventureCreator.getStoryListController();
         storyController = AdventureCreator.getStoryController();
         fragmentController = AdventureCreator.getFragmentController();
-        
+
         // obtain the intent
         Intent editActIntent = getIntent();
         storyPos = (Integer) editActIntent.getSerializableExtra("StoryPos");
@@ -112,16 +111,16 @@ public class FragmentEditActivity extends Activity implements FView<Fragment> {
         // get widget references
         fragmentPartListView = (ListView) findViewById(R.id.FragmentPartList);
         editTitleText = (EditText) findViewById(R.id.fragmentTitle);
-        
+
         // load save file
         storyList = AdventureCreator.getStoryList();
         story = storyList.getAllStories().get(storyPos);
         fragment = story.getFragments().get(fragPos);
 
         // First Load title
-        if (editTitleText != null) 
+        if (editTitleText != null)
             editTitleText.setText(fragment.getTitle());
-        
+
         // Make sure we have at least one part
         if (fragment.getParts().size() == 0) {
             fragmentController.addNewFragmentPart(fragment, "e", 0);
@@ -141,9 +140,9 @@ public class FragmentEditActivity extends Activity implements FView<Fragment> {
         super.onStart();
         fragment.addView(this);
     }
-    
+
     @Override
-    protected void onDestroy(){
+    protected void onDestroy() {
         super.onDestroy();
         fragment.deleteView(this);
     }
@@ -160,8 +159,8 @@ public class FragmentEditActivity extends Activity implements FView<Fragment> {
     public boolean onOptionsItemSelected(MenuItem item) {
         // TODO Auto-generated method stub
         switch (item.getItemId()) {
-          //  case R.id.add_option:
-           //     return true;
+        // case R.id.add_option:
+        // return true;
 
             case R.id.save_fragment:
                 // Save values
@@ -194,23 +193,23 @@ public class FragmentEditActivity extends Activity implements FView<Fragment> {
                 .getMenuInfo();
         position = (int) info.id;
         CharSequence itemTitle = item.getTitle();
-        
-        //before taking any action save changes to title
+
+        // before taking any action save changes to title
         saveTitle();
-        
-        //Do corresponding action
+
+        // Do corresponding action
         if (itemTitle.equals("Insert Text")) {
             fragmentController.addNewFragmentPart(fragment, "t", position);
 
         } else if (itemTitle.equals("Insert Illustration (Large)")) {
-           Log.d(TAG,"insert ill start");
+            Log.d(TAG, "insert ill start");
             saveFragment();
             pictureMode = "Add";
             picturePosition = position;
             picSize = 2;
             AddImage();
         } else if (itemTitle.equals("Insert Illustration (Small)")) {
-            Log.d(TAG,"insert ill start");
+            Log.d(TAG, "insert ill start");
             saveFragment();
             pictureMode = "Add";
             picturePosition = position;
@@ -220,8 +219,8 @@ public class FragmentEditActivity extends Activity implements FView<Fragment> {
         } else if (itemTitle.equals("Edit")) {
             FragmentPart part = fragment.getParts().get(position);
             String type = part.getType();
-            
-            if ( type.equals("t") || type.equals("e")) {
+
+            if (type.equals("t") || type.equals("e")) {
                 RelativeLayout curLayout = new RelativeLayout(this);
 
                 LayoutInflater inflater = (LayoutInflater) this
@@ -232,8 +231,8 @@ public class FragmentEditActivity extends Activity implements FView<Fragment> {
 
                 final EditText editTextSegView = (EditText) editTextWindow.getContentView()
                         .findViewById(R.id.editTextSeg);
-                
-                if ( type.equals("t") ) {
+
+                if (type.equals("t")) {
                     editTextSegView.setText(part.getData());
                 } else {
                     editTextSegView.setText("");
@@ -249,8 +248,9 @@ public class FragmentEditActivity extends Activity implements FView<Fragment> {
                     public void onClick(View v) {
                         String newText = editTextSegView.getText().toString();
                         fragmentController.deleteFragmentPart(fragment, this.getPosition());
-                        
-                        FragmentPart part = fragmentController.addNewFragmentPart(fragment, "t", this.getPosition());
+
+                        FragmentPart part = fragmentController.addNewFragmentPart(fragment, "t",
+                                this.getPosition());
                         fragmentController.setFragmentPartData(fragment, part, newText);
                         editTextWindow.dismiss();
                     }
@@ -266,13 +266,13 @@ public class FragmentEditActivity extends Activity implements FView<Fragment> {
                 editTextWindow.showAtLocation(curLayout, Gravity.CENTER, 0, 0);
                 editTextWindow.update(0, 0, fragmentPartListView.getWidth(), 400);
 
-            } else if ( type.equals("i") ) {
+            } else if (type.equals("i")) {
                 saveFragment();
                 pictureMode = "Edit";
                 picturePosition = position;
                 picSize = part.getPicSize();
                 AddImage();
-            } else if ( type.equals("c") ) {
+            } else if (type.equals("c")) {
 
                 // go to edit choice activity
                 Intent intent = new Intent(this, ChoiceEditActivity.class);
@@ -284,13 +284,13 @@ public class FragmentEditActivity extends Activity implements FView<Fragment> {
 
         } else if (itemTitle.equals("Add Choice")) {
             // create, add and save new choice
-            
+
             // First remove empty part
             fragmentController.removeEmptyPart(fragment);
 
             int choicePos = fragment.getParts().size();
             fragmentController.addNewFragmentPart(fragment, "c", choicePos);
-            
+
             saveFragment();
 
             // go to edit choice activity
@@ -298,13 +298,13 @@ public class FragmentEditActivity extends Activity implements FView<Fragment> {
             intent.putExtra("StoryPos", storyPos);
             intent.putExtra("FragmentPos", fragPos);
             intent.putExtra("ChoicePos", choicePos);
-            Log.d(TAG, "choice pos "+choicePos);
+            Log.d(TAG, "choice pos " + choicePos);
             startActivity(intent);
 
         } else if (itemTitle.equals("Delete")) {
             fragmentController.deleteFragmentPart(fragment, position);
-            
-         // Make sure the fragment isn't completely empty
+
+            // Make sure the fragment isn't completely empty
             if (fragment.getParts().size() == 0)
                 fragmentController.addNewFragmentPart(fragment, "e", 0);
         }
@@ -370,7 +370,8 @@ public class FragmentEditActivity extends Activity implements FView<Fragment> {
 
                     bitmap = BitmapFactory.decodeFile(f.getAbsolutePath(),
                             bitmapOptions);
-                    if(DEBUG) Log.d(TAG, "path of image from camera" + f.getAbsolutePath() + "");
+                    if (DEBUG)
+                        Log.d(TAG, "path of image from camera" + f.getAbsolutePath() + "");
                     f.delete();
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -387,34 +388,42 @@ public class FragmentEditActivity extends Activity implements FView<Fragment> {
                 picturePath = c.getString(columnIndex);
                 c.close();
                 bitmap = (BitmapFactory.decodeFile(picturePath));
-                if(DEBUG) Log.d(TAG, "path of image from gallery" + picturePath + "");
+                if (DEBUG)
+                    Log.d(TAG, "path of image from gallery" + picturePath + "");
             }
-            
-            if (bitmap != null){
-                //following line modified from https://groups.google.com/forum/#!topic/android-developers/YjGcve7s5CQ
-                //by Derek
-                CharSequence appName = this.getResources().getText(this.getResources().getIdentifier("app_name", "string", this.getPackageName()));          
-                
-                File folder = new File(Environment.getExternalStorageDirectory().toString(), appName.toString());
-                File storyFolder = new File (folder.getAbsolutePath(), Integer.toString(story.getId()));
-                boolean folderExists = true; //assume true
-    
+
+            if (bitmap != null) {
+                // following line modified from
+                // https://groups.google.com/forum/#!topic/android-developers/YjGcve7s5CQ
+                // by Derek
+                CharSequence appName = this.getResources().getText(
+                        this.getResources().getIdentifier("app_name", "string",
+                                this.getPackageName()));
+
+                File folder = new File(Environment.getExternalStorageDirectory().toString(),
+                        appName.toString());
+                File storyFolder = new File(folder.getAbsolutePath(), Integer.toString(story
+                        .getId()));
+                boolean folderExists = true; // assume true
+
                 if (!storyFolder.exists()) {
                     folderExists = storyFolder.mkdirs();
                 }
                 if (folderExists) {
-                    //once folder exists finish creating picturePath
+                    // once folder exists finish creating picturePath
                     long picTime = System.currentTimeMillis();
-                    String newPicName = new SimpleDateFormat("yyyy-MM-dd HH.mm.ss").format(picTime) + ".jpg";
+                    String newPicName = new SimpleDateFormat("yyyy-MM-dd HH.mm.ss", Locale.CANADA)
+                            .format(picTime)
+                            + ".jpg";
                     File file = new File(storyFolder.getAbsolutePath(), newPicName);
-                    
+
                     Log.d(TAG, "path of image END" + file.getAbsolutePath() + "");
-                    
-                    //then write the picture to picturePath
+
+                    // then write the picture to picturePath
                     try {
                         OutputStream outFile = new FileOutputStream(file);
-                        //TODO decide on quality size and figure out how 
-                        //to decrease picture dimensions?
+                        // TODO decide on quality size and figure out how
+                        // to decrease picture dimensions?
                         bitmap.compress(Bitmap.CompressFormat.JPEG, 20, outFile);
                         outFile.flush();
                         outFile.close();
@@ -425,44 +434,48 @@ public class FragmentEditActivity extends Activity implements FView<Fragment> {
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
-                    
-                    //finish by updating the fragment part      
-                    //We can cast here because we know the returned type (we just chose it with "i")
-                    FragmentPart part = fragmentController.addNewFragmentPart(fragment, "i", position);
+
+                    // finish by updating the fragment part
+                    // We can cast here because we know the returned type (we
+                    // just chose it with "i")
+                    FragmentPart part = fragmentController.addNewFragmentPart(fragment, "i",
+                            position);
                     fragmentController.setFragmentPartData(fragment, part, picturePath);
                     fragmentController.setFragmentPartPicSize(fragment, part, picSize);
-                    
-                    //remove old picture if in edit mode
+
+                    // remove old picture if in edit mode
                     if (pictureMode.equals("Edit")) {
-                        fragmentController.deleteFragmentPart(fragment, position+1);
+                        fragmentController.deleteFragmentPart(fragment, position + 1);
                     }
                     saveFragment();
                 } else {
-                    //unable to create folder
+                    // unable to create folder
                 }
             }
-            if(DEBUG) Log.d(TAG, "path of image END" + picturePath + "");
+            if (DEBUG)
+                Log.d(TAG, "path of image END" + picturePath + "");
         }
     }
-    
-    //Should be called before any other view notifying action
+
+    // Should be called before any other view notifying action
     // Otherwise changes to title will be reset
-    private void saveTitle(){
+    private void saveTitle() {
         String title = editTitleText.getText().toString();
         fragmentController.setTitle(fragment, title);
     }
 
     private void saveFragment() {
-        if(DEBUG) Log.d(TAG, "removing empty");
-        
+        if (DEBUG)
+            Log.d(TAG, "removing empty");
+
         saveTitle();
-        
-        // make sure fragment does not have any empty parts
+
         fragmentController.removeEmptyPart(fragment);
-        
-        if(DEBUG) Log.d(TAG, "removed empty");
+
+        if (DEBUG)
+            Log.d(TAG, "removed empty");
 
         storyController.setFragmentAtLocation(story, fragPos, fragment);
         storyListController.saveOfflineStories(storyList);
-    }   
+    }
 }
