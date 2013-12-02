@@ -13,6 +13,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import ualberta.g12.adventurecreator.R;
+import ualberta.g12.adventurecreator.data.AdventureCreator;
 import ualberta.g12.adventurecreator.data.Choice;
 import ualberta.g12.adventurecreator.data.Fragment;
 import ualberta.g12.adventurecreator.data.FragmentPart;
@@ -29,6 +30,7 @@ public class FragmentPartAdapter extends ArrayAdapter<FragmentPart> {
 
     private static final String TAG = "FragmentPartAdapter";
     private static final boolean DEBUG = true;
+    public static int PicSize;  
 
     /**
      * Sold constructor for the FragmentPartAdapter. Sets up the context,
@@ -44,6 +46,11 @@ public class FragmentPartAdapter extends ArrayAdapter<FragmentPart> {
         this.resource = resource;
         this.frag = frag;
     }
+    
+    private AdventureCreator getApplication() {
+        // TODO Auto-generated method stub
+        return null;
+    }
 
     @Override
     /**
@@ -54,6 +61,7 @@ public class FragmentPartAdapter extends ArrayAdapter<FragmentPart> {
      * @param parent    fragment that the segment belongs to
      */
     public View getView(int position, View convertView, ViewGroup parent) {
+       //int PicSize = FragmentEditActivity.getState();
         View rowView = convertView;
         if (rowView == null) {
             LayoutInflater inflater = (LayoutInflater) context
@@ -61,6 +69,7 @@ public class FragmentPartAdapter extends ArrayAdapter<FragmentPart> {
             rowView = inflater.inflate(R.layout.listview_fragment_part_list, parent, false);
         }
         ImageView image = (ImageView) rowView.findViewById(R.id.fragmentPartIllustration);
+        ImageView image2 = (ImageView) rowView.findViewById(R.id.fragmentPartIllustrationSmall);
         TextView text = (TextView) rowView.findViewById(R.id.fragmentPartTextPart);
         TextView choiceButton = (TextView) rowView.findViewById(R.id.fragmentPartChoice);
 
@@ -95,14 +104,24 @@ public class FragmentPartAdapter extends ArrayAdapter<FragmentPart> {
             String picturePath = part.getData();
             Bitmap illustration = BitmapFactory.decodeFile(picturePath);
 
-            if (illustration != null) {
-                image.setVisibility(View.VISIBLE);
-                if (image != null)
-                    if (DEBUG)
-                        Log.d(TAG, "SET IMAGE");
-                image.setImageBitmap(illustration);
+            if (PicSize == 2) {
+                if (illustration != null) {
+                    image2.setVisibility(View.VISIBLE);
+                    if (image2 != null)
+                    image2.setImageBitmap(illustration);
+                }
             }
+            
+            if (PicSize == 1){
+                if (illustration != null) {
+                    image.setVisibility(View.VISIBLE);
+                    if (image != null)
+                        if (DEBUG)
+                            Log.d(TAG, "SET IMAGE");
+                    image.setImageBitmap(illustration);
+                }
         } else if ( type.equals("c") ) {
+            
             if (DEBUG)
                 Log.d(TAG, "CHOICE " + position);
             // Display a choice
@@ -132,4 +151,5 @@ public class FragmentPartAdapter extends ArrayAdapter<FragmentPart> {
 
         return rowView;
     }
+    
 }

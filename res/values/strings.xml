@@ -34,7 +34,8 @@
     <string name="story_edit_author_hint">New Author</string>
     <string name="add_choice">Add Choice</string>
     <string name="insert_text">Insert Text</string>
-    <string name="insert_illustration">Insert Illustration</string>
+    <string name="insert_illustration">Insert Illustration (Large)</string>
+    <string name="insert_illustration_s">Insert Illustration (Small)</string>
     <string name="edit">Edit</string>
     <string name="delete">Delete</string>
     <string name="cancel">Cancel</string>

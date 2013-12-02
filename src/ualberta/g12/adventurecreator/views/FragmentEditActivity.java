@@ -26,6 +26,7 @@ import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
@@ -72,6 +73,9 @@ public class FragmentEditActivity extends Activity implements FView<Fragment> {
     private Fragment fragment;
     private int position;
     public int picturePosition;
+    //TODO: get rid of test variable
+   // public static int PicSize;   
+        
     private String pictureMode;
 
     private StoryList storyList;
@@ -90,7 +94,6 @@ public class FragmentEditActivity extends Activity implements FView<Fragment> {
     // Logging info
     private static final String TAG = "FragmentEditActivity";
     private static final boolean DEBUG = true;
-    
     
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -204,11 +207,21 @@ public class FragmentEditActivity extends Activity implements FView<Fragment> {
         if (itemTitle.equals("Insert Text")) {
             fragmentController.addNewFragmentPart(fragment, "t", position);
 
-        } else if (itemTitle.equals("Insert Illustration")) {
-            if(DEBUG) Log.d(TAG,"insert ill start");
+
+        } else if (itemTitle.equals("Insert Illustration (Large)")) {
+           Log.d(TAG,"insert ill start");
+
             saveFragment();
             pictureMode = "Add";
             picturePosition = position;
+            setState(1);
+            AddImage();
+        } else if (itemTitle.equals("Insert Illustration (Small)")) {
+            Log.d(TAG,"insert ill start");
+            saveFragment();
+            pictureMode = "Add";
+            picturePosition = position;
+            setState(2);
             AddImage();
 
         } else if (itemTitle.equals("Edit")) {
@@ -365,8 +378,6 @@ public class FragmentEditActivity extends Activity implements FView<Fragment> {
                             bitmapOptions);
                     if(DEBUG) Log.d(TAG, "path of image from camera" + f.getAbsolutePath() + "");
                     f.delete();
-                    
-                    
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -459,4 +470,13 @@ public class FragmentEditActivity extends Activity implements FView<Fragment> {
         storyController.setFragmentAtLocation(story, fragPos, fragment);
         storyListController.saveOfflineStories(storyList);
     }
+   
+  //  public static int getState(){
+   //     return FragmentEditActivity.PicSize;
+   // }
+    
+    public void setState(int PicSize) {
+        FragmentPartAdapter.PicSize = PicSize;
+    }
+   
 }

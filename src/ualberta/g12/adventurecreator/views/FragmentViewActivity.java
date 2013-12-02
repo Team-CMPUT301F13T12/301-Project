@@ -40,7 +40,7 @@ import ualberta.g12.adventurecreator.data.Story;
 /**
  * Activity for viewing a fragment. User can follow choices and will be taken to
  * the next fragment.
- */
+ **/
 public class FragmentViewActivity extends Activity implements FView<Fragment> {
 
     private TextView fragmentTitleTextView;
