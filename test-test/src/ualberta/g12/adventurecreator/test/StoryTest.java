@@ -36,8 +36,8 @@ public class StoryTest extends ActivityInstrumentationTestCase2<StoryEditActivit
 	 */
 	public void testConstructorWithArguments(){
 		Story s = new Story("test","tester");
-		assertTrue(s.getAuthor().equals(""));
-		assertTrue(s.getTitle().equals(""));
+		assertTrue(s.getAuthor().equals("tester"));
+		assertTrue(s.getTitle().equals("test"));
 	}
 	
 	
@@ -62,7 +62,7 @@ public class StoryTest extends ActivityInstrumentationTestCase2<StoryEditActivit
 	public void testGetTitle(){
 		Story s = new Story("test","tester");
 		
-		assertTrue(s.getTitle().equals(""));
+		assertTrue(s.getTitle().equals("test"));
 
 	}
 	
