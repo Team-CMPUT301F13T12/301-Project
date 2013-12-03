@@ -68,6 +68,9 @@ public class OnlineStorySearchActivity extends Activity implements OnItemClickLi
         getActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
+    /**
+     * loads all title and authors of stories into a new story list
+     */
     private void loadTitleAuthors() {
         tas = new ArrayList<Story>();
 
@@ -75,7 +78,9 @@ public class OnlineStorySearchActivity extends Activity implements OnItemClickLi
                 this.query
         });
     }
-
+    /**
+     * sets up the initial listview of stories that will respond to user interaction  
+     */
     private void setUpUi() {
         listView = (ListView) findViewById(R.id.online_story_search_listview);
         adapter = new StoryAuthorMapListAdapter(this, R.layout.listview_story_list, tas);
@@ -216,6 +221,9 @@ public class OnlineStorySearchActivity extends Activity implements OnItemClickLi
         }
     }
 
+    /**
+     * updates the online list of stories whenever a new story is published to the online storage
+     */
     @Override
     public void update(List<Story> list) {
         tas.clear();
