@@ -71,6 +71,7 @@ public class CacheStoryTask extends AsyncTask<Story, Void, String> {
             Intent i = new Intent(this.context, FragmentViewActivity.class);
             i.putExtra("Story", s);
             i.putExtra("type", "online");
+            i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             this.context.startActivity(i);
         }
         super.onPostExecute(result);
