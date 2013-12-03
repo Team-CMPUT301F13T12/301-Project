@@ -77,7 +77,7 @@ public class DownloadTasksTestCases extends
             fail("Download failed");
         }
         // Wait til onPostExecute is done
-        while (downloadStory.getStatus() == Status.FINISHED) {
+        while (downloadStory.getStatus() != Status.FINISHED) {
             if (downloadStory.isCancelled())
                 fail("We were cancelled");
         }
@@ -124,7 +124,7 @@ public class DownloadTasksTestCases extends
         }
 
         // Wait til onPostExecute is done
-        while (downloadStory.getStatus() == Status.FINISHED) {
+        while (downloadStory.getStatus() != Status.FINISHED) {
             if (downloadStory.isCancelled())
                 fail("We were cancelled");
         }
@@ -182,7 +182,7 @@ public class DownloadTasksTestCases extends
         }
 
         // Wait til onPostExecute finishes and we get updated
-        while (downloadTitleAuthors.getStatus() == Status.FINISHED && !sampleClass.updated) {
+        while (downloadTitleAuthors.getStatus() != Status.FINISHED && !sampleClass.updated) {
             if (downloadTitleAuthors.isCancelled())
                 fail("We were cancelled");
         }
@@ -211,7 +211,7 @@ public class DownloadTasksTestCases extends
         }
 
         // Wait til download is complete
-        while (downloadTitleAuthors.getStatus() == Status.FINISHED && !sampleClass.updated) {
+        while (downloadTitleAuthors.getStatus() != Status.FINISHED && !sampleClass.updated) {
             if (downloadTitleAuthors.isCancelled())
                 fail("We were cancelled");
         }
