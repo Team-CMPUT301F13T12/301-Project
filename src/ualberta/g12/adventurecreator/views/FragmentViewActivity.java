@@ -23,15 +23,22 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import ualberta.g12.adventurecreator.R;
+import ualberta.g12.adventurecreator.controllers.FragmentController;
+import ualberta.g12.adventurecreator.controllers.StoryController;
+import ualberta.g12.adventurecreator.controllers.StoryListController;
+import ualberta.g12.adventurecreator.data.AdventureCreator;
 import ualberta.g12.adventurecreator.data.Fragment;
 import ualberta.g12.adventurecreator.data.FragmentPart;
 import ualberta.g12.adventurecreator.data.Story;
+import ualberta.g12.adventurecreator.data.StoryList;
 
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.text.SimpleDateFormat;
+import java.util.Locale;
 import java.util.Random;
 
 /**
@@ -43,22 +50,34 @@ public class FragmentViewActivity extends Activity implements FView<Fragment> {
     private TextView fragmentTitleTextView;
     private ListView fragmentPartListView;
     private FragmentPartAdapter adapter;
+    private StoryList storyList;
     private Story story;
     private Fragment fragment;
     ImageView viewImage, viewImage2, viewImage3;
-    public int fragPos, x = 0;
+    public int storyPos, fragPos, x = 0;
     private static final boolean DEBUG = true;
     private static final String TAG = "FragmentViewActivity";
+
+    // Controllers
+    private StoryListController storyListController;
+    private StoryController storyController;
+    private FragmentController fragmentController;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_fragment_viewer);
 
+        storyListController = AdventureCreator.getStoryListController();
+        storyController = AdventureCreator.getStoryController();
+        fragmentController = AdventureCreator.getFragmentController();
+        
         // obtain the intent
         Intent viewFragIntent = getIntent();
-        story = (Story) viewFragIntent.getSerializableExtra("Story");
-
+        storyPos = (Integer) viewFragIntent.getSerializableExtra("StoryPos");
+        storyList = AdventureCreator.getStoryList();
+        story = storyList.getStoryAtPos(storyPos);
+        
         // get widget references
         fragmentPartListView = (ListView) findViewById(R.id.fragmentViewPartList);
         fragmentTitleTextView = (TextView) findViewById(R.id.fragmentTitleText);
@@ -69,15 +88,13 @@ public class FragmentViewActivity extends Activity implements FView<Fragment> {
         // set fragment to first fragment in story
         fragPos = story.getStartFragPos();
         fragment = story.getFragmentAtPos(fragPos);
-
+        
         if (DEBUG)
             Log.d(TAG, "start pos " + fragPos);
 
         // show everything
         update();
 
-        if (DEBUG)
-            Log.d(TAG, "update ");
         // set click listeners
         setListClickListener();
 
@@ -107,16 +124,25 @@ public class FragmentViewActivity extends Activity implements FView<Fragment> {
     }
 
     @Override
+    protected void onStart() {
+        super.onStart();
+        fragment.addView(this);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        fragment.deleteView(this);
+    }
+    
+    @Override
     public void update(Fragment model) {
-        // TODO reload all fields based on new info from model
         update();
     }
 
     private void update() {
         // TODO reload all fields based on new info from model
 
-        if (DEBUG)
-            Log.d(TAG, "frag title " + fragment.getTitle());
         // Loads title
         if (fragmentTitleTextView != null)
             fragmentTitleTextView.setText(fragment.getTitle());
@@ -124,6 +150,24 @@ public class FragmentViewActivity extends Activity implements FView<Fragment> {
         // Loads fragment parts (text, images, videos, sounds, etc)
         adapter = new FragmentPartAdapter(this, R.layout.activity_fragment_editor, fragment);
         fragmentPartListView.setAdapter(adapter);
+        
+        Log.d(TAG, "UPDATE");
+        Log.d(TAG, fragment.getAnnotations().toString());
+        Log.d(TAG, "size" +fragment.getAnnotations().size());
+        File file;
+        for(int i=0; i<fragment.getAnnotations().size(); i++){
+            file = new File(fragment.getAnnotations().get(i));
+            Log.d(TAG, "" +file.getAbsoluteFile());
+            if (file.exists()){
+                Log.d(TAG, "existis");
+                if(i==0)
+                    viewImage.setImageBitmap(BitmapFactory.decodeFile(file.getAbsolutePath()));
+                if(i==1)
+                    viewImage2.setImageBitmap(BitmapFactory.decodeFile(file.getAbsolutePath()));
+                if(i==2)
+                    viewImage3.setImageBitmap(BitmapFactory.decodeFile(file.getAbsolutePath()));
+            }
+        }
     }
 
     private void setListClickListener() {
@@ -170,8 +214,8 @@ public class FragmentViewActivity extends Activity implements FView<Fragment> {
         super.onCreateContextMenu(menu, v, menuInfo);
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.fragment_part_menu, menu);
-    }
-
+    }  
+    
     /**
      * Allows the user to add a picture from the gallery or take a new picture
      * and add it as an annotation.
@@ -213,6 +257,7 @@ public class FragmentViewActivity extends Activity implements FView<Fragment> {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK) {
+            Bitmap bitmap = null;
             if (requestCode == 1) {
                 File f = new File(Environment.getExternalStorageDirectory().toString());
                 for (File temp : f.listFiles()) {
@@ -222,20 +267,10 @@ public class FragmentViewActivity extends Activity implements FView<Fragment> {
                     }
                 }
                 try {
-                    Bitmap bitmap;
                     BitmapFactory.Options bitmapOptions = new BitmapFactory.Options();
 
                     bitmap = BitmapFactory.decodeFile(f.getAbsolutePath(),
                             bitmapOptions);
-                    if (x == 0) {
-                        viewImage.setImageBitmap(bitmap);
-                    }
-                    if (x == 1) {
-                        viewImage2.setImageBitmap(bitmap);
-                    }
-                    if (x == 2) {
-                        viewImage3.setImageBitmap(bitmap);
-                    }
 
                     String path = android.os.Environment
                             .getExternalStorageDirectory()
@@ -270,21 +305,70 @@ public class FragmentViewActivity extends Activity implements FView<Fragment> {
                 int columnIndex = c.getColumnIndex(filePath[0]);
                 String picturePath = c.getString(columnIndex);
                 c.close();
-                Bitmap thumbnail = (BitmapFactory.decodeFile(picturePath));
+                bitmap = (BitmapFactory.decodeFile(picturePath));
                 Log.w("path of image from gallery......******************.........", picturePath
                         + "");
+            }
+            
+            if (bitmap != null) {
+                // following line modified from
+                // https://groups.google.com/forum/#!topic/android-developers/YjGcve7s5CQ
+                // by Derek
+                CharSequence appName = this.getResources().getText(
+                        this.getResources().getIdentifier("app_name", "string",
+                                this.getPackageName()));
 
-                if (x == 0) {
-                    viewImage.setImageBitmap(thumbnail);
-                }
-                if (x == 1) {
-                    viewImage2.setImageBitmap(thumbnail);
-                }
-                if (x == 2) {
-                    viewImage3.setImageBitmap(thumbnail);
-                }
+                File folder = new File(Environment.getExternalStorageDirectory().toString(),
+                        appName.toString());
+                File storyFolder = new File(folder.getAbsolutePath(), Integer.toString(story
+                        .getId()));
+                boolean folderExists = true; // assume true
 
+                if (!storyFolder.exists()) {
+                    folderExists = storyFolder.mkdirs();
+                }
+                if (folderExists) {
+                    // once folder exists finish creating picturePath
+                    long picTime = System.currentTimeMillis();
+                    String newPicName = "a" + new SimpleDateFormat("yyyy-MM-dd HH.mm.ss", Locale.US)
+                            .format(picTime)
+                            + ".jpg";
+                    File file = new File(storyFolder.getAbsolutePath(), newPicName);
+                    String picturePath = file.getAbsolutePath();
+
+                    // then write the picture to picturePath
+                    try {
+                        OutputStream outFile = new FileOutputStream(file);
+                        // TODO decide on quality size and figure out how
+                        // to decrease picture dimensions?
+                        bitmap.compress(Bitmap.CompressFormat.JPEG, 20, outFile);
+                        outFile.flush();
+                        outFile.close();
+                    } catch (FileNotFoundException e) {
+                        e.printStackTrace();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+
+                    if (DEBUG)
+                        Log.d(TAG, "path of image END" + picturePath + "");
+                    
+                    // finish by updating the fragment part
+                    fragmentController.setAnnotation(fragment, x, picturePath);
+
+                    saveFragment();
+                } else {
+                    // unable to create folder
+                }
             }
         }
+    }
+    private void saveFragment() {        
+        storyController.setFragmentAtLocation(story, fragPos, fragment);
+        storyListController.saveOfflineStories(storyList);
+        
+        //storyList.getStoryAtPos(storyPos)
     }
 }

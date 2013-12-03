@@ -311,9 +311,8 @@ public class MainActivity extends Activity implements LView<StoryList>, OnItemCl
             i.putExtra("StoryPos", pos);
             startActivity(i);
         } else {
-            Story story = storyList.getStoryAtPos(pos);
             i = new Intent(this, FragmentViewActivity.class);
-            i.putExtra("Story", story);
+            i.putExtra("StoryPos", pos);
             startActivity(i);
         }
     }

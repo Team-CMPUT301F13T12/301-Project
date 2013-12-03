@@ -29,6 +29,7 @@ public class Fragment extends FModel<FView<?>> implements Serializable {
 
     private String title;
     private List<FragmentPart> parts;
+    private List<String> annotations;
 
     /**
      * Creates an empty fragment.
@@ -36,6 +37,11 @@ public class Fragment extends FModel<FView<?>> implements Serializable {
     public Fragment() {
         title = "";
         parts = new LinkedList<FragmentPart>();
+        annotations = new LinkedList<String>();
+        annotations.add("");
+        annotations.add("");
+        annotations.add("");
+        System.err.println(annotations.size());
     }
 
     /**
@@ -82,6 +88,21 @@ public class Fragment extends FModel<FView<?>> implements Serializable {
     }
 
     /**
+     * @return the annotations
+     */
+    public List<String> getAnnotations() {
+        return annotations;
+    }
+
+    /**
+     * @param annotations the annotations to set
+     */
+    public void setAnnotations(List<String> annotations) {
+        this.annotations = annotations;
+        notifyViews();
+    }
+
+    /**
      * Writes the Fragment to an ObjectOutputStream.
      * 
      * @param out the ObjectOutputStream to write to
@@ -89,6 +110,7 @@ public class Fragment extends FModel<FView<?>> implements Serializable {
     private void writeObject(java.io.ObjectOutputStream out) throws IOException {
         out.writeObject(this.title);
         out.writeObject(this.parts);
+        out.writeObject(this.annotations);
     }
 
     /**
@@ -103,5 +125,6 @@ public class Fragment extends FModel<FView<?>> implements Serializable {
             ClassNotFoundException {
         this.title = (String) in.readObject();
         this.parts = (List<FragmentPart>) in.readObject();
+        this.annotations = (List<String>) in.readObject();
     }
 }

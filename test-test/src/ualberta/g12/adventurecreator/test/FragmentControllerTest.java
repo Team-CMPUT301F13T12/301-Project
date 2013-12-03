@@ -99,10 +99,9 @@ public class FragmentControllerTest extends ActivityInstrumentationTestCase2<Mai
     }
 
     /**
-     * Use case #24.  (This is how a picture's display size is determined).
-     * This test checks if the method, setFragmentPartPicSize, functions
-     * correctly. It should change the picSize field of a the passed fragment
-     * part.
+     * Use case #24. (This is how a picture's display size is determined). This
+     * test checks if the method, setFragmentPartPicSize, functions correctly.
+     * It should change the picSize field of a the passed fragment part.
      */
     public void testSetFragmentPartPicSize() {
         FragmentPart part = fragmentController.addNewFragmentPart(fragment, "i", 0);

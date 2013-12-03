@@ -136,4 +136,20 @@ public class FragmentController implements FController {
             }
         }
     }
+    
+    /**
+     * Sets the data field of a FragmentPart in the FragmentPart list of
+     * fragment. Should only be used on "t" (text) or "i" (illustration) type
+     * FragmentParts.
+     * 
+     * @param fragment Fragment that owns the given FragmentPart, part
+     * @param part the FragmentPart to modify
+     * @param data the new data to be set for part, must not be null
+     * @see FragmentPart
+     */
+    //@Override
+    public void setAnnotation(Fragment fragment, int pos, String picLocation) {
+        fragment.getAnnotations().set(pos, picLocation);
+        fragment.setAnnotations(fragment.getAnnotations());
+    }
 }
