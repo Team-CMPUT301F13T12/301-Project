@@ -138,6 +138,9 @@ public class FragmentController implements FController {
     }
 
     /**
+     * Use case #10 and #11. (This is how an annotation is added to a Fragment).
+     * Use case #14. (This is one way that a user can
+     * "upload photos for other stories [they] did not make, but were downloaded").
      * Sets the list of FragmentParts in the Fragment to parts. The list of
      * FragmentParts contains all the content information for the fragment. The
      * list of FragmentParts is displayed when a fragment is viewed.
