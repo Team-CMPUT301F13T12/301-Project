@@ -67,8 +67,12 @@ public class DownloadTasksTestCases extends
         });
 
         // Wait until we're done
-        downloadStory.get();
-
+        // Wait until we're done
+        if (downloadStory.get().contains("Download failed")) {
+            // Download failed
+            fail("Download failed");
+        }
+        // Wait til onPostExecute is done
         while (downloadStory.getStatus() == Status.FINISHED)
             ;
         runTestOnUiThread(new Runnable() {
@@ -77,6 +81,59 @@ public class DownloadTasksTestCases extends
                 StoryList sl = AdventureCreator.getStoryList();
                 assertTrue("We didn't add a story: " + oldSize + " " + sl.getAllStories().size(),
                         oldSize < sl.getAllStories().size());
+            }
+        });
+    }
+
+    public void testDownloadCheckStory() throws Throwable {
+        /*
+         * Lets assume that no one deleted this story
+         */
+
+        List<Story> list = AdventureCreator.getStoryList().getAllStories();
+        int count = 0;
+        for (Story s : list) {
+            if (s.getTitle().equals("A") && s.getAuthor().equals("A")) {
+                count++;
+            }
+        }
+
+        final Story s = new Story("A", "A");
+        runTestOnUiThread(new Runnable() {
+
+            @Override
+            public void run() {
+                downloadStory.execute(new Story[] {
+                        s
+                });
+            }
+        });
+
+        final int finalcount = count;
+        
+        // Wait until we're done
+        if (downloadStory.get().contains("Download failed")) {
+            // Download failed
+            fail("Download failed");
+        }
+
+        // Wait til onPostExecute is done
+        while (downloadStory.getStatus() == Status.FINISHED)
+            ;
+
+        runTestOnUiThread(new Runnable() {
+
+            @Override
+            public void run() {
+                StoryList sl = AdventureCreator.getStoryList();
+                int otherCount = 0;
+                for (Story s : sl.getAllStories()) {
+                    if (s.getAuthor().equals("A") && s.getTitle().equals("A")) {
+                        otherCount++;
+                    }
+                }
+                
+                assertTrue("There wasn't an additional \"A\" story after downloading it.", otherCount > finalcount);
             }
         });
     }
