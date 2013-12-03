@@ -5,6 +5,8 @@ import android.content.Intent;
 import android.test.ActivityInstrumentationTestCase2;
 import android.test.UiThreadTest;
 import android.util.Log;
+import android.widget.Button;
+import android.widget.EditText;
 
 import ualberta.g12.adventurecreator.controllers.FragmentController;
 import ualberta.g12.adventurecreator.controllers.StoryController;
@@ -12,31 +14,31 @@ import ualberta.g12.adventurecreator.controllers.StoryListController;
 import ualberta.g12.adventurecreator.data.AdventureCreator;
 import ualberta.g12.adventurecreator.data.Choice;
 import ualberta.g12.adventurecreator.data.Fragment;
-import ualberta.g12.adventurecreator.data.OfflineIOHelper;
 import ualberta.g12.adventurecreator.data.Story;
 import ualberta.g12.adventurecreator.data.StoryList;
 import ualberta.g12.adventurecreator.views.ChoiceEditActivity;
-import ualberta.g12.adventurecreator.views.FragmentPartAdapter;
+import ualberta.g12.adventurecreator.R;
 
-import java.util.List;
 
+
+/**
+ * This class will test that the widgets in the ChoiceEditActivity are correctly initialized and can be edited
+ * There are two widgets on the screen, on editText and also a button
+ *
+ */
 public class ChoiceEditActivityTestCases extends
         ActivityInstrumentationTestCase2<ChoiceEditActivity> {
 
-    private ChoiceEditActivity myActivity;
-    private FragmentPartAdapter adapter;
-    private StoryListController storyListController;
-    private StoryList storyList;
-    private OfflineIOHelper offlineHelper;
-    private Story story;
-    private Fragment fragment;
-    private AdventureCreator ac;
+ 
+	private ChoiceEditActivity myActivity;
     private Fragment f;
     private Story s;
     private Choice c;
     private FragmentController fc;
     private StoryController sc;
     private StoryListController slc;
+    private EditText myTitleET;
+    private Button choiceButton;
 
     private static final String TAG = "ChoiceEditActivity";
 
@@ -44,6 +46,9 @@ public class ChoiceEditActivityTestCases extends
         super(ChoiceEditActivity.class);
     }
 
+    /**
+     * Lets add stories, controllers and also choices to our application!
+     */
     @Override
     protected void setUp() {
         // super.setUp();
@@ -53,45 +58,43 @@ public class ChoiceEditActivityTestCases extends
         f = new Fragment();
         c = new Choice();
         fc = AdventureCreator.getFragmentController();
-        fc.setTitle(f, "TITLE");
-
         sc = AdventureCreator.getStoryController();
         sc.addFragment(s, f);
+        fc.setTitle(f, "TITLE");
+        sc.setTitle(s, "TITLE");
+        sc.setAuthor(s, "AUTHOR");
+        
+        Fragment f2 = new Fragment();
+        fc.setTitle(f2, "SecondFrag");
+        sc.addFragment(s, f2);
+
+
+        
         
         sc.setFragmentAtLocation(s, 0, f);
-
+        sc.setFragmentAtLocation(s, 1, f2);
         Log.d(TAG, String.format("This many parts: %d", f.getParts().size()));
 
+        c.setChoiceText("Look at me!");
         fc.addNewFragmentPart(f, "c", 0);
-
+        f.getParts().get(0).setChoice(c);
         sc.setFragmentAtLocation(s, 0, f);
         Log.d(TAG, String.format("This many parts: %d", f.getParts().size()));
 
-        sc.setFragmentAtLocation(s, 0, f);
 
         slc = AdventureCreator.getStoryListController();
         slc.addStory(s);
 
-        Story ss1 = sl.getAllStories().get(0);
-        Story ss2 = sl.getAllStories().get(1);
+        int StoryPos = -9;
+        for (int i = 0 ; i < sl.getAllStories().size();i++){
+        	if(sl.getAllStories().get(i).getTitle().equals(s.getTitle())){
+        		StoryPos = i;
+        	}
+        		
+        }
         
-        //fail("s1: " + ss1.getTitle() + " ss2: " + ss2.getTitle());
-        
-        
-        
-        // Let's do what its gonna do
-        Story s1 = sl.getStoryAtPos(0);
-        assertNotNull("Story was null", s1);
-        List<Fragment> lf = s1.getFragments();
-        Log.d(TAG , String.format("%d fragments", lf.size()));
-
-        //fail("fragments: " + lf.size());
-        
-        Fragment f1 = s1.getFragmentAtPos(0);
-        assertNotNull("Fragment was null", f1);
-
         Intent intent = new Intent();
-        intent.putExtra("StoryPos", 0);
+        intent.putExtra("StoryPos", StoryPos);
         intent.putExtra("FragmentPos", 0);
         intent.putExtra("ChoicePos", 0);
 
@@ -99,18 +102,42 @@ public class ChoiceEditActivityTestCases extends
 
         myActivity = getActivity();
 
+        myTitleET = (EditText) myActivity.findViewById(R.id.choiceBody);
+        choiceButton = (Button) myActivity.findViewById(R.id.choiceButton);
     }
+
 
     /**
-     * Tests for use case 7 Connecting 2 story fragments as a choice will test
-     * if choice has two objects linked
+     * tests to see that the widgets all appear 
      */
-    @UiThreadTest
-    public void testAddChoiceConnect() {
-
-        // EditText titleET = (EditText)
-        // myActivity.findViewById(R.id.choiceBody);
+   
+    public void testWidgets() {
+    	assertNotNull(myActivity);
+    	assertNotNull(choiceButton);
+    	assertNotNull(myTitleET);
 
     }
+    
+    
+    /**
+     * Tests to see if editText has the correct string
+     */
+    public void testViewEditTextView() {
+    	assertTrue(myTitleET.getText().toString().equals(c.getChoiceText()));
+    }
+    
+    /**
+     * Tests to see if editText is correctly updated
+     */
+    @UiThreadTest
+    public void testEditEditTextView() {
+    	String myNewChoiceTitle = "NEW CHOICE TEXT";
+    	myTitleET.setText(myNewChoiceTitle);
+    	assertEquals(myTitleET.getText().toString(), myNewChoiceTitle);
+    }
+    
+    /**
+     * TODO IF we ever have time try to figure out how to test the button which displays a dialog (pretty hard right!)
+     */
 
 }
