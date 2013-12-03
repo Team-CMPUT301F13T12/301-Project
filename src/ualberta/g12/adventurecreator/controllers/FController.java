@@ -89,4 +89,15 @@ public interface FController {
      * @see FragmentPart
      */
     public void removeEmptyPart(Fragment fragment);
+    
+    /**
+     * Sets the list of FragmentParts in the Fragment to parts. The list of
+     * FragmentParts contains all the content information for the fragment. The
+     * list of FragmentParts is displayed when a fragment is viewed.
+     * 
+     * @param fragment Fragment that owns the given FragmentPart, part
+     * @param pos the index of the annotation to change
+     * @param picLocation the path to the picture used for the annotation
+     */
+    public void setAnnotation(Fragment fragment, int pos, String picLocation); 
 }

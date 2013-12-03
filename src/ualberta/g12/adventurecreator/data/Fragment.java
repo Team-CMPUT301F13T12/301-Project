@@ -87,6 +87,10 @@ public class Fragment extends FModel<FView<?>> implements Serializable {
     }
 
     /**
+     * Gets the annotations. There will always be 3 annotations in this list.
+     * Each is for one of the annotation spots in FragmentViewActivity. Each
+     * entry contains a path to a picture or the default "".
+     * 
      * @return the annotations
      */
     public List<String> getAnnotations() {
@@ -94,7 +98,11 @@ public class Fragment extends FModel<FView<?>> implements Serializable {
     }
 
     /**
-     * @param annotations the annotations to set
+     * Sets the annotations. There will always be 3 annotations in this list.
+     * Each is for one of the annotation spots in FragmentViewActivity. Each
+     * entry contains a path to a picture or the default "".
+     * 
+     * @param annotations the list of picture paths to set as annotations
      */
     public void setAnnotations(List<String> annotations) {
         this.annotations = annotations;
