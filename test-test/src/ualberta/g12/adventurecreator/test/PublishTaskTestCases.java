@@ -61,4 +61,28 @@ public class PublishTaskTestCases extends
             fail("Assuming story already existed, this should have tried to overwrite it");
         }
     }
+
+    public void testPublish() throws Throwable {
+        this.publishTask = new PublishStoryTask(this.context);
+
+        final Story s = new Story("A", "A");
+
+        runTestOnUiThread(new Runnable() {
+
+            @Override
+            public void run() {
+                publishTask.execute(new Story[] {
+                    s
+                });
+            }
+        });
+        
+        if(this.publishTask.get()){
+            // Upload worked
+            
+        } else {
+            // Upload failed
+            fail("Publish failed");
+        }
+    }
 }
