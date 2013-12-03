@@ -1,7 +1,6 @@
 
 package ualberta.g12.adventurecreator.test;
 
-import android.content.Context;
 import android.test.ActivityInstrumentationTestCase2;
 
 import ualberta.g12.adventurecreator.data.Story;
@@ -13,7 +12,6 @@ import java.util.concurrent.ExecutionException;
 public class CacheStoryTestCases extends ActivityInstrumentationTestCase2<FragmentViewActivity> {
 
     private CacheStoryTask cacheTask;
-    private Context context;
 
     public CacheStoryTestCases() {
         super(FragmentViewActivity.class);
@@ -39,16 +37,18 @@ public class CacheStoryTestCases extends ActivityInstrumentationTestCase2<Fragme
                         fail("Couldn't cache the story");
                     }
                 } catch (InterruptedException e) {
-                    // TODO Auto-generated catch block
+                    fail("Interrupted exception while caching story");
                     e.printStackTrace();
                 } catch (ExecutionException e) {
-                    // TODO Auto-generated catch block
+                    fail("ExecutionException while caching story");
                     e.printStackTrace();
                 }
 
-                // On Post execute won't end til we end this activity
+                /*
+                 * On Post execute won't end til we end this activity
+                 * and activity will end after this is done probably
+                 */
             }
         });
-
     }
 }
