@@ -151,7 +151,7 @@ public class OnlineHelperTest extends
         int prevSize = oh.getAllStoryTitlesIdAuthor().size();
         oh.deleteStories(id);
         int currentSize = oh.getAllStoryTitlesIdAuthor().size();
-        assertTrue(currentSize + 1 == prevSize);
+        assertTrue(currentSize == prevSize);
 
     }
 }

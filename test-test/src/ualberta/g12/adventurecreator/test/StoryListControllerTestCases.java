@@ -108,8 +108,9 @@ public class StoryListControllerTestCases extends ActivityInstrumentationTestCas
         String author = sl.getStoryAtPos(0).getAuthor();
         assertTrue(sl.getStoryAtPos(0).getAuthor().equals(author));
         Story s2 = new Story("Bok", "Dude Dan");
+        s2.setAuthor("author");
         slc.setStory(s2, 0);
-        assertTrue(sl.getStoryAtPos(0).getAuthor().equals(author));
+        assertTrue(sl.getStoryAtPos(0).getAuthor().equals("author"));
 
     }
 
