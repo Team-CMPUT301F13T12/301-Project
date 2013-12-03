@@ -22,6 +22,14 @@ public class StoryAuthorMapListAdapter extends ArrayAdapter<Story> {
 
     private final Context context;
 
+    /**
+     * Sole constructor for the StoryAuthorMapListAdapter. Sets up the context,
+     * story ID and story list.
+     * 
+     * @param c  context the context of the calling activity
+     * @param id  id of the story 
+     * @param list  story list that corresponds
+     */
     public StoryAuthorMapListAdapter(Context c, int id, List<Story> list) {
         super(c, id, list);
         this.context = c;
@@ -31,7 +39,7 @@ public class StoryAuthorMapListAdapter extends ArrayAdapter<Story> {
         TextView title;
         TextView author;
     }
-
+    /**Returns the inflated view that will be displayed as a listview row.**/
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         ViewHolder holder = null;
