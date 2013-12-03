@@ -115,6 +115,17 @@ public class FragmentEditActivityTestCases extends
          * getActivity(); //recreate activity myEditFragmentActivity.recreate();
          */
     }
+    
+
+    /**
+     * tests to see that the widgets all appear 
+     */
+   
+    public void testWidgets() {
+        assertNotNull(fragmentPartListView);
+        assertNotNull(editTitleText);
+        assertNotNull(menu);
+    }
 
     /**
      * Tests that addImage() successfully adds an image to a fragment.
