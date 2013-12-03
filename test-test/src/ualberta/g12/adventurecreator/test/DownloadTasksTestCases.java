@@ -186,7 +186,7 @@ public class DownloadTasksTestCases extends
                 sampleClass.titleAuthors.size() > 0);
     }
 
-    public void testDownloadSearchLetterTest() throws Throwable {
+    public void testDownloadSearchTest() throws Throwable {
         final SampleOViewClass sampleClass = new SampleOViewClass();
         this.downloadTitleAuthors = new DownloadTitleAuthorsTask(context, sampleClass);
 
