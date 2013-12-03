@@ -101,3 +101,4 @@ public class FragmentViewActivityTest extends ActivityInstrumentationTestCase2<F
 	}
 	
 }
+
