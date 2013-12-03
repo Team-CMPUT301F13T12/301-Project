@@ -12,6 +12,8 @@ import ualberta.g12.adventurecreator.online.OnlineHelper;
 /**
  * Application object for the Application. Used as a static singleton throughout
  * other activities which returns other singletons
+ * 
+ * 
  */
 public class AdventureCreator extends Application {
 
@@ -26,6 +28,10 @@ public class AdventureCreator extends Application {
     private static Context context;
 
     @Override
+    /**
+     * 
+     * @see android.app.Application#onCreate()
+     **/
     public void onCreate() {
         super.onCreate();
         context = getApplicationContext();
