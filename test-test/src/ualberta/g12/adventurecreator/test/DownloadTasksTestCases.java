@@ -178,14 +178,40 @@ public class DownloadTasksTestCases extends
         while (downloadTitleAuthors.getStatus() == Status.FINISHED && !sampleClass.updated) {
             ;
         }
+        assertNotNull(sampleClass.titleAuthors);
+        assertTrue("There are no stories in the sampleClass",
+                sampleClass.titleAuthors.size() > 0);
+    }
 
-        if (sampleClass.updated) {
-            assertNotNull(sampleClass.titleAuthors);
-            assertTrue("There are no stories in the sampleClass",
-                    sampleClass.titleAuthors.size() > 0);
-        } else {
-            // We weren't updated oh no
-            fail("We weren't updated oh no!");
+    public void testDownloadSearchLetterTest() throws Throwable {
+        final SampleOViewClass sampleClass = new SampleOViewClass();
+        this.downloadTitleAuthors = new DownloadTitleAuthorsTask(context, sampleClass);
+
+        runTestOnUiThread(new Runnable() {
+
+            @Override
+            public void run() {
+                downloadTitleAuthors.execute(new String[] {
+                        "a"
+                });
+            }
+        });
+
+        if (!downloadTitleAuthors.get()) {
+            // Download failed
+            fail("Download Failed");
         }
+
+        // Wait til download is complete
+        while (downloadTitleAuthors.getStatus() == Status.FINISHED && !sampleClass.updated) {
+            ;
+        }
+
+        // We got the stuff
+        for (Story s : sampleClass.titleAuthors) {
+            assertTrue("Story did not contain search term", s.getAuthor().contains("a")
+                    && s.getTitle().contains("a"));
+        }
+
     }
 }
