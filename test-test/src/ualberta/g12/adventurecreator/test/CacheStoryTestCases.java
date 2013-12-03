@@ -45,8 +45,8 @@ public class CacheStoryTestCases extends ActivityInstrumentationTestCase2<Fragme
                 }
 
                 /*
-                 * On Post execute won't end til we end this activity
-                 * and activity will end after this is done probably
+                 * On Post execute won't end til we end this activity and
+                 * activity will end after this is done probably
                  */
             }
         });
