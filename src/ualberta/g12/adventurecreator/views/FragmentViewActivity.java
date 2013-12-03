@@ -57,6 +57,7 @@ public class FragmentViewActivity extends Activity implements FView<Fragment> {
     public int storyPos, fragPos, x = 0;
     private static final boolean DEBUG = true;
     private static final String TAG = "FragmentViewActivity";
+    private String type;
 
     // Controllers
     private StoryListController storyListController;
@@ -71,12 +72,18 @@ public class FragmentViewActivity extends Activity implements FView<Fragment> {
         storyListController = AdventureCreator.getStoryListController();
         storyController = AdventureCreator.getStoryController();
         fragmentController = AdventureCreator.getFragmentController();
+        storyList = AdventureCreator.getStoryList();
         
         // obtain the intent
         Intent viewFragIntent = getIntent();
-        storyPos = (Integer) viewFragIntent.getSerializableExtra("StoryPos");
-        storyList = AdventureCreator.getStoryList();
-        story = storyList.getStoryAtPos(storyPos);
+        type = (String) viewFragIntent.getSerializableExtra("type");
+        if(type.equals("offline")){
+            storyPos = (Integer) viewFragIntent.getSerializableExtra("StoryPos");
+            story = storyList.getStoryAtPos(storyPos);
+        } else if (type.equals("online"))
+            story = (Story) viewFragIntent.getSerializableExtra("Story");
+        else
+            finish();
         
         // get widget references
         fragmentPartListView = (ListView) findViewById(R.id.fragmentViewPartList);
@@ -98,29 +105,31 @@ public class FragmentViewActivity extends Activity implements FView<Fragment> {
         // set click listeners
         setListClickListener();
 
-        viewImage.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                x = 0;
-                addImage();
-            }
-        });
-
-        viewImage2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                x = 1;
-                addImage();
-            }
-        });
-
-        viewImage3.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                x = 2;
-                addImage();
-            }
-        });
+        if(type.equals("offline")) {
+            viewImage.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    x = 0;
+                    addImage();
+                }
+            });
+    
+            viewImage2.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    x = 1;
+                    addImage();
+                }
+            });
+    
+            viewImage3.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    x = 2;
+                    addImage();
+                }
+            });
+        }
     }
 
     @Override
@@ -359,16 +368,17 @@ public class FragmentViewActivity extends Activity implements FView<Fragment> {
                     fragmentController.setAnnotation(fragment, x, picturePath);
 
                     saveFragment();
+                    //update();
                 } else {
                     // unable to create folder
                 }
             }
         }
     }
-    private void saveFragment() {        
-        storyController.setFragmentAtLocation(story, fragPos, fragment);
-        storyListController.saveOfflineStories(storyList);
-        
-        //storyList.getStoryAtPos(storyPos)
+    private void saveFragment() { 
+        if(type.equals("offline")){
+            storyController.setFragmentAtLocation(story, fragPos, fragment);
+            storyListController.saveOfflineStories(storyList);
+        }
     }
 }

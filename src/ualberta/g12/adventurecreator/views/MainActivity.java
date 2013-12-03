@@ -97,7 +97,8 @@ public class MainActivity extends Activity implements LView<StoryList>, OnItemCl
                     int randPos = random.nextInt((max - 0) + 1) + 0;
                     Story story = storyList.getStoryAtPos(randPos);
                     Intent i = new Intent(getApplicationContext(), FragmentViewActivity.class);
-                    i.putExtra("Story", story);
+                    i.putExtra("type", "offline");
+                    i.putExtra("StoryPos", randPos);
                     startActivity(i);
                 }
             }
@@ -312,6 +313,7 @@ public class MainActivity extends Activity implements LView<StoryList>, OnItemCl
             startActivity(i);
         } else {
             i = new Intent(this, FragmentViewActivity.class);
+            i.putExtra("type", "offline");
             i.putExtra("StoryPos", pos);
             startActivity(i);
         }

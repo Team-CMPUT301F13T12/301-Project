@@ -41,7 +41,6 @@ public class Fragment extends FModel<FView<?>> implements Serializable {
         annotations.add("");
         annotations.add("");
         annotations.add("");
-        System.err.println(annotations.size());
     }
 
     /**
