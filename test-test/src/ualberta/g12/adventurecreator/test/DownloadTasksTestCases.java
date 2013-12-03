@@ -21,7 +21,8 @@ import java.util.List;
  * These test cases test the functionality of the Download AysncTasks, the
  * DownloadStoryTask and the DownloadTitleAuthorTask.<br>
  * They work by downloading the object from the server, assuming that it exists
- * and then performing some checks on the downloaded object.
+ * and then performing some checks on the downloaded object. This tests use
+ * cases 12
  * <p>
  * You may notice that the tests may create a possible while loop, as we wait
  * for their status to be Status.FINISHED. This is because they running on a
@@ -48,11 +49,19 @@ public class DownloadTasksTestCases extends
         this.downloadTitleAuthors = new DownloadTitleAuthorsTask(context, getActivity());
     }
 
+    /**
+     * Basic sanity test ensuring that all of the tasks can be created properly
+     * from their constructors.
+     */
     public void testNotNulls() {
         assertNotNull(this.downloadStory);
         assertNotNull(this.downloadTitleAuthors);
     }
 
+    /**
+     * This test tries to download as story, and if that is successful, checks
+     * that the total number of stories in the list of stories has increased.
+     */
     public void testDownloadStory() throws Throwable {
         /*
          * This is assuming that no one has cleared the list of online stories
@@ -91,6 +100,12 @@ public class DownloadTasksTestCases extends
         });
     }
 
+    /**
+     * This test tries to download a story and checks to see that the story
+     * downloaded was the one it wanted. This is done by getting the count of
+     * all of the stories with the title and author of the story in question
+     * before and after the download and comparing their values after.
+     */
     public void testDownloadCheckStory() throws Throwable {
         /*
          * Lets assume that no one deleted this story
@@ -165,6 +180,11 @@ public class DownloadTasksTestCases extends
 
     }
 
+    /**
+     * This test downloads the list of title authors from the repo of stories.
+     * This data would be displayed in the online mode's list of stories to
+     * download or cache.
+     */
     public void testDownloadTitleAuthors() throws Throwable {
         final SampleOViewClass sampleClass = new SampleOViewClass();
         this.downloadTitleAuthors = new DownloadTitleAuthorsTask(context, sampleClass);
@@ -191,6 +211,10 @@ public class DownloadTasksTestCases extends
                 sampleClass.titleAuthors.size() > 0);
     }
 
+    /**
+     * This test downloads the list of title authors from the repo of stories
+     * that match the search term provided.
+     */
     public void testDownloadSearchTest() throws Throwable {
         final SampleOViewClass sampleClass = new SampleOViewClass();
         this.downloadTitleAuthors = new DownloadTitleAuthorsTask(context, sampleClass);

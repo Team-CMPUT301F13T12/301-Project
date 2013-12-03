@@ -15,12 +15,10 @@ import ualberta.g12.adventurecreator.views.MainActivity;
 import java.util.List;
 
 /**
- * These test cases test the tasks of the online to offline and vice versa
- * implements. There are to ensure that tasks that publish or download stories
- * work correctly as well as viewing the stories after they have been
- * downloaded/published. We test if the fields CacheStoryTask,
- * DownloadTitleAuthorsTask, DownloadStoryTask, PublishStoryTask and
- * TryPublishStoryTask behave correctly
+ * These test cases test the implementation of publishing a story online, Use
+ * Case 3, 10.<br>
+ * They work by using the two AsyncTasks PublishStoryTask and
+ * TryPublishStoryTask.
  **/
 public class PublishTaskTestCases extends
         ActivityInstrumentationTestCase2<MainActivity> {
@@ -38,6 +36,9 @@ public class PublishTaskTestCases extends
         this.context = getActivity();
     }
 
+    /**
+     * Sanity test to ensure tasks are created properly from their constructors
+     */
     public void testNotNulls() {
         this.publishTask = new PublishStoryTask(this.context);
         this.tryPublishTask = new TryPublishStoryTask(this.context);
@@ -45,6 +46,11 @@ public class PublishTaskTestCases extends
         assertNotNull(this.tryPublishTask);
     }
 
+    /**
+     * Tests the checking of the story ID. If there already exists a story with
+     * that ID, then we will ask the user if they want to update the story as it
+     * will overwrite it.
+     */
     public void testCheckPublish() throws Throwable {
         tryPublishTask = new TryPublishStoryTask(this.context);
 
@@ -68,6 +74,10 @@ public class PublishTaskTestCases extends
         }
     }
 
+    /**
+     * Tests the publish functionality. This tests to see if the
+     * PublishStoryTask functions properly.
+     */
     public void testPublish() throws Throwable {
         this.publishTask = new PublishStoryTask(this.context);
 
@@ -92,6 +102,12 @@ public class PublishTaskTestCases extends
         }
     }
 
+    /**
+     * The main PublishStory Test. This test case creates a new story, publishes
+     * it, and then tries to download it. It then checks to ensure that an
+     * additional story was created whch means that the story was published and
+     * then downloaded properly.
+     */
     public void testPublishDownload() throws Throwable {
         this.publishTask = new PublishStoryTask(this.context);
         this.downloadTask = new DownloadStoryTask(this.context);

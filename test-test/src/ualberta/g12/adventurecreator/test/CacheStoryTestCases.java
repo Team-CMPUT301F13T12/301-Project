@@ -9,6 +9,9 @@ import ualberta.g12.adventurecreator.views.FragmentViewActivity;
 
 import java.util.concurrent.ExecutionException;
 
+/**
+ * This class of test cases tests the caching functionality, use case 9.
+ */
 public class CacheStoryTestCases extends ActivityInstrumentationTestCase2<FragmentViewActivity> {
 
     private CacheStoryTask cacheTask;
@@ -17,6 +20,10 @@ public class CacheStoryTestCases extends ActivityInstrumentationTestCase2<Fragme
         super(FragmentViewActivity.class);
     }
 
+    /**
+     * Performs the caching task and ensures that nothing has crashed during
+     * this activity start.
+     */
     public void testEnterActivity() throws Throwable {
         this.cacheTask = new CacheStoryTask(getInstrumentation().getContext());
         assertNotNull(cacheTask);
