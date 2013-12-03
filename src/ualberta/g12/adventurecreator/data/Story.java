@@ -59,8 +59,8 @@ public class Story extends SModel implements Serializable {
      * @param author the author of the new Story
      */
     public Story(String title, String author) {
-        this.storyTitle = "";
-        this.author = "";
+        this.storyTitle = title;
+        this.author = author;
         updateId();
         this.startFragPos = 0;
         

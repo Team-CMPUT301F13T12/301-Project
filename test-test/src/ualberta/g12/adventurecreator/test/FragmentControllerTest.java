@@ -38,9 +38,12 @@ public class FragmentControllerTest extends ActivityInstrumentationTestCase2<Mai
     }
 
     /**
-     * This test checks if the method, addNewFragmentPart, functions correctly. It should
-     * add a new fragment part of the given type to the existing Fragment. It
-     * should also return the added part.
+     * Use case #11. (This is where the user can decide whether to add
+     * illustration to their fragment or not.) Use case #13. (This is how a user
+     * can add many illustrations to a fragment for viewing.) This test checks
+     * if the method, addNewFragmentPart, functions correctly. It should add a
+     * new fragment part of the given type to the existing Fragment. It should
+     * also return the added part.
      */
     public void testAddNewFragmentPart() {
         FragmentPart part = fragmentController.addNewFragmentPart(fragment, "i", 0);
@@ -50,26 +53,30 @@ public class FragmentControllerTest extends ActivityInstrumentationTestCase2<Mai
     }
 
     /**
-     * This test checks if the method, setFragmentPartData, functions correctly. It should
+     * Use case 6. (This is how an image gets added to a fragment.) This test
+     * checks if the method, setFragmentPartData, functions correctly. It should
      * change the data field of a the passed fragment part.
      */
     public void testSetFragmentPartData() {
-        FragmentPart part = fragmentController.addNewFragmentPart(fragment, "t", 0);
+        FragmentPart part = fragmentController.addNewFragmentPart(fragment, "i", 0);
 
         assertTrue(fragment.getParts().size() == 1);
         /* should be blank originally */
         assertTrue(fragment.getParts().get(0).getData() == "");
 
         /* set the data */
-        fragmentController.setFragmentPartData(fragment, part, "newText");
+        fragmentController.setFragmentPartData(fragment, part,
+                "/mnt/sdcard/AdventureCreator/storid/pic.jpg");
 
         assertTrue(fragment.getParts().size() == 1);
-        assertTrue(fragment.getParts().get(0).getType().equals("t"));
-        assertTrue(fragment.getParts().get(0).getData().equals("newText"));
+        assertTrue(fragment.getParts().get(0).getType().equals("i"));
+        assertTrue(fragment.getParts().get(0).getData()
+                .equals("/mnt/sdcard/AdventureCreator/storid/pic.jpg"));
     }
 
     /**
-     * This test checks if the method, setFragmentPartChoice, functions correctly. It
+     * Use case #8. (This is how a choice is added to a fragment.) This test
+     * checks if the method, setFragmentPartChoice, functions correctly. It
      * should change the choice of a the passed fragment part.
      */
     public void testSetFragmentPartChoice() {
@@ -92,8 +99,9 @@ public class FragmentControllerTest extends ActivityInstrumentationTestCase2<Mai
     }
 
     /**
-     * This test checks if the method, setFragmentPartPicSize, functions correctly. It
-     * should change the picSize field of a the passed fragment part.
+     * This test checks if the method, setFragmentPartPicSize, functions
+     * correctly. It should change the picSize field of a the passed fragment
+     * part.
      */
     public void testSetFragmentPartPicSize() {
         FragmentPart part = fragmentController.addNewFragmentPart(fragment, "i", 0);
@@ -111,9 +119,9 @@ public class FragmentControllerTest extends ActivityInstrumentationTestCase2<Mai
     }
 
     /**
-     * This test checks if the method, deleteFragmentPart, functions correctly. It should
-     * remove the FragmentPart located at index partNum in the Fragment's list
-     * of FragmentParts.
+     * This test checks if the method, deleteFragmentPart, functions correctly.
+     * It should remove the FragmentPart located at index partNum in the
+     * Fragment's list of FragmentParts.
      */
     public void testDeleteFragmentPart() {
         fragmentController.addNewFragmentPart(fragment, "t", 0);
@@ -133,9 +141,9 @@ public class FragmentControllerTest extends ActivityInstrumentationTestCase2<Mai
     }
 
     /**
-     * This test checks if the method, removeEmptyPart, functions correctly. It should
-     * remove the first instance of an empty part the Fragment's list
-     * of FragmentParts.
+     * This test checks if the method, removeEmptyPart, functions correctly. It
+     * should remove the first instance of an empty part the Fragment's list of
+     * FragmentParts.
      */
     public void testRemoveEmptyPart() {
         fragmentController.addNewFragmentPart(fragment, "t", 0);
@@ -148,7 +156,7 @@ public class FragmentControllerTest extends ActivityInstrumentationTestCase2<Mai
 
         /* set the data */
         fragmentController.removeEmptyPart(fragment);
-        
+
         assertTrue(fragment.getParts().size() == 4);
         assertTrue(fragment.getParts().get(0).getType().equals("t"));
         assertTrue(fragment.getParts().get(1).getType().equals("i"));
