@@ -4,6 +4,7 @@ package ualberta.g12.adventurecreator.test;
 import android.content.Context;
 import android.os.AsyncTask.Status;
 import android.test.ActivityInstrumentationTestCase2;
+import android.util.Log;
 
 import ualberta.g12.adventurecreator.data.AdventureCreator;
 import ualberta.g12.adventurecreator.data.Story;
@@ -32,6 +33,8 @@ public class DownloadTasksTestCases extends
     private DownloadTitleAuthorsTask downloadTitleAuthors;
     private CacheStoryTask cacheStory;
     private Context context;
+
+    private static final String TAG = "DownloadTasksTestCases";
 
     public DownloadTasksTestCases() {
         super(OnlineStoryViewActivity.class);
@@ -192,7 +195,7 @@ public class DownloadTasksTestCases extends
             @Override
             public void run() {
                 downloadTitleAuthors.execute(new String[] {
-                        "a"
+                        "title"
                 });
             }
         });
@@ -209,9 +212,10 @@ public class DownloadTasksTestCases extends
 
         // We got the stuff
         for (Story s : sampleClass.titleAuthors) {
-            assertTrue("Story did not contain search term", s.getAuthor().contains("a")
-                    && s.getTitle().contains("a"));
+            Log.d(TAG, String.format("Title: %s Author: %s", s.getTitle(), s.getAuthor()));
+            assertTrue("Story did not contain search term",
+                    s.getAuthor().toLowerCase().contains("title")
+                            || s.getTitle().toLowerCase().contains("title"));
         }
-
     }
 }
