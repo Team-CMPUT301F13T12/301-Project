@@ -18,6 +18,8 @@ import android.view.MenuItem;
 import android.widget.ListView;
 import android.widget.PopupMenu;
 
+import ualberta.g12.adventurecreator.controllers.StoryController;
+import ualberta.g12.adventurecreator.data.AdventureCreator;
 import ualberta.g12.adventurecreator.data.Story;
 import ualberta.g12.adventurecreator.data.StoryList;
 import ualberta.g12.adventurecreator.views.MainActivity;
@@ -46,18 +48,16 @@ public class MainActivityTestCases extends
 
     /* Test Cases - all start with "test" */
 
-    // Use Case 2, test 1/3
+    /**
+     *  Use Case 2 test , we see that the list is able to show all stories
+     *  and if so then we can browse them in our listview then 
+     *  This is only browsing OFFLINE Stories however.
+     */
     public void testBrowseStoryList() {
-        // add in multiple stories into the list
-        for (int i = 0; i < 15; i++) {
-            Story UserStory = new Story();
-            sl.addStory(UserStory);
-            /*
-             * Button button = (Button) findViewByid(R.id.menu_add_story);
-             * button.performClick(); Button button2 = (Button)
-             * findViewByid(R.id.editTextSave); button2.performClick();
-             */
-        }
+    	
+        StoryController sc = AdventureCreator.getStoryController();
+        StoryList sl = AdventureCreator.getStoryList();
+        int realSize = sl.getAllStories().size();
 
         // starts the activity
         activity = this.getActivity();
@@ -66,12 +66,9 @@ public class MainActivityTestCases extends
 
         // scroll textview
         view.smoothScrollToPosition(100);
+        
+        assertTrue(realSize == view.getCount());
 
-        // check that user can scroll through the list
-        // Assert.assertEquals(100,
-        // Robolectric.shadowOf(view).getSmoothScrolledPosition());
-         assertTrue("testBrowseStoryList is not yet implemented", false); //
-        // Test doesn't work yet
     }
 
     // Use Case 2, test 2/3
