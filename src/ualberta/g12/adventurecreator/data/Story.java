@@ -67,6 +67,7 @@ public class Story extends SModel implements Serializable {
         Fragment frag = new Fragment();
         frag.setTitle("Story Start Fragment");
         this.fragments = new LinkedList<Fragment>();
+        this.fragments.add(frag);
     }
 
     private void updateId() {
