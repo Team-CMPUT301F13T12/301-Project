@@ -6,14 +6,15 @@ import android.os.AsyncTask.Status;
 import android.test.ActivityInstrumentationTestCase2;
 
 import ualberta.g12.adventurecreator.data.AdventureCreator;
-import ualberta.g12.adventurecreator.data.OfflineIOHelper;
 import ualberta.g12.adventurecreator.data.Story;
 import ualberta.g12.adventurecreator.data.StoryList;
 import ualberta.g12.adventurecreator.tasks.CacheStoryTask;
 import ualberta.g12.adventurecreator.tasks.DownloadStoryTask;
 import ualberta.g12.adventurecreator.tasks.DownloadTitleAuthorsTask;
+import ualberta.g12.adventurecreator.views.OView;
 import ualberta.g12.adventurecreator.views.OnlineStoryViewActivity;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -110,7 +111,7 @@ public class DownloadTasksTestCases extends
         });
 
         final int finalcount = count;
-        
+
         // Wait until we're done
         if (downloadStory.get().contains("Download failed")) {
             // Download failed
@@ -132,9 +133,85 @@ public class DownloadTasksTestCases extends
                         otherCount++;
                     }
                 }
-                
-                assertTrue("There wasn't an additional \"A\" story after downloading it.", otherCount > finalcount);
+
+                assertTrue("There wasn't an additional \"A\" story after downloading it.",
+                        otherCount > finalcount);
             }
         });
+    }
+
+    private class SampleOViewClass implements OView<List<Story>> {
+
+        public List<Story> titleAuthors;
+        public boolean updated = false;
+
+        public SampleOViewClass() {
+            this.titleAuthors = new ArrayList<Story>();
+        }
+
+        @Override
+        public void update(List<Story> model) {
+            this.titleAuthors.clear();
+            titleAuthors.addAll(model);
+            updated = true;
+        }
+
+    }
+
+    public void testDownloadTitleAuthors() throws Throwable {
+        final SampleOViewClass sampleClass = new SampleOViewClass();
+        this.downloadTitleAuthors = new DownloadTitleAuthorsTask(context, sampleClass);
+
+        runTestOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                downloadTitleAuthors.execute(new String[] {});
+            }
+        });
+
+        if (!downloadTitleAuthors.get()) {
+            // Download failed
+            fail("Download failed");
+        }
+
+        // Wait til onPostExecute finishes and we get updated
+        while (downloadTitleAuthors.getStatus() == Status.FINISHED && !sampleClass.updated) {
+            ;
+        }
+        assertNotNull(sampleClass.titleAuthors);
+        assertTrue("There are no stories in the sampleClass",
+                sampleClass.titleAuthors.size() > 0);
+    }
+
+    public void testDownloadSearchLetterTest() throws Throwable {
+        final SampleOViewClass sampleClass = new SampleOViewClass();
+        this.downloadTitleAuthors = new DownloadTitleAuthorsTask(context, sampleClass);
+
+        runTestOnUiThread(new Runnable() {
+
+            @Override
+            public void run() {
+                downloadTitleAuthors.execute(new String[] {
+                        "a"
+                });
+            }
+        });
+
+        if (!downloadTitleAuthors.get()) {
+            // Download failed
+            fail("Download Failed");
+        }
+
+        // Wait til download is complete
+        while (downloadTitleAuthors.getStatus() == Status.FINISHED && !sampleClass.updated) {
+            ;
+        }
+
+        // We got the stuff
+        for (Story s : sampleClass.titleAuthors) {
+            assertTrue("Story did not contain search term", s.getAuthor().contains("a")
+                    && s.getTitle().contains("a"));
+        }
+
     }
 }
