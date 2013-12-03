@@ -20,6 +20,7 @@ import android.view.ContextMenu;
 import android.widget.EditText;
 import android.widget.ListView;
 
+import ualberta.g12.adventurecreator.R;
 import ualberta.g12.adventurecreator.controllers.FragmentController;
 import ualberta.g12.adventurecreator.controllers.StoryController;
 import ualberta.g12.adventurecreator.controllers.StoryListController;
@@ -73,6 +74,14 @@ public class FragmentEditActivityTestCases extends
         slc = AdventureCreator.getStoryListController();
         slc.addStory(s);
 
+//        Intent(); 
+//        intent.putExtra("StoryPos", 0); 
+//        intent.putExtra("FragmentPos", 0); 
+//        intent.putExtra("ChoicePos", 0); 
+//        setActivityIntent(intent); 
+//        myActivity = getActivity();
+        
+        
         Intent intent = new Intent();
         intent.putExtra("Mode", "Edit");
         intent.putExtra("StoryPos", 0);
@@ -81,14 +90,13 @@ public class FragmentEditActivityTestCases extends
 
         myEditFragmentActivity = getActivity();
 
-        /*
-         * fragmentPartListView = (ListView)
-         * myEditFragmentActivity.findViewById(R.id.FragmentPartList);
-         * editTitleText = (EditText)
-         * myEditFragmentActivity.findViewById(R.id.fragmentTitle); menu =
-         * (ContextMenu)
-         * myEditFragmentActivity.findViewById(R.menu.fragment_part_menu);
-         */
+        fragmentPartListView = (ListView) myEditFragmentActivity
+                .findViewById(R.id.FragmentPartList);
+        editTitleText = (EditText) myEditFragmentActivity.findViewById(R.id.fragmentTitle);
+        menu = (ContextMenu) myEditFragmentActivity.findViewById(R.menu.fragment_part_menu);
+
+        
+        //myEditFragmentActivity.recreate();
 
         // ac = new AdventureCreator();
 
@@ -107,18 +115,29 @@ public class FragmentEditActivityTestCases extends
          * getActivity(); //recreate activity myEditFragmentActivity.recreate();
          */
     }
+    
+
+    /**
+     * tests to see that the widgets all appear 
+     */
+   
+    public void testWidgets() {
+        assertNotNull(fragmentPartListView);
+        assertNotNull(editTitleText);
+        assertNotNull(menu);
+    }
 
     /**
      * Tests that addImage() successfully adds an image to a fragment.
      */
     public void testAddImagePopups() {
-        /*
-         * fragmentPartListView.performLongClick();
-         * menu.performIdentifierAction(R.id.insertIllustration, 0);
-         * assertTrue(myEditFragmentActivity
-         * .getCurrentFocus().getClass().toString
-         * ().equals("AlertDialog.Builder"));
-         */
+        myEditFragmentActivity.saveTitle();
+        // fragmentPartListView.performLongClick();
+        // menu.performIdentifierAction(R.id.insertIllustration, 0);
+        // assertTrue(myEditFragmentActivity
+        // .getCurrentFocus().getClass().toString
+        // ().equals("AlertDialog.Builder"));
+        //
     }
     //
     // // Use Case 7, test 1/2 and Use Case 5
