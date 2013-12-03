@@ -32,6 +32,7 @@ public class OnlineHelperTest extends
     }
 
     /**
+     * This test covers use case #3.
      * Tests inserting the story into the web server and also getStoryById
      * methods Test works by creating a new story object, uploading it into the
      * server and then trying to get the same story back then we compare if the

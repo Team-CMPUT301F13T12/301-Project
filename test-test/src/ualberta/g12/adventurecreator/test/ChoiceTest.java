@@ -51,6 +51,7 @@ public class ChoiceTest extends ActivityInstrumentationTestCase2<ChoiceEditActiv
 	
 	
 	/**
+	 * Use case #7.  (This is how a fragment becomes linked to another fragment).
 	 * Tests to see if the getLinkedToFragmentPos and setLinkedToFragmentPos work
 	 * We can do this by creating a new choice object..then setting and getting the fragmentPos to make sure its the samesies
 	 * then make sure its the same 
@@ -63,9 +64,4 @@ public class ChoiceTest extends ActivityInstrumentationTestCase2<ChoiceEditActiv
 		choice.setLinkedToFragmentPos(55);
 		assertTrue(choice.getLinkedToFragmentPos() == 55);
 	}
-	
-	
-	
-	
-
 }

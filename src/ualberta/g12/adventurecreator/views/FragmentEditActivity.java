@@ -454,7 +454,7 @@ public class FragmentEditActivity extends Activity implements FView<Fragment> {
     /* Should be called before any other view notifying action
      * Otherwise changes to title will be reset
      */
-    private void saveTitle() {
+    public void saveTitle() {
         String title = editTitleText.getText().toString();
         fragmentController.setTitle(fragment, title);
     }

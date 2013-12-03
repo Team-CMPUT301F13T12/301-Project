@@ -51,6 +51,7 @@ public class StoryControllerTest extends ActivityInstrumentationTestCase2<StoryE
     }
 
     /**
+     * Use case #5.
      * Tests adding a fragment to a story with a story controller
      */
     public void testAddFragment() {
