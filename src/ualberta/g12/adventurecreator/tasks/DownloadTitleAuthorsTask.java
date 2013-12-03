@@ -54,7 +54,7 @@ public class DownloadTitleAuthorsTask extends AsyncTask<String, String, Boolean>
 
         OnlineHelper onlineHelper = AdventureCreator.getOnlineHelper();
         tas = new ArrayList<Story>();
-        if (query[0] == null || query[0].equals("")) {
+        if (query.length == 0 || query[0] == null || query[0].equals("")) {
             // No search
             try {
                 tas = onlineHelper.getAllStoryTitlesIdAuthor();
@@ -104,8 +104,9 @@ public class DownloadTitleAuthorsTask extends AsyncTask<String, String, Boolean>
     protected void onPostExecute(Boolean result) {
         if (!result) {
             Toast.makeText(context, "Error downloading stories", Toast.LENGTH_SHORT).show();
+        } else {
+            view.update(tas);
         }
-        view.update(tas);
     }
 
 }
