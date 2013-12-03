@@ -92,10 +92,8 @@ public class MainActivity extends Activity implements LView<StoryList>, OnItemCl
                 // TODO Auto-generated method stub
                 if (!isAuthor && storyList.getAllStories().size() > 0) {
                     // http://stackoverflow.com/questions/363681/generating-random-numbers-in-a-range-with-java
-                    Random random = new Random();
                     int max = storyList.getAllStories().size() - 1;
-                    int randPos = random.nextInt((max - 0) + 1) + 0;
-                    Story story = storyList.getStoryAtPos(randPos);
+                    int randPos = getRand(max);
                     Intent i = new Intent(getApplicationContext(), FragmentViewActivity.class);
                     i.putExtra("type", "offline");
                     i.putExtra("StoryPos", randPos);
@@ -112,6 +110,21 @@ public class MainActivity extends Activity implements LView<StoryList>, OnItemCl
         offlineHelper = AdventureCreator.getOfflineIOHelper();
     }
 
+    /**
+     * Obtains a random number from 0 - max 
+     * We use this function for the "I'm" feeling lucky method 
+     * By generating a number between 0 - max we are ensured that the random position of the story is in the story list
+     * For example a list having 3 stories will call this function with input parameter of 3-1 =2 for valid indices
+     * then we call the random function that a number between 0-3 is returned 
+     * @param max
+     * @return a random variable between 0 - max
+     */
+    public int getRand(int max){
+    	Random random = new Random();
+    	return random.nextInt((max-0) +1)+ 0;
+    }
+    
+    
     private void setupListView() {
         // Set up ListView Stuff
         adapter = new StoryListArrayAdapter(this, R.layout.listview_story_list, stories);
