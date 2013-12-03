@@ -9,7 +9,6 @@ import android.util.Log;
 import ualberta.g12.adventurecreator.data.AdventureCreator;
 import ualberta.g12.adventurecreator.data.Story;
 import ualberta.g12.adventurecreator.data.StoryList;
-import ualberta.g12.adventurecreator.tasks.CacheStoryTask;
 import ualberta.g12.adventurecreator.tasks.DownloadStoryTask;
 import ualberta.g12.adventurecreator.tasks.DownloadTitleAuthorsTask;
 import ualberta.g12.adventurecreator.views.OView;
@@ -19,19 +18,22 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * These test cases test the tasks of the online to offline and vice versa
- * implements. There are to ensure that tasks that publish or download stories
- * work correctly as well as viewing the stories after they have been
- * downloaded/published. We test if the fields CacheStoryTask,
- * DownloadTitleAuthorsTask, DownloadStoryTask, PublishStoryTask and
- * TryPublishStoryTask behave correctly
+ * These test cases test the functionality of the Download AysncTasks, the
+ * DownloadStoryTask and the DownloadTitleAuthorTask.<br>
+ * They work by downloading the object from the server, assuming that it exists
+ * and then performing some checks on the downloaded object.
+ * <p>
+ * You may notice that the tests may create a possible while loop, as we wait
+ * for their status to be Status.FINISHED. This is because they running on a
+ * different thread than the rest of the test, and we have no idea of when the
+ * download will be completed. If the tasks are somehow cancelled the test will
+ * fail out.
  **/
 public class DownloadTasksTestCases extends
         ActivityInstrumentationTestCase2<OnlineStoryViewActivity> {
 
     private DownloadStoryTask downloadStory;
     private DownloadTitleAuthorsTask downloadTitleAuthors;
-    private CacheStoryTask cacheStory;
     private Context context;
 
     private static final String TAG = "DownloadTasksTestCases";
@@ -44,13 +46,11 @@ public class DownloadTasksTestCases extends
         this.context = getActivity();
         this.downloadStory = new DownloadStoryTask(this.context);
         this.downloadTitleAuthors = new DownloadTitleAuthorsTask(context, getActivity());
-        this.cacheStory = new CacheStoryTask(context);
     }
 
     public void testNotNulls() {
         assertNotNull(this.downloadStory);
         assertNotNull(this.downloadTitleAuthors);
-        assertNotNull(this.cacheStory);
     }
 
     public void testDownloadStory() throws Throwable {
@@ -77,8 +77,10 @@ public class DownloadTasksTestCases extends
             fail("Download failed");
         }
         // Wait til onPostExecute is done
-        while (downloadStory.getStatus() == Status.FINISHED)
-            ;
+        while (downloadStory.getStatus() == Status.FINISHED) {
+            if (downloadStory.isCancelled())
+                fail("We were cancelled");
+        }
         runTestOnUiThread(new Runnable() {
             @Override
             public void run() {
@@ -122,8 +124,10 @@ public class DownloadTasksTestCases extends
         }
 
         // Wait til onPostExecute is done
-        while (downloadStory.getStatus() == Status.FINISHED)
-            ;
+        while (downloadStory.getStatus() == Status.FINISHED) {
+            if (downloadStory.isCancelled())
+                fail("We were cancelled");
+        }
 
         runTestOnUiThread(new Runnable() {
 
@@ -179,7 +183,8 @@ public class DownloadTasksTestCases extends
 
         // Wait til onPostExecute finishes and we get updated
         while (downloadTitleAuthors.getStatus() == Status.FINISHED && !sampleClass.updated) {
-            ;
+            if (downloadTitleAuthors.isCancelled())
+                fail("We were cancelled");
         }
         assertNotNull(sampleClass.titleAuthors);
         assertTrue("There are no stories in the sampleClass",
@@ -207,7 +212,8 @@ public class DownloadTasksTestCases extends
 
         // Wait til download is complete
         while (downloadTitleAuthors.getStatus() == Status.FINISHED && !sampleClass.updated) {
-            ;
+            if (downloadTitleAuthors.isCancelled())
+                fail("We were cancelled");
         }
 
         // We got the stuff
