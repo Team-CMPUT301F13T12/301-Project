@@ -4,6 +4,7 @@ package ualberta.g12.adventurecreator.test;
 import android.content.Context;
 import android.test.ActivityInstrumentationTestCase2;
 
+import ualberta.g12.adventurecreator.data.Story;
 import ualberta.g12.adventurecreator.tasks.PublishStoryTask;
 import ualberta.g12.adventurecreator.tasks.TryPublishStoryTask;
 import ualberta.g12.adventurecreator.views.MainActivity;
@@ -23,8 +24,8 @@ public class PublishTaskTestCases extends
     private TryPublishStoryTask tryPublishTask;
     private Context context;
 
-    public PublishTaskTestCases(Class<MainActivity> activityClass) {
-        super(activityClass);
+    public PublishTaskTestCases() {
+        super(MainActivity.class);
     }
 
     public void setUp() {
@@ -36,5 +37,28 @@ public class PublishTaskTestCases extends
         this.tryPublishTask = new TryPublishStoryTask(this.context);
         assertNotNull(this.publishTask);
         assertNotNull(this.tryPublishTask);
+    }
+
+    public void testCheckPublish() throws Throwable {
+        tryPublishTask = new TryPublishStoryTask(this.context);
+
+        final Story s = new Story("A", "A");
+
+        runTestOnUiThread(new Runnable() {
+
+            @Override
+            public void run() {
+                tryPublishTask.execute(new Story[] {
+                        s
+                });
+            }
+        });
+
+        if (tryPublishTask.get()) {
+            // Story exists we must update it
+        } else {
+            // Story doesn't exist oh no
+            fail("Assuming story already existed, this should have tried to overwrite it");
+        }
     }
 }
